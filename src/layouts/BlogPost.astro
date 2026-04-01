@@ -1,0 +1,63 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props;
+---
+
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="post-header">
+      <h1>{title}</h1>
+      {subtitle && <span class="post-subtitle">{subtitle}</span>}
+    </header>
+    <div class="post-layout">
+      <slot />
+    </div>
+  </body>
+</html>
+
+<style>
+  .post-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    background: var(--surface);
+  }
+
+  .post-header h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: -0.4px;
+  }
+
+  .post-subtitle {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .post-layout {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+</style>

@@ -1,0 +1,13 @@
+:root {
+  --bg: #080c12;
+  --surface: #0f1520;
+  --surface2: #161e2e;
+  --border: #1e2d45;
+  --teal: #00d4aa;
+  --amber: #f0a020;
+  --red: #ff5f5f;
+  --text: #c8d8f0;
+  --text-dim: #607090;
+  --text-bright: #e8f0ff;
+  --font: 'Inter', system-ui, sans-serif;
+}

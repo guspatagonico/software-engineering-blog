@@ -1,0 +1,40 @@
+---
+interface Props {
+  title: string;
+  variant?: 'default' | 'danger';
+}
+
+const { title, variant = 'default' } = Astro.props;
+---
+
+<div class:list={['card', variant === 'danger' && 'card-danger']}>
+  <div class="card-title">{title}</div>
+  <slot />
+</div>
+
+<style>
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .card-danger {
+    border-color: rgba(255, 95, 95, 0.3);
+  }
+
+  .card-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .card-danger .card-title {
+    color: var(--red);
+  }
+</style>

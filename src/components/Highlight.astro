@@ -1,0 +1,33 @@
+---
+interface Props {
+  variant?: 'default' | 'amber' | 'red';
+}
+
+const { variant = 'default' } = Astro.props;
+const variantClass = variant === 'default' ? '' : `highlight-${variant}`;
+---
+
+<div class:list={['highlight', variantClass]}>
+  <slot />
+</div>
+
+<style>
+  .highlight {
+    border-left: 3px solid var(--teal);
+    background: rgba(0, 212, 170, 0.05);
+    padding: 12px 16px;
+    border-radius: 0 4px 4px 0;
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+
+  .highlight-amber {
+    border-left-color: var(--amber);
+    background: rgba(240, 160, 32, 0.05);
+  }
+
+  .highlight-red {
+    border-left-color: var(--red);
+    background: rgba(255, 95, 95, 0.05);
+  }
+</style>
