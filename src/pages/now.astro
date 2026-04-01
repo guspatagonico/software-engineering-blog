@@ -1,0 +1,70 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Now" description="What I'm working on right now.">
+  <h1>Now</h1>
+  <p class="subtitle">What I'm focused on as of April 2026</p>
+
+  <div class="content">
+    <h2>Building</h2>
+    <ul>
+      <li>This software engineering blog with Astro + React islands</li>
+      <li>Harness engineering framework for AI-assisted development</li>
+    </ul>
+
+    <h2>Learning</h2>
+    <ul>
+      <li>Advanced patterns in multi-agent orchestration</li>
+      <li>Astro 6.x content collections and view transitions</li>
+    </ul>
+
+    <h2>Reading</h2>
+    <ul>
+      <li>Systems design and distributed architecture papers</li>
+      <li>Research on context window optimization for LLMs</li>
+    </ul>
+
+    <p class="note">
+      This is a <a href="https://nownownow.com/about">now page</a>. If you have your own site, you
+      should make one too.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .subtitle {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .content {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .content h2 {
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+
+  .content ul {
+    margin-bottom: 16px;
+    padding-left: 24px;
+  }
+
+  .content li {
+    margin-bottom: 6px;
+  }
+
+  .note {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+</style>

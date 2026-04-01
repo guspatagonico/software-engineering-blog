@@ -57,7 +57,9 @@ export default function Checklist({ sections }: ChecklistProps) {
                 aria-checked={isDone}
                 tabIndex={0}
                 onClick={() => toggle(idx)}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggle(idx); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') toggle(idx);
+                }}
                 style={{
                   ...styles.item,
                   ...(isDone ? styles.itemDone : {}),

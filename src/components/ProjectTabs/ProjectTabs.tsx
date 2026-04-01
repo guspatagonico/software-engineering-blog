@@ -46,7 +46,12 @@ export default function ProjectTabs({ tabs }: ProjectTabsProps) {
             {activeTab.rows.map((row, i) => (
               <tr key={i}>
                 {row.map((cell, j) => (
-                  <td key={j} style={j === 0 ? { fontSize: 11, fontWeight: 600, color: 'var(--teal)' } : undefined}>
+                  <td
+                    key={j}
+                    style={
+                      j === 0 ? { fontSize: 11, fontWeight: 600, color: 'var(--teal)' } : undefined
+                    }
+                  >
                     {cell}
                   </td>
                 ))}

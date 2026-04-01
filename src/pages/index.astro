@@ -1,18 +1,96 @@
 ---
+import Base from '@/layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Software Engineering Blog</title>
-  </head>
-  <body>
-    <h1>Software Engineering Blog</h1>
-    <p>Where systems thinking meets applied intelligence.</p>
-    <ul>
-      <li><a href={`${base}/blog/harness-engineering`}>Harness Engineering</a></li>
+<Base
+  title="Software Engineering Blog"
+  description="Where systems thinking meets applied intelligence."
+>
+  <h1>Software Engineering Blog</h1>
+  <p class="tagline">Where systems thinking meets applied intelligence.</p>
+
+  <section class="posts">
+    <h2 class="section-title">Latest Posts</h2>
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`${base}/blog/${post.slug}`}>
+              <span class="post-title">{post.data.title}</span>
+              {post.data.subtitle && <span class="post-subtitle">{post.data.subtitle}</span>}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href={`${base}/blog/harness-engineering`}>
+          <span class="post-title">Harness Engineering</span>
+          <span class="post-subtitle">Guía práctica · OpenCode + Sub-agentes</span>
+        </a>
+      </li>
     </ul>
-  </body>
-</html>
+  </section>
+</Base>
+
+<style>
+  .tagline {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 40px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--teal);
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .post-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .post-list li {
+    border-bottom: 1px solid rgba(30, 45, 69, 0.5);
+  }
+
+  .post-list li:last-child {
+    border-bottom: none;
+  }
+
+  .post-list a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 0;
+    transition: color 0.15s;
+  }
+
+  .post-list a:hover {
+    text-decoration: none;
+  }
+
+  .post-list a:hover .post-title {
+    color: var(--teal);
+  }
+
+  .post-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-bright);
+  }
+
+  .post-subtitle {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+</style>

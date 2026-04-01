@@ -1,0 +1,115 @@
+---
+import Base from '@/layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+---
+
+<Base title="Blog" description="All posts from the Software Engineering Blog.">
+  <h1>Blog</h1>
+  <p class="subtitle">All posts</p>
+
+  <div class="post-list">
+    <a href={`${base}/blog/harness-engineering`} class="post-card">
+      <div class="post-meta">
+        <span class="post-tag">guide</span>
+      </div>
+      <h2 class="post-title">Harness Engineering</h2>
+      <p class="post-desc">Guía práctica · OpenCode + Sub-agentes</p>
+    </a>
+
+    {
+      posts.map((post) => (
+        <a href={`${base}/blog/${post.slug}`} class="post-card">
+          <div class="post-meta">
+            <span class="post-date">{formatDate(post.data.pubDate)}</span>
+            {post.data.tags.map((tag) => (
+              <span class="post-tag">{tag}</span>
+            ))}
+          </div>
+          <h2 class="post-title">{post.data.title}</h2>
+          {post.data.description && <p class="post-desc">{post.data.description}</p>}
+        </a>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .subtitle {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .post-card {
+    display: block;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    transition: border-color 0.15s;
+  }
+
+  .post-card:hover {
+    border-color: var(--teal);
+    text-decoration: none;
+  }
+
+  .post-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .post-date {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .post-tag {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--teal);
+    background: rgba(0, 212, 170, 0.1);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .post-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+  }
+
+  .post-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+</style>

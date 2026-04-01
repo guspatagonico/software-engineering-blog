@@ -11,3 +11,16 @@
   --text-bright: #e8f0ff;
   --font: 'Inter', system-ui, sans-serif;
 }
+
+[data-theme='light'] {
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --surface2: #eef1f6;
+  --border: #d8dee8;
+  --teal: #009e7e;
+  --amber: #d48a10;
+  --red: #d94040;
+  --text: #2a3650;
+  --text-dim: #7a8aa0;
+  --text-bright: #1a2438;
+}

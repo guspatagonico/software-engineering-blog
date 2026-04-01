@@ -66,17 +66,26 @@ export default function ConvergentEnvelope() {
   const botPath = useMemo(() => buildPath(yEnvBot), []);
   const fillArea = useMemo(() => buildFillArea(), []);
 
-  const dividers = useMemo(() => [0.2, 0.4, 0.6].map((t) => ({
-    x: xOf(t),
-    y1: yEnvTop(t) - 6,
-    y2: yEnvBot(t) + 6,
-  })), []);
+  const dividers = useMemo(
+    () =>
+      [0.2, 0.4, 0.6].map((t) => ({
+        x: xOf(t),
+        y1: yEnvTop(t) - 6,
+        y2: yEnvBot(t) + 6,
+      })),
+    []
+  );
 
   const legY = 255;
 
   return (
     <div className="funnel-container">
-      <svg viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Convergent envelope diagram">
+      <svg
+        viewBox="0 0 640 270"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="Convergent envelope diagram"
+      >
         <defs>
           <linearGradient id="envGradTop" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" stopColor="#00d4aa" stopOpacity={0.85} />
@@ -127,7 +136,10 @@ export default function ConvergentEnvelope() {
 
         {/* Center line */}
         <line
-          x1={X0} y1={Yc} x2={X1} y2={Yc}
+          x1={X0}
+          y1={Yc}
+          x2={X1}
+          y2={Yc}
           stroke="#00d4aa"
           strokeWidth={0.6}
           opacity={0.13}
@@ -150,7 +162,10 @@ export default function ConvergentEnvelope() {
         {dividers.map((d, i) => (
           <line
             key={i}
-            x1={d.x} y1={d.y1} x2={d.x} y2={d.y2}
+            x1={d.x}
+            y1={d.y1}
+            x2={d.x}
+            y2={d.y2}
             stroke="#1e2d45"
             strokeWidth={1}
             strokeDasharray="3,5"
@@ -158,11 +173,27 @@ export default function ConvergentEnvelope() {
         ))}
 
         {/* Start node */}
-        <circle cx={X0} cy={Yc} r={11} fill="none" stroke="#00d4aa" strokeWidth={1} opacity={0.22} />
+        <circle
+          cx={X0}
+          cy={Yc}
+          r={11}
+          fill="none"
+          stroke="#00d4aa"
+          strokeWidth={1}
+          opacity={0.22}
+        />
         <circle cx={X0} cy={Yc} r={5.5} fill="#00d4aa" opacity={0.9} />
 
         {/* End node */}
-        <circle cx={X1} cy={Yc} r={9} fill="none" stroke="#00d4aa" strokeWidth={1.5} opacity={0.55} />
+        <circle
+          cx={X1}
+          cy={Yc}
+          r={9}
+          fill="none"
+          stroke="#00d4aa"
+          strokeWidth={1.5}
+          opacity={0.55}
+        />
         <circle cx={X1} cy={Yc} r={4} fill="#00d4aa" opacity={0.88} />
 
         {/* Phase labels */}
@@ -209,13 +240,44 @@ export default function ConvergentEnvelope() {
         </text>
 
         {/* Legend */}
-        <line x1={60} y1={legY} x2={96} y2={legY} stroke="#f0a020" strokeWidth={2.3} opacity={0.85} />
+        <line
+          x1={60}
+          y1={legY}
+          x2={96}
+          y2={legY}
+          stroke="#f0a020"
+          strokeWidth={2.3}
+          opacity={0.85}
+        />
         <circle cx={78} cy={legY} r={3} fill="#f0a020" opacity={0.75} />
-        <text x={103} y={legY + 4} fontFamily="Inter, sans-serif" fontSize={12} fontWeight={600} fill="#a08040">
+        <text
+          x={103}
+          y={legY + 4}
+          fontFamily="Inter, sans-serif"
+          fontSize={12}
+          fontWeight={600}
+          fill="#a08040"
+        >
           trayectoria del agente
         </text>
-        <line x1={320} y1={legY} x2={356} y2={legY} stroke="#00d4aa" strokeWidth={1.5} strokeDasharray="5,4" opacity={0.65} />
-        <text x={363} y={legY + 4} fontFamily="Inter, sans-serif" fontSize={12} fontWeight={600} fill="#2a8a70">
+        <line
+          x1={320}
+          y1={legY}
+          x2={356}
+          y2={legY}
+          stroke="#00d4aa"
+          strokeWidth={1.5}
+          strokeDasharray="5,4"
+          opacity={0.65}
+        />
+        <text
+          x={363}
+          y={legY + 4}
+          fontFamily="Inter, sans-serif"
+          fontSize={12}
+          fontWeight={600}
+          fill="#2a8a70"
+        >
           envolvente e⁻λt
         </text>
       </svg>

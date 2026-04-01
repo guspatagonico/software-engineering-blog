@@ -1,0 +1,65 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="About" description="About this software engineering blog.">
+  <h1>About</h1>
+  <p class="subtitle">Who I am and what this is about</p>
+
+  <div class="content">
+    <p>
+      I'm a software engineer focused on systems thinking, architecture patterns, and applied AI in
+      development workflows. This blog explores the intersection of those topics with practical,
+      real-world examples.
+    </p>
+
+    <h2>What I Write About</h2>
+    <ul>
+      <li>Software architecture and design patterns</li>
+      <li>AI-assisted development workflows</li>
+      <li>Engineering process and methodology</li>
+      <li>Practical deep dives with code examples</li>
+    </ul>
+
+    <h2>Tech Stack</h2>
+    <p>
+      This blog is built with Astro, React islands for interactivity, TypeScript, and Zustand for
+      state management. Content is managed through Astro content collections with MDX.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .subtitle {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-dim);
+    margin-bottom: 32px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .content {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .content h2 {
+    margin-top: 28px;
+    margin-bottom: 12px;
+  }
+
+  .content p {
+    margin-bottom: 16px;
+  }
+
+  .content ul {
+    margin-bottom: 16px;
+    padding-left: 24px;
+  }
+
+  .content li {
+    margin-bottom: 6px;
+  }
+</style>
