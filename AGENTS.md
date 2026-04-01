@@ -202,6 +202,8 @@ sessions without divergence.
   Example: `handoff-2026-04-01-14-30.md`
 - Custom names may be specified when requested.
 - Contents: completed tasks, in-progress work, blockers, decisions made, and next steps.
+- **Language**: All documentation — README.md, handoffs, comments in config files — must be
+  written in English. Blog post content may be in Spanish or English as required.
 
 ---
 
