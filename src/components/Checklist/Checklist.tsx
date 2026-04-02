@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import './Checklist.css';
 
 interface ChecklistItem {
   label: string;
@@ -37,16 +38,16 @@ export default function Checklist({ sections }: ChecklistProps) {
 
   return (
     <div>
-      <div style={styles.progressText}>
+      <div className="checklist__progress-text">
         {done.size} / {allItems.length} completados
       </div>
-      <div style={styles.progressBar}>
-        <div style={{ ...styles.progressFill, width: `${pct}%` }} />
+      <div className="checklist__progress-bar">
+        <div className="checklist__progress-fill" style={{ width: `${pct}%` }} />
       </div>
 
       {sections.map((section) => (
-        <div key={section.title} style={styles.section}>
-          <h3 style={styles.sectionTitle}>{section.title}</h3>
+        <div key={section.title} className="checklist__section">
+          <h3 className="checklist__section-title">{section.title}</h3>
           {section.items.map((item) => {
             const idx = globalIndex++;
             const isDone = done.has(idx);
@@ -60,25 +61,10 @@ export default function Checklist({ sections }: ChecklistProps) {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' || e.key === ' ') toggle(idx);
                 }}
-                style={{
-                  ...styles.item,
-                  ...(isDone ? styles.itemDone : {}),
-                }}
+                className="checklist__item"
               >
-                <div
-                  style={{
-                    ...styles.box,
-                    ...(isDone ? styles.boxDone : {}),
-                  }}
-                >
-                  ✓
-                </div>
-                <div
-                  style={{
-                    ...styles.label,
-                    ...(isDone ? styles.labelDone : {}),
-                  }}
-                >
+                <div className={`checklist__box ${isDone ? 'checklist__box--done' : ''}`}>✓</div>
+                <div className={`checklist__label ${isDone ? 'checklist__label--done' : ''}`}>
                   {item.label}
                 </div>
               </div>
@@ -87,89 +73,9 @@ export default function Checklist({ sections }: ChecklistProps) {
         </div>
       ))}
 
-      <button type="button" onClick={reset} style={styles.resetButton}>
+      <button type="button" onClick={reset} className="checklist__reset">
         Resetear checklist
       </button>
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  progressText: {
-    fontSize: 11,
-    fontWeight: 500,
-    color: 'var(--text-dim)',
-    marginBottom: 6,
-  },
-  progressBar: {
-    height: 2,
-    background: 'var(--border)',
-    borderRadius: 2,
-    marginBottom: 24,
-  },
-  progressFill: {
-    height: '100%',
-    background: 'var(--teal)',
-    borderRadius: 2,
-    transition: 'width 0.3s',
-  },
-  section: {
-    marginBottom: 20,
-  },
-  sectionTitle: {
-    fontSize: 10,
-    fontWeight: 700,
-    color: 'var(--teal)',
-    margin: '24px 0 12px',
-    letterSpacing: '2.5px',
-    textTransform: 'uppercase' as const,
-  },
-  item: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: 12,
-    padding: '9px 0',
-    borderBottom: '1px solid rgba(30,45,69,0.5)',
-    cursor: 'pointer',
-  },
-  itemDone: {},
-  box: {
-    width: 17,
-    height: 17,
-    border: '1.5px solid var(--border)',
-    borderRadius: 2,
-    flexShrink: 0,
-    marginTop: 2,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'all 0.15s',
-    fontSize: 11,
-  },
-  boxDone: {
-    borderColor: 'var(--teal)',
-    background: 'rgba(0,212,170,0.15)',
-    color: 'var(--teal)',
-  },
-  label: {
-    fontSize: 13,
-  },
-  labelDone: {
-    textDecoration: 'line-through',
-    color: 'var(--text-dim)',
-  },
-  resetButton: {
-    marginTop: 8,
-    padding: '8px 18px',
-    background: 'transparent',
-    border: '1px solid var(--border)',
-    color: 'var(--text-dim)',
-    fontFamily: 'var(--font)',
-    fontSize: 11,
-    fontWeight: 600,
-    cursor: 'pointer',
-    borderRadius: 3,
-    letterSpacing: 1,
-    textTransform: 'uppercase' as const,
-  },
-};

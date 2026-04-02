@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './ProjectTabs.css';
 
 interface TabData {
   id: string;
@@ -18,16 +19,13 @@ export default function ProjectTabs({ tabs }: ProjectTabsProps) {
 
   return (
     <div>
-      <div style={styles.tabBar}>
+      <div className="project-tabs__bar">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveId(tab.id)}
-            style={{
-              ...styles.tab,
-              ...(activeId === tab.id ? styles.tabActive : {}),
-            }}
+            className={`project-tabs__tab ${activeId === tab.id ? 'project-tabs__tab--active' : ''}`}
           >
             {tab.label}
           </button>
@@ -46,12 +44,7 @@ export default function ProjectTabs({ tabs }: ProjectTabsProps) {
             {activeTab.rows.map((row, i) => (
               <tr key={i}>
                 {row.map((cell, j) => (
-                  <td
-                    key={j}
-                    style={
-                      j === 0 ? { fontSize: 11, fontWeight: 600, color: 'var(--teal)' } : undefined
-                    }
-                  >
+                  <td key={j} className={j === 0 ? 'project-tabs__cell-name' : undefined}>
                     {cell}
                   </td>
                 ))}
@@ -63,31 +56,3 @@ export default function ProjectTabs({ tabs }: ProjectTabsProps) {
     </div>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  tabBar: {
-    display: 'flex',
-    gap: 4,
-    marginBottom: 16,
-    borderBottom: '1px solid var(--border)',
-  },
-  tab: {
-    padding: '7px 16px',
-    fontSize: 11,
-    fontWeight: 600,
-    letterSpacing: 1,
-    textTransform: 'uppercase' as const,
-    cursor: 'pointer',
-    border: 'none',
-    background: 'none',
-    color: 'var(--text-dim)',
-    borderBottom: '2px solid transparent',
-    marginBottom: -1,
-    transition: 'all 0.15s',
-    fontFamily: 'var(--font)',
-  },
-  tabActive: {
-    color: 'var(--amber)',
-    borderBottomColor: 'var(--amber)',
-  },
-};

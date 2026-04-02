@@ -157,7 +157,7 @@ const checklistSections = [
 
       <Highlight>
         El harness no define un único camino óptimo (frágil) — define una <strong
-          style="color:var(--teal)">envolvente dinámica</strong
+          class="teal">envolvente dinámica</strong
         > que tolera dispersión al inicio y la va cerrando conforme el proceso avanza. El orquestador
         es el controlador que mantiene esa envolvente activa.
       </Highlight>
@@ -233,7 +233,7 @@ const checklistSections = [
       <Highlight>
         El context window es el recurso más escaso. Llenarlo = pérdida de coherencia = entropía. El
         diseño correcto no es usar ventanas más grandes — es que cada sub-agente opere con el
-        contexto <strong style="color:var(--teal)">mínimo suficiente</strong>.
+        contexto <strong           class="teal">mínimo suficiente</strong>.
       </Highlight>
 
       <h3>Context Budget (template)</h3>
@@ -323,16 +323,15 @@ la spec completa del proyecto.</span></pre>
 
       <h3>Condiciones para paralelizar (las tres deben cumplirse)</h3>
       <Card title="1"
-        >Los sub-agentes <strong style="color:var(--teal)">no escriben al mismo archivo</strong
+        >Los sub-agentes <strong           class="teal">no escriben al mismo archivo</strong
         ></Card
       >
       <Card title="2"
-        >Sus outputs son <strong style="color:var(--teal)">independientes</strong> en esta fase (no se
+        >Sus outputs son <strong class="teal">independientes</strong> en esta fase (no se
         alimentan entre sí)</Card
       >
       <Card title="3"
-        >El orquestador puede <strong style="color:var(--teal)"
-          >validar cada output aisladamente</strong
+        >El orquestador puede <strong class="teal">validar cada output aisladamente</strong
         ></Card
       >
 
@@ -377,7 +376,7 @@ la spec completa del proyecto.</span></pre>
 
       <Highlight>
         <strong>El insight clave:</strong> skills y MCPs no son solo herramientas de capacidad — son <strong
-          style="color:var(--teal)">mecanismos de constraint estructurales</strong
+          class="teal">mecanismos de constraint estructurales</strong
         >. Asignar a un sub-agente solo los MCPs relevantes define las paredes de su envolvente de
         forma física, no instruccional.
       </Highlight>
@@ -538,7 +537,7 @@ la spec completa del proyecto.</span></pre>
   }
 
   .subtitle {
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     color: var(--text-dim);
     margin-bottom: 28px;
@@ -633,5 +632,9 @@ la spec completa del proyecto.</span></pre>
     font-weight: 700;
     color: var(--amber);
     padding-top: 2px;
+  }
+
+  .teal {
+    color: var(--teal);
   }
 </style>
