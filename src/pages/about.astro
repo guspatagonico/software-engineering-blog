@@ -2,30 +2,81 @@
 import Base from '@/layouts/Base.astro';
 ---
 
-<Base title="About" description="About this software engineering blog.">
+<Base title="About" description="About Gustavo Adrián Salvini and this software engineering blog.">
   <h1>About</h1>
-  <p class="subtitle">Who I am and what this is about</p>
+  <p class="subtitle">Gustavo Adrián Salvini · Software Engineer</p>
 
   <div class="content">
     <p>
-      I'm a software engineer focused on systems thinking, architecture patterns, and applied AI in
-      development workflows. This blog explores the intersection of those topics with practical,
-      real-world examples.
+      I'm a Software Developer, IT Consultant, and Founder of <a href="https://ecimtech.com" target="_blank" rel="noopener">EcimTech</a>.
+      I build purpose-driven digital products with a focus on quality, scalability, and impact.
+      This blog explores software engineering, agentic development, and applied AI in real-world workflows.
     </p>
 
-    <h2>What I Write About</h2>
+    <h2>Current Focus</h2>
     <ul>
-      <li>Software architecture and design patterns</li>
-      <li>AI-assisted development workflows</li>
-      <li>Engineering process and methodology</li>
-      <li>Practical deep dives with code examples</li>
+      <li><strong>Agentic Software Development</strong> — designing and orchestrating multi-agent coding workflows with harness frameworks, sub-agent architectures, and context budgeting</li>
+      <li><strong>LLM Context Engineering</strong> — managing context windows, compaction strategies, handoffs, and the mathematical limits of attention mechanisms</li>
+      <li><strong>Software Architecture</strong> — scalable frontend and full-stack systems, component-based design, and state management at scale</li>
+      <li><strong>Modern Web Development</strong> — React, Astro, Next.js, TypeScript, and the ecosystem around them</li>
+    </ul>
+
+    <h2>AI-Enhanced Development & Research</h2>
+    <p>
+      I actively research and develop solutions that leverage AI and LLM technologies to enhance
+      software development workflows, product ideation, and digital solutions.
+    </p>
+    <ul>
+      <li>Integrating <strong>OpenAI</strong>, <strong>Anthropic</strong>, <strong>Google Gemini</strong>, and open-source LLMs through API-based architectures</li>
+      <li>Exploring <strong>Generative AI</strong> applications for software architecture support, content generation, and automation</li>
+      <li>Building <strong>AI-augmented web tools</strong> that empower users to create, learn, and make better decisions faster</li>
+      <li>Researching <strong>RAG systems</strong> (Retrieval-Augmented Generation) and <strong>semantic search</strong> integrations</li>
+      <li>Investigating <strong>local LLM deployment</strong> options for privacy-centric AI solutions</li>
+      <li>Designing <strong>harness frameworks</strong> for agentic coding — convergent envelopes, barrier functions, drift detection, and fork-join orchestration</li>
+    </ul>
+
+    <h2>Engineering Philosophy</h2>
+    <ul>
+      <li><strong>Building, learning, evolving</strong> — knowledge sharing as a multiplier for growth and collective innovation</li>
+      <li><strong>Systems thinking</strong> — treating software development as an engineered process, not a creative exercise</li>
+      <li><strong>Constraints over instructions</strong> — structural barrier functions beat verbal rules in agentic and human teams</li>
+      <li><strong>Context is finite</strong> — whether human or machine, effective work requires managing the scarce resource of attention</li>
     </ul>
 
     <h2>Tech Stack</h2>
+    <div class="tech-grid">
+      <div class="tech-group">
+        <h3>Frontend</h3>
+        <p>React, Astro, Next.js, TypeScript, Zustand, Mantine, Chakra UI, Radix UI, Tailwind</p>
+      </div>
+      <div class="tech-group">
+        <h3>Backend</h3>
+        <p>Node.js, PHP, REST APIs, GraphQL, MySQL, PostgreSQL, SQLite, Qdrant Vector DB, Headless CMS, Serverless</p>
+      </div>
+      <div class="tech-group">
+        <h3>AI / LLM</h3>
+        <p>OpenAI API, Anthropic Claude, Google Gemini, RAG, Semantic Search</p>
+      </div>
+      <div class="tech-group">
+        <h3>Architecture</h3>
+        <p>SSG, SSR, ISR, Component Design Systems, State Management</p>
+      </div>
+    </div>
+
+    <h2>About This Blog</h2>
     <p>
-      This blog is built with Astro, React islands for interactivity, TypeScript, and Zustand for
-      state management. Content is managed through Astro content collections with MDX.
+      Built with Astro and React islands for interactivity. Content is managed through Astro
+      content collections with MDX. The blog covers software architecture, AI-assisted development,
+      agentic workflows, and practical engineering deep dives with code examples.
     </p>
+
+    <h2>Connect</h2>
+    <ul>
+      <li><a href="https://github.com/guspatagonico" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://x.com/guspatagonico" target="_blank" rel="noopener">X (@guspatagonico)</a></li>
+      <li><a href="https://www.linkedin.com/in/gustavosalvini/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://ecimtech.com" target="_blank" rel="noopener">EcimTech</a></li>
+    </ul>
   </div>
 </Base>
 
@@ -61,5 +112,30 @@ import Base from '@/layouts/Base.astro';
 
   .content li {
     margin-bottom: 6px;
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .tech-group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 14px 16px;
+  }
+
+  .tech-group h3 {
+    margin: 0 0 6px;
+    font-size: 11px;
+  }
+
+  .tech-group p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-dim);
   }
 </style>
