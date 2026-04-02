@@ -45,13 +45,13 @@ No test framework assumed — check `package.json` scripts before running.
 
 ### Routing (Astro file-based)
 
-| Path         | Type           | Notes                       |
-| ------------ | -------------- | --------------------------- |
-| `/about`     | Static page    |                             |
-| `/now`       | Static page    |                             |
-| `/contact`   | Static + form  | Links to github, x.com, gustavosalvini.com.ar |
-| `/blog`      | Posts loop     |                             |
-| `/blog/{slug}` | Single post  | MDX content + React islands |
+| Path           | Type          | Notes                                         |
+| -------------- | ------------- | --------------------------------------------- |
+| `/about`       | Static page   |                                               |
+| `/now`         | Static page   |                                               |
+| `/contact`     | Static + form | Links to github, x.com, gustavosalvini.com.ar |
+| `/blog`        | Posts loop    |                                               |
+| `/blog/{slug}` | Single post   | MDX content + React islands                   |
 
 ### Component structure
 
@@ -114,15 +114,15 @@ feature directory.
 
 ### Naming
 
-| Item          | Convention          | Example              |
-| ------------- | ------------------- | -------------------- |
-| Components    | PascalCase          | `FunnelChart.tsx`    |
-| Hooks         | camelCase w/ `use`  | `useDarkMode.ts`     |
-| Utilities     | camelCase           | `formatDate.ts`      |
-| Stores        | camelCase           | `themeStore.ts`      |
-| CSS modules   | camelCase           | `funnelChart.module.css` |
-| Constants     | UPPER_SNAKE_CASE   | `MAX_RETRIES`        |
-| Types/Interfaces | PascalCase       | `ChartConfig`        |
+| Item             | Convention         | Example                  |
+| ---------------- | ------------------ | ------------------------ |
+| Components       | PascalCase         | `FunnelChart.tsx`        |
+| Hooks            | camelCase w/ `use` | `useDarkMode.ts`         |
+| Utilities        | camelCase          | `formatDate.ts`          |
+| Stores           | camelCase          | `themeStore.ts`          |
+| CSS modules      | camelCase          | `funnelChart.module.css` |
+| Constants        | UPPER_SNAKE_CASE   | `MAX_RETRIES`            |
+| Types/Interfaces | PascalCase         | `ChartConfig`            |
 
 ### Types
 
@@ -153,6 +153,7 @@ feature directory.
 - **Never** include agent names in commit messages, co-author trailers, PR text, or docs.
 - Do not remove/modify the `server` block in `vite.config.ts` (`host: '0.0.0.0'`,
   `allowedHosts: ['galadriel']`) — LAN dev convenience, must be preserved.
+- **Never** commit and push until the user explicitly asks to do so.
 
 ---
 
@@ -204,6 +205,8 @@ sessions without divergence.
 - Contents: completed tasks, in-progress work, blockers, decisions made, and next steps.
 - **Language**: All documentation — README.md, handoffs, comments in config files — must be
   written in English. Blog post content may be in Spanish or English as required.
+- **Do not read or process handoff files automatically.** Only read a handoff when the user
+  explicitly asks to do so (e.g. by naming the file or pasting its contents).
 
 ---
 
@@ -211,4 +214,5 @@ sessions without divergence.
 
 Use `_seed/harness_engineering.html` as the starting template for new blog posts. It
 contains a monolith HTML with embedded CSS and JS — decompose it into Astro components
-+ React islands following the architecture above.
+
+- React islands following the architecture above.
