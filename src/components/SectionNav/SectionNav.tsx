@@ -18,7 +18,9 @@ export default function SectionNav({ sections }: SectionNavProps) {
     setActiveId(id);
 
     // Hide all panels, show target
-    document.querySelectorAll('.panel').forEach((p) => p.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach((p) => {
+      p.classList.remove('active');
+    });
     const target = document.getElementById(`panel-${id}`);
     if (target) target.classList.add('active');
   };

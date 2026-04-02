@@ -230,6 +230,61 @@ feature directory.
 
 ---
 
+## Parallel Task Execution
+
+### Task Dispatcher Pattern
+
+Complex tasks should be decomposed into smaller parallel subtasks using a dispatcher model:
+
+1. **Main agent** → Analyzes request, breaks into independent tasks
+2. **Parallel subagents** → Execute subtasks concurrently
+3. **Main agent** → Synthesizes results, reports to user
+
+### Custom Agents
+
+This project has specialized agents defined in `.opencode/agents/`:
+
+| Agent                | Purpose                                                     |
+| -------------------- | ----------------------------------------------------------- |
+| `@orchestrator`      | Breaks down complex tasks, dispatches to specialized agents |
+| `@component-builder` | Creates React/Astro components following conventions        |
+| `@blog-writer`       | Creates blog posts with SectionNav + panels layout          |
+| `@tester`            | Writes Vitest tests for components and utilities            |
+| `@explore`           | Built-in read-only codebase exploration                     |
+
+### Usage
+
+Invoke a specialized agent by mentioning it:
+
+```
+@component-builder create a FunnelChart component
+```
+
+Or let the orchestrator dispatch automatically:
+
+```
+@orchestrator I need to add a new blog post with a chart component and tests
+```
+
+### Creating New Agents
+
+Add markdown files to `.opencode/agents/`:
+
+```markdown
+---
+description: Brief description of agent purpose
+mode: subagent
+tools:
+  write: true
+  edit: true
+  bash: false
+---
+
+Agent-specific instructions here...
+```
+
+---
+
 ## Development Workflow
 
 ### Commits
@@ -246,24 +301,73 @@ chore: bump astro to 4.x
 
 Run `pnpm lint` and `pnpm typecheck` before committing.
 
-### Branching Strategy
+### Git Worktree Workflow
 
-- **New features or important bugfixes** → create a new branch from `main`.
-- **Trivial fixes** (typos, one-liners) → commit directly to `main` with a `fix:` message.
-- Branch names should be **short and descriptive**:
-  - `feat/funnel-chart`
-  - `fix/dark-mode-toggle`
-  - `refactor/date-utils`
+This project uses **git worktrees** to keep the `main` branch clean and enable parallel work.
 
-### PR → Merge Flow
+#### When to use worktrees
 
-1. Create a branch when the user requests a new feature.
-2. Develop on that branch with conventional commits.
-3. Open a PR to `main` when ready.
-4. Merge the PR to integrate into `main`.
-5. Delete the branch after merge.
+- **New features** → always use a worktree
+- **Complex refactoring** → always use a worktree
+- **Extensive exploratory work** → always use a worktree
+- **Trivial fixes** (typos, one-liners) → work directly in main
 
-Do not merge branches without a PR. The user may ask to skip the branch for trivial changes.
+#### Workflow
+
+1. **Create a worktree** for the feature:
+
+   ```bash
+   git worktree add ../software-engineering-{feature-name} -b feat/{feature-name}
+   ```
+
+   Example:
+
+   ```bash
+   git worktree add ../software-engineering-funnel-chart -b feat/funnel-chart
+   ```
+
+2. **Navigate to the worktree** and develop:
+
+   ```bash
+   cd ../software-engineering-funnel-chart
+   pnpm install
+   pnpm dev
+   ```
+
+3. **Work in the worktree**: commit with conventional messages, run tests, lint, typecheck.
+
+4. **When ready**: push branch to remote and create a PR:
+
+   ```bash
+   git push -u origin feat/funnel-chart
+   gh pr create --title "feat: add funnel chart component" --body "$(cat <<'EOF'
+   ## Summary
+   - Bullet point describing the feature
+
+   ## Testing
+   - Describe how to test this feature
+   EOF
+   )"
+   ```
+
+5. **After PR merge**: remove the worktree:
+   ```bash
+   git worktree remove ../software-engineering-funnel-chart
+   git branch -d feat/funnel-chart
+   ```
+
+#### Branch naming
+
+- Features: `feat/{short-name}` (e.g., `feat/funnel-chart`)
+- Bug fixes: `fix/{short-name}` (e.g., `fix/dark-mode-toggle`)
+- Refactors: `refactor/{short-name}` (e.g., `refactor/date-utils`)
+
+#### Rules
+
+- **Never** commit and push until the user explicitly asks.
+- Do not merge branches without a PR.
+- Keep `main` clean — only merged PRs touch it.
+- Run `pnpm lint` and `pnpm typecheck` before committing.
 
 ---
 
@@ -280,6 +384,14 @@ sessions without divergence.
   written in English. Blog post content may be in Spanish or English as required.
 - **Do not read or process handoff files automatically.** Only read a handoff when the user
   explicitly asks to do so (e.g. by naming the file or pasting its contents).
+
+### Command
+
+Use `/handoff` to create a new handoff file automatically. It will:
+
+1. Fetch git status and recent commits for context
+2. Generate the file with sections for completed, pending, blockers, decisions, and files
+3. Write the file to `_handoffs/`
 
 ---
 
