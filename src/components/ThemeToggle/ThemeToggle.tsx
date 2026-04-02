@@ -7,7 +7,7 @@ export default function ThemeToggle() {
 
   return (
     <button type="button" onClick={toggle} className="theme-toggle" aria-label="Toggle theme">
-      {theme === 'dark' ? '☀' : '☾'}
+      {theme === 'dark' ? '☾' : '☀'}
     </button>
   );
 }

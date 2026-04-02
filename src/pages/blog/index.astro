@@ -22,6 +22,16 @@ function formatDate(date: Date): string {
   <p class="subtitle">All posts</p>
 
   <div class="post-list">
+    <a href={`${base}/blog/llm-context-limitations`} class="post-card">
+      <div class="post-meta">
+        <span class="post-date">Apr 1, 2026</span>
+        <span class="post-tag">llm</span>
+        <span class="post-tag">context</span>
+      </div>
+      <h2 class="post-title">Limitaciones de los LLM en la actualidad</h2>
+      <p class="post-desc">Ventana de contexto, Smart Context y estrategias para ahorrar tokens</p>
+    </a>
+
     <a href={`${base}/blog/harness-engineering`} class="post-card">
       <div class="post-meta">
         <span class="post-tag">guide</span>
@@ -32,7 +42,7 @@ function formatDate(date: Date): string {
 
     {
       posts.map((post) => (
-        <a href={`${base}/blog/${post.slug}`} class="post-card">
+        <a href={`${base}/blog/${post.id}`} class="post-card">
           <div class="post-meta">
             <span class="post-date">{formatDate(post.data.pubDate)}</span>
             {post.data.tags.map((tag) => (

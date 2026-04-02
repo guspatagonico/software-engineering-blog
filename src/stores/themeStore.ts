@@ -10,6 +10,8 @@ interface ThemeState {
 
 const getInitialTheme = (): Theme => {
   if (typeof window === 'undefined') return 'dark';
+  const attr = document.documentElement.getAttribute('data-theme') as Theme | null;
+  if (attr) return attr;
   const stored = localStorage.getItem('theme') as Theme | null;
   if (stored) return stored;
   return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';

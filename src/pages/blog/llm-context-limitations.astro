@@ -1,0 +1,149 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+import ContextWindowChart from '../../components/ContextWindowChart/ContextWindowChart';
+
+const contextModels = [
+  { name: 'Gemini 2.5 Pro', provider: 'Google', contextK: 1000000, smartContextK: 500000, year: 2025 },
+  { name: 'GPT-4.1', provider: 'OpenAI', contextK: 1000000, smartContextK: 500000, year: 2025 },
+  { name: 'Claude Opus 4', provider: 'Anthropic', contextK: 200000, smartContextK: 100000, year: 2025 },
+  { name: 'Claude Sonnet 4', provider: 'Anthropic', contextK: 200000, smartContextK: 100000, year: 2025 },
+  { name: 'GPT-4o', provider: 'OpenAI', contextK: 128000, smartContextK: 64000, year: 2024 },
+  { name: 'Gemini 1.5 Pro', provider: 'Google', contextK: 2000000, smartContextK: 1000000, year: 2024 },
+  { name: 'Claude 3.5 Sonnet', provider: 'Anthropic', contextK: 200000, smartContextK: 100000, year: 2024 },
+  { name: 'GPT-4 Turbo', provider: 'OpenAI', contextK: 128000, smartContextK: 64000, year: 2023 },
+  { name: 'Claude 3 Opus', provider: 'Anthropic', contextK: 200000, smartContextK: 100000, year: 2023 },
+];
+---
+
+<BlogPost
+  title="Limitaciones de los LLM en la actualidad"
+  subtitle="Ventana de contexto y Smart Context"
+>
+  <h2>El problema del contexto</h2>
+
+  <p>
+    Los Large Language Models han avanzado rápidamente en capacidad, pero una limitación
+    estructural persiste: la <strong>ventana de contexto</strong>. Cada modelo tiene un
+    límite fijo de tokens que puede procesar simultáneamente —incluyendo el system prompt,
+    el historial de conversación, las herramientas disponibles y la respuesta generada.
+  </p>
+
+  <p>
+    A medida que las sesiones se alargan, el contexto crece linealmente. Cada turno agrega
+    tokens al historial, y eventualmente se alcanza el límite. Cuando esto ocurre, el modelo
+    pierde acceso a información anterior y la calidad de las respuestas degrada.
+  </p>
+
+  <h2>Comparación de ventanas de contexto</h2>
+
+  <ContextWindowChart client:load models={contextModels} />
+
+  <h2>Smart Context: la mitad útil</h2>
+
+  <p>
+    El concepto de <strong>Smart Context</strong> es simple pero revelador: el espacio
+    realmente útil de una ventana de contexto es aproximadamente la mitad del tamaño nominal.
+  </p>
+
+  <p>
+    ¿Por qué? Porque el contexto se distribuye entre:
+  </p>
+
+  <ul>
+    <li><strong>System prompt</strong> — instrucciones del sistema, personalidad, reglas</li>
+    <li><strong>Herramientas y skills</strong> — definiciones de funciones, MCPs, schemas</li>
+    <li><strong>Historial de conversación</strong> — mensajes previos del usuario y asistente</li>
+    <li><strong>Respuesta generada</strong> — tokens de salida del modelo</li>
+  </ul>
+
+  <p>
+    En una sesión larga con herramientas activas, el historial de conversación puede fácilmente
+    consumir el 60-70% del contexto. Si además el system prompt y las herramientas ocupan un
+    20-30%, el espacio disponible para la respuesta se reduce dramáticamente.
+  </p>
+
+  <div class="post-callout">
+    <p>
+      <strong>Regla práctica:</strong> si tu ventana de contexto es de 200K tokens,
+      planifica trabajar con ~100K tokens efectivos. La otra mitad ya está reservada
+      por el sistema, herramientas y la respuesta misma.
+    </p>
+  </div>
+
+  <h2>Estrategias para ahorrar contexto</h2>
+
+  <p>
+    Dado que el contexto es un recurso finito, existen varias técnicas para maximizar
+    su uso efectivo en sesiones largas:
+  </p>
+
+  <h3>MCPs (Model Context Protocol)</h3>
+
+  <p>
+    Los MCPs externalizan el acceso a datos. En lugar de incluir archivos completos en el
+    contexto, el modelo consulta herramientas externas bajo demanda. Esto permite trabajar
+    con repositorios grandes sin copiar todo al contexto.
+  </p>
+
+  <h3>Skills y Tools</h3>
+
+  <p>
+    Las skills y tools bien diseñadas reducen la cantidad de instrucciones que necesitan
+    estar en el system prompt. Una skill con instrucciones claras reemplaza párrafos de
+    explicación ad-hoc, liberando contexto para el trabajo real.
+  </p>
+
+  <h3>Compresión de contexto (Compaction)</h3>
+
+  <p>
+    La compresión resume periódicamente el historial de conversación, manteniendo solo
+    la información esencial. Mensajes largos de debugging, por ejemplo, se comprimen
+    en una línea que describe el problema y la solución encontrada.
+  </p>
+
+  <h3>Handoffs</h3>
+
+  <p>
+    Los handoffs capturan el estado completo del proyecto en un archivo —tareas completadas,
+    decisiones tomadas, próximos pasos— permitiendo iniciar sesiones frescas sin perder
+    continuidad. Es la técnica más efectiva para sesiones que exceden la ventana de contexto.
+  </p>
+
+  <h3>RTK (Reduce Token Knowledge)</h3>
+
+  <p>
+    RTK se refiere a prácticas conscientes para minimizar el consumo de tokens:
+    respuestas concisas, evitar repetición de contexto ya presente, usar herramientas
+    en lugar de incluir archivos inline, y estructurar el historial para que cada
+    token aporte información útil.
+  </p>
+
+  <h2>Impacto en la práctica</h2>
+
+  <p>
+    Combinando estas estrategias, se puede multiplicar la duración efectiva de una sesión
+    de coding. Una sesión que normalmente agotaría 200K tokens en 30 turnos puede
+    extenderse a 100+ turnos con handoffs, compresión y uso eficiente de herramientas.
+  </p>
+
+  <p>
+    La clave no es tener más contexto — es usar mejor el que ya tenemos.
+  </p>
+
+  <style>
+    .post-callout {
+      margin: 1.5rem 0;
+      padding: 1rem 1.25rem;
+      border-left: 3px solid var(--teal);
+      background: var(--surface);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .post-callout p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+  </style>
+</BlogPost>

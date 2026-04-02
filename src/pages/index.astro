@@ -21,7 +21,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       {
         posts.map((post) => (
           <li>
-            <a href={`${base}/blog/${post.slug}`}>
+            <a href={`${base}/blog/${post.id}`}>
               <span class="post-title">{post.data.title}</span>
               {post.data.subtitle && <span class="post-subtitle">{post.data.subtitle}</span>}
             </a>
