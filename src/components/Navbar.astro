@@ -25,10 +25,7 @@ const links = [
   <div class="navbar-links">
     {
       links.map((link) => (
-        <a
-          href={link.href}
-          class:list={['navbar-link', currentPath === link.href && 'active']}
-        >
+        <a href={link.href} class:list={['navbar-link', currentPath === link.href && 'active']}>
           {link.label}
         </a>
       ))
