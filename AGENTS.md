@@ -244,13 +244,15 @@ Complex tasks should be decomposed into smaller parallel subtasks using a dispat
 
 This project has specialized agents defined in `.opencode/agents/`:
 
-| Agent                | Purpose                                                     |
-| -------------------- | ----------------------------------------------------------- |
-| `@orchestrator`      | Breaks down complex tasks, dispatches to specialized agents |
-| `@component-builder` | Creates React/Astro components following conventions        |
-| `@blog-writer`       | Creates blog posts with SectionNav + panels layout          |
-| `@tester`            | Writes Vitest tests for components and utilities            |
-| `@explore`           | Built-in read-only codebase exploration                     |
+| Agent                | Purpose                                                        |
+| -------------------- | -------------------------------------------------------------- |
+| `@project-leader`    | Takes notes, creates high-level plans, delegates to Plan agent |
+| `@orchestrator`      | Breaks down complex tasks, dispatches to specialized agents    |
+| `@component-builder` | Creates React/Astro components following conventions           |
+| `@blog-writer`       | Creates blog posts with SectionNav + panels layout             |
+| `@tester`            | Writes Vitest tests for components and utilities               |
+| `@explore`           | Built-in read-only codebase exploration                        |
+| `@plan`              | Built-in Plan agent for detailed planning and analysis         |
 
 ### Usage
 
