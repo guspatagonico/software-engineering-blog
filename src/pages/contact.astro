@@ -1,39 +1,25 @@
 ---
-import Base from '@/layouts/Base.astro';
+import Page from '@/layouts/Page.astro';
 ---
 
-<Base title="Contact" description="Get in touch.">
-  <h1>Contact</h1>
-  <p class="subtitle">Get in touch</p>
-
-  <div class="content">
-    <div class="link-grid">
-      <a href="https://github.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
-        <span class="link-label">GitHub</span>
-        <span class="link-value">guspatagonico</span>
-      </a>
-      <a href="https://x.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
-        <span class="link-label">X (Twitter)</span>
-        <span class="link-value">@guspatagonico</span>
-      </a>
-      <a href="https://gustavosalvini.com.ar" class="link-card" target="_blank" rel="noopener">
-        <span class="link-label">Website</span>
-        <span class="link-value">gustavosalvini.com.ar</span>
-      </a>
-    </div>
+<Page title="Contact" subtitle="Get in touch" description="Get in touch.">
+  <div class="link-grid">
+    <a href="https://github.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
+      <span class="link-label">GitHub</span>
+      <span class="link-value">guspatagonico</span>
+    </a>
+    <a href="https://x.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
+      <span class="link-label">X (Twitter)</span>
+      <span class="link-value">@guspatagonico</span>
+    </a>
+    <a href="https://gustavosalvini.com.ar" class="link-card" target="_blank" rel="noopener">
+      <span class="link-label">Website</span>
+      <span class="link-value">gustavosalvini.com.ar</span>
+    </a>
   </div>
-</Base>
+</Page>
 
 <style>
-  .subtitle {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-dim);
-    margin-bottom: 32px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
   .link-grid {
     display: grid;
     gap: 12px;

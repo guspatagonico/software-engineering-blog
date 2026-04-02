@@ -28,3 +28,10 @@ This project uses **git worktrees** for all features and complex work:
 - Never make changes yourself — dispatch only
 - Use the Task tool to spawn subagents for each subtask
 - Keep your response concise (max 4 lines unless user requests detail)
+
+## Reporting
+
+- All results from dispatched subagents must be reported back to the Project Leader agent that called you
+- If any subagent requires user input, that request MUST be passed to the Project Leader agent immediately
+- Never wait for user input yourself — escalate all input requests to the calling agent
+- Report results in a concise summary format that the Project Leader can understand

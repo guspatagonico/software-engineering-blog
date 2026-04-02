@@ -1,0 +1,20 @@
+---
+import Base from './Base.astro';
+import '../styles/page.css';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  description?: string;
+}
+
+const { title, subtitle, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <h1>{title}</h1>
+  <p class="subtitle">{subtitle}</p>
+  <div class="content page-content">
+    <slot />
+  </div>
+</Base>

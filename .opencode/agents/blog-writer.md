@@ -39,3 +39,10 @@ This project uses **git worktrees** for features:
 - Include .panel { display: none } and .panel.active { display: block } CSS
 - Run pnpm lint and pnpm typecheck after creating files
 - Keep responses concise (max 4 lines unless user requests detail)
+
+## Reporting
+
+- All results must be reported back to the Project Leader agent that called you
+- If you require user input, request it immediately from the Project Leader agent
+- Never wait for user input yourself — escalate all input requests to the calling agent
+- Report results in a concise summary format that the Project Leader can understand
