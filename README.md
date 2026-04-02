@@ -29,29 +29,38 @@ This blog explores these ideas through working code, not theory.
 
 ## Tech Stack
 
-| Layer | Choice | Why |
-|-------|--------|-----|
-| Framework | [Astro](https://astro.build) | Islands architecture — ship zero JS by default |
-| Interactivity | [React](https://react.dev) | Only where needed: charts, toggles, forms |
-| Language | TypeScript (strict) | No `any`, no excuses |
-| State | [Zustand](https://github.com/pmndrs/zustand) | Minimal, composable, no boilerplate |
-| Persistence | `localStorage` | Browser-native, no cookies, no server state |
-| Styling | CSS Modules + design tokens | Scoped, predictable, no runtime cost |
-| Content | MDX + Zod schemas | Type-safe frontmatter, component-rich posts |
-| Testing | Vitest + Playwright | Unit speed with e2e confidence |
-| Package manager | pnpm | Fast, disk-efficient, strict |
+| Layer           | Choice                       | Why                                            |
+| --------------- | ---------------------------- | ---------------------------------------------- |
+| Framework       | [Astro](https://astro.build) | Islands architecture — ship zero JS by default |
+| Interactivity   | [React](https://react.dev)   | Only where needed: charts, toggles, forms      |
+| Language        | TypeScript (strict)          | No `any`, no excuses                           |
+| Styling         | CSS + design tokens          | Scoped, predictable, no runtime cost           |
+| Content         | MDX + Zod schemas            | Type-safe frontmatter, component-rich posts    |
+| Testing         | Vitest                       | Unit/component tests                           |
+| Package manager | [pnpm](https://pnpm.io)      | Fast, disk-efficient, strict                   |
 
 ---
 
 ## Quick Start
 
 ```bash
+# Clone and install
+git clone https://github.com/guspatagonico/software-engineering-blog
+cd software-engineering-blog
 pnpm install
-pnpm dev          # → http://localhost:4321
+
+# Development
+pnpm dev          # → http://localhost:4321/software-engineering
+
+# Production build
 pnpm build        # → dist/
+
+# Quality checks
 pnpm lint         # ESLint + Prettier
 pnpm typecheck    # astro check + tsc --noEmit
 ```
+
+> **Note:** This blog runs under the `/software-engineering` base path.
 
 ---
 
@@ -59,17 +68,15 @@ pnpm typecheck    # astro check + tsc --noEmit
 
 ```
 src/
-  components/     # React (.tsx) and Astro (.astro) components
-  layouts/        # Page layouts
-  pages/          # Astro file-based routes
-  content/        # MDX blog posts (content collections)
-  styles/         # Global CSS / design tokens
-  stores/         # Zustand state stores
-  utils/          # Pure helper functions
-  lib/            # External integrations
+├── components/     # React (.tsx) and Astro (.astro) components
+├── layouts/        # Page layouts (Base, Page, BlogPost)
+├── pages/          # Astro file-based routes
+├── content/        # MDX blog posts (content collections)
+├── styles/         # Global CSS / design tokens
+└── types/          # TypeScript type definitions
 ```
 
-Routes: `/about` · `/now` · `/contact` · `/blog` · `/blog/{slug}`
+**Routes:** `/` (homepage with blog posts) · `/about` · `/now` · `/contact` · `/blog/{slug}`
 
 ---
 
@@ -88,8 +95,13 @@ demonstrate. We choose demonstration.
 
 ## Contributing
 
-Conventional commits. Small PRs. `pnpm lint` and `pnpm typecheck` before pushing.
-See [AGENTS.md](AGENTS.md) for the full workflow.
+Pull requests welcome. Before submitting:
+
+1. Run `pnpm lint` and `pnpm typecheck` to ensure code quality
+2. Follow [Conventional Commits](https://www.conventionalcommits.org/) for commit messages
+3. Keep PRs focused and small
+
+See [AGENTS.md](AGENTS.md) for internal development workflow.
 
 ---
 
