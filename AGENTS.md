@@ -47,11 +47,84 @@ No test framework assumed — check `package.json` scripts before running.
 
 | Path           | Type          | Notes                                         |
 | -------------- | ------------- | --------------------------------------------- |
+| `/` (homepage) | Posts loop    | Blog is the homepage — no separate `/blog`    |
 | `/about`       | Static page   |                                               |
 | `/now`         | Static page   |                                               |
 | `/contact`     | Static + form | Links to github, x.com, gustavosalvini.com.ar |
-| `/blog`        | Posts loop    |                                               |
-| `/blog/{slug}` | Single post   | MDX content + React islands                   |
+| `/blog/{slug}` | Single post   | Standalone `.astro` files with section nav    |
+
+### Blog post layout convention
+
+Every blog post **must** follow this structure:
+
+```astro
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+import SectionNav from '../../components/SectionNav/SectionNav';
+
+const sections = [
+  { id: 'section-one', icon: '◈', label: 'Section One' },
+  { id: 'section-two', icon: '▸', label: 'Section Two' },
+];
+---
+
+<BlogPost title="Post Title" subtitle="Subtitle">
+  <SectionNav client:load sections={sections} />
+
+  <div class="content">
+    <div class="panel active" id="panel-section-one">
+      <h2>Section One</h2>
+      <!-- content -->
+    </div>
+
+    <div class="panel" id="panel-section-two">
+      <h2>Section Two</h2>
+      <!-- content -->
+    </div>
+  </div>
+
+  <style>
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px;
+    }
+    .content p {
+      font-size: 16px;
+    }
+    .content ul,
+    .content ol {
+      font-size: 16px;
+      padding-left: 1.5rem;
+      margin: 0.75rem 0;
+    }
+    .content ul li,
+    .content ol li {
+      font-size: 16px;
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .content h3 {
+      font-size: 14px;
+    }
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+  </style>
+</BlogPost>
+```
+
+Key rules:
+
+- **Always** use `SectionNav` with `client:load` — never raw content without section navigation.
+- First panel gets `class="panel active"`, rest get `class="panel"`.
+- Panel `id` must be `panel-{section.id}` (prefixed with `panel-`).
+- Reuse existing components: `Highlight`, `Card`, `ConvergentEnvelope`, etc.
+- Add a card entry on the homepage (`src/pages/index.astro`) for every new post.
+- Use icons from: `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑` for section nav items.
 
 ### Component structure
 
@@ -62,15 +135,15 @@ src/
   pages/          # Astro routes
   content/        # MDX blog posts (content collections)
   styles/         # global CSS / design tokens
-  stores/         # Zustand stores
   utils/          # pure helper functions
   lib/            # external integrations
 ```
 
 ### State Management
 
-- **Zustand** for React component state.
-- **localStorage** for persistence (dark/light mode toggle, etc.) — no cookies.
+- Prefer **plain Astro components** with inline `<script>` for interactive UI (e.g. theme toggle).
+- Use React (`.tsx`) only when interactivity requires React-specific features (charts, complex state).
+- **localStorage** for persistence (dark/light mode, etc.) — no cookies.
 - Avoid global Astro state; prefer props and content collections.
 
 ---

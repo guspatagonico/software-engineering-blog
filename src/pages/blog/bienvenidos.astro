@@ -1,0 +1,275 @@
+---
+import BlogPost from '../../layouts/BlogPost.astro';
+import Highlight from '../../components/Highlight.astro';
+import Card from '../../components/Card.astro';
+import SectionNav from '../../components/SectionNav/SectionNav';
+
+const sections = [
+  { id: 'intro', icon: '◈', label: 'Intro' },
+  { id: 'quien', icon: '▸', label: 'Quién soy' },
+  { id: 'temas', icon: '▣', label: 'Temas' },
+  { id: 'ia', icon: '◑', label: 'IA y criterio' },
+  { id: 'filosofia', icon: '⊕', label: 'Filosofía' },
+  { id: 'stack', icon: '⬡', label: 'Tech stack' },
+  { id: 'proximos', icon: '→', label: 'Próximos pasos' },
+];
+---
+
+<BlogPost title="Bienvenidos al blog" subtitle="Punto de partida">
+  <SectionNav client:load sections={sections} />
+
+  <div class="content">
+    <!-- INTRO -->
+    <div class="panel active" id="panel-intro">
+      <h2>Punto de partida</h2>
+
+      <p>
+        Hace más de 20 años escribí mi primera línea de código y desde entonces no paré. Pasé por la
+        telemática, el desarrollo web en sus primeras etapas, la consultoría IT, el emprendimiento,
+        y hoy estoy aquí — frente a una ventana de contexto, igual que vos frente a la tuya.
+      </p>
+
+      <p>
+        Este blog nace de una convicción: <strong>compartir conocimiento es un multiplicador</strong
+        >. No un acto de generosidad abstracta — una estrategia. Cuando escribís lo que sabés, lo
+        pensás mejor. Cuando lo publicás, recibís feedback que ningún GPT puede darte.
+      </p>
+    </div>
+
+    <!-- QUIÉN SOY -->
+    <div class="panel" id="panel-quien">
+      <h2>Quién soy</h2>
+
+      <p>
+        Soy <strong>Gustavo Adrián Salvini</strong>, desarrollador de software, consultor IT y
+        fundador de <a href="https://ecimtech.com" target="_blank" rel="noopener">EcimTech</a>.
+        Estudié en la Universidad de Buenos Aires, hablo español (nativo), italiano (C2) e inglés
+        (C2), y tengo un nivel básico de neerlandés y francés — suficiente para pedir café y
+        entender la mitad de una reunión.
+      </p>
+
+      <p>
+        Mi formación incluye desde telemática y redes hasta desarrollo full-stack, arquitectura de
+        software y — más recientemente — inteligencia artificial aplicada. No vengo de un solo
+        mundo: vengo de varios, y eso se nota en cómo encaro los problemas.
+      </p>
+    </div>
+
+    <!-- TEMAS -->
+    <div class="panel" id="panel-temas">
+      <h2>De qué va este blog</h2>
+
+      <p>
+        La frase que define este espacio es: <em
+          >"Where systems thinking meets applied intelligence."</em
+        > No es marketing — es cómo trabajo. Creo que el desarrollo de software es un proceso de ingeniería,
+        no un ejercicio creativo. Las decisiones se toman con restricciones, no con inspiración.
+      </p>
+
+      <div class="topics-grid">
+        <Card title="Desarrollo Agéntico">
+          <p>
+            Orquestación de flujos de trabajo multi-agente, arquitecturas de sub-agentes, harness
+            frameworks y presupuesto de contexto. Cómo construir sistemas donde las IAs trabajan
+            como un equipo, no como oráculos individuales.
+          </p>
+        </Card>
+
+        <Card title="Ingeniería de Contexto LLM">
+          <p>
+            Ventanas de contexto, estrategias de compactación, handoffs, y los límites matemáticos
+            de los mecanismos de atención. Por qué más contexto no siempre es mejor.
+          </p>
+        </Card>
+
+        <Card title="Arquitectura de Software">
+          <p>
+            Sistemas escalables, diseño basado en componentes, gestión de estado a escala. Patrones
+            que funcionan en producción, no solo en slides.
+          </p>
+        </Card>
+
+        <Card title="IA aplicada">
+          <p>
+            Integración de OpenAI, Anthropic, Google Gemini y modelos open-source. RAG, búsqueda
+            semántica, despliegue local de LLMs. IA como herramienta, no como buzzword.
+          </p>
+        </Card>
+      </div>
+    </div>
+
+    <!-- IA Y CRITERIO -->
+    <div class="panel" id="panel-ia">
+      <h2>El elefante en la habitación</h2>
+
+      <p>
+        Sí, uso IA para desarrollar. No, no delego el pensamiento. Escribí un artículo titulado
+        <em>"Creating in the Age of AI: Where Is Our Human Pride Going?"</em> justamente por eso. La pregunta
+        no es si la IA puede escribir código — la pregunta es si vos podés evaluar lo que escribe.
+      </p>
+
+      <Highlight>
+        <strong>El pensamiento crítico no se automatiza.</strong> La IA amplifica lo que ya tenés. Si
+        no tenés criterio, amplifica el ruido. Si tenés experiencia, amplifica tu capacidad de entrega.
+      </Highlight>
+
+      <p>
+        En este blog vas a encontrar artículos que usan IA como herramienta de análisis y
+        desarrollo, pero siempre con criterio humano al frente. No hay copy-paste sin contexto. No
+        hay prompts mágicos. Hay ingeniería.
+      </p>
+    </div>
+
+    <!-- FILOSOFÍA -->
+    <div class="panel" id="panel-filosofia">
+      <h2>Filosofía de ingeniería</h2>
+
+      <ul>
+        <li>
+          <strong>Construir, aprender, evolucionar</strong> — compartir conocimiento como multiplicador
+          de crecimiento e innovación colectiva
+        </li>
+        <li>
+          <strong>Pensamiento sistémico</strong> — tratar el desarrollo de software como un proceso de
+          ingeniería, no un ejercicio creativo
+        </li>
+        <li>
+          <strong>Restricciones sobre instrucciones</strong> — las funciones de barrera estructurales
+          superan a las reglas verbales, tanto en equipos humanos como agénticos
+        </li>
+        <li>
+          <strong>El contexto es finito</strong> — sea humano o máquina, el trabajo efectivo requiere
+          gestionar el recurso escaso de la atención
+        </li>
+      </ul>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="panel" id="panel-stack">
+      <h2>Tech stack</h2>
+
+      <div class="tech-grid">
+        <div class="tech-group">
+          <h3>Frontend</h3>
+          <p>React, Astro, Next.js, TypeScript, Zustand, Mantine, Chakra UI, Radix UI, Tailwind</p>
+        </div>
+        <div class="tech-group">
+          <h3>Backend</h3>
+          <p>Node.js, PHP, REST APIs, GraphQL, MySQL, PostgreSQL, SQLite, Qdrant Vector DB</p>
+        </div>
+        <div class="tech-group">
+          <h3>AI / LLM</h3>
+          <p>OpenAI API, Anthropic Claude, Google Gemini, RAG, Semantic Search</p>
+        </div>
+        <div class="tech-group">
+          <h3>Arquitectura</h3>
+          <p>SSG, SSR, ISR, Design Systems, State Management</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRÓXIMOS PASOS -->
+    <div class="panel" id="panel-proximos">
+      <h2>Qué viene después</h2>
+
+      <p>
+        Ya tenés dos artículos publicados: uno sobre las <a href="/blog/llm-context-limitations"
+          >limitaciones actuales de los LLM</a
+        > (ventana de contexto, Smart Context, fundamentos matemáticos) y una <a
+          href="/blog/harness-engineering">guía de Harness Engineering</a
+        > con sub-agentes y orquestación.
+      </p>
+
+      <p>
+        Viene más. Arquitecturas reales, benchmarks, estrategias de contexto, agentic development en
+        producción. Si te interesa el tema, este es tu lugar.
+      </p>
+
+      <p class="closing">— Gus</p>
+    </div>
+  </div>
+
+  <style>
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px;
+    }
+
+    .content p {
+      font-size: 16px;
+      margin-bottom: 1rem;
+    }
+
+    .content ul,
+    .content ol {
+      font-size: 16px;
+      padding-left: 1.5rem;
+      margin: 0.75rem 0;
+    }
+
+    .content ul li,
+    .content ol li {
+      font-size: 16px;
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+
+    .content h3 {
+      font-size: 14px;
+    }
+
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .topics-grid p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .tech-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 14px 16px;
+    }
+
+    .tech-group h3 {
+      margin: 0 0 6px;
+      font-size: 11px;
+    }
+
+    .tech-group p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    .closing {
+      font-style: italic;
+      color: var(--text-dim);
+      margin-top: 32px;
+    }
+  </style>
+</BlogPost>

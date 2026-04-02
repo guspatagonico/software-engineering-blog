@@ -5,92 +5,132 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
 ---
 
 <Base
   title="Software Engineering Blog"
   description="Where systems thinking meets applied intelligence."
 >
-  <h1>Software Engineering Blog</h1>
   <p class="tagline">Where systems thinking meets applied intelligence.</p>
 
-  <section class="posts">
-    <h2 class="section-title">Latest Posts</h2>
-    <ul class="post-list">
-      {
-        posts.map((post) => (
-          <li>
-            <a href={`${base}/blog/${post.id}`}>
-              <span class="post-title">{post.data.title}</span>
-              {post.data.subtitle && <span class="post-subtitle">{post.data.subtitle}</span>}
-            </a>
-          </li>
-        ))
-      }
-      <li>
-        <a href={`${base}/blog/harness-engineering`}>
-          <span class="post-title">Harness Engineering</span>
-          <span class="post-subtitle">Guía práctica · OpenCode + Sub-agentes</span>
+  <div class="post-list">
+    <a href={`${base}/blog/llm-context-limitations`} class="post-card">
+      <div class="post-meta">
+        <span class="post-date">Apr 1, 2026</span>
+        <span class="post-tag">llm</span>
+        <span class="post-tag">context</span>
+      </div>
+      <h2 class="post-title">Limitaciones de los LLM en la actualidad</h2>
+      <p class="post-desc">Ventana de contexto, Smart Context y estrategias para ahorrar tokens</p>
+    </a>
+
+    <a href={`${base}/blog/harness-engineering`} class="post-card">
+      <div class="post-meta">
+        <span class="post-tag">guide</span>
+      </div>
+      <h2 class="post-title">Harness Engineering</h2>
+      <p class="post-desc">Guía práctica · OpenCode + Sub-agentes</p>
+    </a>
+
+    <a href={`${base}/blog/bienvenidos`} class="post-card">
+      <div class="post-meta">
+        <span class="post-date">Apr 2, 2026</span>
+        <span class="post-tag">meta</span>
+      </div>
+      <h2 class="post-title">Bienvenidos al blog</h2>
+      <p class="post-desc">Punto de partida · De qué va este espacio</p>
+    </a>
+
+    {
+      posts.map((post) => (
+        <a href={`${base}/blog/${post.id}`} class="post-card">
+          <div class="post-meta">
+            <span class="post-date">{formatDate(post.data.pubDate)}</span>
+            {post.data.tags.map((tag) => (
+              <span class="post-tag">{tag}</span>
+            ))}
+          </div>
+          <h2 class="post-title">{post.data.title}</h2>
+          {post.data.description && <p class="post-desc">{post.data.description}</p>}
         </a>
-      </li>
-    </ul>
-  </section>
+      ))
+    }
+  </div>
 </Base>
 
 <style>
   .tagline {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 600;
     color: var(--text-dim);
-    margin-bottom: 40px;
-  }
-
-  .section-title {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--teal);
-    letter-spacing: 2.5px;
+    margin-bottom: 32px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 16px;
   }
 
   .post-list {
-    list-style: none;
-    padding: 0;
-  }
-
-  .post-list li {
-    border-bottom: 1px solid rgba(30, 45, 69, 0.5);
-  }
-
-  .post-list li:last-child {
-    border-bottom: none;
-  }
-
-  .post-list a {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: 14px 0;
-    transition: color 0.15s;
+    gap: 12px;
   }
 
-  .post-list a:hover {
+  .post-card {
+    display: block;
+    padding: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    transition: border-color 0.15s;
+  }
+
+  .post-card:hover {
+    border-color: var(--teal);
     text-decoration: none;
   }
 
-  .post-list a:hover .post-title {
+  .post-meta {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+  }
+
+  .post-date {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .post-tag {
+    font-size: 9px;
+    font-weight: 700;
     color: var(--teal);
+    background: rgba(0, 212, 170, 0.1);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 
   .post-title {
     font-size: 16px;
     font-weight: 600;
     color: var(--text-bright);
+    margin-bottom: 4px;
   }
 
-  .post-subtitle {
-    font-size: 12px;
+  .post-desc {
+    font-size: 13px;
     color: var(--text-dim);
+    line-height: 1.5;
   }
 </style>

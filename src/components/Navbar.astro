@@ -1,5 +1,5 @@
 ---
-import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
+import ThemeToggle from '@/components/ThemeToggle.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -10,7 +10,6 @@ interface Props {
 const { currentPath } = Astro.props;
 
 const links = [
-  { href: `${base}/blog`, label: 'Blog' },
   { href: `${base}/about`, label: 'About' },
   { href: `${base}/now`, label: 'Now' },
   { href: `${base}/contact`, label: 'Contact' },
@@ -30,7 +29,7 @@ const links = [
         </a>
       ))
     }
-    <ThemeToggle client:only="react" />
+    <ThemeToggle />
   </div>
 </nav>
 
@@ -39,7 +38,8 @@ const links = [
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 28px;
+    height: 48px;
+    padding: 0 28px;
     border-bottom: 1px solid var(--border);
     background: var(--surface);
   }
