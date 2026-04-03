@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/page.css';
 import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
 import Head from '@/components/Head/Head.astro';
 
 interface Props {
@@ -21,11 +22,18 @@ const { title, description } = Astro.props;
     <main class="main-content">
       <slot />
     </main>
+    <Footer />
   </body>
 </html>
 
 <style>
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
   .main-content {
+    flex: 1;
     padding: 32px;
     max-width: 720px;
   }

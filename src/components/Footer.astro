@@ -1,0 +1,103 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<footer class="footer">
+  <div class="author">
+    <span class="author-name">Gustavo Adri&aacute;n Salvini</span>
+  </div>
+
+  <div class="contact-links">
+    <a href="https://github.com/guspatagonico" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="GitHub">
+      <span class="icon">GH</span>
+    </a>
+    <a href="https://x.com/guspatagonico" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="X">
+      <span class="icon">𝕏</span>
+    </a>
+    <a href="https://gustavosalvini.com.ar" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Website">
+      <span class="icon">◉</span>
+    </a>
+  </div>
+
+  <nav class="nav-links">
+    <a href={`${base}/about`}>About</a>
+    <a href={`${base}/now`}>Now</a>
+    <a href={`${base}/contact`}>Contact</a>
+  </nav>
+</footer>
+
+<style>
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 16px;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .author {
+    color: var(--text-dim);
+  }
+
+  .author-name {
+    color: var(--text-bright);
+    font-weight: 600;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-size: 11px;
+    font-weight: 600;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .contact-link:hover {
+    color: var(--teal);
+    border-color: var(--teal);
+    text-decoration: none;
+  }
+
+  .icon {
+    line-height: 1;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .nav-links a {
+    color: var(--text-dim);
+    font-size: 13px;
+    transition: color 0.2s ease;
+  }
+
+  .nav-links a:hover {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  @media (min-width: 640px) {
+    .footer {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 16px 24px;
+    }
+  }
+</style>

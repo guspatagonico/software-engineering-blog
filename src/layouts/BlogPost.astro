@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import Navbar from '@/components/Navbar.astro';
+import Footer from '@/components/Footer.astro';
 import Head from '@/components/Head/Head.astro';
 
 interface Props {
@@ -24,10 +25,17 @@ const { title, subtitle } = Astro.props;
     <div class="post-layout">
       <slot />
     </div>
+    <Footer />
   </body>
 </html>
 
 <style>
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
   .post-header {
     padding: 20px 28px 16px;
     border-bottom: 1px solid var(--border);
@@ -53,8 +61,8 @@ const { title, subtitle } = Astro.props;
   }
 
   .post-layout {
-    display: flex;
     flex: 1;
+    display: flex;
     min-height: 0;
   }
 </style>

@@ -17,3 +17,11 @@ const { title, subtitle, description } = Astro.props;
     <slot />
   </div>
 </Base>
+
+<style>
+  :global(body) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>
