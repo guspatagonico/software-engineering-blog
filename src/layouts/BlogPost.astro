@@ -3,18 +3,30 @@ import '../styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
 import Head from '@/components/Head/Head.astro';
+import { getPost } from '@/data/posts';
 
 interface Props {
   title: string;
   subtitle?: string;
+  description?: string;
 }
 
-const { title, subtitle } = Astro.props;
+const { title, subtitle, description } = Astro.props;
+
+// Try to get description from posts.ts if not provided as prop
+const postId = Astro.url.pathname.split('/').pop();
+const post = postId ? getPost(postId) : undefined;
+const finalDescription = description ?? post?.description;
 ---
 
 <html lang="en">
   <head>
-    <Head title={title} />
+    <Head
+      title={title}
+      description={finalDescription}
+      type="article"
+      publishedTime={post?.pubDate}
+    />
   </head>
   <body>
     <Navbar />
