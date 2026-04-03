@@ -3,54 +3,21 @@ import Page from '@/layouts/Page.astro';
 ---
 
 <Page title="Contact" subtitle="Get in touch" description="Get in touch.">
-  <div class="link-grid">
+  <div class="grid">
     <a href="https://github.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
-      <span class="link-label">GitHub</span>
-      <span class="link-value">guspatagonico</span>
+      <span class="card-label card-label-lg">GitHub</span>
+      <span class="card-value card-value-bright">guspatagonico</span>
     </a>
     <a href="https://x.com/guspatagonico" class="link-card" target="_blank" rel="noopener">
-      <span class="link-label">X (Twitter)</span>
-      <span class="link-value">@guspatagonico</span>
+      <span class="card-label card-label-lg">X (Twitter)</span>
+      <span class="card-value card-value-bright">@guspatagonico</span>
     </a>
     <a href="https://gustavosalvini.com.ar" class="link-card" target="_blank" rel="noopener">
-      <span class="link-label">Website</span>
-      <span class="link-value">gustavosalvini.com.ar</span>
+      <span class="card-label card-label-lg">Website</span>
+      <span class="card-value card-value-bright">gustavosalvini.com.ar</span>
     </a>
   </div>
 </Page>
 
 <style>
-  .link-grid {
-    display: grid;
-    gap: 12px;
-  }
-
-  .link-card {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 16px 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    transition: border-color 0.15s;
-  }
-
-  .link-card:hover {
-    border-color: var(--teal);
-    text-decoration: none;
-  }
-
-  .link-label {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--teal);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-  }
-
-  .link-value {
-    font-size: 14px;
-    color: var(--text-bright);
-  }
 </style>

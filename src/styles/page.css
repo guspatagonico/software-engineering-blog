@@ -10,7 +10,7 @@
 }
 
 .page-content {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.8;
   color: var(--text);
 }
@@ -20,15 +20,156 @@
   margin-bottom: 12px;
 }
 
+.page-content h3 {
+  font-size: 14px;
+}
+
 .page-content p {
   margin-bottom: 16px;
 }
 
-.page-content ul {
-  margin-bottom: 16px;
+.page-content ul,
+.page-content ol {
+  font-size: 16px;
   padding-left: 24px;
+  margin-bottom: 16px;
 }
 
-.page-content li {
+.page-content ul li,
+.page-content ol li {
+  font-size: 16px;
   margin-bottom: 6px;
+  line-height: 1.6;
+}
+
+/* Note */
+.note {
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.grid-2col {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Card */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 14px 16px;
+}
+
+.card-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.card-label-lg {
+  font-size: 12px;
+}
+
+.card-value {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.card-value-bright {
+  color: var(--text-bright);
+  font-size: 14px;
+}
+
+/* Link Card */
+.link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  transition: border-color 0.15s;
+}
+
+.link-card:hover {
+  border-color: var(--teal);
+  text-decoration: none;
+}
+
+/* Tagline */
+.tagline {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Post List */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.post-card {
+  display: block;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  transition: border-color 0.15s;
+}
+
+.post-card:hover {
+  border-color: var(--teal);
+  text-decoration: none;
+}
+
+.post-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.post-date {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.post-tag {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--teal);
+  background: rgba(0, 212, 170, 0.1);
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.post-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-bright);
+  margin-bottom: 4px;
+}
+
+.post-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
 }

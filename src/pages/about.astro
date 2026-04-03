@@ -91,25 +91,25 @@ import Page from '@/layouts/Page.astro';
   </ul>
 
   <h2>Tech Stack</h2>
-  <div class="tech-grid">
-    <div class="tech-group">
-      <h3>Frontend</h3>
-      <p>React, Astro, Next.js, TypeScript, Zustand, Mantine, Chakra UI, Radix UI, Tailwind</p>
+  <div class="grid grid-2col">
+    <div class="card">
+      <p class="card-label">Frontend</p>
+      <p class="card-value">React, Astro, Next.js, TypeScript, Zustand, Mantine, Chakra UI, Radix UI, Tailwind</p>
     </div>
-    <div class="tech-group">
-      <h3>Backend</h3>
-      <p>
+    <div class="card">
+      <p class="card-label">Backend</p>
+      <p class="card-value">
         Node.js, PHP, REST APIs, GraphQL, MySQL, PostgreSQL, SQLite, Qdrant Vector DB, Headless
         CMS, Serverless
       </p>
     </div>
-    <div class="tech-group">
-      <h3>AI / LLM</h3>
-      <p>OpenAI API, Anthropic Claude, Google Gemini, RAG, Semantic Search</p>
+    <div class="card">
+      <p class="card-label">AI / LLM</p>
+      <p class="card-value">OpenAI API, Anthropic Claude, Google Gemini, RAG, Semantic Search</p>
     </div>
-    <div class="tech-group">
-      <h3>Architecture</h3>
-      <p>SSG, SSR, ISR, Component Design Systems, State Management</p>
+    <div class="card">
+      <p class="card-label">Architecture</p>
+      <p class="card-value">SSG, SSR, ISR, Component Design Systems, State Management</p>
     </div>
   </div>
 
@@ -136,28 +136,4 @@ import Page from '@/layouts/Page.astro';
 </Page>
 
 <style>
-  .tech-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  .tech-group {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 14px 16px;
-  }
-
-  .tech-group h3 {
-    margin: 0 0 6px;
-    font-size: 11px;
-  }
-
-  .tech-group p {
-    margin: 0;
-    font-size: 13px;
-    color: var(--text-dim);
-  }
 </style>
