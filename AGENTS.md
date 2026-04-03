@@ -227,6 +227,7 @@ feature directory.
 - Do not remove/modify the `server` block in `vite.config.ts` (`host: '0.0.0.0'`,
   `allowedHosts: ['galadriel']`) — LAN dev convenience, must be preserved.
 - **Never** commit and push until the user explicitly asks to do so.
+- Use **GitHub CLI (`gh`)** for PR creation, issue management, and repo operations.
 
 ---
 

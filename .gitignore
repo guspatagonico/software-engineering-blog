@@ -42,6 +42,9 @@ pnpm-debug.log*
 .cache/
 .parcel-cache/
 
+# Git worktrees
+.worktrees/
+
 # Agents
 opencode.json
 opencode.jsonc
