@@ -8,14 +8,15 @@ import Head from '@/components/Head/Head.astro';
 interface Props {
   title: string;
   description?: string;
+  isHome?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, isHome = false } = Astro.props;
 ---
 
 <html lang="en">
   <head>
-    <Head title={title} description={description} />
+    <Head title={title} description={description} isHome={isHome} />
   </head>
   <body>
     <Navbar />

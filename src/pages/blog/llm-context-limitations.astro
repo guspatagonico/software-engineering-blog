@@ -2,6 +2,7 @@
 import BlogPost from '../../layouts/BlogPost.astro';
 import ContextWindowChart from '../../components/ContextWindowChart/ContextWindowChart';
 import SectionNav from '../../components/SectionNav/SectionNav';
+import '../../styles/post-content.css';
 
 const sections = [
   { id: 'problema', icon: '◈', label: 'Problema' },
@@ -280,43 +281,6 @@ const contextModels = [
   </div>
 
   <style>
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px 32px;
-    }
-
-    .content p {
-      font-size: 16px;
-      margin-bottom: 1rem;
-    }
-
-    .content ul,
-    .content ol {
-      font-size: 16px;
-      padding-left: 1.5rem;
-      margin: 0.75rem 0;
-    }
-
-    .content ul li,
-    .content ol li {
-      font-size: 16px;
-      margin-bottom: 0.4rem;
-      line-height: 1.6;
-    }
-
-    .content h3 {
-      font-size: 14px;
-    }
-
-    .panel {
-      display: none;
-    }
-
-    .panel.active {
-      display: block;
-    }
-
     .post-callout {
       margin: 1.5rem 0;
       padding: 1rem 1.25rem;

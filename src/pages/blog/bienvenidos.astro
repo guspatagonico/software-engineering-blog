@@ -194,6 +194,14 @@ const sections = [
       flex: 1;
       overflow-y: auto;
       padding: 28px 32px;
+      max-width: 100%;
+    }
+
+    /* Reader-friendly max line width on large screens */
+    @media (min-width: 1024px) {
+      .content {
+        max-width: 680px;
+      }
     }
 
     .content p {
@@ -217,10 +225,6 @@ const sections = [
 
     .content h3 {
       font-size: 14px;
-    }
-
-    .panel {
-      display: none;
     }
 
     .panel.active {
