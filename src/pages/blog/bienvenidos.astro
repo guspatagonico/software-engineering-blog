@@ -3,6 +3,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
 import SectionNav from '../../components/SectionNav/SectionNav';
+import '../../styles/post-content.css';
 
 const sections = [
   { id: 'intro', icon: '◈', label: 'Intro' },
@@ -66,7 +67,7 @@ const sections = [
         no un ejercicio creativo. Las decisiones se toman con restricciones, no con inspiración.
       </p>
 
-      <div class="topics-grid">
+      <div class="post-grid">
         <Card title="Desarrollo Agéntico">
           <p>
             Orquestación de flujos de trabajo multi-agente, arquitecturas de sub-agentes, harness
@@ -148,23 +149,22 @@ const sections = [
     <div class="panel" id="panel-stack">
       <h2>Tech stack</h2>
 
-      <div class="tech-grid">
-        <div class="tech-group">
-          <h3>Frontend</h3>
+      <div class="post-grid">
+        <Card title="Frontend">
           <p>React, Astro, Next.js, TypeScript, Zustand, Mantine, Chakra UI, Radix UI, Tailwind</p>
-        </div>
-        <div class="tech-group">
-          <h3>Backend</h3>
+        </Card>
+
+        <Card title="Backend">
           <p>Node.js, PHP, REST APIs, GraphQL, MySQL, PostgreSQL, SQLite, Qdrant Vector DB</p>
-        </div>
-        <div class="tech-group">
-          <h3>AI / LLM</h3>
+        </Card>
+
+        <Card title="AI / LLM">
           <p>OpenAI API, Anthropic Claude, Google Gemini, RAG, Semantic Search</p>
-        </div>
-        <div class="tech-group">
-          <h3>Arquitectura</h3>
+        </Card>
+
+        <Card title="Arquitectura">
           <p>SSG, SSR, ISR, Design Systems, State Management</p>
-        </div>
+        </Card>
       </div>
     </div>
 
@@ -225,45 +225,6 @@ const sections = [
 
     .panel.active {
       display: block;
-    }
-
-    .topics-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .topics-grid p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--text-dim);
-      line-height: 1.6;
-    }
-
-    .tech-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .tech-group {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 14px 16px;
-    }
-
-    .tech-group h3 {
-      margin: 0 0 6px;
-      font-size: 11px;
-    }
-
-    .tech-group p {
-      margin: 0;
-      font-size: 13px;
-      color: var(--text-dim);
     }
 
     .closing {

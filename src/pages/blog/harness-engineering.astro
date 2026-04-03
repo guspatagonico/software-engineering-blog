@@ -6,6 +6,7 @@ import ConvergentEnvelope from '../../components/ConvergentEnvelope/ConvergentEn
 import SectionNav from '../../components/SectionNav/SectionNav';
 import ProjectTabs from '../../components/ProjectTabs/ProjectTabs';
 import Checklist from '../../components/Checklist/Checklist';
+import '../../styles/post-content.css';
 
 const sections = [
   { id: 'mental-model', icon: '◈', label: 'Modelo mental' },
@@ -163,19 +164,21 @@ const checklistSections = [
       </Highlight>
 
       <h3>Dos conceptos formales que fundamentan la metáfora</h3>
-      <Card title="Barrier Functions (CBF)">
-        No solo definís adónde querés llegar — definís regiones prohibidas con "paredes repulsivas".
-        El agente recibe señal de que se está alejando <em>antes</em> de romper algo. En el harness: los
-        MCPs con paths restringidos son barrier functions estructurales, no instruccionales.
-      </Card>
-      <Card title="Funciones de Lyapunov">
-        Una función que decrece monótonamente a lo largo de cualquier trayectoria del sistema prueba
-        la convergencia. En harness: cada intervención del orquestador debe reducir la distancia al
-        objetivo. Si no la reduce, el feedback loop está roto.
-      </Card>
+      <div class="card-stack">
+        <Card title="Barrier Functions (CBF)">
+          No solo definís adónde querés llegar — definís regiones prohibidas con "paredes
+          repulsivas". El agente recibe señal de que se está alejando <em>antes</em> de romper algo. En
+          el harness: los MCPs con paths restringidos son barrier functions estructurales, no instruccionales.
+        </Card>
+        <Card title="Funciones de Lyapunov">
+          Una función que decrece monótonamente a lo largo de cualquier trayectoria del sistema
+          prueba la convergencia. En harness: cada intervención del orquestador debe reducir la
+          distancia al objetivo. Si no la reduce, el feedback loop está roto.
+        </Card>
+      </div>
 
       <h3>Entropía vs. convergencia</h3>
-      <div class="two-col">
+      <div class="post-grid">
         <Card title="Entropía (harness roto)" variant="danger">
           Decisiones individualmente razonables que acumulan desviación. El context window se llena
           de ruido, las herramientas proliferan sin estructura, los sub-agentes optimizan localmente
@@ -200,7 +203,7 @@ const checklistSections = [
       </Highlight>
 
       <h3>Anatomía de un sub-agente bien diseñado</h3>
-      <div class="two-col">
+      <div class="post-grid">
         <Card title="Artefacto de salida"
           >Un único tipo: CSS, PHP, SQL, Markdown — nunca mezclados.</Card
         >
@@ -322,16 +325,18 @@ la spec completa del proyecto.</span></pre>
       </div>
 
       <h3>Condiciones para paralelizar (las tres deben cumplirse)</h3>
-      <Card title="1"
-        >Los sub-agentes <strong class="teal">no escriben al mismo archivo</strong></Card
-      >
-      <Card title="2"
-        >Sus outputs son <strong class="teal">independientes</strong> en esta fase (no se alimentan entre
-        sí)</Card
-      >
-      <Card title="3"
-        >El orquestador puede <strong class="teal">validar cada output aisladamente</strong></Card
-      >
+      <div class="card-stack">
+        <Card title="1"
+          >Los sub-agentes <strong class="teal">no escriben al mismo archivo</strong></Card
+        >
+        <Card title="2"
+          >Sus outputs son <strong class="teal">independientes</strong> en esta fase (no se alimentan
+          entre sí)</Card
+        >
+        <Card title="3"
+          >El orquestador puede <strong class="teal">validar cada output aisladamente</strong></Card
+        >
+      </div>
 
       <h3>Señales de drift</h3>
       <table class="drift-table">
@@ -380,7 +385,7 @@ la spec completa del proyecto.</span></pre>
       </Highlight>
 
       <h3>Constraint instruccional vs. estructural</h3>
-      <div class="two-col">
+      <div class="post-grid">
         <Card title="Instruccional (débil)" variant="danger">
           "No toques los archivos PHP." El agente puede ignorarla, especialmente bajo drift o cuando
           el contexto es ambiguo.
@@ -546,12 +551,6 @@ la spec completa del proyecto.</span></pre>
     margin-bottom: 28px;
     letter-spacing: 2px;
     text-transform: uppercase;
-  }
-
-  .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
   }
 
   .funnel-container {

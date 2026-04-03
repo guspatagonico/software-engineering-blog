@@ -65,4 +65,39 @@ const { title, subtitle } = Astro.props;
     display: flex;
     min-height: 0;
   }
+
+  /* Responsive */
+  @media (max-width: 767px) {
+    .post-header {
+      padding: 16px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .post-header h1 {
+      font-size: 16px;
+    }
+
+    .post-subtitle {
+      font-size: 10px;
+    }
+
+    .post-layout {
+      flex-direction: column;
+    }
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .post-header {
+      padding: 18px 20px;
+    }
+
+    .post-header h1 {
+      font-size: 17px;
+    }
+
+    .post-layout {
+      flex-direction: column;
+    }
+  }
 </style>

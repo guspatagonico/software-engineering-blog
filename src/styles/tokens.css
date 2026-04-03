@@ -10,6 +10,10 @@
   --text-dim: #7387a6;
   --text-bright: #e8f0ff;
   --font: 'Inter', system-ui, sans-serif;
+
+  /* Responsive breakpoints */
+  --bp-tablet: 768px;
+  --bp-desktop: 1024px;
 }
 
 [data-theme='light'] {
