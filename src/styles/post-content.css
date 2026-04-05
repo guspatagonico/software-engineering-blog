@@ -73,3 +73,31 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Table styles */
+.content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  margin: 1rem 0;
+}
+
+.content table th,
+.content table td {
+  padding: 8px 12px;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+.content table th {
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.content table td {
+  background: var(--bg);
+}
+
+.content table tr:nth-child(even) td {
+  background: var(--surface);
+}

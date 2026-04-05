@@ -21,10 +21,10 @@ const {
 
 const siteUrl = Astro.site ? Astro.site.origin : '';
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-const siteName = 'Software Engineering Blog';
+const siteName = 'SE Blog';
 const fullTitle = isHome
-  ? 'The Software Engineering Blog | Gustavo Adrián Salvini'
-  : `${title} | The Software Engineering Blog | Gustavo Adrián Salvini`;
+  ? 'The SE Blog | Gustavo Adrián Salvini'
+  : `${title} | The SE Blog | Gustavo Adrián Salvini`;
 ---
 
 <meta charset="utf-8" />
@@ -54,10 +54,17 @@ const fullTitle = isHome
 }
 {type === 'article' && author && <meta property="article:author" content={author} />}
 
-<!-- Fonts -->
+<!-- Fonts preload -->
 <link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+  rel="preload"
+  href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
   rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
 />
 
 <!-- Theme initialization -->
