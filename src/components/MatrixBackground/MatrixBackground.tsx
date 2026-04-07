@@ -38,6 +38,20 @@ const GEM_WORDS = [
   'dennis ritchie',
   'brian kernighan',
   'linus torvalds',
+  'psy',
+  'la plata',
+  'nico',
+  'luca',
+  'lucila',
+  'cecilia',
+  'luciano',
+  'julia',
+  'italia',
+  'msx',
+  'spectrum',
+  'commodore',
+  'alejo simon',
+  'carpinchos',
 ];
 
 // Layer configuration - each layer has different depth characteristics (40% larger sizes)
@@ -51,6 +65,8 @@ const LAYERS = [
 
 const STREAM_MIN_LENGTH = 15;
 const STREAM_MAX_LENGTH = 35;
+const STREAM_MIN_LENGTH_MOBILE = 8;
+const STREAM_MAX_LENGTH_MOBILE = 18;
 const MOUSE_RADIUS = 200;
 const CHAR_CHANGE_RATE = 0.3; // Lower for more streams
 const CHAR_CHANGE_COUNT = 2; // Fewer changes
@@ -132,10 +148,16 @@ function generateChar(): string {
   return LATIN_CHARS[Math.floor(Math.random() * LATIN_CHARS.length)];
 }
 
-function generateStream(layerIndex: number, canvasWidth: number, startY: number): Stream {
+function generateStream(
+  layerIndex: number,
+  canvasWidth: number,
+  startY: number,
+  isMobile: boolean = false
+): Stream {
   const layer = LAYERS[layerIndex];
-  const streamLength =
-    STREAM_MIN_LENGTH + Math.floor(Math.random() * (STREAM_MAX_LENGTH - STREAM_MIN_LENGTH));
+  const minLen = isMobile ? STREAM_MIN_LENGTH_MOBILE : STREAM_MIN_LENGTH;
+  const maxLen = isMobile ? STREAM_MAX_LENGTH_MOBILE : STREAM_MAX_LENGTH;
+  const streamLength = minLen + Math.floor(Math.random() * (maxLen - minLen));
   const chars: string[] = [];
   const brightness: number[] = [];
 
@@ -174,6 +196,7 @@ export default function MatrixBackground() {
   const animationRef = useRef<number>(0);
   const observerRef = useRef<MutationObserver | null>(null);
   const themeRef = useRef<string>('dark');
+  const isMobileRef = useRef<boolean>(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -197,7 +220,11 @@ export default function MatrixBackground() {
 
     const initStreams = () => {
       streamsRef.current = [];
-      const totalColumns = 180; // More streams for density
+      // Different stream counts for mobile/tablet/desktop
+      const width = window.innerWidth;
+      isMobileRef.current = width < 768;
+      const isTablet = width >= 768 && width < 1024;
+      const totalColumns = isMobileRef.current ? 60 : isTablet ? 180 : 220;
 
       for (let i = 0; i < totalColumns; i++) {
         // Distribute across layers (more in background, fewer in foreground)
@@ -216,7 +243,8 @@ export default function MatrixBackground() {
         const stream = generateStream(
           layerIndex,
           canvas.width,
-          Math.random() * canvas.height * 1.5 - canvas.height * 0.5
+          Math.random() * canvas.height * 1.5 - canvas.height * 0.5,
+          isMobileRef.current
         );
         stream.x = (i / totalColumns) * canvas.width + Math.random() * 10;
         streamsRef.current.push(stream);
@@ -433,8 +461,10 @@ export default function MatrixBackground() {
           stream.x = Math.random() * canvas.width;
 
           // Regenerate stream
-          stream.streamLength =
-            STREAM_MIN_LENGTH + Math.floor(Math.random() * (STREAM_MAX_LENGTH - STREAM_MIN_LENGTH));
+          const isMobileNow = canvas.width < 768;
+          const minLen = isMobileNow ? STREAM_MIN_LENGTH_MOBILE : STREAM_MIN_LENGTH;
+          const maxLen = isMobileNow ? STREAM_MAX_LENGTH_MOBILE : STREAM_MAX_LENGTH;
+          stream.streamLength = minLen + Math.floor(Math.random() * (maxLen - minLen));
           stream.chars = [];
           stream.brightness = [];
           for (let j = 0; j < stream.streamLength; j++) {
