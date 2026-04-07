@@ -1,12 +1,14 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import * as THREE from 'three';
 
 interface DodecahedronProps {
   className?: string;
+  autoHideOnScroll?: boolean;
 }
 
-export default function Dodecahedron({ className }: DodecahedronProps) {
+export default function Dodecahedron({ className, autoHideOnScroll = false }: DodecahedronProps) {
   const containerRef = useRef<HTMLButtonElement>(null);
+  const [isHidden, setIsHidden] = useState(false);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const frameIdRef = useRef<number>(0);
@@ -258,6 +260,36 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
     setHovered(false);
   }, [setHovered]);
 
+  useEffect(() => {
+    if (!autoHideOnScroll || !containerRef.current) return;
+
+    let hideTimer: ReturnType<typeof setTimeout>;
+
+    const hide = () => {
+      setIsHidden(true);
+    };
+
+    const show = () => {
+      setIsHidden(false);
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(hide, 2000);
+    };
+
+    show();
+
+    const content = document.querySelector('.content') as HTMLElement | null;
+    if (content) {
+      content.addEventListener('scroll', show, { passive: true });
+    }
+
+    return () => {
+      clearTimeout(hideTimer);
+      if (content) {
+        content.removeEventListener('scroll', show);
+      }
+    };
+  }, [autoHideOnScroll]);
+
   const handleClick = useCallback(() => {
     // Dispatch event to toggle matrix background
     window.dispatchEvent(new CustomEvent('toggle-matrix-background'));
@@ -267,7 +299,7 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
     <button
       ref={containerRef}
       type="button"
-      className={className}
+      className={`${className || ''} ${isHidden ? 'dodecahedron-hidden' : ''}`.trim()}
       aria-label="Toggle Matrix background"
       style={{
         position: 'fixed',

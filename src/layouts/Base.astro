@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/page.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import ScrollIndicator from '@/components/ScrollIndicator.astro';
 import Head from '@/components/Head/Head.astro';
 
 interface Props {
@@ -25,7 +26,6 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
       // Initialize matrix background state from localStorage or default to hidden
       function initMatrixState() {
         if (!document.body) {
-          // Body not ready yet, wait a bit
           setTimeout(initMatrixState, 0);
           return;
         }
@@ -33,31 +33,39 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
         const initialVisible = stored === 'true';
         document.body.classList.toggle('matrix-bg-visible', initialVisible);
         
-        // Listen for toggle event from Dodecahedron
         window.addEventListener('toggle-matrix-background', () => {
           const isVisible = document.body.classList.toggle('matrix-bg-visible');
           localStorage.setItem('matrix-background-visible', String(isVisible));
         });
       }
       
-      // Run immediately and also on DOMContentLoaded for safety
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initMatrixState);
       } else {
         initMatrixState();
       }
     </script>
+    <style is:global>
+      .dodecahedron-hidden {
+        opacity: 0 !important;
+        transition: opacity 0.5s ease !important;
+        pointer-events: none !important;
+      }
+    </style>
   </head>
   <body>
     <div id="matrix-bg-wrapper" style="display: contents;">
       <MatrixBackground client:visible />
     </div>
     <Navbar />
-    <main class="main-content">
-      <slot />
+    <ScrollIndicator targetSelector=".content" />
+    <main class="page-container">
+      <div class="content">
+        <slot />
+      </div>
     </main>
     <Footer />
-    <Dodecahedron client:visible />
+    <Dodecahedron client:visible autoHideOnScroll={!isHome} />
   </body>
 </html>
 
@@ -66,22 +74,39 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    overflow: hidden;
   }
-  .main-content {
+  .page-container {
     flex: 1;
-    padding: 32px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .content {
+    width: 100%;
     max-width: 1024px;
+    padding: 32px;
+    overflow-y: auto;
+    height: 100%;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
   }
 
   /* Responsive */
   @media (max-width: 767px) {
-    .main-content {
+    .content {
       padding: 20px 16px;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
   @media (min-width: 768px) and (max-width: 1023px) {
-    .main-content {
+    .content {
       padding: 24px 20px;
     }
   }

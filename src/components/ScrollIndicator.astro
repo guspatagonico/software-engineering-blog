@@ -1,0 +1,82 @@
+---
+interface Props {
+  targetSelector: string;
+  position?: 'fixed' | 'absolute';
+  top?: string;
+  bottom?: string;
+}
+
+const { 
+  targetSelector, 
+  position = 'fixed', 
+  top = '48px',
+  bottom 
+} = Astro.props;
+
+const style = position === 'fixed' 
+  ? `top: ${top}` 
+  : top 
+    ? `top: ${top}` 
+    : `bottom: ${bottom ?? 0}`;
+---
+
+<div 
+  class="scroll-indicator" 
+  data-target={targetSelector}
+  style={style}
+>
+  <div class="scroll-line"></div>
+</div>
+
+<script>
+  function initScrollIndicator() {
+    const indicator = document.querySelector('.scroll-indicator') as HTMLElement;
+    if (!indicator) return;
+
+    const targetSelector = indicator.dataset.target;
+    const target = targetSelector ? document.querySelector(targetSelector) : document.querySelector('.content');
+
+    if (!target) return;
+
+    const line = indicator.querySelector('.scroll-line') as HTMLElement;
+    if (!line) return;
+
+    function updateProgress() {
+      const targetEl = target as HTMLElement;
+      const scrollTop = targetEl.scrollTop;
+      const scrollHeight = targetEl.scrollHeight - targetEl.clientHeight;
+      
+      if (scrollHeight <= 0) {
+        line.style.width = '0%';
+        return;
+      }
+
+      const progress = (scrollTop / scrollHeight) * 100;
+      line.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+    }
+
+    target.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
+  }
+
+  document.addEventListener('astro:page-load', initScrollIndicator);
+  initScrollIndicator();
+</script>
+
+<style>
+  .scroll-indicator {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 3px;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .scroll-line {
+    height: 100%;
+    width: 0%;
+    background: var(--teal);
+    transition: width 0.1s ease-out;
+  }
+</style>

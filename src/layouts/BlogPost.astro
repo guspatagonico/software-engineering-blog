@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import ScrollIndicator from '@/components/ScrollIndicator.astro';
 import Head from '@/components/Head/Head.astro';
 import { getPost } from '@/data/posts';
 
@@ -30,6 +31,7 @@ const finalDescription = description ?? post?.description;
   </head>
   <body>
     <Navbar />
+    <ScrollIndicator targetSelector=".content" position="fixed" top="48px" />
     <header class="post-header">
       <h1>{title}</h1>
       {subtitle && <span class="post-subtitle">{subtitle}</span>}
@@ -55,6 +57,8 @@ const finalDescription = description ?? post?.description;
     align-items: baseline;
     gap: 16px;
     background: var(--surface);
+    position: relative;
+    overflow: visible;
   }
 
   .post-header h1 {
@@ -76,6 +80,13 @@ const finalDescription = description ?? post?.description;
     flex: 1;
     display: flex;
     min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .post-layout::-webkit-scrollbar {
+    display: none;
   }
 
   /* Responsive */
