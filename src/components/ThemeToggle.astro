@@ -3,13 +3,32 @@
 ---
 
 <button type="button" class="theme-toggle" aria-label="Toggle theme">
-  <span class="theme-icon"></span>
+  <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <defs>
+      <style>
+        .icon-sun { display: none; }
+        .icon-moon { display: block; }
+        :root[data-theme="light"] .icon-sun { display: block; }
+        :root[data-theme="light"] .icon-moon { display: none; }
+      </style>
+    </defs>
+    <path class="icon-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    <circle class="icon-sun" cx="12" cy="12" r="5"></circle>
+    <line class="icon-sun" x1="12" y1="1" x2="12" y2="3"></line>
+    <line class="icon-sun" x1="12" y1="21" x2="12" y2="23"></line>
+    <line class="icon-sun" x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line class="icon-sun" x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line class="icon-sun" x1="1" y1="12" x2="3" y2="12"></line>
+    <line class="icon-sun" x1="21" y1="12" x2="23" y2="12"></line>
+    <line class="icon-sun" x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line class="icon-sun" x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
 </button>
 
 <script is:inline>
   (function () {
     const btn = document.currentScript.previousElementSibling;
-    const icon = btn.querySelector('.theme-icon');
+    const svg = btn.querySelector('.theme-toggle svg');
 
     function getTheme() {
       const attr = document.documentElement.getAttribute('data-theme');
@@ -18,7 +37,14 @@
     }
 
     function render() {
-      icon.textContent = getTheme() === 'dark' ? '☾' : '☀';
+      const theme = getTheme();
+      if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+      }
+      // Dispatch custom event for components that need to react
+      document.dispatchEvent(new CustomEvent('theme-changed', { detail: { theme } }));
     }
 
     render();
@@ -28,6 +54,10 @@
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
       render();
+      // Force styles recalculation
+      document.body.style.display = 'none';
+      document.body.offsetHeight; // trigger reflow
+      document.body.style.display = '';
     });
   })();
 </script>
@@ -37,12 +67,18 @@
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 4px;
-    padding: 4px 0;
-    width: 32px;
-    font-size: 14px;
+    padding: 5px;
+    width: 28px;
+    height: 28px;
     cursor: pointer;
     color: var(--text);
-    line-height: 1;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle svg {
+    width: 16px;
+    height: 16px;
   }
 </style>

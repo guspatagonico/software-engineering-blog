@@ -10,6 +10,12 @@
   --text-dim: #7387a6;
   --text-bright: #e8f0ff;
   --font: 'Inter', system-ui, sans-serif;
+  --glass-bg: rgba(10, 10, 12, 0.5);
+  --glass-bg-mobile: rgba(10, 10, 12, 0.65);
+  --overlay-bg: rgba(0, 0, 0, 0.5);
+  --btn-bg: #0d9488;
+  --btn-bg-hover: #0f766e;
+  --btn-text: #ffffff;
 
   /* Responsive breakpoints */
   --bp-tablet: 768px;
@@ -27,4 +33,10 @@
   --text: #2a3650;
   --text-dim: #5e6e88;
   --text-bright: #1a2438;
+  --glass-bg: rgba(255, 255, 255, 0.5);
+  --glass-bg-mobile: rgba(255, 255, 255, 0.65);
+  --overlay-bg: rgba(0, 0, 0, 0.15);
+  --btn-bg: #008068;
+  --btn-bg-hover: #006650;
+  --btn-text: #ffffff;
 }

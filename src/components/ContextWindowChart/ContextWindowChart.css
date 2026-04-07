@@ -30,14 +30,14 @@
 }
 
 .ctx-chart__toggle--active {
-  background: #0d9488;
-  color: #fff;
-  border-color: #0d9488;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border-color: var(--btn-bg);
 }
 
 .ctx-chart__toggle--active:hover {
-  background: #0f766e;
-  border-color: #0f766e;
+  background: var(--btn-bg-hover);
+  border-color: var(--btn-bg-hover);
 }
 
 .ctx-chart__legend {

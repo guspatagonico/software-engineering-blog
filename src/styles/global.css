@@ -59,14 +59,14 @@ code {
 }
 
 pre {
-  background: #050810;
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 16px 18px;
   font-family: var(--font);
   font-size: 12px;
   font-weight: 400;
-  color: #8ab4d4;
+  color: var(--text);
   overflow-x: auto;
   margin-bottom: 14px;
   line-height: 1.9;

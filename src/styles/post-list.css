@@ -4,7 +4,7 @@
   font-size: 14px;
   line-height: 1;
   font-weight: 600;
-  color: var(--text-dim);
+  color: var(--text-dim) !important;
   margin-bottom: 32px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -19,14 +19,14 @@
 .post-card {
   display: block;
   padding: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
   border-radius: 5px;
   transition: border-color 0.15s;
 }
 
 .post-card:hover {
-  border-color: var(--teal);
+  border-color: var(--teal) !important;
   text-decoration: none;
 }
 
@@ -39,13 +39,13 @@
 
 .post-date {
   font-size: 11px;
-  color: var(--text-dim);
+  color: var(--text-dim) !important;
 }
 
 .post-tag {
   font-size: 9px;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--teal) !important;
   background: rgba(0, 212, 170, 0.1);
   padding: 2px 8px;
   border-radius: 3px;
@@ -56,12 +56,12 @@
 .post-title {
   font-size: 16px;
   font-weight: 600;
-  color: var(--text-bright);
+  color: var(--text-bright) !important;
   margin-bottom: 4px;
 }
 
 .post-desc {
   font-size: 13px;
-  color: var(--text-dim);
+  color: var(--text-dim) !important;
   line-height: 1.5;
 }

@@ -39,7 +39,6 @@ const GEM_WORDS = [
   'brian kernighan',
   'linus torvalds',
 ];
-const GEM_CHANCE = 0.002; // Very rare - 0.2% chance per character position
 
 // Layer configuration - each layer has different depth characteristics (40% larger sizes)
 const LAYERS = [
@@ -50,7 +49,6 @@ const LAYERS = [
   { depth: 1.0, speed: 2.5, fontSize: 24, alpha: 1.0, columns: 1.2 }, // Foreground
 ];
 
-const COLUMN_WIDTH_BASE = 20;
 const STREAM_MIN_LENGTH = 15;
 const STREAM_MAX_LENGTH = 35;
 const MOUSE_RADIUS = 200;
@@ -174,6 +172,7 @@ export default function MatrixBackground() {
   const streamsRef = useRef<Stream[]>([]);
   const mouseRef = useRef({ x: -1000, y: -1000 });
   const animationRef = useRef<number>(0);
+  const observerRef = useRef<MutationObserver | null>(null);
   const themeRef = useRef<string>('dark');
 
   useEffect(() => {
@@ -182,6 +181,13 @@ export default function MatrixBackground() {
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
+    // Initialize theme from DOM
+    const initTheme = () => {
+      const attr = document.documentElement.getAttribute('data-theme');
+      themeRef.current = attr || 'dark';
+    };
+    initTheme();
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -237,14 +243,26 @@ export default function MatrixBackground() {
       }
     };
 
+    const handleThemeEvent = (e: Event) => {
+      // Read theme directly from DOM attribute - more reliable than custom event detail
+      const attr = document.documentElement.getAttribute('data-theme');
+      themeRef.current = attr || 'dark';
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('storage', handleThemeChange);
-
-    const handleThemeEvent = () => {
-      const stored = localStorage.getItem('theme');
-      themeRef.current = stored || 'dark';
-    };
     window.addEventListener('theme-changed', handleThemeEvent);
+
+    // Also watch for attribute changes directly
+    observerRef.current = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'data-theme') {
+          const attr = document.documentElement.getAttribute('data-theme');
+          themeRef.current = attr || 'dark';
+        }
+      });
+    });
+    observerRef.current.observe(document.documentElement, { attributes: true });
 
     const draw = () => {
       const isDark = themeRef.current === 'dark';
@@ -464,6 +482,7 @@ export default function MatrixBackground() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('storage', handleThemeChange);
       window.removeEventListener('theme-changed', handleThemeEvent);
+      observerRef.current?.disconnect();
       cancelAnimationFrame(animationRef.current);
     };
   }, []);
