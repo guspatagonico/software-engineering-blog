@@ -1,36 +1,30 @@
 ---
-children_hash: f4134f65a02e394416e05a1b4f795430341d3a49f21235ee686aa4f1f54f0829
-compression_ratio: 0.9449275362318841
+children_hash: 0a5113d3036bb8ce94f94a080700c0a84ec0d123b8dfa0e9d21572d7b9acdca2
+compression_ratio: 0.42946990116801437
 condensation_order: 2
 covers: [context.md, visual_effects/_index.md]
-covers_token_total: 690
+covers_token_total: 1113
 summary_level: d2
-token_count: 652
+token_count: 478
 type: summary
 ---
-## ui Domain (context.md)
-- **Purpose & Ownership:** Design Systems & Frontend owned domain capturing immersive interface visuals and animated backgrounds.
-- **Scope:** Includes canvas/WebGL backgrounds, layered digital rain/particle effects, and responsive custom UI components; excludes page copy, data models, backend logic.
-- **Usage Guidance:** Document implementation, tuning, and optimization details for animated UI elements within this domain.
+# ui Structural Summary
 
-## ui/visual_effects Topic (visual_effects/_index.md)
-- **Focus:** MatrixBackground component and related visual effects that contribute to immersive UI animations.
+## Domain Purpose & Scope
+- **ui/context.md** defines the domain for immersive animated interfaces (Canvas/WebGL backgrounds, particle simulations, interactive components) while excluding copy and backend logic; owned by Design Systems & Frontend and used for documenting implementation/optimization.
 
-### visual_effects/context.md
-- **Key Concepts:** MatrixBackground implements layered depth styling, animated character streams, theme-aware lighting, and pointer-responsive forces (vortex pulls and mouse repulsion) optimized via stream/character update rates.
-- **Structure & Relationships:** Encourages linking to other visual effect components within the UI domain for cohesive documentation of animated elements.
+## visual_effects Overview
+- **visual_effects/_index.md** collects the visual narratives below.
 
-### Matrix Background Component (matrix_background.md)
-- **Task & Flow:** Canvas-based component mounts to the viewport, initializes 180 streams spread across five depth layers, and drives a render loop that clears the frame, updates characters/streams, regenerates off-screen data, and handles resize/mouse/theme events.
-- **Structure & Dependencies:** Each stream tracks characters, brightness gradients, optional gem metadata, and depth-sensitive shading; rendering obeys dark/light theme data (localStorage/media queries), CSS module positioning, and a monospace font stack (Noto Sans Mono, MS Gothic, Hiragino Sans).
-- **Highlights & Facts:**
-  - Streams: 180 columns with varied speed/alpha/font size; CHAR_CHANGE_RATE=0.3 and CHAR_CHANGE_COUNT=2 govern refresh cadence.
-  - Character pool: 70% Latin, 30% Japanese katakana defined via constants; rendering order roughly depth-sorted.
-  - Gems: 30 hidden words (e.g., gustavo, robotics, kernel panic, linus torvalds) spawn with GEM_CHANCE=0.002 and flicker through individual timers.
-  - Mouse interaction: 200 px radius repulsion with exponential strength plus depth-specific vortex pulls for smooth motion.
-  - Performance: Layered alpha blending and stream regeneration maintain the cyber-noir aesthetic while supporting interactive responsiveness.
+### Core Animation
+- **matrix_background.md**: Details MatrixBackground rendering pipeline (theme-aware canvas setup, weighted depth streams, gem-word flicker probability, mouse repulsion/vortex). Performance tuning includes breakpoint stream counts (60/180/220) and pauseable gem updates; CSS modules keep size/theme in sync.
+- **matrix_background_toggle.md**: Describes Base.astro embedding, `initMatrixState`, localStorage persistence of `matrix-bg-visible` class, and event-driven visibility that halts the animation loop when disabled.
+- **dodecahedron_toggle.md**: Describes the Three.js Dodecahedron button (128px, glow/wireframe, theme-linked colors, hover/touch handling), renderer settings (antialias, ACESFilmic, PCFShadowMap, capped DPR), event dispatch for `toggle-matrix-background`, and cleanup.
 
-## Drill-down Hooks
-- Review `context.md` for domain-wide scope/usage.
-- Explore `visual_effects/context.md` for component-level concepts and relationships.
-- Inspect `matrix_background.md` for implementation nitty-gritty, constants, and interaction behavior.
+### Layout & Theme Dressing
+- **glassy_navigation_layout.md**: Captures Navbar/Footer glassy backdrops (blur/saturate tokens, sticky placement), mobile drawer behaviors (280px sliding panel, link reveal delays 0.05–0.2s), and enforced token/body-class coordination for consistent overlays.
+
+### Relationships
+- Matrix background (`matrix_background.md`) is the animation engine referenced by the toggle (`matrix_background_toggle.md`) and Dodecahedron button (`dodecahedron_toggle.md`); layout glass styling (`glassy_navigation_layout.md`) shares theme token dependencies with those effects.
+
+Drill into the listed files for detailed implementation, events, and styling rules.

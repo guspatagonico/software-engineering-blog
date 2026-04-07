@@ -21,9 +21,37 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
 <html lang="en">
   <head>
     <Head title={title} description={description} isHome={isHome} />
+    <script is:inline>
+      // Initialize matrix background state from localStorage or default to hidden
+      function initMatrixState() {
+        if (!document.body) {
+          // Body not ready yet, wait a bit
+          setTimeout(initMatrixState, 0);
+          return;
+        }
+        const stored = localStorage.getItem('matrix-background-visible');
+        const initialVisible = stored === 'true';
+        document.body.classList.toggle('matrix-bg-visible', initialVisible);
+        
+        // Listen for toggle event from Dodecahedron
+        window.addEventListener('toggle-matrix-background', () => {
+          const isVisible = document.body.classList.toggle('matrix-bg-visible');
+          localStorage.setItem('matrix-background-visible', String(isVisible));
+        });
+      }
+      
+      // Run immediately and also on DOMContentLoaded for safety
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMatrixState);
+      } else {
+        initMatrixState();
+      }
+    </script>
   </head>
   <body>
-    {showBackground && <MatrixBackground client:visible />}
+    <div id="matrix-bg-wrapper" style="display: contents;">
+      <MatrixBackground client:visible />
+    </div>
     <Navbar />
     <main class="main-content">
       <slot />

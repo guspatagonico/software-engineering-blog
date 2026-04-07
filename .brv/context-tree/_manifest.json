@@ -3,20 +3,26 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1090,
+      "tokens": 1179,
       "type": "summary"
     },
     {
       "order": 2,
       "path": "project_management/_index.md",
-      "tokens": 378,
+      "tokens": 490,
       "type": "summary"
     },
     {
       "order": 1,
-      "path": "project_guidelines/blog_post_architecture/_index.md",
-      "tokens": 376,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
+    },
+    {
+      "importance": 55,
+      "path": "ui/visual_effects/matrix_background.md",
+      "tokens": 724,
+      "type": "context"
     },
     {
       "importance": 50,
@@ -56,12 +62,6 @@
     },
     {
       "importance": 50,
-      "path": "project_guidelines/dev_process/development_process_and_rules.md",
-      "tokens": 880,
-      "type": "context"
-    },
-    {
-      "importance": 50,
       "path": "project_guidelines/run_commands/build_and_run_commands.md",
       "tokens": 521,
       "type": "context"
@@ -71,15 +71,21 @@
       "path": "project_guidelines/run_commands/context.md",
       "tokens": 95,
       "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_management/context.md",
+      "tokens": 108,
+      "type": "context"
     }
   ],
-  "generated_at": "2026-04-07T01:51:19.144Z",
+  "generated_at": "2026-04-07T11:38:03.235Z",
   "lane_tokens": {
-    "contexts": 3968,
+    "contexts": 3920,
     "stubs": 0,
-    "summaries": 1844
+    "summaries": 1856
   },
-  "source_fingerprint": "4085e32c27662814f3cc488380698c000f337f296830c9a6173c359a7800b987",
-  "total_tokens": 5812,
+  "source_fingerprint": "36edac1b433fab35c9faa80ebb58ae888023415aae09e71fdf491ed4e8c5d8ac",
+  "total_tokens": 5776,
   "version": 1
 }

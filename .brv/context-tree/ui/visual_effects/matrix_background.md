@@ -1,44 +1,47 @@
 ---
 title: Matrix Background
 tags: []
+related: [ui/visual_effects/context.md]
 keywords: []
-importance: 50
+importance: 55
 recency: 1
 maturity: draft
+updateCount: 1
 createdAt: '2026-04-07T01:50:56.523Z'
-updatedAt: '2026-04-07T01:50:56.523Z'
+updatedAt: '2026-04-07T02:51:28.121Z'
 ---
 ## Raw Concept
 **Task:**
-Capture the MatrixBackground component that renders the immersive interactive digital rain effect on the homepage.
+Describe the updated MatrixBackground animation component for the UI visual effects library
 
 **Changes:**
-- Added 180-stream canvas renderer with five depth-based layers.
-- Mixed Latin and Japanese katakana characters to echo a cyber-noir aesthetic.
-- Embedded 30 hidden gem words with rare flickering events and mouse-influenced displacement.
+- Made stream counts responsive to viewport width with discrete counts for mobile/tablet/desktop columns.
+- Inserted a curated list of 44 gem words with randomized placement, brightness boosts, and flicker timers per stream.
+- Added theme detection (DOM attribute, storage events, prefers-color-scheme) plus mouse-driven shockwave/vortex effects for richer interactivity.
 
 **Files:**
 - src/components/MatrixBackground/MatrixBackground.tsx
 - src/components/MatrixBackground/MatrixBackground.module.css
 
 **Flow:**
-Mount component -> size canvas to viewport -> initialize streams with layer weights -> animate draw loop (clear, render per-stream character states, update gem timers, regenerate off-screen streams) -> respond to resize/mouse/theme events.
+Mount component -> initialize theme + canvas sizing -> init responsive streams with weighted layer selection -> start draw loop that renders characters with gem styling and updates state -> respond to resize/mouse/theme events -> regenerate streams when off-screen -> cleanup listeners + animation frame
 
-**Timestamp:** 2026-04-06
+**Timestamp:** 2026-04-07
 
 ## Narrative
 ### Structure
-MatrixBackground is a React component that uses a <canvas> ref and an effect to manage the render loop. Streams are generated per layer weight, each carrying characters, brightness gradients, and optional gem metadata that determines flicker behavior. The draw routine clears the canvas, iterates through streams in their roughly sorted order, adjusts color/shadow based on depth, head/tail position, and dark/light themes, and finally applies mouse offsets before drawing each glyph.
+MatrixBackground renders a full-screen canvas using five depth layers, each layer controlling speed, font size, alpha, and column coverage. Streams are regenerated per column with randomized start positions, brightness gradients, and optional gem inserts. Animation responds to theme state, mouse position, and viewport resizing.
 
 ### Dependencies
-Relies on the MatrixBackground CSS module for positioning, localStorage/theme media queries to sync with site theme, and a font stack that includes Noto Sans Mono, MS Gothic, and Hiragino Sans for consistent monospace glyphs.
+Relies on MatrixBackground.module.css for canvas sizing, listens to document.documentElement data-theme attribute, storage events, a theme-changed custom event, and prefers-color-scheme to keep colors in sync. Mouse movement, resize, and MutationObserver callbacks keep the animation reactive.
 
 ### Highlights
-Hidden gem words include terms like gustavo, robotics, kernel panic, and linus torvalds and flash rarely (0.2% per character) with bright green glow. Mouse interactions use a 200px radius, exponential falloff, and subtle vortex pulls so pointers repel the streams while keeping the motion soft. Stream regenerations keep 180 columns flowing with CHAR_CHANGE_RATE 0.3, CHAR_CHANGE_COUNT 2, and layered alpha blending to maintain performance while preserving the retro matrix aesthetic.
+Gem words blink with occasional flashes, guided by timers that swap characters briefly. Dark mode uses layered color palettes while light mode shifts to teal tones. Mouse proximity generates subtle shockwaves and vortex pulls that nudge nearby streams.
+
+### Rules
+Rule: Avoid blocking render work inside draw; updates run via requestAnimationFrame and cleanup removes all listeners. Rule: Gem positions pause regular character updates to preserve their timers; non-gem characters change at a CHAR_CHANGE_RATE of 0.3 with CHAR_CHANGE_COUNT adjustments.
 
 ## Facts
-- **stream_density**: MatrixBackground runs 180 streams distributed across five depth layers with varying speeds, alphas, and font sizes. [project]
-- **character_mix**: Character composition is 70% Latin characters and 30% Japanese katakana, drawn from LATIN_CHARS and JAPANESE_CHARS constants. [project]
-- **gem_words**: Hidden gem words (30 listed terms) appear with GEM_CHANCE 0.002 and have independent gemTimers controlling flicker cadence. [project]
-- **mouse_interaction**: Mouse influence radius is 200px, applying exponential repulsion, offset vortices, and subtle pulls that depend on layer depth. [project]
-- **char_refresh**: Characters refresh at CHAR_CHANGE_RATE 0.3 with CHAR_CHANGE_COUNT 2, while gem tiles flicker at separate timers when gemTimers expire. [project]
+- **stream_counts**: Stream counts are responsive: 60 columns on mobile (<768px), 180 on tablet (768-1024px), and 220 on desktop. [project]
+- **gem_words**: Each stream has a 70% chance of embedding one of 44 curated gem words that flash via per-character timers. [project]
+- **mouse_effects**: Mouse influence occurs within a 200px radius, driving exponential shockwave displacement, vortex pull, and layer-specific alpha adjustments. [project]

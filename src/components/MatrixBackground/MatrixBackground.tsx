@@ -52,6 +52,14 @@ const GEM_WORDS = [
   'commodore',
   'alejo simon',
   'carpinchos',
+  'spec driven development',
+  'neural network',
+  'large language models',
+  'llm',
+  'context window',
+  'pink floyd',
+  'david gilmour',
+  'eclipse',
 ];
 
 // Layer configuration - each layer has different depth characteristics (40% larger sizes)
@@ -197,6 +205,8 @@ export default function MatrixBackground() {
   const observerRef = useRef<MutationObserver | null>(null);
   const themeRef = useRef<string>('dark');
   const isMobileRef = useRef<boolean>(false);
+  const isVisibleRef = useRef(false);
+  const wasVisibleRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -205,7 +215,31 @@ export default function MatrixBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Initialize theme from DOM
+    // Check visibility state
+    const checkVisibility = () => {
+      const isVisible = document.body?.classList.contains('matrix-bg-visible');
+      isVisibleRef.current = isVisible ?? false;
+    };
+
+    // Initialize visibility check
+    checkVisibility();
+    wasVisibleRef.current = isVisibleRef.current;
+
+    // Listen for visibility changes
+    const handleVisibilityChange = () => {
+      checkVisibility();
+    };
+
+    window.addEventListener('toggle-matrix-background', handleVisibilityChange);
+
+    // Also observe class changes on body
+    const bodyObserver = new MutationObserver(() => {
+      checkVisibility();
+    });
+    if (document.body) {
+      bodyObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    }
+
     const initTheme = () => {
       const attr = document.documentElement.getAttribute('data-theme');
       themeRef.current = attr || 'dark';
@@ -293,6 +327,12 @@ export default function MatrixBackground() {
     observerRef.current.observe(document.documentElement, { attributes: true });
 
     const draw = () => {
+      // Skip animation entirely when not visible
+      if (!isVisibleRef.current) {
+        animationRef.current = requestAnimationFrame(draw);
+        return;
+      }
+
       const isDark = themeRef.current === 'dark';
 
       // Clear
@@ -512,7 +552,9 @@ export default function MatrixBackground() {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('storage', handleThemeChange);
       window.removeEventListener('theme-changed', handleThemeEvent);
+      window.removeEventListener('toggle-matrix-background', handleVisibilityChange);
       observerRef.current?.disconnect();
+      bodyObserver.disconnect();
       cancelAnimationFrame(animationRef.current);
     };
   }, []);

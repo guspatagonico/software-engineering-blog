@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
 
 interface DodecahedronProps {
@@ -6,22 +6,30 @@ interface DodecahedronProps {
 }
 
 export default function Dodecahedron({ className }: DodecahedronProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLButtonElement>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const frameIdRef = useRef<number>(0);
   const groupRef = useRef<THREE.Group | null>(null);
   const innerGlowMaterialRef = useRef<THREE.MeshBasicMaterial | null>(null);
   const isHoveredRef = useRef(false);
+  const isTouchDeviceRef = useRef(false);
   const currentSpeedRef = useRef(1.0);
+  const currentScaleRef = useRef(1.0);
   const timeRef = useRef(0);
 
   const setHovered = useCallback((hovered: boolean) => {
-    isHoveredRef.current = hovered;
+    // Only update hover state on non-touch devices
+    if (!isTouchDeviceRef.current) {
+      isHoveredRef.current = hovered;
+    }
   }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
+
+    // Detect touch device
+    isTouchDeviceRef.current = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
     // Check for dark theme
     const isDarkTheme = !document.documentElement.hasAttribute('data-theme');
@@ -48,12 +56,13 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
     // Renderer with transparent background
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 3));
     renderer.setClearColor(0x000000, 0); // Transparent
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
+    renderer.sortObjects = true;
     containerRef.current.appendChild(renderer.domElement);
     rendererRef.current = renderer;
 
@@ -181,6 +190,8 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
     timeRef.current = 0;
     let currentSpeed = 1.0;
     currentSpeedRef.current = 1.0;
+    let currentScale = 1.0;
+    currentScaleRef.current = 1.0;
 
     // Animation loop
     const animate = () => {
@@ -191,12 +202,21 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
       currentSpeed += (targetSpeed - currentSpeed) * 0.08;
       currentSpeedRef.current = currentSpeed;
 
+      // Scale animation - pop out on hover, pop in on unhover
+      const targetScale = isHovered ? 1.15 : 1.0;
+      currentScale += (targetScale - currentScale) * 0.15;
+      currentScaleRef.current = currentScale;
+
       time += 0.008 * currentSpeed;
       timeRef.current = time;
 
       // Rotate - 1.5x faster
       group.rotation.x = time * 1.5;
       group.rotation.y = time * 2.1;
+
+      // Apply scale with gentle pulse
+      const pulseScale = Math.sin(time * 3) * 0.03 + 1;
+      group.scale.setScalar(currentScale * pulseScale);
 
       // Gentle floating motion
       group.position.y = Math.sin(time * 0.8) * 0.15;
@@ -238,25 +258,35 @@ export default function Dodecahedron({ className }: DodecahedronProps) {
     setHovered(false);
   }, [setHovered]);
 
+  const handleClick = useCallback(() => {
+    // Dispatch event to toggle matrix background
+    window.dispatchEvent(new CustomEvent('toggle-matrix-background'));
+  }, []);
+
   return (
-    <div
+    <button
+      ref={containerRef}
+      type="button"
       className={className}
+      aria-label="Toggle Matrix background"
       style={{
         position: 'fixed',
         bottom: '74px',
         right: '24px',
-        width: '160px',
-        height: '160px',
-        zIndex: 100,
+        width: '128px',
+        height: '128px',
+        zIndex: 40,
+        cursor: 'pointer',
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
-    >
-      <div
-        ref={containerRef}
-        role="presentation"
-        style={{ width: '100%', height: '100%' }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      />
-    </div>
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
+    />
   );
 }

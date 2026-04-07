@@ -1,40 +1,58 @@
 ---
-children_hash: f2a13a90de13dd90f3ef09f5f6f08985ff0f574b0c343477e8948126daf06ae3
-compression_ratio: 0.47145328719723184
+children_hash: 1f2b8db2bd4d2cb1bf845bc0cb41e7d23d8222391db8f2b3d3aff5aa45bce173
+compression_ratio: 0.5223748338502436
 condensation_order: 3
 covers: [project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 2312
+covers_token_total: 2257
 summary_level: d3
-token_count: 1090
+token_count: 1179
 type: summary
 ---
 # Structural Summary (Level d3)
 
 ## project_guidelines domain
-- **Agents (project_guidelines/agents)**: Captures pnpm-centric build/tooling rules, SectionNav/panel layout patterns, security/workflow policies, and dispatcher-based agent orchestration. Key facts include pnpm-only scripts (`install`, `dev`, `build`, `preview`, lint/format/typecheck, Vitest, Playwright e2e), strict styling conventions (2‑space indent, single quotes, `@/` aliasing), SectionNav icons limited to a vetted set, and git worktrees/hand-off mechanics anchored by `_handoff`. Dispatcher sequences pnpm commands, security checks, and handoff file generation.
+- **Agents (_index, context.md, project_agent_handbook.md)**  
+  - Purpose: define pnpm-only workflow, dispatcher pattern, and security/process rules for agent-based contributions.  
+  - Key rules: pnpm scripts (`install`, `dev`, `build`, `preview`, lint/format/typecheck), Vitest/Playwright for tests, enforced TypeScript/style conventions, git worktree strategy, no secrets, Vite host/allowedHosts configuration, 4h PR SLA, denial of apologies.  
+  - UI/layout expectations: every post uses `BlogPost`, `SectionNav client:load`, panels with `panel` classes, approved icon set, consistent shared components (`Highlight`, `Card`, `ConvergentEnvelope`), SectionNav-panel pairing, homepage card registration.  
+  - Dispatcher: orchestrates pnpm commands, security checks, handoffs, and multi-agent collaboration (e.g., `@component-builder`, `@blog-writer`).
 
-- **Blog Post Architecture (project_guidelines/blog_post_architecture)**: Enforces `BlogPost` layout with SectionNav client-loaded, mirrored panel IDs/classes (`panel`/`panel active`), and consistent shared components (`Highlight`, `Card`, `ConvergentEnvelope`). SectionNav icons must come from the approved set (◈ ▸ ▣ …), and every post must register a homepage card (index.astro) to surface new content.
+- **Blog Post Architecture (_index)**  
+  - Structure: `BlogPost` layout, defined `sections` array, SectionNav rendered with `client:load`, panels tied to SectionNav entries (`panel-{section.id}`, only first active).  
+  - Components: reused UI elements, inline styling templates, and approved SectionNav icons (◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑).  
+  - Rule: each new article must add a homepage card (`src/pages/index.astro`).
 
-- **Dev Process (project_guidelines/dev_process)**: Documents the style/workflow pipeline: lint/typecheck/format → tests → conventional commits → worktree push → PR via `gh`. Strict conventions cover naming (component/hook/util/store styles), import order, error handling (no swallowed errors), Vite server settings (`host: 0.0.0.0`, `allowedHosts: ["galadriel"]`), and security (no repo secrets). Highlights include dispatcher-driven agent parallelism, SectionNav requiring `client:load`, React islands only when needed, and LocalStorage-based theme persistence.
+- **Dev Process (_index)**  
+  - Flow: style/naming → pnpm lint/typecheck/format → tests → conventional commit → push via worktree → PR via `gh` → cleanup.  
+  - Conventions: 2-space indent, single quotes, trailing commas, interface props, import ordering (Node/external → Astro → `@/` → relative), naming presets per asset type, strict error handling, preserved Vite config, theme persistence via LocalStorage, discourage React islands unless needed.  
+  - Dependencies: pnpm, ESLint plugins, TypeScript, Astro layouts, `gh`.  
+  - Highlights: parallel agents, dispatcher use, SectionNav/client:load requirement, pnpm enforcement.
 
-- **Run Commands (project_guidelines/run_commands)**: Lists pnpm scripts for setup (`install`), dev (`pnpm dev` on localhost:4321), production build/preview, quality gates (`lint`, `format`, `typecheck`), and tests (Vitest `pnpm test`, Playwright `pnpm test:e2e`). Reinforces pnpm-only policy referenced by dev process and agent workflows.
+- **Run Commands (_index, build_and_run_commands.md)**  
+  - Canonical commands: `pnpm install` (lockfile), `pnpm dev` (`localhost:4321`), `pnpm build`, `pnpm preview`, `pnpm lint`, `pnpm format`, `pnpm typecheck`, `pnpm test` (Vitest), `pnpm test:e2e` (Playwright).  
+  - Role: referenced by dev process/agents; reinforces pnpm-only policy for dependency and CI workflows.
 
 ## project_management domain
-- **Domain Context (project_management/context.md)**: Houses curated handoff summaries capturing work status, touched files, pending actions, and blockers (excluding low-level implementation). Ownership attributed to Gustavo Adrián Salvini to ensure future contributors can resume.
+- **Context (context.md)**  
+  - Domain intent: capture handoffs (decisions, blockers, touched files) for quick resumption; excludes implementation depth; owned by Gustavo Adrián Salvini.
 
-- **Handoffs topic (project_management/handoffs)**: April 4, 2026 handoff documents metadata/SEO rollouts (Head, Navbar, Footer, Base, BlogPost, index.astro, posts) ensuring canonical/open graph consistency; centralized post-content.css styling plus layout constraints (900px max-width desktop, full-width mobile), canonical base URL `https://dev.ecim.tech`. Lists pending Playwright E2E/blog post work and procedural reminder to follow checklists before closing iterations. Links back to project_guidelines/dev_process for workflow context.
+- **Handoffs (_index, handoff_2026_04_04.md)**  
+  - Snapshot: April 4, 2026 rollout covering SEO/metadata, centralized styling, canonical titles, pending Playwright/blog-post work.  
+  - Files touched: `Head.astro`, `Navbar`, `Footer`, `Base`, `BlogPost`, `index.astro`, targeted blog pages, shared `post-content.css` (aligned with homepage/global/page/post-list styles), typography/branding unify, canonical URL anchored to `https://dev.ecim.tech`, max-width 900px.  
+  - Pending: Playwright E2E, new blog-post creation; no blockers; rule reminding not to create handoffs unless requested.
+
+- **Run Commands (git_worktree_location.md)**  
+  - Policy: all worktrees under `<project>/.worktrees/<branch>`; create with `git worktree add .worktrees/<branch> -b <branch>`, ensure `.worktrees` exists, centralizes tooling and cleanup.
 
 ## ui domain
-- **Domain Context (ui/context.md)**: Establishes Design Systems & Frontend knowledge for immersive visuals, covering canvas/WebGL backgrounds and animated UI components while excluding copy/data/back-end logic.
+- **Context (context.md)**  
+  - Purpose: document immersive UI (canvas/WebGL backgrounds, particle simulations, interactive components); excludes copy/backend logic; owned by Design Systems & Frontend.
 
-- **Visual Effects topic (ui/visual_effects)**: Focuses on MatrixBackground and related animated experiences; encourages linking to other UI effects for cohesive documentation.
+- **Visual Effects (_index, matrix_background.md, matrix_background_toggle.md, dodecahedron_toggle.md, glassy_navigation_layout.md)**  
+  - Matrix background: theme-aware canvas pipeline, weighted depth streams, gem flicker probabilistics, mouse-driven repulsion/vortex, breakpoint-specific stream counts, pauseable loops, CSS sync.  
+  - Toggle: Base.astro embeds, `initMatrixState`, LocalStorage `matrix-bg-visible`, event-driven visibility halts animation when off.  
+  - Dodecahedron button: Three.js renderer (antialias, ACESFilmic, PCFShadowMap, DPR cap), theme-linked colors, hover/touch handling, `toggle-matrix-background` event dispatch, teardown logic.  
+  - Layout/glass styling: Navbar/Footer glass backdrops (blur/saturate tokens), sticky behavior, mobile drawer (280px slide, staggered link reveals), token/body-class coordination for overlays.  
+  - Relationships: matrix animation engine referenced by toggle and Dodecahedron controls; glass layout shares theme tokens with animated elements.
 
-- **Matrix Background component (ui/visual_effects/matrix_background.md)**:
-  - Task/Flow: Canvas mounts fullscreen, initializes 180 depth-layered streams, and executes frame loop that clears canvas, updates streams/characters, regenerates data, and responds to resize/mouse/theme events.
-  - Structure & Dependencies: Each stream stores characters, gradients, gem metadata, depth-aware shading, and respects theme settings via LocalStorage/media queries; CSS module ensures positioning with monospace font stack (Noto Sans Mono, MS Gothic, Hiragino Sans).
-  - Highlights/Facts: Stream count 180, CHAR_CHANGE_RATE=0.3, CHAR_CHANGE_COUNT=2; character pool 70% Latin/30% katakana; gems (e.g., gustavo, robotics) spawn with GEM_CHANCE=0.002; mouse repulsion radius 200 px with exponential force plus depth-specific vortex pulls; layered alpha blending maintains performance.
-
-## Drill-down guidance
-- For domain scope or usage rationale: read each `context.md`.
-- For topic‑level detail: open `*/_index.md`.
-- For implementation specifics (constants, behaviors, rules): review individual entries such as `matrix_background.md` or `handoff_2026_04_04.md`.
+Drill down into each listed entry for implementation specifics, API settings, and stylings.
