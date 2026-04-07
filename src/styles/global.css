@@ -13,7 +13,7 @@ body {
   font-size: 14px;
   line-height: 1.6;
   min-height: 100dvh;
-  overscroll-behavior: none;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   overflow: hidden;
 }
