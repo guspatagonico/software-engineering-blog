@@ -15,6 +15,7 @@ interface Props {
 const { title, description, isHome = false, showBackground = false } = Astro.props;
 
 import MatrixBackground from '@/components/MatrixBackground/MatrixBackground';
+import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
 ---
 
 <html lang="en">
@@ -22,12 +23,13 @@ import MatrixBackground from '@/components/MatrixBackground/MatrixBackground';
     <Head title={title} description={description} isHome={isHome} />
   </head>
   <body>
-    {showBackground && <MatrixBackground client:load />}
+    {showBackground && <MatrixBackground client:visible />}
     <Navbar />
     <main class="main-content">
       <slot />
     </main>
     <Footer />
+    <Dodecahedron client:visible />
   </body>
 </html>
 
