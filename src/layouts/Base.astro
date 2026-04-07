@@ -74,14 +74,11 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     display: flex;
     flex-direction: column;
     min-height: 100dvh;
-    overflow: hidden;
   }
   .page-container {
     flex: 1;
     display: flex;
     justify-content: center;
-    overflow: hidden;
-    min-height: 0;
   }
 
   .content {
@@ -89,8 +86,7 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     max-width: 1024px;
     padding: 32px;
     overflow-y: auto;
-    height: 100%;
-    min-height: 0;
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -103,7 +99,6 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
   @media (max-width: 767px) {
     .content {
       padding: 20px 16px;
-      -webkit-overflow-scrolling: touch;
     }
   }
 
