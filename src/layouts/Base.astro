@@ -79,20 +79,24 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     flex: 1;
     display: flex;
     justify-content: center;
+    overscroll-behavior: none;
   }
 
   .content {
     width: 100%;
     max-width: 1024px;
     padding: 32px;
+    padding-bottom: 80px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
   }
 
   /* Responsive */
   @media (max-width: 767px) {
     .content {
       padding: 20px 16px;
+      padding-bottom: 90px;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }
