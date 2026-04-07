@@ -81,16 +81,20 @@ const finalDescription = description ?? post?.description;
     display: flex;
     min-height: 0;
     overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  .post-layout::-webkit-scrollbar {
-    display: none;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* Responsive */
   @media (max-width: 767px) {
+    .post-layout {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .post-layout::-webkit-scrollbar {
+      display: none;
+    }
+
     .post-header {
       padding: 16px;
       flex-direction: column;
