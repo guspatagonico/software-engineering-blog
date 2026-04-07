@@ -278,15 +278,21 @@ export default function Dodecahedron({ className, autoHideOnScroll = false }: Do
     show();
 
     const content = document.querySelector('.content') as HTMLElement | null;
-    if (content) {
-      content.addEventListener('scroll', show, { passive: true });
+    const pageContainer = document.querySelector('.page-container') as HTMLElement | null;
+    const scrollTarget = content || pageContainer;
+
+    if (scrollTarget) {
+      scrollTarget.addEventListener('scroll', show, { passive: true });
     }
+
+    window.addEventListener('scroll', show, { passive: true });
 
     return () => {
       clearTimeout(hideTimer);
-      if (content) {
-        content.removeEventListener('scroll', show);
+      if (scrollTarget) {
+        scrollTarget.removeEventListener('scroll', show);
       }
+      window.removeEventListener('scroll', show);
     };
   }, [autoHideOnScroll]);
 
