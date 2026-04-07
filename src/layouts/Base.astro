@@ -79,7 +79,6 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     flex: 1;
     display: flex;
     justify-content: center;
-    overscroll-behavior: none;
   }
 
   .content {
@@ -89,14 +88,18 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     padding-bottom: 80px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
   }
 
   /* Responsive */
   @media (max-width: 767px) {
+    .page-container {
+      overscroll-behavior: none;
+    }
+
     .content {
       padding: 20px 16px;
       padding-bottom: 90px;
+      overscroll-behavior: none;
       scrollbar-width: none;
       -ms-overflow-style: none;
     }

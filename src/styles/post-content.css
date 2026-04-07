@@ -7,11 +7,11 @@
   padding-bottom: 90px;
   max-width: 100%;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: none;
 }
 
 @media (max-width: 767px) {
   .content {
+    overscroll-behavior: none;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }

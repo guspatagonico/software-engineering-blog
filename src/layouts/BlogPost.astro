@@ -82,11 +82,13 @@ const finalDescription = description ?? post?.description;
     min-height: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    overscroll-behavior: none;
   }
 
   /* Responsive */
   @media (max-width: 767px) {
+    .post-layout {
+      overscroll-behavior: none;
+    }
     .post-layout {
       scrollbar-width: none;
       -ms-overflow-style: none;
