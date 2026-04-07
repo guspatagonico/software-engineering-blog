@@ -36,6 +36,15 @@
   font-size: 14px;
 }
 
+.content .subtitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
 .panel {
   display: none;
 }
@@ -101,3 +110,9 @@
 .content table tr:nth-child(even) td {
   background: var(--surface);
 }
+
+.content .closing {
+    font-style: italic;
+    color: var(--text-dim);
+    margin-top: 32px;
+  }
