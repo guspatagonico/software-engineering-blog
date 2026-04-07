@@ -1,30 +1,35 @@
 ---
-children_hash: 0a5113d3036bb8ce94f94a080700c0a84ec0d123b8dfa0e9d21572d7b9acdca2
-compression_ratio: 0.42946990116801437
+children_hash: d7e2cedd0203a1a38b503d1543ec6430110c9360141105da6c133ed39b4db001
+compression_ratio: 0.7150537634408602
 condensation_order: 2
 covers: [context.md, visual_effects/_index.md]
-covers_token_total: 1113
+covers_token_total: 1116
 summary_level: d2
-token_count: 478
+token_count: 798
 type: summary
 ---
-# ui Structural Summary
+### Domain: ui
+- **Purpose & Scope**: Records immersive interface visuals (canvas/WebGL backgrounds, particle simulations, custom responsive UI) while excluding content copy, data models, and backend logic; owned by Design Systems & Frontend.
+- **Usage**: Source for implementation, tuning, and optimization notes on animated UI layers.
 
-## Domain Purpose & Scope
-- **ui/context.md** defines the domain for immersive animated interfaces (Canvas/WebGL backgrounds, particle simulations, interactive components) while excluding copy and backend logic; owned by Design Systems & Frontend and used for documenting implementation/optimization.
+### Topic: visual_effects
+- **Context Hub** (`visual_effects/context.md`): Centralizes knowledge on MatrixBackground (layered digital rain, gem-word highlights, pointer-aware forces) plus performance safeguards and theme handling, anchoring the downstream visual components.
 
-## visual_effects Overview
-- **visual_effects/_index.md** collects the visual narratives below.
+#### Matrix Background (`matrix_background.md`)
+- **Architecture**: Five canvas depth layers with responsive stream counts (60–220), controlled speed/alpha/column coverage; 44 gem words with independent timers; character updates governed by `CHAR_CHANGE_RATE=0.3`.
+- **Interactions & Dependencies**: Theme detection via DOM/storage/prefers-color-scheme, mouse-driven shockwave/vortex within 200 px, responsive listeners for resize/mouse/theme; gem timers pause during gem-word focus; renders via `requestAnimationFrame` with cleanup of listeners and timers.
 
-### Core Animation
-- **matrix_background.md**: Details MatrixBackground rendering pipeline (theme-aware canvas setup, weighted depth streams, gem-word flicker probability, mouse repulsion/vortex). Performance tuning includes breakpoint stream counts (60/180/220) and pauseable gem updates; CSS modules keep size/theme in sync.
-- **matrix_background_toggle.md**: Describes Base.astro embedding, `initMatrixState`, localStorage persistence of `matrix-bg-visible` class, and event-driven visibility that halts the animation loop when disabled.
-- **dodecahedron_toggle.md**: Describes the Three.js Dodecahedron button (128px, glow/wireframe, theme-linked colors, hover/touch handling), renderer settings (antialias, ACESFilmic, PCFShadowMap, capped DPR), event dispatch for `toggle-matrix-background`, and cleanup.
+#### Matrix Background Toggle (`matrix_background_toggle.md`)
+- **Flow & Persistence**: `Base.astro` wraps `#matrix-bg-wrapper`, listens for `toggle-matrix-background`, toggles `matrix-bg-visible` class and localStorage key; MatrixBackground halts drawing when hidden. Default state hidden, user preference persisted.
 
-### Layout & Theme Dressing
-- **glassy_navigation_layout.md**: Captures Navbar/Footer glassy backdrops (blur/saturate tokens, sticky placement), mobile drawer behaviors (280px sliding panel, link reveal delays 0.05–0.2s), and enforced token/body-class coordination for consistent overlays.
+#### Dodecahedron Toggle (`dodecahedron_toggle.md`)
+- **Structure & Lighting**: Fixed 128 px Three.js button with dodecahedron/wireframe/glow meshes plus ambient/directional/fill/rim/point lights; theme-aware materials, hover/touch animations (rotation, scale, glow), `toggle-matrix-background` dispatches.
+- **Dependencies & Constraints**: Responds to theme-change and resize events; caps devicePixelRatio at 3; uses antialiasing, ACESFilmicToneMapping, PCFShadowMap, exposure 1.0; disposes renderer/geometry/material on unmount; pointer hover pauses rotation/scale while touch taps only toggle visibility.
 
-### Relationships
-- Matrix background (`matrix_background.md`) is the animation engine referenced by the toggle (`matrix_background_toggle.md`) and Dodecahedron button (`dodecahedron_toggle.md`); layout glass styling (`glassy_navigation_layout.md`) shares theme token dependencies with those effects.
+#### Glassy Navigation Layout (`glassy_navigation_layout.md`)
+- **Structure**: `Navbar.astro`/`Footer.astro` use backdrop-filter blur/saturate glass surfaces driven by `--glass-bg`, `--glass-bg-mobile`, `--overlay-bg` tokens; mobile drawer overlay reveals links with staggered delays and ARIA/data attributes governing visibility.
+- **Dependencies & Rules**: Shared glass tokens in `tokens.css`, mobile drawer toggles synchronized with data-visible attribute plus `nav-open` body class; glass styling must use shared tokens consistently across themes.
 
-Drill into the listed files for detailed implementation, events, and styling rules.
+#### Scroll Feedback System (`scroll_feedback_system.md`)
+- **Architecture**: `.page-container` flex wrapper with scrollable `.content` keeps viewport scroll anchored; global scrollbar hiding, Navbar/headers host `ScrollIndicator.astro` progress bar (3 px green) beneath.
+- **Components & Flow**: Scroll events adjust indicator width and trigger Dodecahedron auto-hide timer (`autoHideOnScroll=false` default, hides after 2 s on non-home pages); layout updates span Base and BlogPost layouts plus CSS tweaks to maintain scroll behavior.

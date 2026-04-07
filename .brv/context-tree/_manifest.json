@@ -3,25 +3,31 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1179,
+      "tokens": 1192,
       "type": "summary"
     },
     {
       "order": 2,
       "path": "project_management/_index.md",
-      "tokens": 490,
+      "tokens": 470,
       "type": "summary"
     },
     {
       "order": 1,
-      "path": "project_management/run_commands/_index.md",
-      "tokens": 187,
+      "path": "project_guidelines/run_commands/_index.md",
+      "tokens": 335,
       "type": "summary"
     },
     {
       "importance": 55,
       "path": "ui/visual_effects/matrix_background.md",
       "tokens": 724,
+      "type": "context"
+    },
+    {
+      "importance": 55,
+      "path": "ui/visual_effects/scroll_feedback_system.md",
+      "tokens": 795,
       "type": "context"
     },
     {
@@ -59,33 +65,15 @@
       "path": "project_guidelines/dev_process/context.md",
       "tokens": 100,
       "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/run_commands/build_and_run_commands.md",
-      "tokens": 521,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/run_commands/context.md",
-      "tokens": 95,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_management/context.md",
-      "tokens": 108,
-      "type": "context"
     }
   ],
-  "generated_at": "2026-04-07T11:38:03.235Z",
+  "generated_at": "2026-04-07T18:02:38.947Z",
   "lane_tokens": {
-    "contexts": 3920,
+    "contexts": 3991,
     "stubs": 0,
-    "summaries": 1856
+    "summaries": 1997
   },
-  "source_fingerprint": "36edac1b433fab35c9faa80ebb58ae888023415aae09e71fdf491ed4e8c5d8ac",
-  "total_tokens": 5776,
+  "source_fingerprint": "aeb9f160b44cc695c7ad99e83b563852f3e5e307e82caa24e55d2e87c0499589",
+  "total_tokens": 5988,
   "version": 1
 }

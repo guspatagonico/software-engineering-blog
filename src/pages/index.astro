@@ -21,9 +21,10 @@ function formatDate(dateStr: string): string {
   title="The SE Blog"
   description="Where systems thinking meets applied intelligence."
   isHome={true}
-    showBackground={false}
+  showBackground={false}
 >
-  <p class="tagline">Where systems thinking meets applied intelligence.</p>
+  <div class="homepage-content">
+    <p class="tagline">Where systems thinking meets applied intelligence.</p>
 
   <div class="post-list">
     {
@@ -40,6 +41,7 @@ function formatDate(dateStr: string): string {
         </a>
       ))
     }
+  </div>
   </div>
 </Base>
 
