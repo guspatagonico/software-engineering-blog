@@ -31,10 +31,10 @@ const finalDescription = description ?? post?.description;
   </head>
   <body>
     <Navbar />
+    <ScrollIndicator targetSelector=".post-layout" position="fixed" top="48px" />
     <header class="post-header">
       <h1>{title}</h1>
       {subtitle && <span class="post-subtitle">{subtitle}</span>}
-      <ScrollIndicator targetSelector=".post-layout" position="absolute" top="auto" bottom="0" />
     </header>
     <div class="post-layout">
       <slot />
@@ -47,7 +47,8 @@ const finalDescription = description ?? post?.description;
   body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
   }
 
   .post-header {
@@ -69,6 +70,12 @@ const finalDescription = description ?? post?.description;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .post-layout::-webkit-scrollbar {
+    display: none;
   }
 
   .post-header h1 {
@@ -86,24 +93,10 @@ const finalDescription = description ?? post?.description;
     text-transform: uppercase;
   }
 
-  .post-layout {
-    flex: 1;
-    display: flex;
-    min-height: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
   /* Responsive */
   @media (max-width: 767px) {
     .post-layout {
       overscroll-behavior: none;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .post-layout::-webkit-scrollbar {
-      display: none;
     }
 
     .post-header {
