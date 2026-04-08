@@ -40,6 +40,51 @@ const finalDescription = description ?? post?.description;
       <slot />
     </div>
     <Footer />
+
+    <!-- Handle URL hash for section navigation -->
+    <script is:inline>
+      (function() {
+        // Wait for React components to hydrate
+        function initHashNavigation() {
+          const hash = window.location.hash.slice(1);
+          if (!hash) return;
+
+          // Find the panel matching the hash
+          const panel = document.getElementById('panel-' + hash);
+          if (!panel) return;
+
+          // Activate the panel
+          document.querySelectorAll('.panel').forEach((p) => {
+            p.classList.remove('active');
+          });
+          panel.classList.add('active');
+
+          // Scroll to panel on mobile/tablet
+          const isMobile = window.innerWidth < 1024;
+          if (isMobile) {
+            setTimeout(() => {
+              panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+          }
+
+          // Dispatch a custom event so SectionNav can sync its state
+          window.dispatchEvent(new CustomEvent('section-activated', {
+            detail: { sectionId: hash }
+          }));
+        }
+
+        // Run on load and when DOM is ready
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initHashNavigation);
+        } else {
+          // Small delay to let React hydrate first
+          setTimeout(initHashNavigation, 50);
+        }
+
+        // Also run after Astro page transitions
+        document.addEventListener('astro:page-load', initHashNavigation);
+      })();
+    </script>
   </body>
 </html>
 

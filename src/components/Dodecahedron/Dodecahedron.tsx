@@ -309,8 +309,8 @@ export default function Dodecahedron({ className, autoHideOnScroll = false }: Do
       aria-label="Toggle Matrix background"
       style={{
         position: 'fixed',
-        bottom: '74px',
-        right: '24px',
+        bottom: '40px',
+        right: '0px',
         width: '128px',
         height: '128px',
         zIndex: 40,
