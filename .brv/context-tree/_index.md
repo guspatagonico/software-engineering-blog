@@ -1,35 +1,37 @@
 ---
-children_hash: e8b3da1136397b696fe2ee37e852e9c82888c401feabe921bb3c1b8664d61f53
-compression_ratio: 0.42794279427942794
+children_hash: f59b5a4712f5a501a0e4803d84bdeaa3e3c5a51efbfbb36046aa6b1c5f26ab50
+compression_ratio: 0.3900481540930979
 condensation_order: 3
 covers: [project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 2727
+covers_token_total: 3115
 summary_level: d3
-token_count: 1167
+token_count: 1215
 type: summary
 ---
-### project_guidelines
-- **Root Context (`context.md`)**: Defines pnpm-centered lifecycle (install/dev/build/lint/test), spelling out ownership (Gustavo Adrián Salvini), CI/onboarding focus, and constraints (no feature narratives).
-- **agents**: `context.md` + `project_agent_handbook.md` detail PNPM dispatcher agents enforcing scripts (install/dev/build/preview/lint/typecheck/test/playwright), strict stylistic conventions (TypeScript strict, single quotes, 2-space indent, `@/` aliasing, `<Image />` usage), layout mandates (BlogPost + SectionNav/panel IDs), worktree/security rules (GH CLI PRs, no secrets/`.env`, locked Vite config), and git handoff automation—key reference for coordination and security workflows.
-- **blog_post_architecture**: `blog_post_architecture.md` and `context.md` specify the structural template (BlogPost import, section ids/icons, SectionNav client:load, linked panels with only first `active`, shared components like Highlight/Card/ConvergentEnvelope, icon whitelist) plus homepage registration requirement; connected to `dev_process/context.md` for broader workflow compliance.
-- **dev_process**: `context.md` and `development_process_and_rules.md` capture enforced flow (style checks → pnpm lint/typecheck/format → tests → git worktree commits → GH CLI PRs), naming/import conventions, security posture (immutable Vite block, zero error swallowing, no secrets), tooling stack (pnpm, ESLint, TypeScript, Astro layouts, LocalStorage theme persistence), and highlight requirements (SectionNav client loads). 
-- **git_safe_mutations**: `context.md` and `git_mutation_approval_rule.md` codify mandate to secure explicit user consent before any git mutation (detect pending changes → confirm checks → ask for approval quote).
-- **run_commands**: `build_and_run_commands.md` catalogues pnpm-only lifecycle commands (install/dev/build/preview/lint/format/typecheck/Vitest/Playwright e2e) tied to dev_process for upstream validation.
+# Structural Knowledge Summary (Level d3)
 
-### project_management
-- **Domain Intent (`context.md`)**: Captures session handoff snapshots (tasks, blockers, files, pending actions) without implementation details; owned by Gustavo Adrián Salvini.
-- **handoffs topic**: 
-  - `context.md` links governance to `project_guidelines/dev_process`. 
-  - `current_session_handoff_rule.md` enforces current-session-only entries (log post-task, no duplication) for crisp tracking.
-  - `handoff_2026_04_04.md` documents April 4 handoff: SEO/OpenGraph metadata, canonical URL anchored at `https://dev.ecim.tech`, naming conventions (“The SE Blog | Gustavo Adrián Salvini”), shared component/CSS dependencies (Head, Navbar, Footer, Base, BlogPost, homepage, `src/styles/post-content.css`), pending Playwright e2e setup, and prohibition on new handoffs until outstanding tasks clear.
-- **run_commands topic**: `git_worktree_location.md` insists all worktrees reside under `<project_folder>/.worktrees/<branch>` with `git worktree add` into `.worktrees`, prepping directory and forbidding external locations.
+## project_guidelines
+- **Agents**: `context.md` plus `project_agent_handbook.md` describe the dispatcher-style agent flow: pnpm scripts (install/dev/build/preview/lint/typecheck/format/test/e2e), security checks, and `_handoff` exports run sequentially; enforce pnpm-only tooling, strict formatting (TypeScript strict, 2-space, single quotes, `@/` aliases), component layout (BlogPost + SectionNav + Panel structure), shared UI components, git worktree usage, no secrets/`.env`, locked Vite host config, GH CLI PR creation, non-apologetic review tone, and day-3 freeze.  
+- **Blog Post Architecture**: `blog_post_architecture.md` details mandated layout (BlogPost import, SectionNav client:load, panel IDs, first panel active), shared UI components, icon whitelist, inline styling, and homepage registration requirement, linking to dev process expectations.  
+- **Dev Process**: Enforces flow (style → lint/typecheck/format → tests → conventional commit via git worktree → GH CLI PR → cleanup), strict style/naming/import order, no silent errors, locked Vite config, secrets ban, and integration with SectionNav/React islands/LocalStorage theme persistence; facts include TypeScript strict mode, pre-commit checks, and security protections.  
+- **Git Safe Mutations**: `context.md` + `git_mutation_approval_rule.md` codify explicit user consent before commit/push/force, ensuring manual approval even after checks.  
+- **Run Commands**: `build_and_run_commands.md` catalogs pnpm lifecycle commands (install/dev/build/preview/lint/typecheck/format/test/test:e2e) reinforcing pnpm-only policy and linking back to dev process expectations.
 
-### ui
-- **Domain Context (`context.md`)**: Houses immersive UI effects (canvas/WebGL/particle layers) while excluding copy/content/backends; used for implementation/tuning.
-- **visual_effects topic**:
-  - `context.md` ties MatrixBackground, performance safeguards, and theme handling.
-  - `matrix_background.md` details quintuple canvas layers, responsive stream/count/alpha controls, gem-word timers, `CHAR_CHANGE_RATE`, theme/mouse listening, pointer-driven shockwave/vortex within 200 px, `requestAnimationFrame` rendering, and teardown logic.
-  - `matrix_background_toggle.md` explains `Base.astro` listener for `toggle-matrix-background`, toggling visibility class/localStorage state, and MatrixBackground halting when hidden.
-  - `dodecahedron_toggle.md` covers the Three.js button (128 px, dodecahedron & wireframe/glow meshes), ambient/directional/fill/rim/point lights, theme-aware materials, hover/touch animations, `toggle-matrix-background` dispatch, devicePixelRatio cap=3, antialiasing tone mapping/exposure settings, event listeners cleanup, and pointer/touch interaction rules.
-  - `glassy_navigation_layout.md` describes Navbar/Footer glass surfaces using shared tokens (`--glass-bg`, etc.), mobile drawer toggles tied to `data-visible` + `nav-open` body class, drawer ARIA/data attributes, and cross-theme token reuse.
-  - `scroll_feedback_system.md` explains `.page-container` flex + scrollable `.content`, hidden scrollbar, `ScrollIndicator.astro` progress bar under headers, scroll events updating width, Dodecahedron auto-hide timer (2 s off-home, `autoHideOnScroll=false` default), and layout/CSS adjustments spanning Base/BlogPost.
+## project_management
+- **Domain Intent** (`context.md`): Captures concise, current-session handoffs (tasks, decisions, blockers, files, pending work) under Gustavo’s ownership while excluding implementation detail.  
+- **Handoffs**: `_index.md` points to `context.md`, `current_session_handoff_rule.md` (enforce current-session-only entries, accurate tracking, no duplication), and `handoff_2026_04_04.md` (docs on SEO/Open Graph, canonical URLs tied to `https://dev.ecim.tech`, styling updates spanning Head/Navbar/Footer/Base/BlogPost/CSS, pending Playwright E2E work, and rule against premature handoff creation).  
+- **Run Commands**: `git_worktree_location.md` enforces centralized `.worktrees/<branch>` usage via `git worktree add`, prohibiting worktrees outside that directory for cleanup/tooling consistency.
+
+## ui
+- **Domain Purpose** (`context.md`): Documents immersive visuals (canvas/WebGL rain, particles, pointer-driven effects) and interactive components reacting to pointer/theme while excluding copy/data/backend logic; owned by Design Systems & Frontend.  
+- **Blog Post Layout**:  
+  - `blog_post_meta_footer_and_tags.md` prescribes layout chain (Navbar → ScrollIndicator → hero → slot → fixed meta footer → Footer), responsive meta footer offsets, teal tag chip styling, and hash-navigation script that syncs SectionNav, smooth-scrolls on small screens, and emits `section-activated`.  
+  - `context.md` synthesizes these patterns, their dependency on Navbar/ScrollIndicator/SectionNav/Footer, and relates to `visual_effects/scroll_feedback_system.md`.  
+- **Visual Effects Topic**: `context.md` defines MatrixBackground’s multi-layer rain, gem words, pointer/theme forces, and tuning guidance, serving as the hub.  
+  - **Matrix Background**: `matrix_background.md` details five canvas layers (speeds, sizes, alphas, responsive stream counts, gem words with paused updates), theme auto-detection, 200px interaction radius for shockwaves/vortices, and cleanup via `requestAnimationFrame`.  
+  - **Matrix Background Toggle**: `matrix_background_toggle.md` covers `Base.astro` wrapper with toggle events, localStorage persistence (`matrix-background-visible`), default hidden state, and render pausing when off.  
+  - **Dodecahedron Toggle**: `dodecahedron_toggle.md` documents the Three.js button (128px, z-index 40) with mesh/light setup, theme-aware materials, pointer/touch animations, toggle events, renderer disposal, and device pixel ratio cap.  
+  - **Glassy Navigation Layout**: `glassy_navigation_layout.md` explains blur/saturate tokens, mobile drawer overlays with data attributes for visibility, and JS toggles that manage `data-visible`/`nav-open` states shared across themes.  
+  - **Scroll Feedback System**: `scroll_feedback_system.md` describes the flex `.page-container` layout, hidden native scrollbars, `ScrollIndicator.astro` progress bars, Dodecahedron auto-hide timer, scroll event wiring to indicators/timer, and necessary Base/BlogPost/CSS tweaks.  
+
+Readers requiring implementation details should drill into each referenced entry (`project_guidelines/*`, `project_management/*`, `ui/*`) following these structural relationships.

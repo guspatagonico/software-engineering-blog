@@ -14,7 +14,7 @@ export const posts: PostMeta[] = [
     title: 'Limitaciones de los LLM en la actualidad',
     subtitle: 'Ventana de contexto y Smart Context',
     description: 'Ventana de contexto, Smart Context y estrategias para ahorrar tokens',
-    pubDate: '2026-04-01',
+    pubDate: '2026-03-20',
     tags: ['llm', 'context'],
   },
   {
@@ -22,7 +22,7 @@ export const posts: PostMeta[] = [
     title: 'Harness Engineering',
     subtitle: 'Guía práctica',
     description: 'Guía práctica · OpenCode + Sub-agentes',
-    pubDate: '2026-03-01',
+    pubDate: '2026-04-01',
     tags: ['guide'],
   },
   {
@@ -30,7 +30,7 @@ export const posts: PostMeta[] = [
     title: 'Bienvenidos al blog',
     subtitle: 'Punto de partida',
     description: 'Punto de partida · De qué va este espacio',
-    pubDate: '2026-04-02',
+    pubDate: '2026-03-15',
     tags: ['meta'],
   },
 ];

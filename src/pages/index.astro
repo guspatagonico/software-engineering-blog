@@ -8,11 +8,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const posts = getPublishedPosts();
 
 function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
+  // Parse YYYY-MM-DD manually to avoid timezone issues
+  const [year, month, day] = dateStr.split('-').map(Number);
+  // month is 0-indexed in Date constructor
+  const date = new Date(year, month - 1, day);
   return date.toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+    timeZone: 'UTC', // Keep UTC to preserve the exact date
   });
 }
 ---

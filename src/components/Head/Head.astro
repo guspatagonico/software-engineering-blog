@@ -7,6 +7,7 @@ interface Props {
   publishedTime?: string;
   author?: string;
   isHome?: boolean;
+  tags?: string[];
 }
 
 const {
@@ -17,6 +18,7 @@ const {
   publishedTime,
   author,
   isHome = false,
+  tags = [],
 } = Astro.props;
 
 const siteUrl = Astro.site ? Astro.site.origin : '';
@@ -31,6 +33,7 @@ const fullTitle = isHome
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="canonical" href={canonicalURL.href} />
 {description && <meta name="description" content={description} />}
+{tags.length > 0 && <meta name="keywords" content={tags.join(', ')} />}
 
 <!-- Open Graph -->
 <meta property="og:title" content={fullTitle} />
@@ -53,6 +56,11 @@ const fullTitle = isHome
   )
 }
 {type === 'article' && author && <meta property="article:author" content={author} />}
+{
+  type === 'article' && tags.length > 0 && (
+    tags.map((tag) => <meta property="article:tag" content={tag} />)
+  )
+}
 
 <!-- Fonts -->
 <link

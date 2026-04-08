@@ -3,7 +3,7 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1167,
+      "tokens": 1215,
       "type": "summary"
     },
     {
@@ -67,13 +67,13 @@
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-08T00:19:55.734Z",
+  "generated_at": "2026-04-08T02:59:26.295Z",
   "lane_tokens": {
     "contexts": 3991,
     "stubs": 0,
-    "summaries": 1948
+    "summaries": 1996
   },
-  "source_fingerprint": "398926012bf568aca7da2a2a0562869506253cdcd98fd93b519c8126a0f0eb6e",
-  "total_tokens": 5939,
+  "source_fingerprint": "2797430ac9ddc1948ab2579fecbe217c27cfa2ab46c211f1ba7d80828b592bd8",
+  "total_tokens": 5987,
   "version": 1
 }

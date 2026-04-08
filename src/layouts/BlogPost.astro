@@ -27,6 +27,7 @@ const finalDescription = description ?? post?.description;
       description={finalDescription}
       type="article"
       publishedTime={post?.pubDate}
+      tags={post?.tags}
     />
   </head>
   <body>
@@ -39,6 +40,24 @@ const finalDescription = description ?? post?.description;
     <div class="post-layout">
       <slot />
     </div>
+    
+    <!-- Post Meta Footer - Date and Tags (anchored right, above global footer) -->
+    {post && (
+      <div class="post-meta-footer">
+        <div class="post-meta-inner">
+          <span class="post-meta-label">Published</span>
+          <span class="post-meta-date">{post.pubDate}</span>
+        </div>
+        {post.tags.length > 0 && (
+          <div class="post-meta-tags">
+            {post.tags.map((tag) => (
+              <span class="post-tag">{tag}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    )}
+    
     <Footer />
 
     <!-- Handle URL hash for section navigation -->
@@ -204,6 +223,122 @@ const finalDescription = description ?? post?.description;
 
     .post-layout {
       flex-direction: column;
+    }
+  }
+
+  /* Post Meta Footer - Anchored to right above global footer */
+  .post-meta-footer {
+    position: fixed;
+    bottom: 70px; /* Height of global footer + spacing */
+    right: 0;
+    padding:8px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    z-index: 35;
+    max-width: 280px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .post-meta-inner {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .post-meta-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .post-meta-date {
+    font-size: 12px;
+    color: var(--text-bright);
+    font-weight: 500;
+  }
+
+  .post-meta-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .post-tag {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--teal);
+    background: rgba(0, 212, 170, 0.15);
+    padding: 3px 8px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0, 212, 170, 0.3);
+  }
+
+  /* Desktop */
+  @media (min-width: 1400px) {
+    .post-meta-footer {
+      bottom: 70px;
+      right: 0;
+    }
+  }
+
+  /* Tablet & Mobile - same full-width layout above footer */
+  @media (max-width: 1399px) {
+    .post-meta-footer {
+      position: fixed;
+      bottom: 59px; /* Footer: padding 12px*2 + border 1px + content ~16px = 47px */
+      /* bottom: 53px; */
+      left: 0;
+      right: 0;
+      max-width: none;
+      border-radius: 0;
+      border-right: none;
+      border-left: none;
+      border-top: 1px solid var(--border);
+      border-bottom: none;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+      margin: 0;
+      padding: 6px 16px; /* Reduced vertical padding */
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+      z-index: 45; /* Below footer (50) but above content */
+    }
+  }
+
+  /* Smaller screens - footer has less padding */
+  @media (max-width: 480px) {
+    .post-meta-footer {
+      bottom: 47px; /* Footer: padding 12px*2 + border 1px + content ~16px = 47px */
+      padding: 5px 16px;
+    }
+  }
+
+  /* Tablet & Mobile inner elements */
+  @media (max-width: 1023px) {
+    .post-meta-inner {
+      flex-shrink: 0;
+    }
+
+    .post-meta-tags {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .post-tag {
+      flex-shrink: 0;
+      padding: 2px 6px; /* Reduced padding for mobile/tablet */
+      font-size: 9px;
     }
   }
 </style>
