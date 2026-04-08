@@ -2,6 +2,8 @@
 
 > Where systems thinking meets applied intelligence.
 
+**🌐 Live Demo:** [https://dev.ecim.tech/software-engineering](https://dev.ecim.tech/software-engineering)
+
 An interactive blog at the intersection of **software engineering**, **software architecture**, and **agentic development**. Each post is a living artifact — data visualizations, architecture diagrams, math expressions, and interactive charts that you can explore, not just read.
 
 Built with **Astro**, **React islands**, and **TypeScript**, this blog demonstrates modern frontend patterns while exploring the bleeding edge of AI-augmented software development.
