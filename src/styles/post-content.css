@@ -7,9 +7,12 @@
   max-width: 100%;
 }
 
-@media (max-width: 767px) {
+/* Desktop: content is scrollable */
+@media (min-width: 1024px) {
   .content {
-    overscroll-behavior: none;
+    max-width: 1024px;
+    overflow-y: auto;
+    height: calc(100vh - 48px - 60px);
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -19,9 +22,15 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 767px) {
   .content {
-    max-width: 1024px;
+    overscroll-behavior: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
   }
 }
 
