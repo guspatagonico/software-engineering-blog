@@ -29,21 +29,10 @@ export default function SectionNav({ sections }: SectionNavProps) {
       const target = document.getElementById(`panel-${id}`);
       if (target) {
         target.classList.add('active');
-        // Scroll to the panel on mobile/tablet with offset
+        // Scroll to the panel on mobile/tablet
         const isMobile = window.innerWidth < 1024;
         if (isMobile) {
-          const scrollContainer = document.querySelector('.post-layout') || window;
-          const panelRect = target.getBoundingClientRect();
-          const offset = 20; // pixels of breathing room above the panel
-          const scrollTop =
-            panelRect.top +
-            (scrollContainer instanceof Element ? scrollContainer.scrollTop : window.pageYOffset) -
-            offset;
-
-          scrollContainer.scrollTo({
-            top: scrollTop,
-            behavior: 'smooth',
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       }
 

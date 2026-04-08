@@ -30,7 +30,6 @@ const finalDescription = description ?? post?.description;
   <body>
     <Navbar />
     <ScrollIndicator targetSelector=".content" position="fixed" top="48px" />
-    <!-- <ScrollIndicator targetSelector=".content" /> -->
     <header class="post-header">
       <h1>{title}</h1>
       {subtitle && <span class="post-subtitle">{subtitle}</span>}
@@ -76,26 +75,11 @@ const finalDescription = description ?? post?.description;
           });
           panel.classList.add('active');
 
-          // Scroll to panel on mobile/tablet with offset
+          // Scroll to panel on mobile/tablet
           const isMobile = window.innerWidth < 1024;
           if (isMobile) {
             setTimeout(() => {
-              const scrollContainer = document.querySelector('.post-layout');
-              const panelRect = panel.getBoundingClientRect();
-              const offset = 20; // pixels of breathing room above the panel
-              const scrollTop = panelRect.top + (scrollContainer ? scrollContainer.scrollTop : window.pageYOffset) - offset;
-              
-              if (scrollContainer) {
-                scrollContainer.scrollTo({
-                  top: scrollTop,
-                  behavior: 'smooth'
-                });
-              } else {
-                window.scrollTo({
-                  top: scrollTop,
-                  behavior: 'smooth'
-                });
-              }
+              panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
           }
 
