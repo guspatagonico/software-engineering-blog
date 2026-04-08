@@ -34,7 +34,11 @@ const style = position === 'fixed'
     if (!indicator) return;
 
     const targetSelector = indicator.dataset.target;
-    const target = targetSelector ? document.querySelector(targetSelector) : document.querySelector('.content');
+    // Try primary selector first, fallback to .content, then .post-layout, then body
+    let target = targetSelector ? document.querySelector(targetSelector) : null;
+    if (!target) target = document.querySelector('.content');
+    if (!target) target = document.querySelector('.post-layout');
+    if (!target) target = document.body;
 
     if (!target) return;
 

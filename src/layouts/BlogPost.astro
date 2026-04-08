@@ -31,7 +31,7 @@ const finalDescription = description ?? post?.description;
   </head>
   <body>
     <Navbar />
-    <ScrollIndicator targetSelector=".post-layout" position="fixed" top="48px" />
+    <ScrollIndicator targetSelector=".content" position="fixed" top="48px" />
     <header class="post-header">
       <h1>{title}</h1>
       {subtitle && <span class="post-subtitle">{subtitle}</span>}
@@ -67,11 +67,65 @@ const finalDescription = description ?? post?.description;
     flex: 1;
     display: flex;
     min-height: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     position: relative;
     scrollbar-width: none;
     -ms-overflow-style: none;
+  }
+
+  .post-layout::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Desktop: fixed section nav, scrolling content */
+  @media (min-width: 1024px) {
+    .post-layout {
+      overflow: hidden;
+    }
+
+    .post-layout > nav {
+      position: sticky;
+      top: calc(48px + 60px);
+      height: calc(100vh - 48px - 60px - 70px);
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .post-layout > .content {
+      flex: 1;
+      overflow-y: auto;
+      height: calc(100vh - 48px - 60px);
+    }
+  }
+
+  /* Tablet */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .post-layout {
+      flex-direction: column;
+      overflow-y: auto;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    .post-layout {
+      flex-direction: column;
+      overflow-y: auto;
+      overscroll-behavior: none;
+    }
+
+    .post-header {
+      padding: 16px;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .post-header h1 {
+      font-size: 16px;
+    }
+
+    .post-subtitle {
+      font-size: 10px;
+    }
   }
 
   .post-layout::-webkit-scrollbar {
