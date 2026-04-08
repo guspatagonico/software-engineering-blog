@@ -3,7 +3,7 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1192,
+      "tokens": 1167,
       "type": "summary"
     },
     {
@@ -14,8 +14,8 @@
     },
     {
       "order": 1,
-      "path": "project_guidelines/run_commands/_index.md",
-      "tokens": 335,
+      "path": "project_guidelines/git_safe_mutations/_index.md",
+      "tokens": 311,
       "type": "summary"
     },
     {
@@ -67,13 +67,13 @@
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-07T18:02:38.947Z",
+  "generated_at": "2026-04-08T00:19:55.734Z",
   "lane_tokens": {
     "contexts": 3991,
     "stubs": 0,
-    "summaries": 1997
+    "summaries": 1948
   },
-  "source_fingerprint": "aeb9f160b44cc695c7ad99e83b563852f3e5e307e82caa24e55d2e87c0499589",
-  "total_tokens": 5988,
+  "source_fingerprint": "398926012bf568aca7da2a2a0562869506253cdcd98fd93b519c8126a0f0eb6e",
+  "total_tokens": 5939,
   "version": 1
 }

@@ -1,47 +1,50 @@
 ---
-children_hash: d5dd195c26df13d2dc83944af3cafa5f5a2217843f405e64497587ea8781543e
-compression_ratio: 0.46057192374350087
+children_hash: baa3fe464e89f38657cf227c8363425e2294951a51b4e44b5363d42789705e2a
+compression_ratio: 0.45664309639002604
 condensation_order: 2
-covers: [agents/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, run_commands/_index.md]
-covers_token_total: 2308
+covers: [agents/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, run_commands/_index.md]
+covers_token_total: 2687
 summary_level: d2
-token_count: 1063
+token_count: 1227
 type: summary
 ---
-# Structural Summary of `project_guidelines` Domain (Level d2)
+# Structural Summary — Level d2
 
-## Agents
-- **Purpose & Coverage**: Documents AGENTS.md via `context.md` (overview of pnpm toolchain, SectionNav/panel layout, security/git/worktree rules, dispatcher pattern) and `project_agent_handbook.md` (full agent handbook with raw concepts, dependencies, rules, facts).
-- **Key Systems**:
-  - **Build & Tooling**: pnpm-only workflow (`install`, `dev` on `localhost:4321`, `build`, `preview`, lint/format/typecheck, Vitest, Playwright e2e); strict TypeScript, 2-space indentation, single quotes, `@/` alias, colocated component/test/style files, `<Image />` from `astro:assets`.
-  - **Content Layout**: Blog posts use `BlogPost`, `SectionNav client:load`, panels inside `.content` with ids `panel-{section.id}` and CSS classes (`panel active` first, others `panel`); SectionNav icons limited to approved set; shared components (`Highlight`, `Card`, `ConvergentEnvelope`) standardize UI.
-  - **Process & Security Rules**: git worktrees for complex work (trivial fixes on `main`), `_handoff` command writes git state to `_handoffs/`, no committing secrets/`.env`, maintain routing table, Vite server block fixed (`host: '0.0.0.0'`, `allowedHosts: ['galadriel']`), PR/issue flow via `gh`, PR reviews within 4h SLA, deny apologies.
-  - **Agent Dispatch**: Dispatcher orchestrates pnpm commands, security checks, handoff file generation; core agent usage pattern described in `context.md`.
+## project_guidelines
+- **Purpose & Scope (context.md)**: Defines repo-wide pnpm-driven build/lint/test/run conventions, ownership (Gustavo Adrián Salvini), and usage guidance for onboarding/CI automation while excluding feature-level narratives.
 
-## Blog Post Architecture
-- **Focus**: Enforces `BlogPost` layout pattern for every article, covering SectionNav setup, panel conventions, shared UI components, and homepage card registration (`src/pages/index.astro`).
-- **Structure & Rules**:
-  - Import `BlogPost`, prepare `sections` array (id/icon/label), render `SectionNav client:load`.
-  - Panels mirror SectionNav entries (`div` IDs `panel-{section.id}`, classes `panel`/`panel active`, only first active).
-  - Shared components (`Highlight`, `Card`, `ConvergentEnvelope`) applied for consistent styling; inline styles dictated by template.
-  - SectionNav icons drawn from approved set (◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑).
-  - Each new post must add corresponding homepage card to keep content surfaced.
+### agents (project_guidelines/agents)
+- **High-Level Coverage**: Captures AGENTS.md via `context.md` and `project_agent_handbook.md`, documenting pnpm-only tooling, repository security/git/worktree rules, layout conventions (SectionNav/panels), and the dispatcher-style multi-agent workflow coordinating pnpm scripts, security checks, and `_handoff` metadata exports.
+- **Key Architecture & Rules**:
+  - Tooling: `pnpm` scripts (install, dev @ localhost:4321, build, preview, lint/lint:fix, typecheck, format, Vitest, Playwright e2e); TypeScript strict mode; 2-space indentation; single quotes; `@/` alias usage; co-located components/tests/styles; `<Image />` from `astro:assets`.
+  - Layout: Every post uses `BlogPost`, `SectionNav client:load`, panel structure (first panel active, IDs `panel-{section.id}`), and shared components (Highlight/Card/ConvergentEnvelope) aligning with prescribed directories; SectionNav icons limited to approved set.
+  - Process & Security: Git worktree mandate for complex work, `_handoff` command capturing repo state, strict prohibition on secrets/`.env`, immutable Vite server block (`host: '0.0.0.0'`, `allowedHosts: ['galadriel']`), GH CLI PR creation, no agent naming or co-author trailers in commits, zero apologies in reviews, day 3 change freeze, PR reviews within 4h SLA.
+  - Agent Behavior: Dispatcher pattern triggering pnpm commands, security checks, and handoff artifacts ensures consistent agent execution.
 
-## Dev Process
-- **Scope & Flow**: Governs style, naming, error handling, security, parallel agent orchestration, git/PR workflow: style enforcement → `pnpm lint/typecheck/format` → tests → commit (conventional) → push via worktree → PR via `gh` post-checks → worktree cleanup.
-- **Key Conventions**:
-  - Style/naming: 2-space indent, single quotes, trailing commas, interface-based props, import ordering (Node/external → Astro → `@/` aliases → feature-relative), prescribed naming for components/hooks/utilities/stores/css/constants/types.
-  - Error handling & config: never swallow errors, keep Vite server config (`host: '0.0.0.0'`, `allowedHosts: ["galadriel"]`), no secrets in repo.
-  - Parallel work & agents: dispatcher splits tasks among agents (e.g., `@component-builder`, `@blog-writer`).
-  - Git/PR: git worktrees standard for larger work, run lint/typecheck/tests pre-commit, push after verification, open PR via `gh`.
-- **Dependencies**: pnpm, ESLint (`@astrojs/eslint-plugin`, `eslint-plugin-react-hooks`), TypeScript, Astro layouts, `gh` CLI.
-- **Highlights**: SectionNav must use `client:load`, prefer Astro components for static content, React islands only when needed, maintain Vite config, enforce strict TypeScript, manage theme persistence via LocalStorage.
+### blog_post_architecture (project_guidelines/blog_post_architecture)
+- **Layout Enforcement** (`blog_post_architecture.md` & `context.md`):
+  - Every entry imports `BlogPost`, defines sections with id/icon/label, renders `SectionNav client:load`, and aligns panels (`div` with `panel-{section.id}`) so navigation toggles active content; only first panel uses `panel active`.
+  - Shared UI components (Highlight, Card, ConvergentEnvelope) and inline `.content`/`.panel` styling enforce uniform presentation; SectionNav icons constrained to `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑`.
+  - Integration requirements include registering each new post on the homepage (`src/pages/index.astro`) immediately.
+- **Relation**: Linked to `project_guidelines/dev_process/context.md` for broader workflow expectations (processor integration, SectionNav client loads, use of Astro components/React islands).
 
-## Run Commands
-- **Purpose & Flow**: Catalogs pnpm scripts for dependency management, development, production builds, quality gates, and tests (Vitest + Playwright).
-- **Command Families** (`build_and_run_commands.md`):
-  - Setup/Development: `pnpm install` (locks deps via `pnpm-lock.yaml`), `pnpm dev` (Astro server `localhost:4321`).
-  - Production: `pnpm build`, `pnpm preview`.
-  - Quality: `pnpm lint`, `pnpm format`, `pnpm typecheck` (pnpm usage enforced, npm/yarn prohibited).
-  - Testing: Vitest (`pnpm test` with filters/patterns/watch), Playwright (`pnpm test:e2e`).
-- **Relations**: Reinforces pnpm-only policy and scripts referenced by `project_guidelines/dev_process`; serves as canonical command reference when orchestrating CI or agent workflows.
+### dev_process (project_guidelines/dev_process)
+- **Workflow & Enforcement**:
+  - Core flow: style enforcement → `pnpm lint/typecheck/format` → tests → commit (conventional messages) via git worktree → PR with GH CLI post-checks → worktree removal.
+  - Style/naming: 2-space indent, single quotes, trailing commas, interface-prop typing, import ordering (Node/external → Astro → `@/` aliases → same-feature relative), naming conventions for components/hooks/utils/stores/CSS/types.
+  - Error handling/security: No swallowed errors, immutable Vite server block, prohibition on committing secrets/API keys/`.env`.
+  - Collaboration: Parallel agent dispatcher (e.g., `@component-builder`, `@blog-writer`), git worktrees for non-trivial work, lint/typecheck prior to every commit, GH CLI for PRs; secrets and Vite config protected.
+- **Dependencies & Highlights**: pnpm, ESLint (`@astrojs/eslint-plugin`, `eslint-plugin-react-hooks`), TypeScript, Astro layouts; SectionNav client:load usage; prefer Astro components for static content, React islands for interactivity; LocalStorage for theme persistence.
+- **Facts for Drill-Down**: TypeScript strict mode, enforced import order, standard git worktrees, required pre-commit checks, secrets/Vite config protections.
+
+### git_safe_mutations (project_guidelines/git_safe_mutations)
+- **Mandated Consent Workflow** (`context.md` & `git_mutation_approval_rule.md`):
+  - No git commit/push/force push without explicit user approval regardless of lint/typecheck status.
+  - Flow: detect pending mutation → ensure checks passed → ask “Do you want me to commit and push?” → proceed after consent.
+  - Rule codified in AGENTS.md line 229; commitment to keep repo state under user control.
+
+### run_commands (project_guidelines/run_commands)
+- **Command Catalog** (`build_and_run_commands.md` & `context.md`):
+  - pnpm-only lifecycle: `pnpm install` (locks dependencies), `pnpm dev` (Astro on `localhost:4321`), `pnpm build`/`preview`, lint/format/typecheck commands, Vitest (`pnpm test`) with filtering/watch modes, Playwright e2e (`pnpm test:e2e`).
+  - Purpose: document dependency management, development, and quality checks, reinforcing pnpm-only policy.
+  - Relationship: Ties into `project_guidelines/dev_process` for upstream workflow expectations.

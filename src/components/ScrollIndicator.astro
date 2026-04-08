@@ -34,10 +34,22 @@ const style = position === 'fixed'
     if (!indicator) return;
 
     const targetSelector = indicator.dataset.target;
-    // Try primary selector first, fallback to .content, then .post-layout, then body
-    let target = targetSelector ? document.querySelector(targetSelector) : null;
-    if (!target) target = document.querySelector('.content');
-    if (!target) target = document.querySelector('.post-layout');
+    
+    // Helper: find the actually scrollable element
+    function findScrollableElement(selector: string) {
+      const el = document.querySelector(selector);
+      if (!el) return null;
+      const style = window.getComputedStyle(el);
+      const isScrollable = style.overflow === 'auto' || style.overflow === 'scroll' || 
+                          style.overflowY === 'auto' || style.overflowY === 'scroll';
+      return isScrollable ? el : null;
+    }
+    
+    // Try selectors in order, preferring actually scrollable elements
+    let target = targetSelector ? findScrollableElement(targetSelector) : null;
+    if (!target) target = findScrollableElement('.content');
+    if (!target) target = findScrollableElement('.post-layout');
+    if (!target) target = findScrollableElement('main');
     if (!target) target = document.body;
 
     if (!target) return;
