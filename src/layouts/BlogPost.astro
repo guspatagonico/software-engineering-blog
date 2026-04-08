@@ -75,11 +75,22 @@ const finalDescription = description ?? post?.description;
           });
           panel.classList.add('active');
 
-          // Scroll to panel on mobile/tablet
+          // Scroll to panel on mobile/tablet, accounting for .content padding
           const isMobile = window.innerWidth < 1024;
           if (isMobile) {
             setTimeout(() => {
-              panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              const scrollContainer = document.querySelector('.post-layout');
+              const contentPadding = 28; // .content padding-top
+              
+              // Calculate scroll position: panel offset from top of content minus padding
+              // This positions the panel right where .content starts visually
+              const scrollTop = panel.offsetTop - contentPadding;
+              
+              if (scrollContainer) {
+                scrollContainer.scrollTo({ top: scrollTop, behavior: 'smooth' });
+              } else {
+                window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+              }
             }, 100);
           }
 
