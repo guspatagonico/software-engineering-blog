@@ -93,6 +93,12 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
     -webkit-overflow-scrolling: touch;
     height: 100%;
     min-height: 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .content::-webkit-scrollbar {
+    display: none;
   }
 
   /* Responsive */
@@ -105,12 +111,6 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
       padding: 20px 16px;
       padding-bottom: 90px;
       overscroll-behavior: none;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-
-    .content::-webkit-scrollbar {
-      display: none;
     }
   }
 
