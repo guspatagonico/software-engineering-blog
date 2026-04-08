@@ -7,6 +7,9 @@ import SectionNav from '../../components/SectionNav/SectionNav';
 import ProjectTabs from '../../components/ProjectTabs/ProjectTabs';
 import Checklist from '../../components/Checklist/Checklist';
 import '../../styles/post-content.css';
+import { getPost } from '../../data/posts';
+
+const post = getPost('harness-engineering');
 
 const sections = [
   { id: 'mental-model', icon: '◈', label: 'Modelo mental' },
@@ -145,7 +148,7 @@ const checklistSections = [
 ];
 ---
 
-<BlogPost title="Harness Engineering" subtitle="Guía práctica · OpenCode + Sub-agentes">
+<BlogPost title="Harness Engineering" subtitle="Guía práctica · OpenCode + Sub-agentes" post={post}>
   <SectionNav client:load sections={sections} />
 
   <div class="content">

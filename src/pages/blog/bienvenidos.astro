@@ -4,6 +4,9 @@ import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
 import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
+import { getPost } from '../../data/posts';
+
+const post = getPost('bienvenidos');
 
 const sections = [
   { id: 'intro', icon: '◈', label: 'Intro' },
@@ -16,7 +19,7 @@ const sections = [
 ];
 ---
 
-<BlogPost title="Bienvenidos al blog" subtitle="Punto de partida">
+<BlogPost title="Bienvenidos al blog" subtitle="Punto de partida" post={post}>
   <SectionNav client:load sections={sections} />
 
   <div class="content">

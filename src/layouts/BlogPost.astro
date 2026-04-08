@@ -4,19 +4,16 @@ import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
 import ScrollIndicator from '@/components/ScrollIndicator.astro';
 import Head from '@/components/Head/Head.astro';
-import { getPost } from '@/data/posts';
+import type { PostMeta } from '@/data/posts';
 
 interface Props {
   title: string;
   subtitle?: string;
   description?: string;
+  post?: PostMeta;
 }
 
-const { title, subtitle, description } = Astro.props;
-
-// Try to get description from posts.ts if not provided as prop
-const postId = Astro.url.pathname.split('/').pop();
-const post = postId ? getPost(postId) : undefined;
+const { title, subtitle, description, post } = Astro.props;
 const finalDescription = description ?? post?.description;
 ---
 

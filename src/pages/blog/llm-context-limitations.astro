@@ -3,6 +3,9 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import ContextWindowChart from '../../components/ContextWindowChart/ContextWindowChart';
 import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
+import { getPost } from '../../data/posts';
+
+const post = getPost('llm-context-limitations');
 
 const sections = [
   { id: 'problema', icon: '◈', label: 'Problema' },
@@ -41,6 +44,7 @@ const contextModels = [
 <BlogPost
   title="Limitaciones de los LLM en la actualidad"
   subtitle="Ventana de contexto y Smart Context"
+  post={post}
 >
   <SectionNav client:load sections={sections} />
 
