@@ -1,12 +1,10 @@
 ---
-children_hash: 2e30d4697ff2712005d63f179405de23497339800e38d67ef680fb0b9f6ac197
-compression_ratio: 0.4435590969455511
-condensation_order: 1
-covers: [context.md, project_agent_handbook.md]
-covers_token_total: 1506
-summary_level: d1
-token_count: 668
-type: summary
+tags: []
+keywords: []
+importance: 56
+recency: 1
+maturity: draft
+accessCount: 2
 ---
 ### Domain: project_guidelines › agents
 - **Purpose:** Captures the AGENTS.md handbook for the Software Engineering Blog project, covering commands, architecture patterns, styling, security, worktree policies, and agent behaviors.

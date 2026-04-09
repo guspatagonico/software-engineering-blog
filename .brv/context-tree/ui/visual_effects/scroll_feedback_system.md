@@ -3,9 +3,10 @@ title: Scroll Feedback System
 tags: []
 related: [ui/visual_effects/dodecahedron_toggle.md]
 keywords: []
-importance: 55
+importance: 64
 recency: 1
 maturity: draft
+accessCount: 3
 updateCount: 1
 createdAt: '2026-04-07T18:00:12.146Z'
 updatedAt: '2026-04-07T18:02:08.278Z'

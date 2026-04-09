@@ -3,9 +3,10 @@ title: Project Agent Handbook
 tags: []
 related: [project_guidelines/run_commands/build_and_run_commands.md, project_guidelines/blog_post_architecture/blog_post_architecture.md, project_guidelines/dev_process/development_process_and_rules.md]
 keywords: []
-importance: 50
+importance: 100
 recency: 1
-maturity: draft
+maturity: core
+accessCount: 33
 createdAt: '2026-04-06T18:03:13.518Z'
 updatedAt: '2026-04-06T18:03:13.518Z'
 ---

@@ -1,12 +1,10 @@
 ---
-children_hash: 1e66132a1bc27418dec51255e9bc463f9350e3b38175412eae0ba357ba8f4d69
-compression_ratio: 0.5136612021857924
-condensation_order: 1
-covers: [blog_post_architecture.md, context.md]
-covers_token_total: 732
-summary_level: d1
-token_count: 376
-type: summary
+tags: []
+keywords: []
+importance: 56
+recency: 1
+maturity: draft
+accessCount: 2
 ---
 ## blog_post_architecture
 - **Purpose & Scope**: Defines the enforced BlogPost layout pattern that every entry must follow, covering SectionNav integration, panel conventions, shared UI components, and homepage card updates (see `blog_post_architecture.md` entries for details).

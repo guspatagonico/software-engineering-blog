@@ -1,12 +1,10 @@
 ---
-children_hash: a0cc250506a36e45c232023dc89e2564c3ea02c03e244f155b0038e60361a4f8
-compression_ratio: 0.3631713554987212
-condensation_order: 1
-covers: [blog_post_meta_footer_and_tags.md, context.md]
-covers_token_total: 1173
-summary_level: d1
-token_count: 426
-type: summary
+tags: []
+keywords: []
+importance: 53
+recency: 1
+maturity: draft
+accessCount: 1
 ---
 # Blog Post Layout Structural Summary
 
