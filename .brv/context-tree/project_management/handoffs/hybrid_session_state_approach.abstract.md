@@ -1,0 +1,1 @@
+ByteRover stores durable knowledge while handoffs hold ephemeral session state, so agents always query ByteRover first and consult handoffs only upon explicit request for transient context.

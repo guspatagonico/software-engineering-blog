@@ -3,77 +3,75 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1215,
+      "tokens": 1269,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "project_management/_index.md",
-      "tokens": 470,
+      "path": "facts/_index.md",
+      "tokens": 276,
       "type": "summary"
     },
     {
       "order": 1,
-      "path": "project_guidelines/git_safe_mutations/_index.md",
-      "tokens": 311,
+      "path": "facts/personal/_index.md",
+      "tokens": 322,
       "type": "summary"
     },
     {
-      "importance": 55,
-      "path": "ui/visual_effects/matrix_background.md",
-      "tokens": 724,
-      "type": "context"
-    },
-    {
-      "importance": 55,
-      "path": "ui/visual_effects/scroll_feedback_system.md",
-      "tokens": 795,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/agents/context.md",
-      "tokens": 155,
-      "type": "context"
-    },
-    {
-      "importance": 50,
+      "importance": 100,
       "path": "project_guidelines/agents/project_agent_handbook.md",
-      "tokens": 1351,
+      "tokens": 1355,
       "type": "context"
     },
     {
-      "importance": 50,
+      "importance": 100,
       "path": "project_guidelines/blog_post_architecture/blog_post_architecture.md",
-      "tokens": 634,
+      "tokens": 638,
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "project_guidelines/blog_post_architecture/context.md",
-      "tokens": 98,
+      "importance": 65,
+      "path": "project_management/handoffs/handoff_2026_04_04.md",
+      "tokens": 676,
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "project_guidelines/context.md",
-      "tokens": 134,
+      "importance": 64,
+      "path": "ui/visual_effects/scroll_feedback_system.md",
+      "tokens": 799,
       "type": "context"
     },
     {
+      "importance": 56,
+      "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
+      "tokens": 447,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
+      "abstractTokens": 47,
+      "importance": 55,
+      "path": "project_management/handoffs/hybrid_session_state_approach.md",
+      "tokens": 47,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/personal/caveman_style_preference.abstract.md",
+      "abstractTokens": 35,
       "importance": 50,
-      "path": "project_guidelines/dev_process/context.md",
-      "tokens": 100,
+      "path": "facts/personal/caveman_style_preference.md",
+      "tokens": 35,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-08T02:59:26.295Z",
+  "generated_at": "2026-04-13T14:40:46.501Z",
   "lane_tokens": {
-    "contexts": 3991,
+    "contexts": 3997,
     "stubs": 0,
-    "summaries": 1996
+    "summaries": 1867
   },
-  "source_fingerprint": "2797430ac9ddc1948ab2579fecbe217c27cfa2ab46c211f1ba7d80828b592bd8",
-  "total_tokens": 5987,
+  "source_fingerprint": "b0162ac11a1f5a3957167ea44148ea4dce346b8a431a92d59d99bd7fec6f48a2",
+  "total_tokens": 5864,
   "version": 1
 }

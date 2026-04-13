@@ -1,0 +1,1 @@
+Document mandates that the agent respond in caveman full mode with terse, article-free phrasing while preserving exact technical substance.

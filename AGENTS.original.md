@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-Interactive Software Engineering blog. Data viz, charts, tables, math, diagrams, dark/light mode. Astro + React islands.
+Interactive Software Engineering blog with data visualizations, charts, tables, math
+expressions, architecture diagrams, and dark/light mode.  
+Astro framework with React islands for interactive components.
 
 ### Author
 
@@ -12,30 +14,30 @@ Gustavo Adrián Salvini · guspatagonico@gmail.com · https://github.com/guspata
 
 ## Build & Run Commands
 
-Use **pnpm** (never npm/yarn).
+Uses **pnpm** (never npm/yarn).
 
 ```bash
-pnpm install          # install deps
-pnpm dev              # dev server (localhost:4321)
-pnpm build            # production → dist/
-pnpm preview          # serve prod locally
-pnpm lint             # ESLint + Prettier check
-pnpm lint:fix         # auto-fix lint
-pnpm typecheck        # astro check + tsc --noEmit
-pnpm format           # Prettier on src/
+pnpm install          # install dependencies
+pnpm dev              # start dev server (Astro on localhost:4321)
+pnpm build            # production build → dist/
+pnpm preview          # serve production build locally
+pnpm lint             # run ESLint + Prettier check
+pnpm lint:fix         # auto-fix lint issues
+pnpm typecheck        # run astro check + tsc --noEmit
+pnpm format           # run Prettier on src/
 ```
 
 ### Testing
 
 ```bash
-pnpm test             # all tests (Vitest)
-pnpm test -- path/to/file.test.ts        # single file
-pnpm test -- -t "test name"              # single test
-pnpm test:watch       # Vitest watch mode
-pnpm test:e2e         # Playwright e2e
+pnpm test             # run all tests (Vitest)
+pnpm test -- path/to/file.test.ts        # single test file
+pnpm test -- -t "test name substring"     # single test by name
+pnpm test:watch       # Vitest in watch mode
+pnpm test:e2e         # Playwright end-to-end
 ```
 
-Check `package.json` scripts before running.
+No test framework assumed — check `package.json` scripts before running.
 
 ---
 
@@ -45,7 +47,7 @@ Check `package.json` scripts before running.
 
 | Path           | Type          | Notes                                         |
 | -------------- | ------------- | --------------------------------------------- |
-| `/` (homepage) | Posts loop    | Blog is homepage — no `/blog`                 |
+| `/` (homepage) | Posts loop    | Blog is the homepage — no separate `/blog`    |
 | `/about`       | Static page   |                                               |
 | `/now`         | Static page   |                                               |
 | `/contact`     | Static + form | Links to github, x.com, gustavosalvini.com.ar |
@@ -117,11 +119,11 @@ const sections = [
 
 Key rules:
 
-- Always use `SectionNav` with `client:load` — never raw content without section navigation.
+- **Always** use `SectionNav` with `client:load` — never raw content without section navigation.
 - First panel gets `class="panel active"`, rest get `class="panel"`.
 - Panel `id` must be `panel-{section.id}` (prefixed with `panel-`).
 - Reuse existing components: `Highlight`, `Card`, `ConvergentEnvelope`, etc.
-- Add a card entry on `src/pages/index.astro` for every new post.
+- Add a card entry on the homepage (`src/pages/index.astro`) for every new post.
 - Use icons from: `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑` for section nav items.
 
 ### Component structure
@@ -139,8 +141,8 @@ src/
 
 ### State Management
 
-- Prefer **plain Astro components** with inline `<script>` for interactive UI (theme toggle).
-- Use React (`.tsx`) only when interactivity needs React-specific features (charts, complex state).
+- Prefer **plain Astro components** with inline `<script>` for interactive UI (e.g. theme toggle).
+- Use React (`.tsx`) only when interactivity requires React-specific features (charts, complex state).
 - **localStorage** for persistence (dark/light mode, etc.) — no cookies.
 - Avoid global Astro state; prefer props and content collections.
 
@@ -169,16 +171,17 @@ import type { Post } from '@/types';
 import { formatDate } from '@/utils/date';
 import ThemeToggle from '@/components/ThemeToggle';
 
-// 4. Relative (only within same feature folder)
+// 4. Relative (only within the same feature folder)
 import { useChartConfig } from './hooks';
 ```
 
-Use `@/` path alias for cross-folder imports; relative imports only within same feature directory.
+Use `@/` path alias for cross-folder imports; relative imports only within the same
+feature directory.
 
 ### Components
 
 - Astro components (`.astro`) for static content and layouts.
-- React components (`.tsx`) only when interactivity needed (charts, toggles, forms).
+- React components (`.tsx`) only when interactivity is needed (charts, toggles, forms).
 - Props typed with `interface`, not `type` — one interface per component.
 - Co-locate component, test, and styles: `Button/` → `Button.tsx`, `Button.test.tsx`, `Button.module.css`.
 
@@ -198,7 +201,7 @@ Use `@/` path alias for cross-folder imports; relative imports only within same 
 
 - Prefer `interface` for object shapes; `type` for unions/intersections/aliases.
 - Avoid `any` — use `unknown` and narrow. Enable `@typescript-eslint/no-explicit-any`.
-- Export types from barrel `types/index.ts` when shared across modules.
+- Export types from a barrel `types/index.ts` when shared across modules.
 - Use `satisfies` operator for config objects to keep literal types.
 
 ### Error Handling
@@ -221,8 +224,9 @@ Use `@/` path alias for cross-folder imports; relative imports only within same 
 
 - **Never** commit API keys, secrets, or `.env` files. Update `.gitignore` accordingly.
 - **Never** include agent names in commit messages, co-author trailers, PR text, or docs.
-- Do not remove/modify `server` block in `vite.config.ts` (`host: '0.0.0.0'`, `allowedHosts: ['galadriel']`) — LAN dev convenience, must be preserved.
-- **Never** commit and push until user explicitly asks.
+- Do not remove/modify the `server` block in `vite.config.ts` (`host: '0.0.0.0'`,
+  `allowedHosts: ['galadriel']`) — LAN dev convenience, must be preserved.
+- **Never** commit and push until the user explicitly asks to do so.
 - Use **GitHub CLI (`gh`)** for PR creation, issue management, and repo operations.
 
 ---
@@ -239,7 +243,7 @@ Complex tasks should be decomposed into smaller parallel subtasks using a dispat
 
 ### Custom Agents
 
-Specialized agents defined in `.opencode/agents/`:
+This project has specialized agents defined in `.opencode/agents/`:
 
 | Agent                | Purpose                                                        |
 | -------------------- | -------------------------------------------------------------- |
@@ -253,13 +257,13 @@ Specialized agents defined in `.opencode/agents/`:
 
 ### Usage
 
-Invoke specialized agent by mentioning it:
+Invoke a specialized agent by mentioning it:
 
 ```
 @component-builder create a FunnelChart component
 ```
 
-Or let orchestrator dispatch automatically:
+Or let the orchestrator dispatch automatically:
 
 ```
 @orchestrator I need to add a new blog post with a chart component and tests
@@ -302,7 +306,7 @@ Run `pnpm lint` and `pnpm typecheck` before committing.
 
 ### Git Worktree Workflow
 
-This project uses **git worktrees** to keep `main` branch clean and enable parallel work.
+This project uses **git worktrees** to keep the `main` branch clean and enable parallel work.
 
 #### When to use worktrees
 
@@ -363,59 +367,40 @@ This project uses **git worktrees** to keep `main` branch clean and enable paral
 
 #### Rules
 
-- **Never** commit and push until user explicitly asks.
+- **Never** commit and push until the user explicitly asks.
 - Do not merge branches without a PR.
 - Keep `main` clean — only merged PRs touch it.
 - Run `pnpm lint` and `pnpm typecheck` before committing.
 
 ---
 
-## Session State & Knowledge Management
+## Handoffs
 
-Hybrid approach using **Byterover** (persistent knowledge) and **handoffs** (ephemeral session state).
+Handoff files live in `_handoffs/` and capture the current project state to resume
+sessions without divergence.
 
-### Byterover (`.brv/context-tree/`)
+- **Default naming**: `handoff-{YYYY-MM-DD}-{HH-mm}.md`  
+  Example: `handoff-2026-04-01-14-30.md`
+- Custom names may be specified when requested.
+- Contents: completed tasks, in-progress work, blockers, decisions made, and next steps.
+- **Language**: All documentation — README.md, handoffs, comments in config files — must be
+  written in English. Blog post content may be in Spanish or English as required.
+- **Do not read or process handoff files automatically.** Only read a handoff when the user
+  explicitly asks to do so (e.g. by naming the file or pasting its contents).
 
-Persistent project knowledge base. Auto-queries at session start.
+### Command
 
-```bash
-brv query "how are blog posts structured?"     # Retrieve knowledge
-brv curate "Decision: use pnpm only, never npm/yarn"  # Save knowledge
-```
+Use `/handoff` to create a new handoff file automatically. It will:
 
-**Store in Byterover:**
-
-- Architecture patterns and conventions
-- Key decisions and their rationale
-- User preferences (communication style, workflow choices)
-- Component usage patterns and examples
-- Troubleshooting notes
-
-### Handoffs (`_handoffs/`)
-
-Ephemeral session state. User explicitly triggers creation/reading.
-
-- **Default naming**: `handoff-{YYYY-MM-DD}-{HH-mm}.md`
-- Contents: completed tasks (current session only), in-progress work, blockers, next steps
-- **Do not read automatically** — only when user explicitly asks
-
-**Command:** `/handoff` creates handoff automatically (fetches git status, generates sections, writes to `_handoffs/`)
-
-### When to use what
-
-| Type                    | Use                | Storage                  |
-| ----------------------- | ------------------ | ------------------------ |
-| Pattern/convention      | Byterover `curate` | Persistent, searchable   |
-| Architecture decision   | Byterover `curate` | Persistent, searchable   |
-| User preference         | Byterover `curate` | Persistent, searchable   |
-| Today's completed tasks | Handoff file       | Ephemeral, session-bound |
-| Current blockers        | Handoff file       | Ephemeral, session-bound |
-| Next steps              | Handoff file       | Ephemeral, session-bound |
-
-**Language:** All docs (README, handoffs, config comments) in English. Blog posts may be Spanish or English.
+1. Fetch git status and recent commits for context
+2. Generate the file with sections for completed, pending, blockers, decisions, and files
+3. Write the file to `_handoffs/`
 
 ---
 
 ## Seed
 
-Use `_seed/harness_engineering.html` as starting template for new blog posts. It contains a monolith HTML with embedded CSS and JS — decompose it into Astro components + React islands following the architecture above.
+Use `_seed/harness_engineering.html` as the starting template for new blog posts. It
+contains a monolith HTML with embedded CSS and JS — decompose it into Astro components
+
+- React islands following the architecture above.

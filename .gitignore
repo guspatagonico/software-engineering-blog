@@ -50,6 +50,9 @@ opencode.json
 opencode.jsonc
 .agents/
 
-# ByteRover — .brv/context-tree/ contains a nested .git managed by brv vc.
-# Without these entries, `git add .` fails with "does not have a commit checked out".
-# .brv/
+# ByteRover
+# .brv/context-tree/ is committed (shared knowledge base)
+# Temporary/cache files excluded:
+.brv/_queue_status.json
+.brv/review-backups/
+.brv/*.log

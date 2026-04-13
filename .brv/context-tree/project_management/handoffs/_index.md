@@ -1,40 +1,30 @@
 ---
-children_hash: 0d0bbdd0b29eeb0bb27c4733a0510f0551b0740a2fff8f7a58c31e098feffd5f
-compression_ratio: 0.5467445742904842
+children_hash: 8262921e4b0e083a62a3f545d21a6eea9ad1e28cd00fb860868410d694318e04
+compression_ratio: 0.269041095890411
 condensation_order: 1
-covers: [context.md, current_session_handoff_rule.md, handoff_2026_04_04.md]
-covers_token_total: 1198
+covers: [context.md, current_session_handoff_rule.md, handoff_2026_04_04.md, hybrid_session_state_approach.md]
+covers_token_total: 1825
 summary_level: d1
-token_count: 655
+token_count: 491
 type: summary
 ---
-# Handoffs Structural Summary
+# Project Management – Handoffs (structural summary)
 
-## Domain Overview (handoffs)
-- **context.md**: Captures the project snapshot at the April 4, 2026 handoff, highlighting SEO/metadata updates, shared `post-content.css` styling, homepage title conventions, and the outstanding Playwright E2E work. Points readers to `project_guidelines/dev_process` for related governance.
+- **Handoff Context (`context.md`)**
+  - Captures April 4, 2026 state: SEO/metadata rollout, shared styling (post-content.css), homepage title conventions, and pending Playwright E2E work.
+  - Serves as the domain anchor for handoff knowledge; links to broader process guidance in `project_guidelines/dev_process`.
 
-## Session Guidance (current_session_handoff_rule.md)
-- **Purpose**: Enforce that every handoff document contains only items completed during the active session to avoid noise.
-- **Flow**: Complete tasks → log them in the current handoff → exclude previously logged items → keep descriptions concise.
-- **Key Rules**:
-  1. Only include current-session completions.
-  2. Never repeat items from earlier sessions.
-  3. Keep text brief and focused on current work.
-- **Dependencies**: Requires accurate per-session task tracking so redundant content is automatically filtered.
-- **Facts**: Defines conventions for session scoping, deduplication, and brevity, emphasizing clarity for recipients.
+- **Current Session Rule (`current_session_handoff_rule.md`)**
+  - Defines the rule set for generating handoffs: only include work completed in the active session, omit previously noted items, and keep descriptions concise.
+  - Flow enforces session-based task tracking → concise handoff creation → delivery; dependencies require up-to-date completion tracking.
+  - Codified rules and facts enforce non-duplication and brevity, ensuring recipients focus on new outstanding work.
 
-## April 4, 2026 Handoff (handoff_2026_04_04.md)
-- **Task**: Document what shipped on April 4, what files were touched, and what remains.
-- **Changes & Architecture**:
-  - SEO, Open Graph, Twitter Card metadata, and canonical URL logic implemented.
-  - Homepage/blog title conventions (“The SE Blog | Gustavo Adrián Salvini”) and logo/table typography refined.
-  - Shared blog post styles extracted into `src/styles/post-content.css`, referenced by every post.
-  - Updates applied to `Head`, `Navbar`, `Footer`, `Base`, `BlogPost`, homepage, and multiple blog posts to align with new metadata and styling.
-- **Files**: Enumerates all affected components/layouts/pages and shared style sheets (e.g., `src/components/Head/Head.astro`, `src/styles/post-content.css`, `src/styles/global.css`, etc.).
-- **Flow**: Complete SEO/meta → refresh shared components/styles → ensure posts import shared CSS → apply consistent titles/logo/table styles → transition to Playwright E2E/extra posts.
-- **Dependencies**: Relies on the listed component/layout files and position of shared CSS to maintain consistent styling.
-- **Highlights/Facts**:
-  - Canonical URLs anchored at `https://dev.ecim.tech` with responsive content width limits (900px wide, 100% on narrow screens).
-  - Shared blog styling centralized in `post-content.css`; homepage and pages append the consistent title suffix.
-  - Pending work: Playwright E2E setup and publishing additional blog posts.
-- **Rules**: Do not produce handoff docs without explicit request; complete the pending checklist before closing iteration.
+- **April 4, 2026 Handoff (`handoff_2026_04_04.md`)**
+  - Documents completed SEO/canonical/Open Graph/Twitter metadata, homepage/blog title/logo typography, and shared style migration into `src/styles/post-content.css`.
+  - Lists touched files across Head, Navbar, Footer, Base/BlogPost layouts, multiple blog pages, and related CSS assets.
+  - Highlights site URL (`https://dev.ecim.tech`), max-width rules, new title suffix strategy, centralized styles, and outstanding tasks (Playwright E2E + additional posts); instructs not to process handoffs without explicit request.
+
+- **Hybrid Session State Approach (`hybrid_session_state_approach.md`)**
+  - Explains the dual-store pattern: ByteRover retains durable knowledge (patterns, decisions, preferences) while handoffs track ephemeral session state (tasks, blockers, next steps).
+  - Sets agent behavior: auto-query ByteRover at session start, defer handoff access until explicitly requested, keeping session noise low.
+  - Emphasizes division of responsibilities, persistence rules, and agent startup conventions for managing knowledge vs. ephemeral context.

@@ -1,25 +1,34 @@
 ---
-children_hash: 3d40e9264b12b2160b957b33a521639e00887f204706390206d093be202e529b
-compression_ratio: 0.4315886134067952
+children_hash: 7b25463b26e352b0d8fe835ac4d80d55b4365f61186dde22fe8473eedaff12fa
+compression_ratio: 0.7245444801714899
 condensation_order: 2
 covers: [context.md, handoffs/_index.md, run_commands/_index.md]
-covers_token_total: 1089
+covers_token_total: 933
 summary_level: d2
-token_count: 470
+token_count: 676
 type: summary
 ---
-# Project Management – Structural Summary (d2)
+## project_management domain overview
+- **Purpose & Ownership**: `context.md` defines the domain’s role in recording session handoff summaries (tasks done, decisions, blockers, pending actions, touched files) and names Gustavo Adrián Salvini as owner; it excludes implementation-level details.
+- **Scope enforcement**: Summaries should focus on completed work, decisions, blockers, pending actions, and touched files, keeping implementation specifics out of this domain unless directly tied to the handoff narrative.
 
-## Domain Intent and Ownership
-- **context.md** defines the domain’s mission: capture concise session handoff summaries that record completed tasks, decisions, blockers, files touched, and pending actions so collaborators can resume work efficiently; Gustavo Adrián Salvini owns this domain.
-- Scope intentionally excludes implementation minutiae, focusing only on the high-level snapshot of session work.
+## handoffs topic (d2 structural summary)
+- **Context anchor (`context.md`)**: Serves as the canonical reference for what belongs in handoff entries (completed work, decisions, blockers, pending actions, touched files) and links to broader process guidance in `project_guidelines/dev_process`.
+- **Current session rule (`current_session_handoff_rule.md`)**:
+  - Enforces session-bounded summaries: include only newly completed work, omit prior items, and keep descriptions concise.
+  - Flow: session task tracking → concise handoff creation → delivery to stakeholder.
+  - Dependencies: requires up-to-date completion tracking and non-duplication to keep recipients focused on outstanding work.
+- **April 4, 2026 handoff (`handoff_2026_04_04.md`)**:
+  - Captures SEO/metadata rollout, shared styling migration into `src/styles/post-content.css`, homepage and blog title conventions, and touched files (Head, Navbar, Footer, layouts, blog pages, CSS).
+  - Highlights: site URL `https://dev.ecim.tech`, max-width rules, new title suffix strategy, centralized styles, pending Playwright E2E work and additional posts.
+  - Operational note: do not process handoffs without explicit request.
+- **Hybrid session state approach (`hybrid_session_state_approach.md`)**:
+  - Establishes dual-store behavior: ByteRover for durable knowledge (patterns, decisions, preferences) and handoffs for ephemeral session state (tasks, blockers, next steps).
+  - Agent startup guidance: auto-query ByteRover, defer handoff access until explicitly requested; enforces responsibility separation and persistence rules.
 
-## Handoffs Topic
-- **handoffs/_index.md** (d1 summary) points to three child entries:
-  - **context.md** (as above) explains domain purpose and links to governance in `project_guidelines/dev_process`.
-  - **current_session_handoff_rule.md** outlines the current-session-only rule set—task completion → log in current handoff → exclude prior entries—with emphasis on accurate tracking, no duplication, and brevity to keep handoff docs relevant.
-  - **handoff_2026_04_04.md** provides the April 4 handoff: details of SEO/Open Graph metadata, canonical URL logic anchored at `https://dev.ecim.tech`, homepage/blog title conventions (“The SE Blog | Gustavo Adrián Salvini”), shared `src/styles/post-content.css`, and consistent component updates (`Head`, `Navbar`, `Footer`, `Base`, `BlogPost`, homepage, etc.); notes dependencies on those components and CSS placement, mentions pending Playwright E2E setup and future posts, and encodes rules against unsanctioned handoff creation until pending items complete.
-
-## Run Commands Topic
-- **run_commands/_index.md** (d1 summary) references:
-  - **git_worktree_location.md** which enforces keeping every worktree inside `<project_folder>/.worktrees/<branch_name>` using `git worktree add .worktrees/<branch_name> -b <branch_name>`, requiring the `.worktrees` directory prep, ensuring centralized management for cleanup and tooling, and forbidding worktrees outside that location.
+## run_commands topic
+- **Worktree convention (`git_worktree_location.md`)**:
+  - Purpose: centralize every project worktree inside `<project_folder>/.worktrees/<branch_name>` to avoid sibling-directory clutter.
+  - Flow: create feature branch → `git worktree add .worktrees/<branch_name> -b <branch_name>` → new worktree under `.worktrees`.
+  - Dependencies: `.worktrees` directory must exist at project root before adding worktrees.
+  - Highlights/fact: Centralizing worktrees simplifies cleanup, onboarding, tooling assumptions, and no worktree is allowed outside the prescribed location.
