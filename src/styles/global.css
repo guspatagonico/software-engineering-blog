@@ -80,12 +80,12 @@ pre {
   border-radius: 4px;
   padding: 16px 18px;
   font-family: var(--font);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   color: var(--text);
   overflow-x: auto;
   margin-bottom: 14px;
-  line-height: 1.9;
+  line-height: 1.4;
 }
 
 table {

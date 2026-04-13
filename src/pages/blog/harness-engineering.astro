@@ -243,36 +243,46 @@ const checklistSections = [
       </Highlight>
 
       <h3>Context Budget (template)</h3>
-      <pre><span class="cm">## Context Budget: [nombre-subagente]</span>
-
-Sistema:    ~800 tokens   <span class="cm">(AGENTS.md específico del sub-agente)</span>
-Spec task: ~1500 tokens   <span class="cm">(solo la sección relevante del spec)</span>
-Archivos:  ~3000 tokens   <span class="cm">(solo los archivos que necesita tocar)</span>
-Handoff:    ~500 tokens   <span class="cm">(resumen del estado de la fase anterior)</span>
-─────────────────────────────────────
-Total:     ~5800 tokens   <span class="cm">(margen amplio para el output)</span>
-
-<span class="cm">NO entra: historial previo, archivos de otros módulos,
-la spec completa del proyecto.</span></pre>
+      <div class="data-block">
+        <div class="data-header">## Context Budget: [nombre-subagente]</div>
+        <table>
+          <tr><td>Sistema:</td><td>~800 tokens <span class="data-note">(AGENTS.md específico del sub-agente)</span></td></tr>
+          <tr><td>Spec task:</td><td>~1500 tokens <span class="data-note">(solo la sección relevante del spec)</span></td></tr>
+          <tr><td>Archivos:</td><td>~3000 tokens <span class="data-note">(solo los archivos que necesita tocar)</span></td></tr>
+          <tr><td>Handoff:</td><td>~500 tokens <span class="data-note">(resumen del estado de la fase anterior)</span></td></tr>
+        </table>
+        <div class="data-separator"></div>
+        <table>
+          <tr class="data-total"><td>Total:</td><td>~5800 tokens <span class="data-note">(margen amplio para el output)</span></td></tr>
+        </table>
+        <div class="data-footer">NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto.</div>
+      </div>
 
       <h3>Handoff comprimido (template)</h3>
-      <pre><span class="cm">## Handoff: [nombre-subagente] → [destino]</span>
-<span class="kw">Completado</span>:   [qué hizo, en una oración]
-<span class="kw">Artefactos</span>:   [lista de archivos con paths exactos]
-<span class="kw">Estado clave</span>: [una o dos líneas relevantes para el siguiente agente]
-<span class="kw">Pendiente</span>:    [qué queda fuera de scope]
-<span class="kw">Blockers</span>:     ninguno | [descripción si hay alguno]
-<span class="kw">Resultado</span>:    DONE | PARTIAL | BLOCKED</pre>
+      <div class="data-block">
+        <div class="data-header">## Handoff: [nombre-subagente] → [destino]</div>
+        <table>
+          <tr><td>Completado:</td><td>[qué hizo, en una oración]</td></tr>
+          <tr><td>Artefactos:</td><td>[lista de archivos con paths exactos]</td></tr>
+          <tr><td>Estado clave:</td><td>[una o dos líneas relevantes para el siguiente agente]</td></tr>
+          <tr><td>Pendiente:</td><td>[qué queda fuera de scope]</td></tr>
+          <tr><td>Blockers:</td><td>ninguno | [descripción si hay alguno]</td></tr>
+          <tr><td>Resultado:</td><td>DONE | PARTIAL | BLOCKED</td></tr>
+        </table>
+      </div>
 
       <h3>Ejemplo real — pivot.lat</h3>
-      <pre><span class="cm">## Handoff: pmpro-css → pmpro-js</span>
-<span class="kw">Completado</span>:   Estilos del pricing table con SVG column icons y badge "Mejor Valor"
-<span class="kw">Artefactos</span>:   /wp-content/themes/pivot/css/pmpro-table.css
-<span class="kw">Estado clave</span>: La clase .pmpro-best-value marca la columna destacada;
-               JS debe toggle-arla via data-attribute, no inline styles
-<span class="kw">Pendiente</span>:    Responsive breakpoints en mobile (fuera de scope)
-<span class="kw">Blockers</span>:     ninguno
-<span class="kw">Resultado</span>:    <span class="kw">DONE</span></pre>
+      <div class="data-block">
+        <div class="data-header">## Handoff: pmpro-css → pmpro-js</div>
+        <table>
+          <tr><td>Completado:</td><td>Estilos del pricing table con SVG column icons y badge "Mejor Valor"</td></tr>
+          <tr><td>Artefactos:</td><td>/wp-content/themes/pivot/css/pmpro-table.css</td></tr>
+          <tr><td>Estado clave:</td><td>La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via data-attribute, no inline styles</td></tr>
+          <tr><td>Pendiente:</td><td>Responsive breakpoints en mobile (fuera de scope)</td></tr>
+          <tr><td>Blockers:</td><td>ninguno</td></tr>
+          <tr><td>Resultado:</td><td><strong style="color: var(--teal)">DONE</strong></td></tr>
+        </table>
+      </div>
 
       <h3>Session-state.md — fuente de verdad global</h3>
       <Highlight variant="amber">
@@ -281,24 +291,41 @@ la spec completa del proyecto.</span></pre>
         >. Entra en el context del orquestador en cada turno, pero <strong>nunca</strong> en el de los
         sub-agentes.
       </Highlight>
-      <pre><span class="cm"># Session State — pivot.lat</span>
-
-<span class="kw">Fase actual: 2 / 4</span>
-
-<span class="cm">Completado</span>
-  [x] pmpro-css: pricing table styling ✓
-  [x] wp-db: schema custom PMPro ✓
-
-<span class="cm">En progreso</span>
-  [ ] pmpro-js: comportamiento interactivo (en ejecución)
-  [ ] paypal-nvp: sandbox (bloqueado: creds pendientes)
-
-<span class="cm">Decisiones tomadas</span>
-  - Columna destacada via data-attribute, no inline styles
-  - Sandbox mode via WP_DEBUG constante
-
-<span class="cm">Blockers activos</span>
-  - paypal-nvp necesita PAYPAL_CLIENT_ID del cliente</pre>
+      <div class="data-block">
+        <div class="data-header"># Session State — pivot.lat</div>
+        <div style="color: var(--teal); font-weight: 600; margin-bottom: 12px;">Fase actual: 2 / 4</div>
+        
+        <div class="data-section">
+          <div class="data-section-title">Completado</div>
+          <ul class="data-list data-list-checked">
+            <li><span class="check">✓</span> pmpro-css: pricing table styling</li>
+            <li><span class="check">✓</span> wp-db: schema custom PMPro</li>
+          </ul>
+        </div>
+        
+        <div class="data-section">
+          <div class="data-section-title">En progreso</div>
+          <ul class="data-list">
+            <li><span class="bullet">○</span> pmpro-js: comportamiento interactivo (en ejecución)</li>
+            <li><span class="bullet">○</span> paypal-nvp: sandbox (bloqueado: creds pendientes)</li>
+          </ul>
+        </div>
+        
+        <div class="data-section">
+          <div class="data-section-title">Decisiones tomadas</div>
+          <ul class="data-list">
+            <li>Columna destacada via data-attribute, no inline styles</li>
+            <li>Sandbox mode via WP_DEBUG constante</li>
+          </ul>
+        </div>
+        
+        <div class="data-section">
+          <div class="data-section-title">Blockers activos</div>
+          <ul class="data-list">
+            <li>paypal-nvp necesita PAYPAL_CLIENT_ID del cliente</li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- ORQUESTACIÓN -->

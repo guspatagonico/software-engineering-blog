@@ -137,3 +137,99 @@
   color: var(--text-dim);
   margin-top: 32px;
 }
+
+/* Data block - styled like pre blocks but with proper key-value alignment */
+.data-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.data-block .data-header {
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.data-block .data-footer {
+  color: var(--text-dim);
+  font-style: italic;
+  margin-top: 12px;
+}
+
+.data-block table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin: 0;
+}
+
+.data-block table td {
+  padding: 2px 0;
+  border: none;
+  background: transparent;
+  vertical-align: top;
+}
+
+.data-block table td:first-child {
+  color: var(--teal);
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: 12px;
+  width: 1px;
+}
+
+.data-block table td:last-child {
+  color: var(--text);
+}
+
+.data-block .data-separator {
+  border-top: 1px solid var(--border);
+  margin: 8px 0;
+}
+
+.data-block .data-total {
+  font-weight: 600;
+}
+
+.data-block .data-note {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* Data sections with lists */
+.data-block .data-section {
+  margin-bottom: 12px;
+}
+
+.data-block .data-section-title {
+  color: var(--text-dim);
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.data-block .data-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.data-block .data-list li {
+  padding: 2px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.data-block .data-list .check {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.data-block .data-list .bullet {
+  color: var(--text-dim);
+}
