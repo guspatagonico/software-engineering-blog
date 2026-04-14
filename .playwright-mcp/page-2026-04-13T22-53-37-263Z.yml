@@ -1,0 +1,124 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Home" [ref=e3] [cursor=pointer]:
+      - /url: /software-engineering/
+      - generic [ref=e4]: "{ }"
+      - generic [ref=e5]: The SE Blog
+    - button "Toggle navigation" [ref=e126] [cursor=pointer]
+  - banner [ref=e18]:
+    - heading "Harness Engineering" [level=1] [ref=e19]
+    - generic [ref=e20]: Guía práctica · OpenCode + Sub-agentes
+  - generic [ref=e21]:
+    - generic [ref=e22]:
+      - button "Collapse sections" [expanded] [ref=e128] [cursor=pointer]:
+        - generic [ref=e129]: Secciones
+        - generic [ref=e130]: ▶
+      - navigation [ref=e23]:
+        - button "◈ Modelo mental" [ref=e25] [cursor=pointer]:
+          - generic [ref=e26]: ◈
+          - text: Modelo mental
+        - button "⬡ Sub-agentes" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: ⬡
+          - text: Sub-agentes
+        - button "▣ Context window" [ref=e29] [cursor=pointer]:
+          - generic [ref=e30]: ▣
+          - text: Context window
+        - button "⟳ Orquestación" [ref=e31] [cursor=pointer]:
+          - generic [ref=e32]: ⟳
+          - text: Orquestación
+        - button "⊕ Skills & MCPs" [ref=e33] [cursor=pointer]:
+          - generic [ref=e34]: ⊕
+          - text: Skills & MCPs
+        - button "✓ Checklist" [ref=e35] [cursor=pointer]:
+          - generic [ref=e36]: ✓
+          - text: Checklist
+        - button "≡ Vocabulario" [ref=e37] [cursor=pointer]:
+          - generic [ref=e38]: ≡
+          - text: Vocabulario
+    - generic [ref=e114]:
+      - heading "Orquestación paralela" [level=2] [ref=e115]
+      - generic [ref=e116]: Fork-Join · Detección de drift
+      - generic [ref=e40]:
+        - text: El orquestador
+        - strong [ref=e41]: no piensa sobre el dominio
+        - text: — mide distancia al objetivo y redirige. Su función es mantener la envolvente convergente activa.
+      - heading "Patrón Fork-Join" [level=3] [ref=e117]
+      - generic [ref=e131]:
+        - generic [ref=e132]: Orquestador
+        - generic [ref=e133]: ┌── Fork ──┐
+        - generic [ref=e134]:
+          - generic [ref=e135]:
+            - generic [ref=e136]: Sub-agente A
+            - generic [ref=e137]: CSS/frontend
+          - generic [ref=e138]:
+            - generic [ref=e139]: Sub-agente B
+            - generic [ref=e140]: PHP/backend
+          - generic [ref=e141]:
+            - generic [ref=e142]: Sub-agente C
+            - generic [ref=e143]: DB/queries
+        - generic [ref=e144]: └── Join ──┘
+        - generic [ref=e145]: Join
+        - generic [ref=e146]: ↓
+        - generic [ref=e147]: Validación
+        - generic [ref=e148]: ↓
+        - generic [ref=e149]: siguiente
+      - heading "Condiciones para paralelizar (las tres deben cumplirse)" [level=3] [ref=e120]
+      - generic [ref=e121]:
+        - generic [ref=e63]:
+          - generic [ref=e122]: "1"
+          - text: Los sub-agentes
+          - strong [ref=e64]: no escriben al mismo archivo
+        - generic [ref=e65]:
+          - generic [ref=e123]: "2"
+          - text: Sus outputs son
+          - strong [ref=e66]: independientes
+          - text: en esta fase (no se alimentan entre sí)
+        - generic [ref=e67]:
+          - generic [ref=e124]: "3"
+          - text: El orquestador puede
+          - strong [ref=e68]: validar cada output aisladamente
+      - heading "Señales de drift" [level=3] [ref=e125]
+      - table [ref=e69]:
+        - rowgroup [ref=e70]:
+          - row "Señal Interpretación Acción del orquestador" [ref=e71]:
+            - columnheader "Señal" [ref=e72]
+            - columnheader "Interpretación" [ref=e73]
+            - columnheader "Acción del orquestador" [ref=e74]
+        - rowgroup [ref=e75]:
+          - row "Output más extenso de lo esperado Expansión de scope Interrumpir, re-definir scope" [ref=e76]:
+            - cell "Output más extenso de lo esperado" [ref=e77]
+            - cell "Expansión de scope" [ref=e78]
+            - cell "Interrumpir, re-definir scope" [ref=e79]
+          - row "Modificaciones a archivos fuera del scope Violación de barrier function Revertir, separar en nuevo sub-agente" [ref=e80]:
+            - cell "Modificaciones a archivos fuera del scope" [ref=e81]
+            - cell "Violación de barrier function" [ref=e82]
+            - cell "Revertir, separar en nuevo sub-agente" [ref=e83]
+          - row "Preguntas sobre dominio ajeno al task Ambigüedad en el spec Aclarar y proveer contexto mínimo" [ref=e84]:
+            - cell "Preguntas sobre dominio ajeno al task" [ref=e85]
+            - cell "Ambigüedad en el spec" [ref=e86]
+            - cell "Aclarar y proveer contexto mínimo" [ref=e87]
+          - row "Output que no matchea el schema de handoff Contrato roto Re-ejecutar con spec más restrictiva" [ref=e88]:
+            - cell "Output que no matchea el schema de handoff" [ref=e89]
+            - cell "Contrato roto" [ref=e90]
+            - cell "Re-ejecutar con spec más restrictiva" [ref=e91]
+          - row "Loops de auto-corrección (>2 iteraciones) Convergencia prematura Cambiar enfoque o partir el task" [ref=e92]:
+            - cell "Loops de auto-corrección (>2 iteraciones)" [ref=e93]
+            - cell "Convergencia prematura" [ref=e94]
+            - cell "Cambiar enfoque o partir el task" [ref=e95]
+  - generic [ref=e96]:
+    - generic [ref=e97]:
+      - generic [ref=e98]: Published
+      - generic [ref=e99]: 2026-04-01
+    - generic [ref=e101]: guide
+  - contentinfo [ref=e102]:
+    - generic [ref=e103]: Gustavo Adrián Salvini
+    - generic [ref=e104]:
+      - link "GitHub" [ref=e105] [cursor=pointer]:
+        - /url: https://github.com/guspatagonico
+        - img [ref=e106]
+      - link "X" [ref=e108] [cursor=pointer]:
+        - /url: https://x.com/guspatagonico
+        - img [ref=e109]
+      - link "Website" [ref=e111] [cursor=pointer]:
+        - /url: https://gustavosalvini.com.ar
+        - img [ref=e112]

@@ -1,55 +1,35 @@
 ---
-children_hash: cbb008e0a9c3eb631588c88275fb030d0253fc59342b58622f3812e8d527d6e7
-compression_ratio: 0.7307692307692307
+children_hash: 78db1fc6ae83b231116348bf6f85d18efd7ea7104873b74df0f48d942d76a3f0
+compression_ratio: 0.6245772266065389
 condensation_order: 2
 covers: [blog_post_layout/_index.md, context.md, visual_effects/_index.md]
-covers_token_total: 1612
+covers_token_total: 1774
 summary_level: d2
-token_count: 1178
+token_count: 1108
 type: summary
 ---
-# ui Domain Structure (Level d2)
+### Domain Overview: `ui`
+- **Purpose & Scope (`context.md`)**: Captures immersive interface visuals/animated backgrounds used across the site; focuses on Canvas/WebGL effects, layered digital rain, particle systems, and pointer/theme‑responsive components. Excludes content copy, data models, backend logic. Owned by Design Systems & Frontend, aimed at documenting implementation/tuning/optimization.
 
-- **Purpose & Scope (`context.md`)**  
-  - Captures immersive interface visuals (canvas/WebGL backgrounds, layered rain, particle sims) and interactive components reacting to pointer/theme inputs; excludes content copy, data models, backend logic.  
-  - Owned by Design Systems & Frontend; used for documenting implementation, tuning, optimization of animated UI elements.
+---
 
-## blog_post_layout Topic Overview
-- **`blog_post_meta_footer_and_tags.md`**  
-  - Layout chain: Navbar → ScrollIndicator → sticky hero header → slot → fixed meta footer → Footer, with hash-navigation script synchronizing SectionNav and enforcing layout rules.  
-  - Meta footer variants: Desktop/tablet – 70px bottom offset, 280px max-width, flush edges; mobile (<767px) – full-width row 53px above Footer with z-index 45; small mobile (<480px) – offset reduces to 47px via tighter padding.  
-  - Tag chips: uppercase teal, 9px/700 weight, 3×8px padding, teal border, responsive padding shrink; mobile chips remain flex-wrap friendly.  
-  - Hash navigation script: on `DOMContentLoaded`/`astro:page-load`, clears `.active`, applies to hash targets, smooth-scrolls below 1024px, emits `section-activated` events; enforces layout rules alongside fixed footer/tag behavior.
+### Topic: `blog_post_layout`
+- **Layout Structure (`context.md`)**: `BlogPost.astro` composes Navbar → ScrollIndicator → hero header → slot content → Footer, with a responsive meta footer overlay positioned differently on desktop (vertical stack) versus mobile (horizontal row). Hash‑navigation script syncs SectionNav panels, emits `section-activated`, and smooth-scrolls under 1024 px.
+- **Meta Footer & Tags (`blog_post_meta_footer_and_tags.md`)**:
+  - Footer positioning: fixed 70 px above viewport on desktop/tablet (max 280 px width, z-index 35); at 53 px (mobile) / 47 px (small mobile) above Footer while keeping content scrollable.
+  - Tags: uppercase teal chips (9px, 700 weight, padded borders) that shrink/res-wrap on small screens.
+  - Hash nav rules: clears `.active` panels, reactivates `panel-<hash>`, smooth-scrolls on narrow viewports, and dispatches `section-activated` events before/after Astro page load.
+- **Content Styling (`post_content_styles.md` & `_index.md`)**:
+  - Shared utilities in `src/styles/post-content.css`: `.content` wrapper, responsive grids (`.post-grid`, `.card-stack`), accent/muted table helpers (coloring second/third columns), panel/callout blocks with teal accents, `.data-block` metadata frames, and 175 px vocabulary term columns with amber text.
+  - Styling flow: wrapper → grids → tables → accent helpers → panels/callouts → data blocks → utility text states → vocabulary grid. Relies on theme tokens (`--teal`, `--border`, `--surface`, etc.) and accent table variables.
 
-- **`context.md` (blog_post_layout)**  
-  - Synthesizes fixed meta footer patterns, teal responsive tags, and hash-navigation helper; highlights dependencies on Navbar, ScrollIndicator, SectionNav, Footer, and the hash script’s role in coordination.  
-  - Relates to `ui/visual_effects/scroll_feedback_system.md` for downstream navigation feedback integration.
+---
 
-## visual_effects Topic Set
-- **`context.md` (visual_effects domain entry)**  
-  - Defines MatrixBackground’s layered rain, gem-word highlights, pointer and theme forces, and performance tuning; serves as hub for related visual components.
-
-- **Component Breakdown**
-  - **Matrix Background (`matrix_background.md`)**  
-    - Five canvas layers manage speed/size/alpha/column coverage with responsive stream counts (60/180/220) and 44 gem words; gem char updates pause while regular chars update at `CHAR_CHANGE_RATE=0.3`.  
-    - Interactions: theme detection via DOM attribute/storage/prefers-color-scheme, mouse-driven shockwaves/vortices within 200px, responsive listeners; renders via `requestAnimationFrame`, cleans listeners, preserves gem timer state.
-
-  - **Matrix Background Toggle (`matrix_background_toggle.md`)**  
-    - `Base.astro` hosts `#matrix-bg-wrapper`, initializes matrix visibility state, listens for `toggle-matrix-background`, toggles `matrix-bg-visible` class/localStorage, and MatrixBackground stops rendering when hidden.  
-    - Defaults to hidden with persistence via `matrix-background-visible` key.
-
-  - **Dodecahedron Toggle (`dodecahedron_toggle.md`)**  
-    - Fixed 128px Three.js button (z-index 40) with dodecahedron/wireframe/glow meshes; uses ambient/directional/fill/rim/point lights, theme-aware materials, pointer hover/touch animations for rotation/scale/glow.  
-    - Reacts to theme-change/resizes, dispatches `toggle-matrix-background`, caps `devicePixelRatio` at 3, disposes renderer/geometry/material on unmount, enforces ACESFilmicToneMapping, `PCFShadowMap`, exposure 1.0.  
-    - Hover pauses animations on pointer devices; touch toggles only; click emits toggle event; placement ensures consistent overlay.
-
-  - **Glassy Navigation Layout (`glassy_navigation_layout.md`)**  
-    - Navbar/Footer use backdrop-filter blur/saturate glass surfaces controlled by tokens (`--glass-bg`, `--glass-bg-mobile`, `--overlay-bg`); mobile drawer overlays with staggered link reveal delays, aria/data attributes controlling visibility.  
-    - JS toggles manage drawer vis states via `data-visible` and `nav-open` body class; shared tokens used by both themes; visibility tightly tied to data attributes/class.
-
-  - **Scroll Feedback System (`scroll_feedback_system.md`)**  
-    - Layout: `.page-container` flex wrapper + scrollable `.content` keeps page scroll at viewport edge while Navbar and headers host `ScrollIndicator`; native scrollbars hidden globally.  
-    - Components: `ScrollIndicator.astro` renders 3px green progress bars under Navbar/headers; Dodecahedron gets `autoHideOnScroll` prop (false default) to hide after 2s inactivity on non-home pages.  
-    - Flow: Scroll events update indicator width and trigger Dodecahedron visibility timer; changes include Base/BlogPost layout tweaks and CSS adjustments for scroll behavior.
-
-Readers seeking implementation detail should drill into each entry (`blog_post_meta_footer_and_tags.md`, `visual_effects/*`) while understanding these structural relationships and rules.
+### Topic: `visual_effects`
+- **Domain Context (`visual_effects/_index.md` + `context.md`)**: Serves as the hub for animated UI elements, especially MatrixBackground and related toggles/components; documents layered rain, gem-word highlights, mouse interactions, and performance tuning for Canvas/WebGL effects. Emphasizes shared tokens, listeners, and cleanup responsibilities.
+- **Components & Relationships**:
+  - **Matrix Background (`matrix_background.md`)**: Five-layer canvas managing speed/size/alpha/columns with responsive stream counts (60/180/220), 44 flickering gem words (pause gem timers while others change at CHAR_CHANGE_RATE=0.3), theme detection (attributes/storage/events), mouse shockwave/vortex within 200 px, and ensured cleanup via requestAnimationFrame loops and listeners.
+  - **Matrix Background Toggle (`matrix_background_toggle.md`)**: `Base.astro` wraps `#matrix-bg-wrapper`, watches `toggle-matrix-background` events, toggles `matrix-bg-visible` class/localStorage, and short-circuits MatrixBackground draw loop when hidden. Default state hidden; visibility persists via `matrix-background-visible`.
+  - **Dodecahedron Toggle (`dodecahedron_toggle.md`)**: Fixed 128 px button (z-index 40) housing Three.js meshes (dodecahedron, wireframe, glow) with ambient/directional/fill/rim/point lights; theme-aware materials, hover/touch animations (rotation/scale/glow), toggles matrix background via `toggle-matrix-background`, listens to theme changes, resizes, and disposes WebGL resources (caps devicePixelRatio at 3, uses ACESFilmicToneMapping, PCFShadowMap, exposure 1.0). Hover pauses animations on pointers; touches only toggle visibility.
+  - **Glassy Navigation Layout (`glassy_navigation_layout.md`)**: `Navbar.astro` and `Footer.astro` employ backdrop-filter blur/saturate glass surfaces driven by tokens (`--glass-bg`, `--glass-bg-mobile`, `--overlay-bg`); mobile drawer uses JS toggles to animate overlay/drawer linked to `data-visible` attributes and `nav-open` body class with staggered reveal delays. Glass surfaces must use shared tokens across themes.
+  - **Scroll Feedback System (`scroll_feedback_system.md`)**: Layout wraps content with `.page-container` flex + scrollable `.content`, hides native scrollbars, and places ScrollIndicator (3 px green bar) under Navbar/headers; scroll events update indicator width and trigger Dodecahedron auto-hide (enabled on non-home pages with 2 s timeout). Layout adjustments relate to Base and BlogPost updates.

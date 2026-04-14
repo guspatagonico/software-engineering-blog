@@ -1,22 +1,24 @@
 ---
-tags: []
-keywords: []
-importance: 53
-recency: 1
-maturity: draft
-accessCount: 1
+children_hash: d32c9b82d8ba7bd17acb6316da64a5eec7062fe69a1fb0f7f29d9daf3b0ea9d2
+compression_ratio: 0.2372112211221122
+condensation_order: 1
+covers: [blog_post_meta_footer_and_tags.md, context.md, post_content_styles.md, post_content_styles/_index.md]
+covers_token_total: 2424
+summary_level: d1
+token_count: 575
+type: summary
 ---
-# Blog Post Layout Structural Summary
+### Blog Post Layout
+- **Context Overview**: `context.md` defines the BlogPost layout, highlighting the hero header, ScrollIndicator, fixed post meta footer, and hash-navigation interop for SectionNav.
+- **Structural Flow**: `BlogPost.astro` renders Navbar → ScrollIndicator → hero header → content slot, then overlays the responsive post-meta-footer (desktop vertical stack vs. mobile horizontal row), followed by Footer and the hash-navigation script that syncs SectionNav panels.
+- **Key Relationships**: Meta footer depends on Navbar, ScrollIndicator, Footer, and SectionNav; the hash script toggles `.active` panels, smooth-scrolls under 1024px, and dispatches `section-activated` events to keep navigation aligned.
 
-- **BlogPost.astro shell (blog_post_meta_footer_and_tags.md)**  
-  - Assembles Navbar → ScrollIndicator → sticky hero header → content slot, overlays fixed meta footer above Footer, then renders Footer and runs hash-navigation script.  
-  - Meta footer behavior: desktop/tablet keep 70px bottom offset with 280px max width and flush styling; mobile (<767px) switches to full-width row 53px above Footer (accounting for padding/border) with z-index 45; small mobile (<480px) reduces offset to 47px via tighter vertical padding.  
-  - Tag chips: uppercase teal styling (9px/700 weight) with 3px×8px padding, rgba(0,212,170,0.15) background, 1px teal border; mobile pads shrink to 2px×6px while chips remain flex-wrap friendly.  
-  - Hash-navigation: inline script running on DOMContentLoaded and astro:page-load removes `.active` from panels, adds it to the hash-target panel, smooth-scrolls when viewport <1024px, and dispatches `section-activated` CustomEvents for SectionNav sync; enforces Rule 3 along with fixed footer and tag rules (Rule 1/2) for consistent layout.
+### Blog Post Meta Footer and Tags (`blog_post_meta_footer_and_tags.md`)
+- **Meta Footer Behavior**: Fixed 70 px above the viewport for desktop/tablet (max 280 px width, z-index 35, flush box-shadow) and shifts to full-width rows at 53 px (mobile) or 47 px (small mobile) above Footer, keeping main content scrollable underneath.
+- **Post Tag Styling**: Tags render as uppercase teal chips (9px font, 700 weight, 3×8 px padding with teal border/background) and shrink to 2×6 px on small screens while wrapping flexibly.
+- **Hash Navigation Rules**: Inline script runs before/after Astro page load, clears `.active` from all panels, reassigns it to `panel-<hash>`, smooth-scrolls if width <1024 px, and emits `section-activated` CustomEvents for SectionNav.
 
-- **Topic overview (context.md)**  
-  - Captures the combined pattern: fixed meta footer variants, teal responsive tag chips, and hash-navigation helper driving SectionNav.  
-  - Highlights the dependency on Navbar, ScrollIndicator, SectionNav, and Footer plus hash script interactions.  
-  - Signals relation to `ui/visual_effects/scroll_feedback_system.md` for downstream navigation feedback.
-
-Readers can drill down into `blog_post_meta_footer_and_tags.md` for specific offsets, styling rules, and hash script logic, and into `context.md` for the overarching layout intent and relationships.
+### Post Content Styles (`post_content_styles.md` + `_index` summary)
+- **Shared Styling Utilities**: `src/styles/post-content.css` defines the `.content` wrapper, responsive grids (`.post-grid`, `.card-stack`), accent/muted table helpers, panel/callout blocks, `.data-block`, utility text states, and vocabulary grids to keep blog content consistent.
+- **Structural Sequence**: Content wrapper → grid/card helpers → table structure → accent/muted helpers → panels/callouts → data-block → utility classes → vocabulary grid.
+- **Highlights & Dependencies**: Relies on theme tokens (`--teal`, `--border`, `--surface`, etc.) and table accent variables; accent helpers color the second/third columns, panels add teal accents, `.data-block` frames metadata, and vocabulary rows enforce a 175 px term column with amber text.

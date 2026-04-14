@@ -1,0 +1,1 @@
+The Post Content Styles document explains how src/styles/post-content.css centralizes blog post body styling with layout helpers, accented/muted table columns, consistent panels, callouts, data blocks, vocabulary rows, and inline text utilities.

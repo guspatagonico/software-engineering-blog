@@ -1,0 +1,1 @@
+The post-content.css document details reusable responsive wrappers, accent/muted helpers, panels, callouts, data-blocks, utility text styles, and vocabulary grids so blog posts maintain consistent themed layout and data display without ad-hoc CSS.

@@ -1,0 +1,137 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Home" [ref=e3] [cursor=pointer]:
+      - /url: /software-engineering/
+      - generic [ref=e4]: "{ }"
+      - generic [ref=e5]: The SE Blog
+    - button "Toggle navigation" [ref=e7] [cursor=pointer]
+  - banner [ref=e9]:
+    - heading "Harness Engineering" [level=1] [ref=e10]
+    - generic [ref=e11]: Guía práctica · OpenCode + Sub-agentes
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - button "Collapse sections" [expanded] [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Secciones
+        - generic [ref=e16]: ▶
+      - navigation [ref=e17]:
+        - button "◈ Modelo mental" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: ◈
+          - text: Modelo mental
+        - button "⬡ Sub-agentes" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: ⬡
+          - text: Sub-agentes
+        - button "▣ Context window" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ▣
+          - text: Context window
+        - button "⟳ Orquestación" [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]: ⟳
+          - text: Orquestación
+        - button "⊕ Skills & MCPs" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: ⊕
+          - text: Skills & MCPs
+        - button "✓ Checklist" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: ✓
+          - text: Checklist
+        - button "≡ Vocabulario" [ref=e30] [cursor=pointer]:
+          - generic [ref=e31]: ≡
+          - text: Vocabulario
+    - generic [ref=e33]:
+      - heading "Orquestación paralela" [level=2] [ref=e34]
+      - generic [ref=e35]: Fork-Join · Detección de drift
+      - generic [ref=e36]:
+        - text: El orquestador
+        - strong [ref=e37]: no piensa sobre el dominio
+        - text: — mide distancia al objetivo y redirige. Su función es mantener la envolvente convergente activa.
+      - heading "Patrón Fork-Join" [level=3] [ref=e38]
+      - generic [ref=e40]:
+        - generic [ref=e41]:
+          - generic [ref=e42]: Orquestador
+          - generic [ref=e43]: →
+          - generic [ref=e44]: ╶┬╴
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]: ↓
+            - generic [ref=e48]:
+              - generic [ref=e49]: Sub-agente A
+              - generic [ref=e50]: CSS/frontend
+            - generic [ref=e51]: ↓
+          - generic [ref=e52]:
+            - generic [ref=e53]: ↓
+            - generic [ref=e54]:
+              - generic [ref=e55]: Sub-agente B
+              - generic [ref=e56]: PHP/backend
+            - generic [ref=e57]: ↓
+          - generic [ref=e58]:
+            - generic [ref=e59]: ↓
+            - generic [ref=e60]:
+              - generic [ref=e61]: Sub-agente C
+              - generic [ref=e62]: DB/queries
+            - generic [ref=e63]: ↓
+        - generic [ref=e64]:
+          - generic [ref=e65]: ╶┴╴
+          - generic [ref=e66]: →
+          - generic [ref=e67]: Join
+          - generic [ref=e68]: →
+          - generic [ref=e69]: Validación
+          - generic [ref=e70]: →
+          - generic [ref=e71]: siguiente
+      - heading "Condiciones para paralelizar (las tres deben cumplirse)" [level=3] [ref=e72]
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - generic [ref=e75]: "1"
+          - text: Los sub-agentes
+          - strong [ref=e76]: no escriben al mismo archivo
+        - generic [ref=e77]:
+          - generic [ref=e78]: "2"
+          - text: Sus outputs son
+          - strong [ref=e79]: independientes
+          - text: en esta fase (no se alimentan entre sí)
+        - generic [ref=e80]:
+          - generic [ref=e81]: "3"
+          - text: El orquestador puede
+          - strong [ref=e82]: validar cada output aisladamente
+      - heading "Señales de drift" [level=3] [ref=e83]
+      - table [ref=e84]:
+        - rowgroup [ref=e85]:
+          - row "Señal Interpretación Acción del orquestador" [ref=e86]:
+            - columnheader "Señal" [ref=e87]
+            - columnheader "Interpretación" [ref=e88]
+            - columnheader "Acción del orquestador" [ref=e89]
+        - rowgroup [ref=e90]:
+          - row "Output más extenso de lo esperado Expansión de scope Interrumpir, re-definir scope" [ref=e91]:
+            - cell "Output más extenso de lo esperado" [ref=e92]
+            - cell "Expansión de scope" [ref=e93]
+            - cell "Interrumpir, re-definir scope" [ref=e94]
+          - row "Modificaciones a archivos fuera del scope Violación de barrier function Revertir, separar en nuevo sub-agente" [ref=e95]:
+            - cell "Modificaciones a archivos fuera del scope" [ref=e96]
+            - cell "Violación de barrier function" [ref=e97]
+            - cell "Revertir, separar en nuevo sub-agente" [ref=e98]
+          - row "Preguntas sobre dominio ajeno al task Ambigüedad en el spec Aclarar y proveer contexto mínimo" [ref=e99]:
+            - cell "Preguntas sobre dominio ajeno al task" [ref=e100]
+            - cell "Ambigüedad en el spec" [ref=e101]
+            - cell "Aclarar y proveer contexto mínimo" [ref=e102]
+          - row "Output que no matchea el schema de handoff Contrato roto Re-ejecutar con spec más restrictiva" [ref=e103]:
+            - cell "Output que no matchea el schema de handoff" [ref=e104]
+            - cell "Contrato roto" [ref=e105]
+            - cell "Re-ejecutar con spec más restrictiva" [ref=e106]
+          - row "Loops de auto-corrección (>2 iteraciones) Convergencia prematura Cambiar enfoque o partir el task" [ref=e107]:
+            - cell "Loops de auto-corrección (>2 iteraciones)" [ref=e108]
+            - cell "Convergencia prematura" [ref=e109]
+            - cell "Cambiar enfoque o partir el task" [ref=e110]
+  - generic [ref=e111]:
+    - generic [ref=e112]:
+      - generic [ref=e113]: Published
+      - generic [ref=e114]: 2026-04-01
+    - generic [ref=e116]: guide
+  - contentinfo [ref=e117]:
+    - generic [ref=e118]: Gustavo Adrián Salvini
+    - generic [ref=e119]:
+      - link "GitHub" [ref=e120] [cursor=pointer]:
+        - /url: https://github.com/guspatagonico
+        - img [ref=e121]
+      - link "X" [ref=e123] [cursor=pointer]:
+        - /url: https://x.com/guspatagonico
+        - img [ref=e124]
+      - link "Website" [ref=e126] [cursor=pointer]:
+        - /url: https://gustavosalvini.com.ar
+        - img [ref=e127]

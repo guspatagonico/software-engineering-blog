@@ -1,0 +1,131 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Home" [ref=e3] [cursor=pointer]:
+      - /url: /software-engineering/
+      - generic [ref=e4]: "{ }"
+      - generic [ref=e5]: The SE Blog
+    - generic [ref=e7]:
+      - link "About" [ref=e8] [cursor=pointer]:
+        - /url: /software-engineering/about
+      - link "Now" [ref=e9] [cursor=pointer]:
+        - /url: /software-engineering/now
+      - link "Contact" [ref=e10] [cursor=pointer]:
+        - /url: /software-engineering/contact
+      - button "Toggle theme" [ref=e11] [cursor=pointer]:
+        - img [ref=e12]
+  - banner [ref=e18]:
+    - heading "Harness Engineering" [level=1] [ref=e19]
+    - generic [ref=e20]: Guía práctica · OpenCode + Sub-agentes
+  - generic [ref=e21]:
+    - navigation [ref=e23]:
+      - generic [ref=e24]: Secciones
+      - button "◈ Modelo mental" [ref=e25] [cursor=pointer]:
+        - generic [ref=e26]: ◈
+        - text: Modelo mental
+      - button "⬡ Sub-agentes" [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: ⬡
+        - text: Sub-agentes
+      - button "▣ Context window" [ref=e29] [cursor=pointer]:
+        - generic [ref=e30]: ▣
+        - text: Context window
+      - button "⟳ Orquestación" [ref=e31] [cursor=pointer]:
+        - generic [ref=e32]: ⟳
+        - text: Orquestación
+      - button "⊕ Skills & MCPs" [ref=e33] [cursor=pointer]:
+        - generic [ref=e34]: ⊕
+        - text: Skills & MCPs
+      - button "✓ Checklist" [ref=e35] [cursor=pointer]:
+        - generic [ref=e36]: ✓
+        - text: Checklist
+      - button "≡ Vocabulario" [ref=e37] [cursor=pointer]:
+        - generic [ref=e38]: ≡
+        - text: Vocabulario
+    - generic [ref=e40]:
+      - heading "Orquestación paralela" [level=2] [ref=e41]
+      - generic [ref=e42]: Fork-Join · Detección de drift
+      - generic [ref=e43]:
+        - text: El orquestador
+        - strong [ref=e44]: no piensa sobre el dominio
+        - text: — mide distancia al objetivo y redirige. Su función es mantener la envolvente convergente activa.
+      - heading "Patrón Fork-Join" [level=3] [ref=e45]
+      - generic [ref=e48]:
+        - generic [ref=e49]: Orquestador
+        - generic [ref=e50]: →
+        - generic [ref=e51]: Fork
+        - generic [ref=e52]: →
+        - generic [ref=e53]:
+          - generic [ref=e54]:
+            - generic [ref=e55]: A
+            - generic [ref=e56]: CSS
+          - generic [ref=e57]:
+            - generic [ref=e58]: B
+            - generic [ref=e59]: PHP
+          - generic [ref=e60]:
+            - generic [ref=e61]: C
+            - generic [ref=e62]: DB
+        - generic [ref=e63]: →
+        - generic [ref=e64]: Join
+        - generic [ref=e65]: →
+        - generic [ref=e66]: Validación
+        - generic [ref=e67]: →
+        - generic [ref=e68]: siguiente
+      - heading "Condiciones para paralelizar (las tres deben cumplirse)" [level=3] [ref=e69]
+      - generic [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: "1"
+          - text: Los sub-agentes
+          - strong [ref=e73]: no escriben al mismo archivo
+        - generic [ref=e74]:
+          - generic [ref=e75]: "2"
+          - text: Sus outputs son
+          - strong [ref=e76]: independientes
+          - text: en esta fase (no se alimentan entre sí)
+        - generic [ref=e77]:
+          - generic [ref=e78]: "3"
+          - text: El orquestador puede
+          - strong [ref=e79]: validar cada output aisladamente
+      - heading "Señales de drift" [level=3] [ref=e80]
+      - table [ref=e81]:
+        - rowgroup [ref=e82]:
+          - row "Señal Interpretación Acción del orquestador" [ref=e83]:
+            - columnheader "Señal" [ref=e84]
+            - columnheader "Interpretación" [ref=e85]
+            - columnheader "Acción del orquestador" [ref=e86]
+        - rowgroup [ref=e87]:
+          - row "Output más extenso de lo esperado Expansión de scope Interrumpir, re-definir scope" [ref=e88]:
+            - cell "Output más extenso de lo esperado" [ref=e89]
+            - cell "Expansión de scope" [ref=e90]
+            - cell "Interrumpir, re-definir scope" [ref=e91]
+          - row "Modificaciones a archivos fuera del scope Violación de barrier function Revertir, separar en nuevo sub-agente" [ref=e92]:
+            - cell "Modificaciones a archivos fuera del scope" [ref=e93]
+            - cell "Violación de barrier function" [ref=e94]
+            - cell "Revertir, separar en nuevo sub-agente" [ref=e95]
+          - row "Preguntas sobre dominio ajeno al task Ambigüedad en el spec Aclarar y proveer contexto mínimo" [ref=e96]:
+            - cell "Preguntas sobre dominio ajeno al task" [ref=e97]
+            - cell "Ambigüedad en el spec" [ref=e98]
+            - cell "Aclarar y proveer contexto mínimo" [ref=e99]
+          - row "Output que no matchea el schema de handoff Contrato roto Re-ejecutar con spec más restrictiva" [ref=e100]:
+            - cell "Output que no matchea el schema de handoff" [ref=e101]
+            - cell "Contrato roto" [ref=e102]
+            - cell "Re-ejecutar con spec más restrictiva" [ref=e103]
+          - row "Loops de auto-corrección (>2 iteraciones) Convergencia prematura Cambiar enfoque o partir el task" [ref=e104]:
+            - cell "Loops de auto-corrección (>2 iteraciones)" [ref=e105]
+            - cell "Convergencia prematura" [ref=e106]
+            - cell "Cambiar enfoque o partir el task" [ref=e107]
+  - generic [ref=e108]:
+    - generic [ref=e109]:
+      - generic [ref=e110]: Published
+      - generic [ref=e111]: 2026-04-01
+    - generic [ref=e113]: guide
+  - contentinfo [ref=e114]:
+    - generic [ref=e115]: Gustavo Adrián Salvini
+    - generic [ref=e116]:
+      - link "GitHub" [ref=e117] [cursor=pointer]:
+        - /url: https://github.com/guspatagonico
+        - img [ref=e118]
+      - link "X" [ref=e120] [cursor=pointer]:
+        - /url: https://x.com/guspatagonico
+        - img [ref=e121]
+      - link "Website" [ref=e123] [cursor=pointer]:
+        - /url: https://gustavosalvini.com.ar
+        - img [ref=e124]

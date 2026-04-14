@@ -1,0 +1,168 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Home" [ref=e3] [cursor=pointer]:
+      - /url: /software-engineering/
+      - generic [ref=e4]: "{ }"
+      - generic [ref=e5]: The SE Blog
+    - button "Toggle navigation" [ref=e7] [cursor=pointer]
+  - banner [ref=e9]:
+    - heading "Harness Engineering" [level=1] [ref=e10]
+    - generic [ref=e11]: Guía práctica · OpenCode + Sub-agentes
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - button "Collapse sections" [expanded] [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Secciones
+        - generic [ref=e16]: ▶
+      - navigation [ref=e17]:
+        - button "◈ Modelo mental" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: ◈
+          - text: Modelo mental
+        - button "⬡ Sub-agentes" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: ⬡
+          - text: Sub-agentes
+        - button "▣ Context window" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ▣
+          - text: Context window
+        - button "⟳ Orquestación" [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]: ⟳
+          - text: Orquestación
+        - button "⊕ Skills & MCPs" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: ⊕
+          - text: Skills & MCPs
+        - button "✓ Checklist" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: ✓
+          - text: Checklist
+        - button "≡ Vocabulario" [ref=e30] [cursor=pointer]:
+          - generic [ref=e31]: ≡
+          - text: Vocabulario
+    - generic [ref=e33]:
+      - heading "Estrategia de context window" [level=2] [ref=e34]
+      - generic [ref=e35]: Partición · Handoff · Compresión
+      - generic [ref=e36]:
+        - text: El context window es el recurso más escaso. Llenarlo = pérdida de coherencia = entropía. El diseño correcto no es usar ventanas más grandes — es que cada sub-agente opere con el contexto
+        - strong [ref=e37]: mínimo suficiente
+        - text: .
+      - heading "Context Budget (template)" [level=3] [ref=e38]
+      - generic [ref=e39]:
+        - generic [ref=e40]: "## Context Budget: [nombre-subagente]"
+        - table [ref=e41]:
+          - rowgroup [ref=e42]:
+            - 'row "Sistema: ~800 tokens (AGENTS.md específico del sub-agente)" [ref=e43]':
+              - cell "Sistema:" [ref=e44]
+              - cell "~800 tokens (AGENTS.md específico del sub-agente)" [ref=e45]
+            - 'row "Spec task: ~1500 tokens (solo la sección relevante del spec)" [ref=e46]':
+              - cell "Spec task:" [ref=e47]
+              - cell "~1500 tokens (solo la sección relevante del spec)" [ref=e48]
+            - 'row "Archivos: ~3000 tokens (solo los archivos que necesita tocar)" [ref=e49]':
+              - cell "Archivos:" [ref=e50]
+              - cell "~3000 tokens (solo los archivos que necesita tocar)" [ref=e51]
+            - 'row "Handoff: ~500 tokens (resumen del estado de la fase anterior)" [ref=e52]':
+              - cell "Handoff:" [ref=e53]
+              - cell "~500 tokens (resumen del estado de la fase anterior)" [ref=e54]
+            - row [ref=e55]:
+              - cell [ref=e56]
+            - 'row "Total: ~5800 tokens (margen amplio para el output)" [ref=e58]':
+              - cell "Total:" [ref=e59]
+              - cell "~5800 tokens (margen amplio para el output)" [ref=e60]
+        - generic [ref=e61]: "NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto."
+      - heading "Handoff comprimido (template)" [level=3] [ref=e62]
+      - generic [ref=e63]:
+        - generic [ref=e64]: "## Handoff: [nombre-subagente] → [destino]"
+        - table [ref=e65]:
+          - rowgroup [ref=e66]:
+            - 'row "Completado: [qué hizo, en una oración]" [ref=e67]':
+              - cell "Completado:" [ref=e68]
+              - cell "[qué hizo, en una oración]" [ref=e69]
+            - 'row "Artefactos: [lista de archivos con paths exactos]" [ref=e70]':
+              - cell "Artefactos:" [ref=e71]
+              - cell "[lista de archivos con paths exactos]" [ref=e72]
+            - 'row "Estado clave: [una o dos líneas relevantes para el siguiente agente]" [ref=e73]':
+              - cell "Estado clave:" [ref=e74]
+              - cell "[una o dos líneas relevantes para el siguiente agente]" [ref=e75]
+            - 'row "Pendiente: [qué queda fuera de scope]" [ref=e76]':
+              - cell "Pendiente:" [ref=e77]
+              - cell "[qué queda fuera de scope]" [ref=e78]
+            - 'row "Blockers: ninguno | [descripción si hay alguno]" [ref=e79]':
+              - cell "Blockers:" [ref=e80]
+              - cell "ninguno | [descripción si hay alguno]" [ref=e81]
+            - 'row "Resultado: DONE | PARTIAL | BLOCKED" [ref=e82]':
+              - cell "Resultado:" [ref=e83]
+              - cell "DONE | PARTIAL | BLOCKED" [ref=e84]
+      - heading "Ejemplo real — pivot.lat" [level=3] [ref=e85]
+      - generic [ref=e86]:
+        - generic [ref=e87]: "## Handoff: pmpro-css → pmpro-js"
+        - table [ref=e88]:
+          - rowgroup [ref=e89]:
+            - 'row "Completado: Estilos del pricing table con SVG column icons y badge \"Mejor Valor\"" [ref=e90]':
+              - cell "Completado:" [ref=e91]
+              - cell "Estilos del pricing table con SVG column icons y badge \"Mejor Valor\"" [ref=e92]
+            - 'row "Artefactos: /wp-content/themes/pivot/css/pmpro-table.css" [ref=e93]':
+              - cell "Artefactos:" [ref=e94]
+              - cell "/wp-content/themes/pivot/css/pmpro-table.css" [ref=e95]
+            - 'row "Estado clave: La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via data-attribute, no inline styles" [ref=e96]':
+              - cell "Estado clave:" [ref=e97]
+              - cell "La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via data-attribute, no inline styles" [ref=e98]
+            - 'row "Pendiente: Responsive breakpoints en mobile (fuera de scope)" [ref=e99]':
+              - cell "Pendiente:" [ref=e100]
+              - cell "Responsive breakpoints en mobile (fuera de scope)" [ref=e101]
+            - 'row "Blockers: ninguno" [ref=e102]':
+              - cell "Blockers:" [ref=e103]
+              - cell "ninguno" [ref=e104]
+            - 'row "Resultado: DONE" [ref=e105]':
+              - cell "Resultado:" [ref=e106]
+              - cell "DONE" [ref=e107]:
+                - strong [ref=e108]: DONE
+      - heading "Session-state.md — fuente de verdad global" [level=3] [ref=e109]
+      - generic [ref=e110]:
+        - text: El orquestador mantiene un archivo comprimido que es el
+        - strong [ref=e111]: único estado global del proyecto
+        - text: . Entra en el context del orquestador en cada turno, pero
+        - strong [ref=e112]: nunca
+        - text: en el de los sub-agentes.
+      - generic [ref=e113]:
+        - generic [ref=e114]: "# Session State — pivot.lat"
+        - generic [ref=e115]: "Fase actual: 2 / 4"
+        - generic [ref=e116]:
+          - generic [ref=e117]: Completado
+          - list [ref=e118]:
+            - listitem [ref=e119]:
+              - generic [ref=e120]: ✓
+              - text: "pmpro-css: pricing table styling"
+            - listitem [ref=e121]:
+              - generic [ref=e122]: ✓
+              - text: "wp-db: schema custom PMPro"
+        - generic [ref=e123]:
+          - generic [ref=e124]: En progreso
+          - list [ref=e125]:
+            - listitem [ref=e126]:
+              - generic [ref=e127]: ○
+              - text: "pmpro-js: comportamiento interactivo (en ejecución)"
+            - listitem [ref=e128]:
+              - generic [ref=e129]: ○
+              - text: "paypal-nvp: sandbox (bloqueado: creds pendientes)"
+        - generic [ref=e130]:
+          - generic [ref=e131]: Decisiones tomadas
+          - list [ref=e132]:
+            - listitem [ref=e133]: Columna destacada via data-attribute, no inline styles
+            - listitem [ref=e134]: Sandbox mode via WP_DEBUG constante
+        - generic [ref=e135]:
+          - generic [ref=e136]: Blockers activos
+          - list [ref=e137]:
+            - listitem [ref=e138]: paypal-nvp necesita PAYPAL_CLIENT_ID del cliente
+  - generic [ref=e139]:
+    - generic [ref=e140]:
+      - generic [ref=e141]: Published
+      - generic [ref=e142]: 2026-04-01
+    - generic [ref=e144]: guide
+  - contentinfo [ref=e145]:
+    - generic [ref=e146]: Gustavo Adrián Salvini
+    - generic [ref=e147]:
+      - link "GitHub" [ref=e148] [cursor=pointer]:
+        - /url: https://github.com/guspatagonico
+        - img [ref=e149]
+      - link "X" [ref=e151] [cursor=pointer]:
+        - /url: https://x.com/guspatagonico
+        - img [ref=e152]
+      - link "Website" [ref=e154] [cursor=pointer]:
+        - /url: https://gustavosalvini.com.ar
+        - img [ref=e155]

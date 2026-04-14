@@ -1,0 +1,88 @@
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - link "Home" [ref=e3] [cursor=pointer]:
+      - /url: /software-engineering/
+      - generic [ref=e4]: "{ }"
+      - generic [ref=e5]: The SE Blog
+    - button "Toggle navigation" [ref=e7] [cursor=pointer]
+  - banner [ref=e9]:
+    - heading "Harness Engineering" [level=1] [ref=e10]
+    - generic [ref=e11]: Guía práctica · OpenCode + Sub-agentes
+  - generic [ref=e12]:
+    - generic [ref=e13]:
+      - button "Collapse sections" [expanded] [ref=e14] [cursor=pointer]:
+        - generic [ref=e15]: Secciones
+        - generic [ref=e16]: ▶
+      - navigation [ref=e17]:
+        - button "◈ Modelo mental" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: ◈
+          - text: Modelo mental
+        - button "⬡ Sub-agentes" [ref=e20] [cursor=pointer]:
+          - generic [ref=e21]: ⬡
+          - text: Sub-agentes
+        - button "▣ Context window" [ref=e22] [cursor=pointer]:
+          - generic [ref=e23]: ▣
+          - text: Context window
+        - button "⟳ Orquestación" [ref=e24] [cursor=pointer]:
+          - generic [ref=e25]: ⟳
+          - text: Orquestación
+        - button "⊕ Skills & MCPs" [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: ⊕
+          - text: Skills & MCPs
+        - button "✓ Checklist" [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: ✓
+          - text: Checklist
+        - button "≡ Vocabulario" [ref=e30] [cursor=pointer]:
+          - generic [ref=e31]: ≡
+          - text: Vocabulario
+    - generic [ref=e33]:
+      - heading "La envolvente convergente" [level=2] [ref=e34]
+      - generic [ref=e35]: El modelo mental central del framework
+      - img "Convergent envelope diagram" [ref=e38]:
+        - generic [ref=e47]: inicio
+        - generic [ref=e48]: fork
+        - generic [ref=e49]: join
+        - generic [ref=e50]: validación
+        - generic [ref=e51]: ✓ converge
+        - generic [ref=e52]: y = A·e⁻λt·sin(ωt)
+        - generic [ref=e54]: trayectoria del agente
+        - generic [ref=e55]: envolvente e⁻λt
+      - generic [ref=e56]:
+        - text: El harness no define un único camino óptimo (frágil) — define una
+        - strong [ref=e57]: envolvente dinámica
+        - text: que tolera dispersión al inicio y la va cerrando conforme el proceso avanza. El orquestador es el controlador que mantiene esa envolvente activa.
+      - heading "Dos conceptos formales que fundamentan la metáfora" [level=3] [ref=e58]
+      - generic [ref=e59]:
+        - generic [ref=e60]:
+          - generic [ref=e61]: Barrier Functions (CBF)
+          - text: No solo definís adónde querés llegar — definís regiones prohibidas con "paredes repulsivas". El agente recibe señal de que se está alejando
+          - emphasis [ref=e62]: antes
+          - text: "de romper algo. En el harness: los MCPs con paths restringidos son barrier functions estructurales, no instruccionales."
+        - generic [ref=e63]:
+          - generic [ref=e64]: Funciones de Lyapunov
+          - text: "Una función que decrece monótonamente a lo largo de cualquier trayectoria del sistema prueba la convergencia. En harness: cada intervención del orquestador debe reducir la distancia al objetivo. Si no la reduce, el feedback loop está roto."
+      - heading "Entropía vs. convergencia" [level=3] [ref=e65]
+      - generic [ref=e66]:
+        - generic [ref=e67]:
+          - generic [ref=e68]: Entropía (harness roto)
+          - text: Decisiones individualmente razonables que acumulan desviación. El context window se llena de ruido, las herramientas proliferan sin estructura, los sub-agentes optimizan localmente sin coherencia global.
+        - generic [ref=e69]:
+          - generic [ref=e70]: Convergencia (harness bien aplicado)
+          - text: El espacio de acción está acotado, el feedback loop provee señal clara, las constraints son justas — ni tan laxas que generen entropía, ni tan rígidas que produzcan óptimos locales.
+  - generic [ref=e71]:
+    - generic [ref=e72]:
+      - generic [ref=e73]: Published
+      - generic [ref=e74]: 2026-04-01
+    - generic [ref=e76]: guide
+  - contentinfo [ref=e77]:
+    - generic [ref=e78]: Gustavo Adrián Salvini
+    - generic [ref=e79]:
+      - link "GitHub" [ref=e80] [cursor=pointer]:
+        - /url: https://github.com/guspatagonico
+        - img [ref=e81]
+      - link "X" [ref=e83] [cursor=pointer]:
+        - /url: https://x.com/guspatagonico
+        - img [ref=e84]
+      - link "Website" [ref=e86] [cursor=pointer]:
+        - /url: https://gustavosalvini.com.ar
+        - img [ref=e87]

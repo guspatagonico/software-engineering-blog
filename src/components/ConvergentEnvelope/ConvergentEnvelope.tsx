@@ -79,7 +79,7 @@ export default function ConvergentEnvelope() {
   const legY = 255;
 
   return (
-    <div className="funnel-container">
+    <div className="funnel-container post-panel post-panel-lg">
       <svg
         viewBox="0 0 640 270"
         xmlns="http://www.w3.org/2000/svg"

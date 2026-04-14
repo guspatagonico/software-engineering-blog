@@ -137,10 +137,80 @@
   background: var(--surface);
 }
 
+/* Table column accents */
+.table-accent-1 td:nth-child(1) {
+  color: var(--table-accent-color, var(--red));
+  font-weight: 600;
+}
+
+.table-accent-2 td:nth-child(2) {
+  color: var(--table-accent-color, var(--red));
+  font-weight: 600;
+}
+
+.table-accent-3 td:nth-child(3) {
+  color: var(--table-accent-color, var(--red));
+  font-weight: 600;
+}
+
+.table-muted-3 td:nth-child(3) {
+  color: var(--table-muted-color, var(--text-dim));
+}
+
+.table-muted-1 td:nth-child(1) {
+  color: var(--table-muted-color, var(--text-dim));
+}
+
+.table-muted-2 td:nth-child(2) {
+  color: var(--table-muted-color, var(--text-dim));
+}
+
+.table-accent-red {
+  --table-accent-color: var(--red);
+}
+
+.table-accent-teal {
+  --table-accent-color: var(--teal);
+}
+
+.table-accent-amber {
+  --table-accent-color: var(--amber);
+}
+
 .content .closing {
   font-style: italic;
   color: var(--text-dim);
   margin-top: 32px;
+}
+
+/* Diagram panels */
+.post-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.post-panel-lg {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+/* Callout blocks inside posts */
+.post-callout {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--teal);
+  background: var(--surface);
+  border-radius: 0 6px 6px 0;
+}
+
+.post-callout p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
 }
 
 /* Data block - styled like pre blocks but with proper key-value alignment */
@@ -247,4 +317,44 @@
 
 .data-block .data-list .bullet {
   color: var(--text-dim);
+}
+
+/* Shared utility text styles */
+.teal {
+  color: var(--teal);
+}
+
+.tick {
+  color: var(--teal);
+}
+
+.cross {
+  color: var(--text-dim);
+}
+
+.cm {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.kw {
+  color: var(--teal);
+  font-weight: 600;
+}
+
+/* Vocabulary list */
+.vocab-item {
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(30, 45, 69, 0.5);
+  align-items: start;
+}
+
+.vocab-term {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--amber);
+  padding-top: 2px;
 }

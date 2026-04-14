@@ -2,10 +2,10 @@
 title: Development Process and Rules
 tags: []
 keywords: []
-importance: 62
+importance: 86
 recency: 1
-maturity: draft
-accessCount: 4
+maturity: core
+accessCount: 12
 createdAt: '2026-04-06T17:42:32.228Z'
 updatedAt: '2026-04-06T17:42:32.228Z'
 ---

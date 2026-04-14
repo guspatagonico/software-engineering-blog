@@ -337,7 +337,7 @@ const checklistSections = [
       </Highlight>
 
       <h3>Patrón Fork-Join</h3>
-      <div class="fork-join-diagram">
+      <div class="fork-join-diagram post-panel">
         <!-- Desktop: Horizontal layout -->
         <div class="fj-flow-desktop">
           <div class="fj-horizontal-flow">
@@ -392,7 +392,7 @@ const checklistSections = [
       </div>
 
       <h3>Señales de drift</h3>
-      <table class="drift-table">
+      <table class="drift-table table-accent-2 table-accent-red table-muted-3">
         <thead>
           <tr><th>Señal</th><th>Interpretación</th><th>Acción del orquestador</th></tr>
         </thead>
@@ -578,48 +578,7 @@ const checklistSections = [
 </BlogPost>
 
 <style>
-  .funnel-container {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 24px;
-    margin-bottom: 24px;
-  }
-
-  .tick {
-    color: var(--teal);
-  }
-
-  .cross {
-    color: var(--text-dim);
-  }
-
-  .cm {
-    color: var(--text-dim);
-    font-style: italic;
-  }
-
-  .kw {
-    color: var(--teal);
-    font-weight: 600;
-  }
-
-  .drift-table td:nth-child(2) {
-    color: var(--red);
-    font-size: 16px;
-  }
-
-  .drift-table td:nth-child(3) {
-    color: var(--text-dim);
-    font-size: 16px;
-  }
-
   .phase-diagram {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 16px;
     font-size: 12px;
     font-weight: 500;
     line-height: 2.2;
@@ -643,11 +602,6 @@ const checklistSections = [
 
   /* Fork-Join Diagram */
   .fork-join-diagram {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 16px;
     font-size: 12px;
     font-weight: 500;
     line-height: 1.4;
@@ -816,23 +770,4 @@ const checklistSections = [
     color: var(--text-dim);
   }
 
-  .vocab-item {
-    display: grid;
-    grid-template-columns: 175px 1fr;
-    gap: 16px;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(30, 45, 69, 0.5);
-    align-items: start;
-  }
-
-  .vocab-term {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--amber);
-    padding-top: 2px;
-  }
-
-  .teal {
-    color: var(--teal);
-  }
 </style>

@@ -3,19 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1269,
-      "type": "summary"
-    },
-    {
-      "order": 2,
-      "path": "facts/_index.md",
-      "tokens": 276,
+      "tokens": 1388,
       "type": "summary"
     },
     {
       "order": 1,
       "path": "facts/personal/_index.md",
       "tokens": 322,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
     },
     {
@@ -31,47 +31,31 @@
       "type": "context"
     },
     {
-      "importance": 65,
+      "importance": 89,
       "path": "project_management/handoffs/handoff_2026_04_04.md",
-      "tokens": 676,
+      "tokens": 675,
       "type": "context"
     },
     {
-      "importance": 64,
-      "path": "ui/visual_effects/scroll_feedback_system.md",
-      "tokens": 799,
+      "importance": 83,
+      "path": "project_guidelines/dev_process/development_process_and_rules.md",
+      "tokens": 885,
       "type": "context"
     },
     {
-      "importance": 56,
+      "importance": 62,
       "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
       "tokens": 447,
       "type": "context"
-    },
-    {
-      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
-      "abstractTokens": 47,
-      "importance": 55,
-      "path": "project_management/handoffs/hybrid_session_state_approach.md",
-      "tokens": 47,
-      "type": "context"
-    },
-    {
-      "abstractPath": "facts/personal/caveman_style_preference.abstract.md",
-      "abstractTokens": 35,
-      "importance": 50,
-      "path": "facts/personal/caveman_style_preference.md",
-      "tokens": 35,
-      "type": "context"
     }
   ],
-  "generated_at": "2026-04-13T14:40:46.501Z",
+  "generated_at": "2026-04-14T00:17:49.806Z",
   "lane_tokens": {
-    "contexts": 3997,
+    "contexts": 4000,
     "stubs": 0,
-    "summaries": 1867
+    "summaries": 1897
   },
-  "source_fingerprint": "b0162ac11a1f5a3957167ea44148ea4dce346b8a431a92d59d99bd7fec6f48a2",
-  "total_tokens": 5864,
+  "source_fingerprint": "222074ce44292a705027d93832ee3ea76a7570ecec835e8a29c5b0fadcac0ce4",
+  "total_tokens": 5897,
   "version": 1
 }
