@@ -1,12 +1,10 @@
 ---
-children_hash: ff0f236fbb88db82743e75bdb49e24c7a3ee4bae88a8cdd66b46d01eb4d4006c
-compression_ratio: 0.5802238805970149
-condensation_order: 1
-covers: [context.md, git_mutation_approval_rule.md]
-covers_token_total: 536
-summary_level: d1
-token_count: 311
-type: summary
+tags: []
+keywords: []
+importance: 53
+recency: 1
+maturity: draft
+accessCount: 1
 ---
 - **git_safe_mutations/context.md**
   - Defines the workflow rule that a context engineer must obtain explicit permission before performing any git commit or push.

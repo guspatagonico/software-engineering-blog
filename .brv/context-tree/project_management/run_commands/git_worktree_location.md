@@ -2,10 +2,10 @@
 title: Git Worktree Location
 tags: []
 keywords: []
-importance: 53
+importance: 56
 recency: 1
 maturity: draft
-accessCount: 1
+accessCount: 2
 createdAt: '2026-04-07T02:59:52.171Z'
 updatedAt: '2026-04-07T02:59:52.171Z'
 ---

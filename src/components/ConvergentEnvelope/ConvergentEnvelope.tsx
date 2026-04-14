@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const X0 = 48;
 const X1 = 592;
@@ -34,17 +34,25 @@ function buildPath(fn: (t: number) => number): string {
   return d;
 }
 
-function buildFillArea(): string {
+function buildFillArea(top: (t: number) => number, bot: (t: number) => number): string {
   let d = `M ${X0},${Yc}`;
   for (let i = 0; i <= N; i++) {
     const t = i / N;
-    d += ` L ${xOf(t).toFixed(2)},${yEnvTop(t).toFixed(2)}`;
+    d += ` L ${xOf(t).toFixed(2)},${top(t).toFixed(2)}`;
   }
   for (let i = N; i >= 0; i--) {
     const t = i / N;
-    d += ` L ${xOf(t).toFixed(2)},${yEnvBot(t).toFixed(2)}`;
+    d += ` L ${xOf(t).toFixed(2)},${bot(t).toFixed(2)}`;
   }
   return `${d} Z`;
+}
+
+function buildDividerPoints(top: (t: number) => number, bot: (t: number) => number) {
+  return [0.2, 0.4, 0.6].map((t) => ({
+    x: xOf(t),
+    y1: top(t) - 6,
+    y2: bot(t) + 6,
+  }));
 }
 
 interface PhaseLabel {
@@ -60,26 +68,83 @@ const phaseLabels: PhaseLabel[] = [
   { text: 'validación', t: 0.6, fill: '#8a9ab8' },
 ];
 
-export default function ConvergentEnvelope() {
-  const signalPoints = useMemo(() => buildPoints(ySignal), []);
-  const topPath = useMemo(() => buildPath(yEnvTop), []);
-  const botPath = useMemo(() => buildPath(yEnvBot), []);
-  const fillArea = useMemo(() => buildFillArea(), []);
+interface ConvergentEnvelopeProps {
+  mode?: 'static' | 'animated';
+}
 
-  const dividers = useMemo(
-    () =>
-      [0.2, 0.4, 0.6].map((t) => ({
-        x: xOf(t),
-        y1: yEnvTop(t) - 6,
-        y2: yEnvBot(t) + 6,
-      })),
-    []
-  );
+export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelopeProps) {
+  const staticSignalPoints = useMemo(() => buildPoints(ySignal), []);
+  const staticTopPath = useMemo(() => buildPath(yEnvTop), []);
+  const staticBotPath = useMemo(() => buildPath(yEnvBot), []);
+  const staticFillArea = useMemo(() => buildFillArea(yEnvTop, yEnvBot), []);
+  const staticDividers = useMemo(() => buildDividerPoints(yEnvTop, yEnvBot), []);
+
+  const [signalPoints, setSignalPoints] = useState(staticSignalPoints);
+  const [topPath, setTopPath] = useState(staticTopPath);
+  const [botPath, setBotPath] = useState(staticBotPath);
+  const [fillArea, setFillArea] = useState(staticFillArea);
+  const [dividers, setDividers] = useState(staticDividers);
+  const frameRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (mode !== 'animated') {
+      setSignalPoints(staticSignalPoints);
+      setTopPath(staticTopPath);
+      setBotPath(staticBotPath);
+      setFillArea(staticFillArea);
+      setDividers(staticDividers);
+      return;
+    }
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motionQuery.matches) {
+      setSignalPoints(staticSignalPoints);
+      setTopPath(staticTopPath);
+      setBotPath(staticBotPath);
+      setFillArea(staticFillArea);
+      setDividers(staticDividers);
+      return;
+    }
+
+    const animate = (time: number) => {
+      const tSec = time / 1000;
+      const wobble = (freq: number, amp: number, phase: number) =>
+        amp * Math.sin(tSec * freq + phase);
+
+      const envA = A * (1 + wobble(0.7, 0.12, 0.4) + wobble(1.3, 0.06, 2.1));
+      const envLambda = lambda * (1 + wobble(0.5, 0.1, 1.1));
+      const envOmega =
+        omega * (1 + wobble(1.2, 0.24, 0.2) + wobble(2.4, 0.12, 1.4) + wobble(3.2, 0.06, 2.6));
+      const phaseShift = wobble(1.1, 0.9, 0.9) + wobble(2.8, 0.35, 1.8);
+      const touchFactor = 0.88 + 0.12 * (0.5 + 0.5 * Math.sin(tSec * 1.2 + 0.7));
+      const signalAmp = envA * touchFactor;
+
+      const yTop = (t: number) => Yc - envA * Math.exp(-envLambda * t);
+      const yBot = (t: number) => Yc + envA * Math.exp(-envLambda * t);
+      const ySig = (t: number) =>
+        Yc - signalAmp * Math.exp(-envLambda * t) * Math.sin(envOmega * t + phaseShift);
+
+      setSignalPoints(buildPoints(ySig));
+      setTopPath(buildPath(yTop));
+      setBotPath(buildPath(yBot));
+      setFillArea(buildFillArea(yTop, yBot));
+      setDividers(buildDividerPoints(yTop, yBot));
+      frameRef.current = requestAnimationFrame(animate);
+    };
+
+    frameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (frameRef.current) {
+        cancelAnimationFrame(frameRef.current);
+      }
+    };
+  }, [mode, staticBotPath, staticDividers, staticFillArea, staticSignalPoints, staticTopPath]);
 
   const legY = 255;
 
   return (
-    <div className="funnel-container post-panel post-panel-lg">
+    <div className="funnel-container post-panel post-panel-lg" data-mode={mode}>
       <svg
         viewBox="0 0 640 270"
         xmlns="http://www.w3.org/2000/svg"
@@ -159,9 +224,9 @@ export default function ConvergentEnvelope() {
         />
 
         {/* Phase dividers */}
-        {dividers.map((d, i) => (
+        {dividers.map((d) => (
           <line
-            key={i}
+            key={`${d.x}-${d.y1}`}
             x1={d.x}
             y1={d.y1}
             x2={d.x}
@@ -171,18 +236,6 @@ export default function ConvergentEnvelope() {
             strokeDasharray="3,5"
           />
         ))}
-
-        {/* Start node */}
-        <circle
-          cx={X0}
-          cy={Yc}
-          r={11}
-          fill="none"
-          stroke="#00d4aa"
-          strokeWidth={1}
-          opacity={0.22}
-        />
-        <circle cx={X0} cy={Yc} r={5.5} fill="#00d4aa" opacity={0.9} />
 
         {/* End node */}
         <circle
@@ -197,9 +250,9 @@ export default function ConvergentEnvelope() {
         <circle cx={X1} cy={Yc} r={4} fill="#00d4aa" opacity={0.88} />
 
         {/* Phase labels */}
-        {phaseLabels.map((label, i) => (
+        {phaseLabels.map((label) => (
           <text
-            key={i}
+            key={label.text}
             x={xOf(label.t)}
             y={22}
             fontFamily="Inter, sans-serif"
@@ -223,20 +276,6 @@ export default function ConvergentEnvelope() {
           fill="#00d4aa"
         >
           ✓ converge
-        </text>
-
-        {/* Formula */}
-        <text
-          x={xOf(0.72)}
-          y={yEnvTop(0.72) - 10}
-          fontFamily="Inter, sans-serif"
-          fontSize={11}
-          fontWeight={500}
-          fontStyle="italic"
-          fill="#607090"
-          opacity={0.7}
-        >
-          y = A·e⁻λt·sin(ωt)
         </text>
 
         {/* Legend */}

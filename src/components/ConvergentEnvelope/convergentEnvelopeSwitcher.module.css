@@ -1,0 +1,101 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--text-dim);
+  font-weight: 700;
+}
+
+.switchGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.activeLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--teal);
+}
+
+.inactiveLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.switch {
+  position: relative;
+  width: 52px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(120deg, rgba(30, 45, 69, 0.8), rgba(26, 35, 55, 0.9));
+  border: 1px solid rgba(0, 212, 170, 0.25);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  top: 3px;
+  border-radius: 50%;
+  background: #f8fafc;
+  box-shadow: 0 6px 14px rgba(8, 14, 30, 0.35);
+  transition: transform 0.25s ease;
+}
+
+.switch input:checked + .slider {
+  background: linear-gradient(120deg, rgba(0, 212, 170, 0.9), rgba(0, 175, 150, 0.85));
+  border-color: rgba(0, 212, 170, 0.6);
+}
+
+.switch input:checked + .slider::before {
+  transform: translateX(24px);
+}
+
+.switch input:focus-visible + .slider {
+  outline: 2px solid rgba(0, 212, 170, 0.6);
+  outline-offset: 2px;
+}
+
+.diagramFrame {
+  display: block;
+}
+
+@media (max-width: 720px) {
+  .controls {
+    align-items: flex-start;
+  }
+}

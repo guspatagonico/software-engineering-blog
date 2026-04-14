@@ -73,6 +73,7 @@
 
 .panel {
   display: none;
+  margin-bottom: 32px;
 }
 
 .panel.active {

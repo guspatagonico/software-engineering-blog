@@ -18,6 +18,11 @@ const { title, variant = 'default' } = Astro.props;
     border: 1px solid var(--border);
     border-radius: 5px;
     padding: 16px 20px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .card:hover {
+    background: var(--surface2);
   }
 
   .card-danger {

@@ -2,7 +2,7 @@
 import BlogPost from '../../layouts/BlogPost.astro';
 import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
-import ConvergentEnvelope from '../../components/ConvergentEnvelope/ConvergentEnvelope';
+import ConvergentEnvelopeSwitcher from '../../components/ConvergentEnvelope/ConvergentEnvelopeSwitcher';
 import SectionNav from '../../components/SectionNav/SectionNav';
 import ProjectTabs from '../../components/ProjectTabs/ProjectTabs';
 import Checklist from '../../components/Checklist/Checklist';
@@ -157,7 +157,7 @@ const checklistSections = [
       <h2>La envolvente convergente</h2>
       <div class="subtitle">El modelo mental central del framework</div>
 
-      <ConvergentEnvelope client:load />
+      <ConvergentEnvelopeSwitcher client:load />
 
       <Highlight>
         El harness no define un único camino óptimo (frágil) — define una <strong class="teal"
