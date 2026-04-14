@@ -1,15 +1,15 @@
 ---
 interface Props {
   title: string;
-  variant?: 'default' | 'danger';
+  variant?: 'default' | 'danger' | 'numbered';
 }
 
 const { title, variant = 'default' } = Astro.props;
 ---
 
-<div class:list={['card', variant === 'danger' && 'card-danger']}>
+<div class:list={['card', variant === 'danger' && 'card-danger', variant === 'numbered' && 'card-numbered']}>
   <div class="card-title">{title}</div>
-  <slot />
+  <div class="card-content"><slot /></div>
 </div>
 
 <style>
@@ -35,5 +35,40 @@ const { title, variant = 'default' } = Astro.props;
 
   .card-danger .card-title {
     color: var(--red);
+  }
+
+  /* Numbered variant: horizontal layout with circle badge */
+  .card-numbered {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+  }
+
+  .card-numbered .card-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    background: var(--teal);
+    color: var(--bg);
+    border-radius: 50%;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0;
+  }
+
+  .card-numbered .card-content {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .card-numbered .card-content :global(p) {
+    margin: 0;
   }
 </style>

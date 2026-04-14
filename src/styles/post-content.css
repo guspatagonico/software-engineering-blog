@@ -57,10 +57,15 @@
   font-size: 14px;
 }
 
-.content .subtitle {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-dim);
+.panel h3 {
+  color: var(--teal-dark);
+}
+
+.content .subtitle,
+.panel .subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--teal);
   margin-bottom: 28px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -151,7 +156,8 @@
 
 .data-block .data-header {
   color: var(--text-dim);
-  font-style: italic;
+  font-weight: 600;
+  font-size: 16px;
   margin-bottom: 8px;
 }
 
@@ -192,6 +198,14 @@
   margin: 8px 0;
 }
 
+.data-block .data-separator-row td {
+  padding: 0;
+}
+
+.data-block .data-separator-row .data-separator {
+  margin: 8px 0;
+}
+
 .data-block .data-total {
   font-weight: 600;
 }
@@ -209,6 +223,7 @@
 .data-block .data-section-title {
   color: var(--text-dim);
   font-style: italic;
+  font-size: 16px;
   margin-bottom: 4px;
 }
 

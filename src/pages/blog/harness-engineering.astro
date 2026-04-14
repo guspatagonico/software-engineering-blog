@@ -250,9 +250,7 @@ const checklistSections = [
           <tr><td>Spec task:</td><td>~1500 tokens <span class="data-note">(solo la sección relevante del spec)</span></td></tr>
           <tr><td>Archivos:</td><td>~3000 tokens <span class="data-note">(solo los archivos que necesita tocar)</span></td></tr>
           <tr><td>Handoff:</td><td>~500 tokens <span class="data-note">(resumen del estado de la fase anterior)</span></td></tr>
-        </table>
-        <div class="data-separator"></div>
-        <table>
+          <tr class="data-separator-row"><td colspan="2"><div class="data-separator"></div></td></tr>
           <tr class="data-total"><td>Total:</td><td>~5800 tokens <span class="data-note">(margen amplio para el output)</span></td></tr>
         </table>
         <div class="data-footer">NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto.</div>
@@ -339,31 +337,56 @@ const checklistSections = [
       </Highlight>
 
       <h3>Patrón Fork-Join</h3>
-      <div class="phase-diagram">
-        <span class="ph-dim"> ┌─ </span><span class="ph-parallel">Sub-agente A (CSS/frontend)</span
-        ><span class="ph-dim"> ────┐</span><br />
-        <span class="ph-dim">Orquestador ───────►├─ </span><span class="ph-parallel"
-          >Sub-agente B (PHP/backend)</span
-        ><span class="ph-dim"> ─────┤──► </span><span class="ph-join">Join</span><span
-          class="ph-dim"
-        >
-          ──►
-        </span><span class="ph-seq">Validación</span><span class="ph-dim"> ──► siguiente</span><br
-        />
-        <span class="ph-dim"> └─ </span><span class="ph-parallel">Sub-agente C (DB/queries)</span
-        ><span class="ph-dim"> ─────┘</span>
+      <div class="fork-join-diagram">
+        <!-- Desktop: Horizontal layout -->
+        <div class="fj-flow-desktop">
+          <div class="fj-horizontal-flow">
+            <div class="fj-start">Orquestador</div>
+            <div class="fj-h-arrow">→</div>
+            <div class="fj-fork">Fork</div>
+            <div class="fj-h-arrow">→</div>
+            <div class="fj-parallel-box">
+              <div class="fj-agent-card"><span class="fj-label">Subagente A</span><span class="fj-type">CSS</span></div>
+              <div class="fj-agent-card"><span class="fj-label">Subagente B</span><span class="fj-type">PHP</span></div>
+              <div class="fj-agent-card"><span class="fj-label">Subagente C</span><span class="fj-type">DB</span></div>
+            </div>
+            <div class="fj-h-arrow">→</div>
+            <div class="fj-join">Join</div>
+            <div class="fj-h-arrow">→</div>
+            <div class="fj-validation">Validación</div>
+            <div class="fj-h-arrow">→</div>
+            <div class="fj-end">siguiente</div>
+          </div>
+        </div>
+        
+        <!-- Mobile: Simplified vertical -->
+        <div class="fj-flow-mobile">
+          <div class="fj-node">Orquestador</div>
+          <div class="fj-fork-label">┌── Fork ──┐</div>
+          <div class="fj-parallel-stack">
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span></div>
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span></div>
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span></div>
+          </div>
+          <div class="fj-join-label">└── Join ──┘</div>
+          <div class="fj-node fj-join">Join</div>
+          <div class="fj-arrow">↓</div>
+          <div class="fj-node fj-validation">Validación</div>
+          <div class="fj-arrow">↓</div>
+          <div class="fj-next">siguiente</div>
+        </div>
       </div>
 
       <h3>Condiciones para paralelizar (las tres deben cumplirse)</h3>
       <div class="card-stack">
-        <Card title="1"
+        <Card title="1" variant="numbered"
           >Los sub-agentes <strong class="teal">no escriben al mismo archivo</strong></Card
         >
-        <Card title="2"
+        <Card title="2" variant="numbered"
           >Sus outputs son <strong class="teal">independientes</strong> en esta fase (no se alimentan
           entre sí)</Card
         >
-        <Card title="3"
+        <Card title="3" variant="numbered"
           >El orquestador puede <strong class="teal">validar cada output aisladamente</strong></Card
         >
       </div>
@@ -583,12 +606,12 @@ const checklistSections = [
 
   .drift-table td:nth-child(2) {
     color: var(--red);
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .drift-table td:nth-child(3) {
     color: var(--text-dim);
-    font-size: 11px;
+    font-size: 16px;
   }
 
   .phase-diagram {
@@ -616,6 +639,177 @@ const checklistSections = [
   .ph-join {
     color: var(--text);
     font-weight: 600;
+  }
+
+  /* Fork-Join Diagram */
+  .fork-join-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-dim);
+  }
+
+  /* Mobile layout (default) */
+  .fj-flow-desktop {
+    display: none;
+  }
+
+  .fj-flow-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .fj-node {
+    font-weight: 600;
+    color: var(--text);
+    padding: 6px 12px;
+  }
+
+  .fj-fork-label,
+  .fj-join-label {
+    font-family: monospace;
+    font-size: 11px;
+    color: var(--teal);
+    letter-spacing: 1px;
+  }
+
+  .fj-parallel-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .fj-agent-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    gap: 12px;
+  }
+
+  .fj-label {
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .fj-type {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  .fj-join {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg);
+  }
+
+  .fj-validation {
+    color: var(--amber);
+  }
+
+  .fj-arrow {
+    color: var(--text-dim);
+    font-size: 14px;
+  }
+
+  .fj-next {
+    color: var(--text-dim);
+    font-size: 11px;
+  }
+
+  /* Desktop: Horizontal flow with stacked parallel agents */
+  @media (min-width: 768px) {
+    .fj-flow-mobile {
+      display: none;
+    }
+
+    .fj-flow-desktop {
+      display: block;
+    }
+
+    .fj-horizontal-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .fj-start,
+    .fj-fork,
+    .fj-join,
+    .fj-validation,
+    .fj-end {
+      font-weight: 600;
+      padding: 4px 8px;
+      white-space: nowrap;
+    }
+
+    .fj-start {
+      color: var(--text);
+    }
+
+    .fj-fork,
+    .fj-join {
+      color: var(--teal);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--bg);
+      padding: 4px 12px;
+    }
+
+    .fj-validation {
+      color: var(--amber);
+    }
+
+    .fj-end {
+      color: var(--text-dim);
+      font-size: 11px;
+    }
+
+    .fj-h-arrow {
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+
+    .fj-parallel-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .fj-parallel-box .fj-agent-card {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      min-width: 140px;
+      gap: 12px;
+    }
+
+    .fj-parallel-box .fj-label {
+      font-size: 13px;
+    }
+
+    .fj-parallel-box .fj-type {
+      font-size: 11px;
+    }
   }
 
   .ph-dim {
