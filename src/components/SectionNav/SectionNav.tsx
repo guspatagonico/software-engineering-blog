@@ -29,21 +29,14 @@ export default function SectionNav({ sections }: SectionNavProps) {
       const target = document.getElementById(`panel-${id}`);
       if (target) {
         target.classList.add('active');
-        // Scroll to the panel on mobile/tablet, accounting for .content padding
-        const isMobile = window.innerWidth < 1024;
-        if (isMobile) {
-          const scrollContainer = document.querySelector('.post-layout');
-          const contentPadding = 28; // .content padding-top
-
-          // Calculate scroll position: panel offset from top of content minus padding
-          // This positions the panel right where .content starts visually
-          const scrollTop = target.offsetTop - contentPadding;
-
-          if (scrollContainer) {
-            scrollContainer.scrollTo({ top: scrollTop, behavior: 'smooth' });
-          } else {
-            window.scrollTo({ top: scrollTop, behavior: 'smooth' });
-          }
+        const content = document.querySelector('.content');
+        const scrollContainer = document.querySelector('.post-layout');
+        if (content && content.scrollHeight > content.clientHeight) {
+          content.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (scrollContainer) {
+          scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }
 

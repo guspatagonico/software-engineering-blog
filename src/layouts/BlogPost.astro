@@ -75,24 +75,18 @@ const finalDescription = description ?? post?.description;
           });
           panel.classList.add('active');
 
-          // Scroll to panel on mobile/tablet, accounting for .content padding
-          const isMobile = window.innerWidth < 1024;
-          if (isMobile) {
-            setTimeout(() => {
-              const scrollContainer = document.querySelector('.post-layout');
-              const contentPadding = 28; // .content padding-top
-              
-              // Calculate scroll position: panel offset from top of content minus padding
-              // This positions the panel right where .content starts visually
-              const scrollTop = panel.offsetTop - contentPadding;
-              
-              if (scrollContainer) {
-                scrollContainer.scrollTo({ top: scrollTop, behavior: 'smooth' });
-              } else {
-                window.scrollTo({ top: scrollTop, behavior: 'smooth' });
-              }
-            }, 100);
-          }
+          setTimeout(() => {
+            const content = document.querySelector('.content');
+            const scrollContainer = document.querySelector('.post-layout');
+
+            if (content && content.scrollHeight > content.clientHeight) {
+              content.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (scrollContainer) {
+              scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }, 100);
 
           // Dispatch a custom event so SectionNav can sync its state
           window.dispatchEvent(new CustomEvent('section-activated', {
