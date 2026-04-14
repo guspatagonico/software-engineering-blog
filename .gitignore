@@ -41,6 +41,7 @@ pnpm-debug.log*
 *.local
 .cache/
 .parcel-cache/
+.gsupload.json
 
 # Git worktrees
 .worktrees/
