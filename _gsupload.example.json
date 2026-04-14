@@ -1,0 +1,17 @@
+{
+  "_comment": "Example config. Remove _comment fields before use. Replace fake values with real credentials.",
+  "_comment_security": "Security-critical fields (hostname, username, password, keys, ports) are fake placeholders.",
+  "global_excludes": [".git", "node_modules", "__pycache__", "*.env"],
+  "bindings": {
+    "frontend": {
+      "protocol": "sftp",
+      "max_workers": 5,
+      "hostname": "example-host.internal",
+      "port": "2222",
+      "username": "deploy_user",
+      "password": "fake-StrongP@ssw0rd-1234",
+      "local_basepath": "/path/to/project/dist",
+      "remote_basepath": "/var/www/example/public_html/software-engineering"
+    }
+  }
+}

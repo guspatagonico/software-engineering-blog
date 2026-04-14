@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-const X0 = 48;
+import styles from './convergentEnvelope.module.css';
+
+const X0 = 28;
 const X1 = 592;
 const Yc = 130;
 const W = X1 - X0;
@@ -70,39 +72,46 @@ const phaseLabels: PhaseLabel[] = [
 
 interface ConvergentEnvelopeProps {
   mode?: 'static' | 'animated';
+  isCrossfading?: boolean;
+  previousMode?: 'static' | 'animated' | null;
 }
 
-export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelopeProps) {
+export default function ConvergentEnvelope({
+  mode = 'static',
+  isCrossfading = false,
+  previousMode = null,
+}: ConvergentEnvelopeProps) {
   const staticSignalPoints = useMemo(() => buildPoints(ySignal), []);
   const staticTopPath = useMemo(() => buildPath(yEnvTop), []);
   const staticBotPath = useMemo(() => buildPath(yEnvBot), []);
   const staticFillArea = useMemo(() => buildFillArea(yEnvTop, yEnvBot), []);
   const staticDividers = useMemo(() => buildDividerPoints(yEnvTop, yEnvBot), []);
 
-  const [signalPoints, setSignalPoints] = useState(staticSignalPoints);
-  const [topPath, setTopPath] = useState(staticTopPath);
-  const [botPath, setBotPath] = useState(staticBotPath);
-  const [fillArea, setFillArea] = useState(staticFillArea);
-  const [dividers, setDividers] = useState(staticDividers);
+  const [animatedSignalPoints, setAnimatedSignalPoints] = useState(staticSignalPoints);
+  const [animatedTopPath, setAnimatedTopPath] = useState(staticTopPath);
+  const [animatedBotPath, setAnimatedBotPath] = useState(staticBotPath);
+  const [animatedFillArea, setAnimatedFillArea] = useState(staticFillArea);
+  const [animatedDividers, setAnimatedDividers] = useState(staticDividers);
   const frameRef = useRef<number | null>(null);
+  const shouldAnimate = mode === 'animated' || (isCrossfading && previousMode === 'animated');
 
   useEffect(() => {
-    if (mode !== 'animated') {
-      setSignalPoints(staticSignalPoints);
-      setTopPath(staticTopPath);
-      setBotPath(staticBotPath);
-      setFillArea(staticFillArea);
-      setDividers(staticDividers);
+    if (!shouldAnimate) {
+      setAnimatedSignalPoints(staticSignalPoints);
+      setAnimatedTopPath(staticTopPath);
+      setAnimatedBotPath(staticBotPath);
+      setAnimatedFillArea(staticFillArea);
+      setAnimatedDividers(staticDividers);
       return;
     }
 
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (motionQuery.matches) {
-      setSignalPoints(staticSignalPoints);
-      setTopPath(staticTopPath);
-      setBotPath(staticBotPath);
-      setFillArea(staticFillArea);
-      setDividers(staticDividers);
+      setAnimatedSignalPoints(staticSignalPoints);
+      setAnimatedTopPath(staticTopPath);
+      setAnimatedBotPath(staticBotPath);
+      setAnimatedFillArea(staticFillArea);
+      setAnimatedDividers(staticDividers);
       return;
     }
 
@@ -124,11 +133,11 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
       const ySig = (t: number) =>
         Yc - signalAmp * Math.exp(-envLambda * t) * Math.sin(envOmega * t + phaseShift);
 
-      setSignalPoints(buildPoints(ySig));
-      setTopPath(buildPath(yTop));
-      setBotPath(buildPath(yBot));
-      setFillArea(buildFillArea(yTop, yBot));
-      setDividers(buildDividerPoints(yTop, yBot));
+      setAnimatedSignalPoints(buildPoints(ySig));
+      setAnimatedTopPath(buildPath(yTop));
+      setAnimatedBotPath(buildPath(yBot));
+      setAnimatedFillArea(buildFillArea(yTop, yBot));
+      setAnimatedDividers(buildDividerPoints(yTop, yBot));
       frameRef.current = requestAnimationFrame(animate);
     };
 
@@ -139,7 +148,14 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
         cancelAnimationFrame(frameRef.current);
       }
     };
-  }, [mode, staticBotPath, staticDividers, staticFillArea, staticSignalPoints, staticTopPath]);
+  }, [
+    shouldAnimate,
+    staticBotPath,
+    staticDividers,
+    staticFillArea,
+    staticSignalPoints,
+    staticTopPath,
+  ]);
 
   const legY = 255;
 
@@ -174,80 +190,159 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
           </filter>
         </defs>
 
-        {/* Filled area between envelopes */}
-        <path d={fillArea} fill="rgba(0,212,170,0.04)" stroke="none" />
+        <g className={styles.curves} style={{ opacity: mode === 'static' ? 1 : 0 }}>
+          {/* Filled area between envelopes */}
+          <path d={staticFillArea} fill="rgba(0,212,170,0.04)" stroke="none" />
 
-        {/* Upper envelope */}
-        <path
-          d={topPath}
-          fill="none"
-          stroke="url(#envGradTop)"
-          strokeWidth={1.5}
-          strokeDasharray="6,4"
-          opacity={0.75}
-          filter="url(#envGlow)"
-        />
-
-        {/* Lower envelope */}
-        <path
-          d={botPath}
-          fill="none"
-          stroke="url(#envGradBot)"
-          strokeWidth={1.5}
-          strokeDasharray="6,4"
-          opacity={0.75}
-          filter="url(#envGlow)"
-        />
-
-        {/* Center line */}
-        <line
-          x1={X0}
-          y1={Yc}
-          x2={X1}
-          y2={Yc}
-          stroke="#00d4aa"
-          strokeWidth={0.6}
-          opacity={0.13}
-          strokeDasharray="2,10"
-        />
-
-        {/* Signal polyline */}
-        <polyline
-          points={signalPoints}
-          fill="none"
-          stroke="url(#trajGrad)"
-          strokeWidth={2.3}
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          filter="url(#glow)"
-          opacity={0.96}
-        />
-
-        {/* Phase dividers */}
-        {dividers.map((d) => (
-          <line
-            key={`${d.x}-${d.y1}`}
-            x1={d.x}
-            y1={d.y1}
-            x2={d.x}
-            y2={d.y2}
-            stroke="#1e2d45"
-            strokeWidth={1}
-            strokeDasharray="3,5"
+          {/* Upper envelope */}
+          <path
+            d={staticTopPath}
+            fill="none"
+            stroke="url(#envGradTop)"
+            strokeWidth={1.5}
+            strokeDasharray="6,4"
+            opacity={0.75}
+            filter="url(#envGlow)"
           />
-        ))}
 
-        {/* End node */}
-        <circle
-          cx={X1}
-          cy={Yc}
-          r={9}
-          fill="none"
-          stroke="#00d4aa"
-          strokeWidth={1.5}
-          opacity={0.55}
-        />
-        <circle cx={X1} cy={Yc} r={4} fill="#00d4aa" opacity={0.88} />
+          {/* Lower envelope */}
+          <path
+            d={staticBotPath}
+            fill="none"
+            stroke="url(#envGradBot)"
+            strokeWidth={1.5}
+            strokeDasharray="6,4"
+            opacity={0.75}
+            filter="url(#envGlow)"
+          />
+
+          {/* Center line */}
+          <line
+            x1={X0}
+            y1={Yc}
+            x2={X1}
+            y2={Yc}
+            stroke="#00d4aa"
+            strokeWidth={0.6}
+            opacity={0.13}
+            strokeDasharray="2,10"
+          />
+
+          {/* Signal polyline */}
+          <polyline
+            points={staticSignalPoints}
+            fill="none"
+            stroke="url(#trajGrad)"
+            strokeWidth={2.3}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            filter="url(#glow)"
+            opacity={0.96}
+          />
+
+          {/* Phase dividers */}
+          {staticDividers.map((d) => (
+            <line
+              key={`static-${d.x}-${d.y1}`}
+              x1={d.x}
+              y1={d.y1}
+              x2={d.x}
+              y2={d.y2}
+              stroke="#1e2d45"
+              strokeWidth={1}
+              strokeDasharray="3,5"
+            />
+          ))}
+
+          {/* End node */}
+          <circle
+            cx={X1}
+            cy={Yc}
+            r={9}
+            fill="none"
+            stroke="#00d4aa"
+            strokeWidth={1.5}
+            opacity={0.55}
+          />
+          <circle cx={X1} cy={Yc} r={4} fill="#00d4aa" opacity={0.88} />
+        </g>
+
+        <g className={styles.curves} style={{ opacity: mode === 'animated' ? 1 : 0 }}>
+          {/* Filled area between envelopes */}
+          <path d={animatedFillArea} fill="rgba(0,212,170,0.04)" stroke="none" />
+
+          {/* Upper envelope */}
+          <path
+            d={animatedTopPath}
+            fill="none"
+            stroke="url(#envGradTop)"
+            strokeWidth={1.5}
+            strokeDasharray="6,4"
+            opacity={0.75}
+            filter="url(#envGlow)"
+          />
+
+          {/* Lower envelope */}
+          <path
+            d={animatedBotPath}
+            fill="none"
+            stroke="url(#envGradBot)"
+            strokeWidth={1.5}
+            strokeDasharray="6,4"
+            opacity={0.75}
+            filter="url(#envGlow)"
+          />
+
+          {/* Center line */}
+          <line
+            x1={X0}
+            y1={Yc}
+            x2={X1}
+            y2={Yc}
+            stroke="#00d4aa"
+            strokeWidth={0.6}
+            opacity={0.13}
+            strokeDasharray="2,10"
+          />
+
+          {/* Signal polyline */}
+          <polyline
+            points={animatedSignalPoints}
+            fill="none"
+            stroke="url(#trajGrad)"
+            strokeWidth={2.3}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            filter="url(#glow)"
+            opacity={0.96}
+          />
+
+          {/* Phase dividers */}
+          {animatedDividers.map((d) => (
+            <line
+              key={`animated-${d.x}-${d.y1}`}
+              x1={d.x}
+              y1={d.y1}
+              x2={d.x}
+              y2={d.y2}
+              stroke="#1e2d45"
+              strokeWidth={1}
+              strokeDasharray="3,5"
+            />
+          ))}
+
+          {/* End node */}
+          <circle
+            cx={X1}
+            cy={Yc}
+            r={9}
+            fill="none"
+            stroke="#00d4aa"
+            strokeWidth={1.5}
+            opacity={0.55}
+          />
+          <circle cx={X1} cy={Yc} r={4} fill="#00d4aa" opacity={0.88} />
+        </g>
 
         {/* Phase labels */}
         {phaseLabels.map((label) => (
@@ -256,10 +351,10 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
             x={xOf(label.t)}
             y={22}
             fontFamily="Inter, sans-serif"
-            fontSize={12}
             fontWeight={700}
             textAnchor="middle"
             fill={label.fill}
+            className="funnel-phase-label"
           >
             {label.text}
           </text>
@@ -270,10 +365,10 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
           x={X1}
           y={22}
           fontFamily="Inter, sans-serif"
-          fontSize={12}
           fontWeight={700}
           textAnchor="middle"
           fill="#00d4aa"
+          className="funnel-converge-label"
         >
           ✓ converge
         </text>
@@ -293,9 +388,9 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
           x={103}
           y={legY + 4}
           fontFamily="Inter, sans-serif"
-          fontSize={12}
           fontWeight={600}
           fill="#a08040"
+          className="funnel-legend-label"
         >
           trayectoria del agente
         </text>
@@ -313,9 +408,9 @@ export default function ConvergentEnvelope({ mode = 'static' }: ConvergentEnvelo
           x={363}
           y={legY + 4}
           fontFamily="Inter, sans-serif"
-          fontSize={12}
           fontWeight={600}
           fill="#2a8a70"
+          className="funnel-legend-label"
         >
           envolvente e⁻λt
         </text>

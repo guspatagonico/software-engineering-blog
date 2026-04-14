@@ -3,9 +3,10 @@ title: Caveman Style Preference
 summary: Captures the user requirement for terse caveman mode responses while preserving technical accuracy
 tags: []
 keywords: []
-importance: 50
+importance: 53
 recency: 1
 maturity: draft
+accessCount: 1
 createdAt: '2026-04-13T14:34:05.861Z'
 updatedAt: '2026-04-13T14:34:05.861Z'
 ---

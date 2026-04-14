@@ -2,9 +2,10 @@
 title: Build and Run Commands
 tags: []
 keywords: []
-importance: 50
+importance: 53
 recency: 1
 maturity: draft
+accessCount: 1
 createdAt: '2026-04-06T17:42:32.225Z'
 updatedAt: '2026-04-06T17:42:32.225Z'
 ---

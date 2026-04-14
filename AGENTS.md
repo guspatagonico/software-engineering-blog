@@ -122,7 +122,7 @@ Key rules:
 - Panel `id` must be `panel-{section.id}` (prefixed with `panel-`).
 - Reuse existing components: `Highlight`, `Card`, `ConvergentEnvelope`, etc.
 - Add a card entry on `src/pages/index.astro` for every new post.
-- Use icons from: `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑` for section nav items.
+- Use icons from: `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑ 👤 🧠 ⚙ ✦ ⚠ ⧉` for section nav items.
 
 ### Component structure
 

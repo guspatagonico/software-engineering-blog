@@ -14,9 +14,9 @@ const post = getPost('harness-engineering');
 const sections = [
   { id: 'mental-model', icon: '◈', label: 'Modelo mental' },
   { id: 'subagentes', icon: '⬡', label: 'Sub-agentes' },
-  { id: 'context', icon: '▣', label: 'Context window' },
+  { id: 'context', icon: '◑', label: 'Context window' },
   { id: 'orq', icon: '⟳', label: 'Orquestación' },
-  { id: 'tools', icon: '⊕', label: 'Skills & MCPs' },
+  { id: 'tools', icon: '⧉', label: 'Skills & MCPs' },
   { id: 'checklist', icon: '✓', label: 'Checklist' },
   { id: 'vocab', icon: '≡', label: 'Vocabulario' },
 ];
@@ -341,39 +341,53 @@ const checklistSections = [
         <!-- Desktop: Horizontal layout -->
         <div class="fj-flow-desktop">
           <div class="fj-horizontal-flow">
-            <div class="fj-start">Orquestador</div>
-            <div class="fj-h-arrow">→</div>
-            <div class="fj-fork">Fork</div>
-            <div class="fj-h-arrow">→</div>
-            <div class="fj-parallel-box">
-              <div class="fj-agent-card"><span class="fj-label">Subagente A</span><span class="fj-type">CSS</span></div>
-              <div class="fj-agent-card"><span class="fj-label">Subagente B</span><span class="fj-type">PHP</span></div>
-              <div class="fj-agent-card"><span class="fj-label">Subagente C</span><span class="fj-type">DB</span></div>
+            <div class="fj-start">Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span></div>
+            <div class="fj-h-arrow">
+              <span class="fj-arrow-glyph">→</span>
             </div>
-            <div class="fj-h-arrow">→</div>
-            <div class="fj-join">Join</div>
-            <div class="fj-h-arrow">→</div>
-            <div class="fj-validation">Validación</div>
-            <div class="fj-h-arrow">→</div>
-            <div class="fj-end">siguiente</div>
+            <div class="fj-fork">Fork<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span></div>
+            <div class="fj-h-arrow">
+              <span class="fj-arrow-glyph">→</span>
+            </div>
+            <div class="fj-parallel-box">
+              <div class="fj-agent-card"><span class="fj-label">Subagente A</span><span class="fj-type">CSS</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+              <div class="fj-agent-card"><span class="fj-label">Subagente B</span><span class="fj-type">PHP</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+              <div class="fj-agent-card"><span class="fj-label">Subagente C</span><span class="fj-type">DB</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+            </div>
+            <div class="fj-h-arrow">
+              <span class="fj-arrow-glyph">→</span>
+            </div>
+            <div class="fj-join">Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span></div>
+            <div class="fj-h-arrow">
+              <span class="fj-arrow-glyph">→</span>
+            </div>
+            <div class="fj-validation">Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span></div>
+            <div class="fj-h-arrow">
+              <span class="fj-arrow-glyph">→</span>
+            </div>
+            <div class="fj-end">siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span></div>
           </div>
         </div>
         
         <!-- Mobile: Simplified vertical -->
         <div class="fj-flow-mobile">
-          <div class="fj-node">Orquestador</div>
-          <div class="fj-fork-label">┌── Fork ──┐</div>
+          <div class="fj-node">Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span></div>
+          <div class="fj-fork-label">┌── Fork ──┐<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span></div>
           <div class="fj-parallel-stack">
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span></div>
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span></div>
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span></div>
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+            <div class="fj-agent-card"><span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
           </div>
           <div class="fj-join-label">└── Join ──┘</div>
-          <div class="fj-node fj-join">Join</div>
-          <div class="fj-arrow">↓</div>
-          <div class="fj-node fj-validation">Validación</div>
-          <div class="fj-arrow">↓</div>
-          <div class="fj-next">siguiente</div>
+          <div class="fj-node fj-join">Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span></div>
+          <div class="fj-arrow">
+            <span class="fj-arrow-glyph">↓</span>
+          </div>
+          <div class="fj-node fj-validation">Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span></div>
+          <div class="fj-arrow">
+            <span class="fj-arrow-glyph">↓</span>
+          </div>
+          <div class="fj-next">siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span></div>
         </div>
       </div>
 
@@ -618,12 +632,20 @@ const checklistSections = [
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    overflow: visible;
   }
 
   .fj-node {
     font-weight: 600;
     color: var(--text);
     padding: 6px 12px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .fj-arrow-glyph {
+    font-size: 14px;
+    color: var(--text-dim);
   }
 
   .fj-fork-label,
@@ -632,6 +654,7 @@ const checklistSections = [
     font-size: 11px;
     color: var(--teal);
     letter-spacing: 1px;
+    position: relative;
   }
 
   .fj-parallel-stack {
@@ -640,6 +663,7 @@ const checklistSections = [
     gap: 6px;
     width: 100%;
     max-width: 260px;
+    overflow: visible;
   }
 
   .fj-agent-card {
@@ -651,6 +675,8 @@ const checklistSections = [
     border: 1px solid var(--border);
     border-radius: 4px;
     gap: 12px;
+    position: relative;
+    overflow: visible;
   }
 
   .fj-label {
@@ -667,20 +693,102 @@ const checklistSections = [
     border: 1px solid var(--border);
     border-radius: 4px;
     background: var(--bg);
+    position: relative;
+    overflow: visible;
   }
 
   .fj-validation {
     color: var(--amber);
+    position: relative;
+    overflow: visible;
   }
 
   .fj-arrow {
     color: var(--text-dim);
     font-size: 14px;
+    position: relative;
+    width: 24px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .fj-next {
     color: var(--text-dim);
     font-size: 11px;
+    position: relative;
+    overflow: visible;
+  }
+
+  .fj-stage-token {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--teal);
+    box-shadow: 0 0 16px rgba(0, 212, 170, 0.9);
+    opacity: 0;
+    top: 50%;
+    left: 100%;
+    margin-left: 6px;
+    transform: translateY(-50%) scale(0.7);
+    animation: fj-stage 7.2s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  .fj-stage-token--orq {
+    animation-delay: 0s;
+  }
+
+  .fj-stage-token--fork {
+    animation-delay: 1.2s;
+  }
+
+  .fj-stage-token--sub {
+    animation-delay: 2.4s;
+  }
+
+  .fj-stage-token--join {
+    animation-delay: 3.6s;
+  }
+
+  .fj-stage-token--val {
+    animation-delay: 4.8s;
+  }
+
+  .fj-stage-token--next {
+    animation-delay: 6s;
+  }
+
+  @keyframes fj-stage {
+    0% {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.7);
+    }
+    8% {
+      opacity: 0.95;
+      transform: translateY(-50%) scale(1);
+    }
+    14% {
+      opacity: 0.85;
+      transform: translateY(-50%) scale(1);
+    }
+    18% {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.8);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.7);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fj-stage-token {
+      animation: none;
+      opacity: 0.6;
+    }
   }
 
   /* Desktop: Horizontal flow with stacked parallel agents */
@@ -709,6 +817,7 @@ const checklistSections = [
       font-weight: 600;
       padding: 4px 8px;
       white-space: nowrap;
+      position: relative;
     }
 
     .fj-start {
@@ -736,6 +845,51 @@ const checklistSections = [
     .fj-h-arrow {
       color: var(--text-dim);
       font-size: 14px;
+      position: relative;
+      width: 34px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .fj-stage-token {
+      left: 50%;
+      margin-left: 0;
+      top: -8px;
+      transform: translate(-50%, -50%) scale(0.7);
+      animation-name: fj-stage-desktop;
+    }
+
+    .fj-agent-card .fj-stage-token {
+      left: auto;
+      top: 50%;
+      right: -8px;
+      transform: translateY(-50%) scale(0.7);
+      animation-name: fj-stage;
+    }
+
+    @keyframes fj-stage-desktop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+      }
+      8% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      14% {
+        opacity: 0.85;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      18% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.7);
+      }
     }
 
     .fj-parallel-box {
@@ -768,6 +922,42 @@ const checklistSections = [
 
   .ph-dim {
     color: var(--text-dim);
+  }
+
+  :global(.funnel-container svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  :global(.funnel-phase-label) {
+    font-size: 14px;
+  }
+
+  :global(.funnel-converge-label) {
+    font-size: 13px;
+  }
+
+  :global(.funnel-legend-label) {
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    :global(.funnel-container) {
+      padding: 10px;
+    }
+
+    :global(.funnel-phase-label) {
+      font-size: 17px;
+    }
+
+    :global(.funnel-converge-label) {
+      font-size: 16px;
+    }
+
+    :global(.funnel-legend-label) {
+      font-size: 15px;
+    }
   }
 
 </style>

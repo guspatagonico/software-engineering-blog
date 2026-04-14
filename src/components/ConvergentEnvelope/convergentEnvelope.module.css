@@ -1,0 +1,4 @@
+.curves {
+  transition: opacity 0.28s ease;
+  will-change: opacity;
+}

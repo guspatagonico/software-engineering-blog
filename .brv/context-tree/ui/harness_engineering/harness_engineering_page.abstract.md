@@ -1,0 +1,1 @@
+Harness Engineering page documents layout and technical defaults for ConvergentEnvelope animation, context/orchestration budgets, drift signals, checklists, and styling rules to keep sub-agent work bounded.

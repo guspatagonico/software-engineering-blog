@@ -3,19 +3,13 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1388,
+      "tokens": 1673,
       "type": "summary"
     },
     {
       "order": 1,
       "path": "facts/personal/_index.md",
       "tokens": 322,
-      "type": "summary"
-    },
-    {
-      "order": 1,
-      "path": "project_management/run_commands/_index.md",
-      "tokens": 187,
       "type": "summary"
     },
     {
@@ -31,31 +25,31 @@
       "type": "context"
     },
     {
-      "importance": 89,
+      "importance": 100,
+      "path": "project_guidelines/dev_process/development_process_and_rules.md",
+      "tokens": 884,
+      "type": "context"
+    },
+    {
+      "importance": 100,
       "path": "project_management/handoffs/handoff_2026_04_04.md",
       "tokens": 675,
       "type": "context"
     },
     {
-      "importance": 83,
-      "path": "project_guidelines/dev_process/development_process_and_rules.md",
-      "tokens": 885,
-      "type": "context"
-    },
-    {
-      "importance": 62,
+      "importance": 65,
       "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
-      "tokens": 447,
+      "tokens": 448,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-14T00:17:49.806Z",
+  "generated_at": "2026-04-14T01:45:25.952Z",
   "lane_tokens": {
     "contexts": 4000,
     "stubs": 0,
-    "summaries": 1897
+    "summaries": 1995
   },
-  "source_fingerprint": "222074ce44292a705027d93832ee3ea76a7570ecec835e8a29c5b0fadcac0ce4",
-  "total_tokens": 5897,
+  "source_fingerprint": "fbf39842cef2fb8308794bdbdfe04887edfc2f18d22c66cc07382a2ecfb92d04",
+  "total_tokens": 5995,
   "version": 1
 }

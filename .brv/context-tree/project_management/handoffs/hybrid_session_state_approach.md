@@ -4,9 +4,10 @@ summary: Defines how ByteRover stores durable knowledge while handoffs capture e
 tags: []
 related: [project_management/handoffs/context.md]
 keywords: []
-importance: 55
+importance: 58
 recency: 1
 maturity: draft
+accessCount: 1
 updateCount: 1
 createdAt: '2026-04-13T14:40:06.574Z'
 updatedAt: '2026-04-13T14:40:25.894Z'

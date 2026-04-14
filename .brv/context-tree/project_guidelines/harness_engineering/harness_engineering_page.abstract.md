@@ -1,0 +1,1 @@
+The Harness Engineering page documents the ConvergentEnvelope defaults, context/tool/skill budgets, fork-join orchestration rules, drift responses, and glossary/checklist guidance that govern sub-agent behavior and validation workflows.
