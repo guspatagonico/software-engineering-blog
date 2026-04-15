@@ -8,6 +8,19 @@
   font-size: 14px;
 }
 
+:root[data-content-loading='true'] .post-header h1,
+:root[data-content-loading='true'] .post-header .post-subtitle,
+:root[data-content-loading='true'] .content * {
+  opacity: 0;
+}
+
+:root:not([data-content-loading='true']) .post-header h1,
+:root:not([data-content-loading='true']) .post-header .post-subtitle,
+:root:not([data-content-loading='true']) .content * {
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
 /* Desktop: content is scrollable */
 @media (min-width: 1024px) {
   .content {
@@ -79,6 +92,10 @@
 
 .panel.active {
   display: block;
+}
+
+:root[data-panel-syncing='true'] .panel {
+  display: none !important;
 }
 
 /* Grid layouts for blog post content */

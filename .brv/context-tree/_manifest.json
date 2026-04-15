@@ -3,19 +3,13 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1118,
+      "tokens": 1005,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "project_management/_index.md",
-      "tokens": 676,
-      "type": "summary"
-    },
-    {
-      "order": 1,
-      "path": "project_management/run_commands/_index.md",
-      "tokens": 187,
+      "path": "project_guidelines/_index.md",
+      "tokens": 889,
       "type": "summary"
     },
     {
@@ -49,13 +43,13 @@
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-15T13:19:15.458Z",
+  "generated_at": "2026-04-15T14:57:17.284Z",
   "lane_tokens": {
     "contexts": 4000,
     "stubs": 0,
-    "summaries": 1981
+    "summaries": 1894
   },
-  "source_fingerprint": "8b93274ccaf4465d8bfd1d4bcd553979799ca95f58a0e8446c455b8b51629f21",
-  "total_tokens": 5981,
+  "source_fingerprint": "394ca9123d9bc3d1220c09faea1aad173531dbc8a8b584afde8d6ce2ba3c8b62",
+  "total_tokens": 5894,
   "version": 1
 }

@@ -26,6 +26,54 @@ const finalDescription = description ?? post?.description;
       publishedTime={post?.pubDate}
       tags={post?.tags}
     />
+    <script is:inline>
+      (function () {
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          document.documentElement.dataset.sectionsCollapsed = 'true';
+        }
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        document.documentElement.dataset.contentLoading = 'true';
+        function clearLoading() {
+          requestAnimationFrame(function () {
+            delete document.documentElement.dataset.contentLoading;
+          });
+        }
+        window.addEventListener('load', clearLoading, { once: true });
+        document.addEventListener('astro:page-load', clearLoading, { once: true });
+      })();
+    </script>
+    <script is:inline>
+      (function () {
+        var hash = window.location.hash.slice(1);
+        if (hash) {
+          document.documentElement.dataset.panelSyncing = 'true';
+          document.documentElement.dataset.sectionsSyncing = 'true';
+          document.documentElement.dataset.currentPanel = hash;
+        }
+
+        if (window.matchMedia('(max-width: 767px)').matches) {
+          document.documentElement.dataset.sectionsCollapsed = 'true';
+        }
+      })();
+    </script>
+    <style is:inline>
+      @media (max-width: 767px) {
+        :root:not([data-sections-collapsed='false']) .section-nav-toggle__label-text {
+          display: none;
+        }
+
+        :root:not([data-sections-collapsed='false']) .section-nav-toggle__active {
+          display: inline-flex;
+        }
+
+        :root:not([data-sections-collapsed='false']) .section-nav-toggle__icon {
+          transform: rotate(0deg);
+        }
+      }
+    </style>
   </head>
   <body>
     <Navbar />
@@ -63,7 +111,11 @@ const finalDescription = description ?? post?.description;
         // Wait for React components to hydrate
         function initHashNavigation() {
           const hash = window.location.hash.slice(1);
-          if (!hash) return;
+          if (!hash) {
+            delete document.documentElement.dataset.panelSyncing;
+            delete document.documentElement.dataset.sectionsSyncing;
+            return;
+          }
 
           // Find the panel matching the hash
           const panel = document.getElementById('panel-' + hash);
@@ -92,6 +144,9 @@ const finalDescription = description ?? post?.description;
           window.dispatchEvent(new CustomEvent('section-activated', {
             detail: { sectionId: hash }
           }));
+
+          delete document.documentElement.dataset.panelSyncing;
+          delete document.documentElement.dataset.sectionsSyncing;
         }
 
         // Run on load and when DOM is ready

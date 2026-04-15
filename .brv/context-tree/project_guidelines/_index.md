@@ -1,48 +1,40 @@
 ---
-children_hash: 91dc3b7c622a353968768789eec48ad4ffe6e38ce760c42b65d59329b061b0eb
-compression_ratio: 0.24923857868020305
+children_hash: a67cd9c4c4905387df4c52bfc805b7beeb58a1196a9290eefb5749ef04b2f37a
+compression_ratio: 0.19461471103327496
 condensation_order: 2
-covers: [agents/_index.md, architecture/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md]
-covers_token_total: 3940
+covers: [agents/_index.md, architecture/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md, ui_design/_index.md]
+covers_token_total: 4568
 summary_level: d2
-token_count: 982
+token_count: 889
 type: summary
 ---
 # Domain: Project Guidelines (d2 Summary)
 
-This structural summary synthesizes the architectural standards, operational workflows, and engineering frameworks governing the Software Engineering Blog. It establishes a unified model for agent-driven development, state management, and interactive content delivery.
+This domain establishes the architectural, operational, and governance standards for the Software Engineering Blog. It integrates agent-driven development workflows with a rigorous interactive UI framework and centralized state management.
 
-## 1. Agent Governance and Orchestration
-The development lifecycle is managed through a rigorous agent-orchestration framework that prioritizes context efficiency and safety.
+## 1. Agent Governance & Orchestration
+The project operates under a strict agent-driven framework defined by the **AGENTS.md** manifesto.
+*   **Operational Standards**: Mandates a **pnpm-only** workflow, **TypeScript strict mode**, and **git worktrees** for non-trivial features. Agents are prohibited from committing secrets or including their names in documentation (see `agents/project_agent_handbook.md`).
+*   **Harness Engineering**: Employs the **Envolvente Convergente Framework**, using Barrier and Lyapunov functions to ensure sub-agent interventions converge toward project goals while managing entropy and drift (see `agents/harness_engineering/_index.md`).
+*   **Context Management**: Strictly budgets sub-agent context to **~5800 tokens**. Global state is maintained in `session-state.md` and transferred via standardized handoff templates (see `agents/context_window_and_handoff_strategy.md`).
+*   **Mutation Gating**: All git commits and pushes require explicit user consent, regardless of lint or typecheck success (see `project_guidelines/git_safe_mutations/_index.md`).
 
-*   **Operational Standards (agents/_index.md, context.md)**: Mandates a **pnpm-only** workflow, **TypeScript strict mode**, and **git worktrees** for non-trivial features. Security is enforced via a strict prohibition on committing secrets and a requirement for explicit user consent before any git mutation (**git_safe_mutations/_index.md**).
-*   **Sub-Agent Anatomy (agents/_index.md)**: Ephemeral units defined by the "Rule of Gold" (scope ≤ 2 sentences). They operate within a strict **~5800 token context budget** and utilize standardized handoff templates (Summary, Artifacts, Key State, Result status).
-*   **Orchestration Patterns (agents/_index.md, harness_engineering/_index.md)**: Employs a **Fork-Join pattern** for parallel execution, ensuring branches write to independent files. The orchestrator monitors for "drift signals" such as scope expansion or repeated correction loops.
+## 2. Blog Architecture & UI Standards
+Every blog post follows a standardized interactive layout to ensure platform-wide consistency.
+*   **Layout Pattern**: Posts must utilize the `BlogPost` layout and `SectionNav` component (with `client:load`). Content is organized into a **Panel System** where IDs follow the `panel-{section.id}` pattern (see `blog_post_architecture/_index.md`).
+*   **Visual Language**: Navigation icons are restricted to an approved set (◈ ▸ ▣ ◑ ⊕ ⬡). Reusable components like `Highlight`, `Card`, and `ConvergentEnvelope` are mandatory for cohesive styling.
+*   **Mobile Performance**: Implements early viewport detection (mobile < 767px) in the document head to prevent hydration flickering and layout shifts. `SectionNav` automatically expands at viewports > 1024px (see `ui_design/mobile_ui_performance_patterns.md`).
 
-## 2. Engineering Frameworks
-The repository utilizes specialized mental models and centralized utilities to maintain system integrity.
+## 3. Development Process & Infrastructure
+The repository enforces a standardized lifecycle for code quality and deployment.
+*   **Workflow Gates**: Core flow requires style enforcement → `pnpm lint/typecheck/format` → Vitest/Playwright execution → Conventional Commits → PR via `gh` CLI (see `dev_process/_index.md`).
+*   **State Persistence**: Centralized management via `src/utils/storage.ts` using a single `localStorage` key (`gsalvini-se-blog`). It handles theme, background visibility, and checklist states with SSR-safe window checks (see `architecture/state_persistence_and_storage.md`).
+*   **Execution Environment**: Defines standardized commands for local development (`pnpm dev`), testing (`pnpm test`, `pnpm test:e2e`), and production asset management via the `/dist-upload` command (see `run_commands/_index.md`).
 
-*   **Envolvente Convergente (harness_engineering/_index.md)**: A mathematical framework for solution convergence using **Barrier Functions (CBF)** to prohibit invalid regions and **Lyapunov Functions** to reduce distance to the target goal.
-*   **State Persistence (architecture/_index.md)**: Centralized state management via `src/utils/storage.ts` using a unified `localStorage` key (`gsalvini-se-blog`). It handles schema migration for legacy keys and implements SSR guards for Astro compatibility.
-*   **Quality Gates (run_commands/_index.md, dev_process/_index.md)**: Enforces a strict flow: `pnpm lint/typecheck/format` → Vitest/Playwright testing → Conventional Commits → PR creation via `gh` CLI.
-
-## 3. Blog Architecture and UI Standards
-Consistency across interactive blog posts is maintained through enforced layout patterns and component reuse.
-
-*   **Layout Pattern (blog_post_architecture/_index.md, agents/_index.md)**: Every post must import the `BlogPost` layout and render `SectionNav` with `client:load`.
-*   **Panel System**: Content must be organized into `div` panels with IDs following the `panel-{section.id}` pattern. The initial state requires the first panel to be marked `panel active`.
-*   **Visual Language**: Restricts navigation icons to an approved set (◈ ▸ ▣ ◑ ⊕ ⬡) and mandates the use of `astro:assets` for media.
-*   **Shared Components**: Cohesive styling is achieved through the reuse of `Highlight`, `Card`, and `ConvergentEnvelope` components.
-
-## 4. Command and Workflow Reference
-*   **Setup & Dev**: `pnpm install` and `pnpm dev` (port 4321).
-*   **Verification**: `pnpm lint`, `pnpm typecheck`, `pnpm test` (Vitest), and `pnpm test:e2e` (Playwright).
-*   **Git Policy**: Explicit approval is required for all mutations; lint/typecheck success does not override this gate (**git_mutation_approval_rule.md**).
-
-### Drill-down References
-*   **agents/**: Detailed agent manifesto, handoff strategies, and orchestration invariants.
-*   **harness_engineering/**: Mathematical foundations of the convergence framework and animation constants.
-*   **architecture/**: Persistence schema and storage migration logic.
-*   **blog_post_architecture/**: Specific panel conventions and UI component integration.
-*   **dev_process/**: Naming conventions, import ordering, and PR workflows.
-*   **run_commands/**: Comprehensive pnpm script definitions and quality gate commands.
+## 4. Key Drill-down References
+*   **agents/**: Core governance, sub-agent anatomy, and orchestration rules.
+*   **architecture/**: State persistence logic and storage schemas.
+*   **blog_post_architecture/**: BlogPost layout conventions and panel systems.
+*   **dev_process/**: Coding standards, import ordering, and PR workflows.
+*   **harness_engineering/**: Mathematical models for convergence and context budgeting.
+*   **run_commands/**: Script manifest for build, test, and production deployment.

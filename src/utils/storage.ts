@@ -5,6 +5,7 @@ export interface PersistedState {
   matrixBackgroundVisible?: boolean;
   convergentEnvelopeMode?: 'static' | 'animated';
   checklists?: Record<string, number[]>;
+  scrollPositions?: Record<string, Record<string, number>>;
 }
 
 export const readStorage = (): PersistedState => {
