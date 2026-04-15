@@ -38,12 +38,12 @@
 }
 
 .post-date {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--text-dim) !important;
 }
 
 .post-tag {
-  font-size: 9px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--teal) !important;
   background: rgba(0, 212, 170, 0.1);
@@ -61,7 +61,7 @@
 }
 
 .post-desc {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-dim) !important;
   line-height: 1.5;
 }

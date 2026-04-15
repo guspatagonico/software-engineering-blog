@@ -399,7 +399,7 @@ Ephemeral session state. User explicitly triggers creation/reading.
 - Contents: completed tasks (current session only), in-progress work, blockers, next steps
 - **Do not read automatically** — only when user explicitly asks
 
-**Command:** `/handoff` creates handoff automatically (fetches git status, generates sections, writes to `_handoffs/`)
+**Command:** `/handoff-create` creates handoff automatically (fetches git status, generates sections, writes to `_handoffs/`)
 
 ### When to use what
 

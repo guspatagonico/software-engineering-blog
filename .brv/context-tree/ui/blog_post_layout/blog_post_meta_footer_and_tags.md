@@ -3,10 +3,10 @@ title: Blog Post Meta Footer and Tags
 tags: []
 related: [ui/visual_effects/scroll_feedback_system.md]
 keywords: []
-importance: 53
+importance: 56
 recency: 1
 maturity: draft
-accessCount: 1
+accessCount: 2
 createdAt: '2026-04-08T02:59:01.945Z'
 updatedAt: '2026-04-08T02:59:01.945Z'
 ---
