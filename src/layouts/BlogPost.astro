@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import PostCompactFooter from '@/components/PostCompactFooter.astro';
 import ScrollIndicator from '@/components/ScrollIndicator.astro';
 import Head from '@/components/Head/Head.astro';
 import type { PostMeta } from '@/data/posts';
@@ -35,6 +36,26 @@ const finalDescription = description ?? post?.description;
     </script>
     <script is:inline>
       (function () {
+        function moveTagsInline() {
+          const tags = document.querySelector('[data-post-tags]');
+          const content = document.querySelector('.content');
+          if (!tags || !content) return;
+          if (content.contains(tags)) return;
+          tags.removeAttribute('hidden');
+          content.appendChild(tags);
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', moveTagsInline);
+        } else {
+          moveTagsInline();
+        }
+
+        document.addEventListener('astro:page-load', moveTagsInline);
+      })();
+    </script>
+    <script is:inline>
+      (function () {
         document.documentElement.dataset.contentLoading = 'true';
         function clearLoading() {
           requestAnimationFrame(function () {
@@ -59,6 +80,73 @@ const finalDescription = description ?? post?.description;
         }
       })();
     </script>
+    <script is:inline>
+      (function () {
+        const root = document.documentElement;
+        const threshold = 12;
+        let lastCompact = null;
+
+        function getScrollTop() {
+          const content = document.querySelector('.content');
+          if (content && content.scrollHeight > content.clientHeight) return content.scrollTop;
+          const layout = document.querySelector('.post-layout');
+          if (layout && layout.scrollHeight > layout.clientHeight) return layout.scrollTop;
+          return window.scrollY || document.documentElement.scrollTop;
+        }
+
+        function setHeaderHeight() {
+          const header = document.querySelector('.post-header');
+          if (!header) return;
+          const height = Math.round(header.getBoundingClientRect().height);
+          root.style.setProperty('--post-header-height', `${height}px`);
+        }
+
+        function updateCompact() {
+          const scrollTop = getScrollTop();
+          const shouldCompact = scrollTop > threshold;
+          if (shouldCompact !== lastCompact) {
+            root.dataset.headerCompact = shouldCompact ? 'true' : 'false';
+            lastCompact = shouldCompact;
+            requestAnimationFrame(setHeaderHeight);
+          }
+        }
+
+        function refresh() {
+          bindListeners();
+          setHeaderHeight();
+          updateCompact();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', refresh);
+        } else {
+          refresh();
+        }
+
+        function bindListeners() {
+          const content = document.querySelector('.content');
+          const layout = document.querySelector('.post-layout');
+          if (content && content.dataset.headerCompactBound !== 'true') {
+            content.dataset.headerCompactBound = 'true';
+            content.addEventListener('scroll', updateCompact, { passive: true });
+          }
+          if (layout && layout.dataset.headerCompactBound !== 'true') {
+            layout.dataset.headerCompactBound = 'true';
+            layout.addEventListener('scroll', updateCompact, { passive: true });
+          }
+          if (root.dataset.headerCompactWindowBound !== 'true') {
+            root.dataset.headerCompactWindowBound = 'true';
+            window.addEventListener('scroll', updateCompact, { passive: true });
+          }
+        }
+
+        window.addEventListener('load', refresh, { once: true });
+        window.addEventListener('resize', refresh, { passive: true });
+        document.addEventListener('astro:page-load', () => {
+          setTimeout(refresh, 0);
+        });
+      })();
+    </script>
     <style is:inline>
       @media (max-width: 767px) {
         :root:not([data-sections-collapsed='false']) .section-nav-toggle__label-text {
@@ -75,7 +163,7 @@ const finalDescription = description ?? post?.description;
       }
     </style>
   </head>
-  <body>
+  <body class="post-page">
     <Navbar />
     <ScrollIndicator targetSelector=".content" position="fixed" top="48px" />
     <header class="post-header">
@@ -86,21 +174,17 @@ const finalDescription = description ?? post?.description;
       <slot />
     </div>
 
-    <!-- Post Meta Footer - Date and Tags (anchored right, above global footer) -->
+    {post && <PostCompactFooter published={post.pubDate} />}
+
     {
-      post && (
-        <div class="post-meta-footer">
-          <div class="post-meta-inner">
-            <span class="post-meta-label">Published</span>
-            <span class="post-meta-date">{post.pubDate}</span>
+      post && post.tags.length > 0 && (
+        <div class="post-tags-inline" data-post-tags hidden>
+          <span class="post-tags-inline__label">Tags</span>
+          <div class="post-tags-inline__list">
+            {post.tags.map((tag) => (
+              <span class="post-tag">{tag}</span>
+            ))}
           </div>
-          {post.tags.length > 0 && (
-            <div class="post-meta-tags">
-              {post.tags.map((tag) => (
-                <span class="post-tag">{tag}</span>
-              ))}
-            </div>
-          )}
         </div>
       )
     }
@@ -258,6 +342,10 @@ const finalDescription = description ?? post?.description;
     overflow: hidden;
   }
 
+  .post-page .footer {
+    display: none;
+  }
+
   .post-header {
     padding: 20px 28px 16px;
     border-bottom: 1px solid var(--border);
@@ -268,6 +356,13 @@ const finalDescription = description ?? post?.description;
     position: sticky;
     top: 48px;
     z-index: 40;
+    transition:
+      padding 0.2s ease,
+      gap 0.2s ease;
+  }
+
+  :root {
+    --post-header-height: 60px;
   }
 
   .post-layout {
@@ -291,8 +386,8 @@ const finalDescription = description ?? post?.description;
 
     .post-layout > nav {
       position: sticky;
-      top: calc(48px + 60px);
-      height: calc(100vh - 48px - 60px - 70px);
+      top: calc(48px + var(--post-header-height, 60px));
+      height: calc(100vh - 48px - var(--post-header-height, 60px) - 70px);
       overflow-y: auto;
       flex-shrink: 0;
       scrollbar-width: none;
@@ -344,6 +439,9 @@ const finalDescription = description ?? post?.description;
     font-weight: 700;
     color: var(--text-bright);
     letter-spacing: -0.4px;
+    transition:
+      font-size 0.2s ease,
+      line-height 0.2s ease;
   }
 
   .post-subtitle {
@@ -352,6 +450,26 @@ const finalDescription = description ?? post?.description;
     color: var(--teal);
     letter-spacing: 2px;
     text-transform: uppercase;
+    transition:
+      font-size 0.2s ease,
+      line-height 0.2s ease,
+      letter-spacing 0.2s ease;
+  }
+
+  :root[data-header-compact='true'] .post-header {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  :root[data-header-compact='true'] .post-header h1 {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  :root[data-header-compact='true'] .post-subtitle {
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: 1.6px;
   }
 
   .mermaid {
@@ -460,122 +578,6 @@ const finalDescription = description ?? post?.description;
   @media (max-width: 767px) {
     .mermaid {
       padding: 14px 12px;
-    }
-  }
-
-  /* Post Meta Footer - Anchored to right above global footer */
-  .post-meta-footer {
-    position: fixed;
-    bottom: 70px; /* Height of global footer + spacing */
-    right: 0;
-    padding: 8px 20px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-right: none;
-    border-radius: 6px 0 0 6px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 10px;
-    z-index: 35;
-    max-width: 280px;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-  }
-
-  .post-meta-inner {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .post-meta-label {
-    font-size: 10px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .post-meta-date {
-    font-size: 12px;
-    color: var(--text-bright);
-    font-weight: 500;
-  }
-
-  .post-meta-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .post-tag {
-    font-size: 9px;
-    font-weight: 700;
-    color: var(--teal);
-    background: rgba(0, 212, 170, 0.15);
-    padding: 3px 8px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(0, 212, 170, 0.3);
-  }
-
-  /* Desktop */
-  @media (min-width: 1400px) {
-    .post-meta-footer {
-      bottom: 70px;
-      right: 0;
-    }
-  }
-
-  /* Tablet & Mobile - same full-width layout above footer */
-  @media (max-width: 1399px) {
-    .post-meta-footer {
-      position: fixed;
-      bottom: 59px; /* Footer: padding 12px*2 + border 1px + content ~16px = 47px */
-      /* bottom: 53px; */
-      left: 0;
-      right: 0;
-      max-width: none;
-      border-radius: 0;
-      border-right: none;
-      border-left: none;
-      border-top: 1px solid var(--border);
-      border-bottom: none;
-      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
-      margin: 0;
-      padding: 6px 16px; /* Reduced vertical padding */
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      gap: 16px;
-      flex-wrap: wrap;
-      z-index: 45; /* Below footer (50) but above content */
-    }
-  }
-
-  /* Smaller screens - footer has less padding */
-  @media (max-width: 480px) {
-    .post-meta-footer {
-      bottom: 47px; /* Footer: padding 12px*2 + border 1px + content ~16px = 47px */
-      padding: 5px 16px;
-    }
-  }
-
-  /* Tablet & Mobile inner elements */
-  @media (max-width: 1023px) {
-    .post-meta-inner {
-      flex-shrink: 0;
-    }
-
-    .post-meta-tags {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .post-tag {
-      flex-shrink: 0;
-      padding: 2px 6px; /* Reduced padding for mobile/tablet */
-      font-size: 9px;
     }
   }
 </style>
