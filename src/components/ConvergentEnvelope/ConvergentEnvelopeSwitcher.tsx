@@ -1,9 +1,10 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
+import { readStorage, updateStorage } from '@/utils/storage';
 import ConvergentEnvelope from './ConvergentEnvelope';
 import styles from './convergentEnvelopeSwitcher.module.css';
 
-const STORAGE_KEY = 'convergent-envelope-mode';
+const LEGACY_STORAGE_KEY = 'convergent-envelope-mode';
 
 export default function ConvergentEnvelopeSwitcher() {
   const [mode, setMode] = useState<'static' | 'animated'>('animated');
@@ -13,12 +14,20 @@ export default function ConvergentEnvelopeSwitcher() {
   const switchId = useId();
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === 'static' || stored === 'animated') {
-      setMode(stored);
-    } else {
-      window.localStorage.setItem(STORAGE_KEY, 'animated');
-    }
+    const stored = readStorage().convergentEnvelopeMode;
+    const legacy = window.localStorage.getItem(LEGACY_STORAGE_KEY);
+    const initial =
+      stored === 'static' || stored === 'animated'
+        ? stored
+        : legacy === 'static' || legacy === 'animated'
+          ? legacy
+          : 'animated';
+
+    setMode(initial);
+    updateStorage((prev) => ({
+      ...prev,
+      convergentEnvelopeMode: initial,
+    }));
 
     return () => {
       timeoutRef.current.forEach((timeoutId) => {
@@ -34,7 +43,10 @@ export default function ConvergentEnvelopeSwitcher() {
 
     setPreviousMode(mode);
     setMode(nextMode);
-    window.localStorage.setItem(STORAGE_KEY, nextMode);
+    updateStorage((prev) => ({
+      ...prev,
+      convergentEnvelopeMode: nextMode,
+    }));
     setIsCrossfading(true);
     timeoutRef.current.push(
       window.setTimeout(() => {

@@ -29,13 +29,35 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
           setTimeout(initMatrixState, 0);
           return;
         }
-        const stored = localStorage.getItem('matrix-background-visible');
-        const initialVisible = stored === 'true';
+        const STORAGE_KEY = 'gsalvini-se-blog';
+        function readStore() {
+          try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+          } catch {
+            return {};
+          }
+        }
+        function writeStore(next) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        }
+
+        const store = readStore();
+        let initialVisible = store.matrixBackgroundVisible;
+        if (typeof initialVisible !== 'boolean') {
+          const legacy = localStorage.getItem('matrix-background-visible');
+          if (legacy === 'true' || legacy === 'false') {
+            initialVisible = legacy === 'true';
+            writeStore({ ...store, matrixBackgroundVisible: initialVisible });
+          } else {
+            initialVisible = false;
+          }
+        }
         document.body.classList.toggle('matrix-bg-visible', initialVisible);
         
         window.addEventListener('toggle-matrix-background', () => {
           const isVisible = document.body.classList.toggle('matrix-bg-visible');
-          localStorage.setItem('matrix-background-visible', String(isVisible));
+          const nextStore = readStore();
+          writeStore({ ...nextStore, matrixBackgroundVisible: isVisible });
         });
       }
       

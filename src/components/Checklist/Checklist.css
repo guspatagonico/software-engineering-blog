@@ -39,6 +39,20 @@
   padding: 9px 0;
   border-bottom: 1px solid rgba(30, 45, 69, 0.5);
   cursor: pointer;
+  position: relative;
+}
+
+.checklist__input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+
+.checklist__input:focus-visible + .checklist__box {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
 }
 
 .checklist__box {

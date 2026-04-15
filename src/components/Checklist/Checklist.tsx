@@ -1,4 +1,5 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { readStorage, updateStorage } from '@/utils/storage';
 import './Checklist.css';
 
 interface ChecklistItem {
@@ -12,11 +13,40 @@ interface ChecklistSection {
 
 interface ChecklistProps {
   sections: ChecklistSection[];
+  storageKey?: string;
 }
 
-export default function Checklist({ sections }: ChecklistProps) {
+export default function Checklist({ sections, storageKey }: ChecklistProps) {
   const allItems = sections.flatMap((s) => s.items);
   const [done, setDone] = useState<Set<number>>(new Set());
+  const hasHydrated = useRef(false);
+
+  useEffect(() => {
+    if (!storageKey) {
+      hasHydrated.current = true;
+      return;
+    }
+    const stored = readStorage().checklists?.[storageKey];
+    if (Array.isArray(stored)) {
+      const sanitized = stored
+        .filter((value) => Number.isInteger(value))
+        .filter((value) => value >= 0 && value < allItems.length);
+      setDone(new Set(sanitized));
+    }
+    hasHydrated.current = true;
+  }, [storageKey, allItems.length]);
+
+  useEffect(() => {
+    if (!storageKey || !hasHydrated.current) return;
+    updateStorage((prev) => {
+      const nextChecklists = { ...(prev.checklists ?? {}) };
+      nextChecklists[storageKey] = Array.from(done).sort((a, b) => a - b);
+      return {
+        ...prev,
+        checklists: nextChecklists,
+      };
+    });
+  }, [done, storageKey]);
 
   const toggle = useCallback((index: number) => {
     setDone((prev) => {
@@ -52,22 +82,18 @@ export default function Checklist({ sections }: ChecklistProps) {
             const idx = globalIndex++;
             const isDone = done.has(idx);
             return (
-              <div
-                key={idx}
-                role="checkbox"
-                aria-checked={isDone}
-                tabIndex={0}
-                onClick={() => toggle(idx)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') toggle(idx);
-                }}
-                className="checklist__item"
-              >
-                <div className={`checklist__box ${isDone ? 'checklist__box--done' : ''}`}>✓</div>
-                <div className={`checklist__label ${isDone ? 'checklist__label--done' : ''}`}>
+              <label key={idx} className="checklist__item">
+                <input
+                  className="checklist__input"
+                  type="checkbox"
+                  checked={isDone}
+                  onChange={() => toggle(idx)}
+                />
+                <span className={`checklist__box ${isDone ? 'checklist__box--done' : ''}`}>✓</span>
+                <span className={`checklist__label ${isDone ? 'checklist__label--done' : ''}`}>
                   {item.label}
-                </div>
-              </div>
+                </span>
+              </label>
             );
           })}
         </div>

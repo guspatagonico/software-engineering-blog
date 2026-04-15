@@ -3,13 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 913,
+      "tokens": 1118,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "project_guidelines/_index.md",
-      "tokens": 965,
+      "path": "project_management/_index.md",
+      "tokens": 676,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
     },
     {
@@ -37,19 +43,19 @@
       "type": "context"
     },
     {
-      "importance": 86,
+      "importance": 92,
       "path": "project_management/handoffs/current_session_handoff_rule.md",
       "tokens": 448,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-15T02:25:31.484Z",
+  "generated_at": "2026-04-15T13:19:15.458Z",
   "lane_tokens": {
     "contexts": 4000,
     "stubs": 0,
-    "summaries": 1878
+    "summaries": 1981
   },
-  "source_fingerprint": "696b14f6cd409f0f3fc6b07b059e447227ac45c06acc77ff62cf09ddca5b8ff1",
-  "total_tokens": 5878,
+  "source_fingerprint": "8b93274ccaf4465d8bfd1d4bcd553979799ca95f58a0e8446c455b8b51629f21",
+  "total_tokens": 5981,
   "version": 1
 }

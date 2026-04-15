@@ -29,10 +29,25 @@
   (function () {
     const btn = document.currentScript.previousElementSibling;
     const svg = btn.querySelector('.theme-toggle svg');
+    const STORAGE_KEY = 'gsalvini-se-blog';
+
+    function readStore() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      } catch {
+        return {};
+      }
+    }
+
+    function writeStore(next) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+    }
 
     function getTheme() {
       const attr = document.documentElement.getAttribute('data-theme');
       if (attr) return attr;
+      const stored = readStore().theme;
+      if (stored) return stored;
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
 
@@ -52,7 +67,8 @@
     btn.addEventListener('click', function () {
       const next = getTheme() === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      const store = readStore();
+      writeStore({ ...store, theme: next });
       render();
       // Force styles recalculation
       document.body.style.display = 'none';

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { readStorage, STORAGE_KEY } from '@/utils/storage';
 import styles from './MatrixBackground.module.css';
 
 const LATIN_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%&*<>[]{}';
@@ -286,7 +287,7 @@ export default function MatrixBackground() {
     };
 
     const getTheme = () => {
-      const stored = localStorage.getItem('theme');
+      const stored = readStorage().theme;
       if (stored) return stored;
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     };
@@ -300,8 +301,8 @@ export default function MatrixBackground() {
     };
 
     const handleThemeChange = (e: StorageEvent) => {
-      if (e.key === 'theme') {
-        themeRef.current = e.newValue || 'dark';
+      if (e.key === STORAGE_KEY) {
+        themeRef.current = getTheme();
       }
     };
 
