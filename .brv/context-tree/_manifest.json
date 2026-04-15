@@ -37,19 +37,19 @@
       "type": "context"
     },
     {
-      "importance": 92,
+      "importance": 95,
       "path": "project_management/handoffs/current_session_handoff_rule.md",
       "tokens": 448,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-15T14:57:17.284Z",
+  "generated_at": "2026-04-15T16:35:54.814Z",
   "lane_tokens": {
     "contexts": 4000,
     "stubs": 0,
     "summaries": 1894
   },
-  "source_fingerprint": "394ca9123d9bc3d1220c09faea1aad173531dbc8a8b584afde8d6ce2ba3c8b62",
+  "source_fingerprint": "c802a6d71ae3eb7dc95baab03de18d29fad1ddf59aa033d18b0d84fe092d8683",
   "total_tokens": 5894,
   "version": 1
 }

@@ -10,6 +10,14 @@ export interface PostMeta {
 
 export const posts: PostMeta[] = [
   {
+    id: 'harness-agentic-control',
+    title: 'Harness Engineering para agentes tipo OpenCode',
+    subtitle: 'Control loop, contracts y señales de deriva',
+    description: 'Modelo operativo para agentes con herramientas, contratos y evidencia',
+    pubDate: '2026-04-15',
+    tags: ['harness', 'agents', 'orchestration'],
+  },
+  {
     id: 'llm-context-limitations',
     title: 'Limitaciones de los LLM en la actualidad',
     subtitle: 'Ventana de contexto y Smart Context',

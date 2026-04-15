@@ -3,10 +3,10 @@ title: Matrix Background
 tags: []
 related: [ui/visual_effects/context.md]
 keywords: []
-importance: 79
+importance: 82
 recency: 1
 maturity: validated
-accessCount: 8
+accessCount: 9
 updateCount: 1
 createdAt: '2026-04-07T01:50:56.523Z'
 updatedAt: '2026-04-07T02:51:28.121Z'

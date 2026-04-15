@@ -2,10 +2,10 @@
 title: Current Session Handoff Rule
 tags: []
 keywords: []
-importance: 92
+importance: 100
 recency: 1
 maturity: core
-accessCount: 14
+accessCount: 19
 createdAt: '2026-04-07T14:48:21.856Z'
 updatedAt: '2026-04-07T14:48:21.856Z'
 ---

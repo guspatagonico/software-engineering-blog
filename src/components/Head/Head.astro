@@ -57,9 +57,9 @@ const fullTitle = isHome
 }
 {type === 'article' && author && <meta property="article:author" content={author} />}
 {
-  type === 'article' && tags.length > 0 && (
+  type === 'article' &&
+    tags.length > 0 &&
     tags.map((tag) => <meta property="article:tag" content={tag} />)
-  )
 }
 
 <!-- Fonts -->

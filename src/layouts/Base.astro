@@ -53,14 +53,14 @@ import Dodecahedron from '@/components/Dodecahedron/Dodecahedron';
           }
         }
         document.body.classList.toggle('matrix-bg-visible', initialVisible);
-        
+
         window.addEventListener('toggle-matrix-background', () => {
           const isVisible = document.body.classList.toggle('matrix-bg-visible');
           const nextStore = readStore();
           writeStore({ ...nextStore, matrixBackgroundVisible: isVisible });
         });
       }
-      
+
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initMatrixState);
       } else {

@@ -47,7 +47,7 @@ const finalDescription = description ?? post?.description;
     </script>
     <script is:inline>
       (function () {
-        var hash = window.location.hash.slice(1);
+        const hash = window.location.hash.slice(1);
         if (hash) {
           document.documentElement.dataset.panelSyncing = 'true';
           document.documentElement.dataset.sectionsSyncing = 'true';
@@ -85,29 +85,31 @@ const finalDescription = description ?? post?.description;
     <div class="post-layout">
       <slot />
     </div>
-    
+
     <!-- Post Meta Footer - Date and Tags (anchored right, above global footer) -->
-    {post && (
-      <div class="post-meta-footer">
-        <div class="post-meta-inner">
-          <span class="post-meta-label">Published</span>
-          <span class="post-meta-date">{post.pubDate}</span>
-        </div>
-        {post.tags.length > 0 && (
-          <div class="post-meta-tags">
-            {post.tags.map((tag) => (
-              <span class="post-tag">{tag}</span>
-            ))}
+    {
+      post && (
+        <div class="post-meta-footer">
+          <div class="post-meta-inner">
+            <span class="post-meta-label">Published</span>
+            <span class="post-meta-date">{post.pubDate}</span>
           </div>
-        )}
-      </div>
-    )}
-    
+          {post.tags.length > 0 && (
+            <div class="post-meta-tags">
+              {post.tags.map((tag) => (
+                <span class="post-tag">{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      )
+    }
+
     <Footer />
 
     <!-- Handle URL hash for section navigation -->
     <script is:inline>
-      (function() {
+      (function () {
         // Wait for React components to hydrate
         function initHashNavigation() {
           const hash = window.location.hash.slice(1);
@@ -141,9 +143,11 @@ const finalDescription = description ?? post?.description;
           }, 100);
 
           // Dispatch a custom event so SectionNav can sync its state
-          window.dispatchEvent(new CustomEvent('section-activated', {
-            detail: { sectionId: hash }
-          }));
+          window.dispatchEvent(
+            new CustomEvent('section-activated', {
+              detail: { sectionId: hash },
+            })
+          );
 
           delete document.documentElement.dataset.panelSyncing;
           delete document.documentElement.dataset.sectionsSyncing;
@@ -160,6 +164,88 @@ const finalDescription = description ?? post?.description;
         // Also run after Astro page transitions
         document.addEventListener('astro:page-load', initHashNavigation);
       })();
+    </script>
+    <script is:inline type="module">
+      let mermaidRetryTimeout;
+
+      async function renderMermaid(isRerender, attempt = 0) {
+        const { default: mermaid } =
+          await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+
+        const styles = getComputedStyle(document.documentElement);
+        const themeVariables = {
+          background: styles.getPropertyValue('--surface').trim(),
+          primaryColor: styles.getPropertyValue('--surface2').trim(),
+          primaryTextColor: styles.getPropertyValue('--text-bright').trim(),
+          primaryBorderColor: styles.getPropertyValue('--border').trim(),
+          lineColor: styles.getPropertyValue('--text-dim').trim(),
+          secondaryColor: styles.getPropertyValue('--surface').trim(),
+          tertiaryColor: styles.getPropertyValue('--bg').trim(),
+          textColor: styles.getPropertyValue('--text').trim(),
+          fontFamily: styles.getPropertyValue('--font').trim(),
+          fontSize: '14px',
+          edgeLabelBackground: styles.getPropertyValue('--surface').trim(),
+          clusterBkg: styles.getPropertyValue('--surface').trim(),
+          clusterBorder: styles.getPropertyValue('--border').trim(),
+        };
+
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'loose',
+          theme: 'base',
+          themeVariables,
+        });
+
+        if (!isRerender) {
+          document.querySelectorAll('pre > code.language-mermaid').forEach((code) => {
+            const pre = code.parentElement;
+            if (!pre || pre.dataset.mermaidRendered === 'true') return;
+            const container = document.createElement('div');
+            container.className = 'mermaid';
+            container.dataset.mermaidSource = code.textContent || '';
+            container.textContent = code.textContent || '';
+            pre.dataset.mermaidRendered = 'true';
+            pre.replaceWith(container);
+          });
+        } else {
+          document.querySelectorAll('.mermaid').forEach((node) => {
+            const source = node.dataset.mermaidSource;
+            if (!source) return;
+            node.innerHTML = '';
+            node.textContent = source;
+          });
+        }
+
+        try {
+          await mermaid.run({ querySelector: '.mermaid' });
+        } catch (error) {
+          if (attempt < 1) {
+            clearTimeout(mermaidRetryTimeout);
+            mermaidRetryTimeout = setTimeout(() => renderMermaid(true, attempt + 1), 150);
+          } else {
+            console.error('Mermaid render failed', error);
+          }
+        }
+      }
+
+      function scheduleMermaidRender(isRerender) {
+        requestAnimationFrame(() => renderMermaid(isRerender));
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => scheduleMermaidRender(false));
+      } else {
+        scheduleMermaidRender(false);
+      }
+
+      document.addEventListener('astro:page-load', () => scheduleMermaidRender(false));
+
+      const observer = new MutationObserver((mutations) => {
+        const hasThemeChange = mutations.some((m) => m.attributeName === 'data-theme');
+        if (hasThemeChange) scheduleMermaidRender(true);
+      });
+
+      observer.observe(document.documentElement, { attributes: true });
     </script>
   </body>
 </html>
@@ -268,6 +354,94 @@ const finalDescription = description ?? post?.description;
     text-transform: uppercase;
   }
 
+  .mermaid {
+    margin: 16px 0 18px;
+    padding: 18px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.08), rgba(10, 12, 18, 0));
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    overflow: auto;
+  }
+
+  .mermaid svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+    font-family: var(--font) !important;
+  }
+
+  .mermaid svg * {
+    font-family: var(--font) !important;
+  }
+
+  .mermaid text,
+  .mermaid tspan {
+    font-family: var(--font);
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    font-size: 14px;
+  }
+
+  .mermaid .c4Container,
+  .mermaid .c4Container * {
+    font-size: 14px;
+    font-family: var(--font) !important;
+  }
+
+  .mermaid .c4Container .label,
+  .mermaid .c4Container .label text,
+  .mermaid .c4Container .nodeLabel {
+    font-weight: 600;
+  }
+
+  .mermaid .label text,
+  .mermaid .nodeLabel {
+    fill: var(--text-bright);
+  }
+
+  .mermaid .edgePath path {
+    stroke: var(--text-dim);
+  }
+
+  .mermaid .edgeLabel {
+    background: rgba(10, 12, 18, 0.85);
+    border-radius: 6px;
+    padding: 1px 6px;
+  }
+
+  .mermaid .node rect,
+  .mermaid .node circle,
+  .mermaid .node polygon,
+  .mermaid .node path {
+    stroke-width: 1.2px;
+  }
+
+  .mermaid .cluster rect {
+    rx: 8px;
+    ry: 8px;
+  }
+
+  :root[data-theme='light'] .mermaid {
+    background: linear-gradient(135deg, rgba(0, 120, 96, 0.08), rgba(255, 255, 255, 0.7));
+    border-color: rgba(0, 60, 48, 0.2);
+  }
+
+  :root[data-theme='light'] .mermaid .edgeLabel {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 60, 48, 0.15);
+  }
+
+  :root[data-theme='light'] .mermaid .edgePath path {
+    stroke: rgba(0, 60, 48, 0.6);
+  }
+
+  :root[data-theme='dark'] .mermaid .edgeLabel {
+    background: rgba(10, 12, 18, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
   /* Tablet */
   @media (min-width: 768px) and (max-width: 1023px) {
     .post-header {
@@ -283,12 +457,18 @@ const finalDescription = description ?? post?.description;
     }
   }
 
+  @media (max-width: 767px) {
+    .mermaid {
+      padding: 14px 12px;
+    }
+  }
+
   /* Post Meta Footer - Anchored to right above global footer */
   .post-meta-footer {
     position: fixed;
     bottom: 70px; /* Height of global footer + spacing */
     right: 0;
-    padding:8px 20px;
+    padding: 8px 20px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-right: none;

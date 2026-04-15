@@ -3,13 +3,32 @@
 ---
 
 <button type="button" class="theme-toggle" aria-label="Toggle theme">
-  <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <svg
+    class="theme-icon"
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
     <defs>
       <style>
-        .icon-sun { display: none; }
-        .icon-moon { display: block; }
-        :root[data-theme="light"] .icon-sun { display: block; }
-        :root[data-theme="light"] .icon-moon { display: none; }
+        .icon-sun {
+          display: none;
+        }
+        .icon-moon {
+          display: block;
+        }
+        :root[data-theme='light'] .icon-sun {
+          display: block;
+        }
+        :root[data-theme='light'] .icon-moon {
+          display: none;
+        }
       </style>
     </defs>
     <path class="icon-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -28,7 +47,6 @@
 <script is:inline>
   (function () {
     const btn = document.currentScript.previousElementSibling;
-    const svg = btn.querySelector('.theme-toggle svg');
     const STORAGE_KEY = 'gsalvini-se-blog';
 
     function readStore() {
@@ -72,7 +90,7 @@
       render();
       // Force styles recalculation
       document.body.style.display = 'none';
-      document.body.offsetHeight; // trigger reflow
+      void document.body.offsetHeight; // trigger reflow
       document.body.style.display = '';
     });
   })();

@@ -15,7 +15,6 @@ interface SectionNavProps {
 export default function SectionNav({ sections }: SectionNavProps) {
   const [activeId, setActiveId] = useState('');
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const hasInitialized = useRef(false);
   const scrollRaf = useRef<number | null>(null);
@@ -81,7 +80,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
   const saveScrollPosition = useCallback(
     (sectionId: string) => {
       const target = getScrollTarget();
-      const pos = target === window ? window.scrollY : target.scrollTop;
+      const pos = target === window ? window.scrollY : (target as HTMLElement).scrollTop;
       if (pos < 0) return;
       const postKey = getPostKey();
       const rounded = Math.round(pos);
@@ -147,7 +146,6 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
     const mobileQuery = window.matchMedia('(max-width: 767px)');
     const handleMobileChange = (event: MediaQueryListEvent | MediaQueryList) => {
-      setIsMobile(event.matches);
       if (!hasInitialized.current) {
         const collapsedAttr = document.documentElement.dataset.sectionsCollapsed;
         if (collapsedAttr === 'true' || collapsedAttr === 'false') {

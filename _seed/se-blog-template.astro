@@ -1,0 +1,114 @@
+---
+import BlogPost from '../src/layouts/BlogPost.astro';
+import SectionNav from '../src/components/SectionNav/SectionNav';
+import '../src/styles/post-content.css';
+import { getPost } from '../src/data/posts';
+
+const post = getPost('slug-goes-here');
+
+const sections = [
+  { id: 'thesis', icon: '◈', label: 'Thesis' },
+  { id: 'definitions', icon: '≡', label: 'Definitions' },
+  { id: 'model', icon: '⬡', label: 'System Model' },
+  { id: 'evidence', icon: '✓', label: 'Verified Facts' },
+  { id: 'hypotheses', icon: '⚠', label: 'Hypotheses' },
+  { id: 'tradeoffs', icon: '▣', label: 'Tradeoffs' },
+  { id: 'patterns', icon: '⧉', label: 'Patterns' },
+  { id: 'evaluation', icon: '∑', label: 'Evaluation' },
+  { id: 'future', icon: '→', label: 'Future' },
+  { id: 'summary', icon: '⊕', label: 'Summary' },
+];
+---
+
+<BlogPost title="Post Title" subtitle="Subtitle" post={post}>
+  <SectionNav client:load sections={sections} />
+
+  <div class="content">
+    <div class="panel active" id="panel-thesis">
+      <h2>Thesis and scope</h2>
+      <p>Define the core claim and scope.</p>
+    </div>
+
+    <div class="panel" id="panel-definitions">
+      <h2>Key definitions and context</h2>
+      <p>Define terms and baseline assumptions.</p>
+    </div>
+
+    <div class="panel" id="panel-model">
+      <h2>System model</h2>
+      <p>Introduce the mental model and boundaries.</p>
+      <pre><code class="language-mermaid">flowchart TD
+  A[Input] --&gt; B[Agent]
+  B --&gt; C[Harness]
+  C --&gt; D[Outcome]
+</code></pre>
+    </div>
+
+    <div class="panel" id="panel-evidence">
+      <h2>Verified facts</h2>
+      <p>List verified facts with citations.</p>
+    </div>
+
+    <div class="panel" id="panel-hypotheses">
+      <h2>Hypotheses and conjectures</h2>
+      <p>Clearly label assumptions and ideas.</p>
+    </div>
+
+    <div class="panel" id="panel-tradeoffs">
+      <h2>Design tradeoffs and failure modes</h2>
+      <p>Explain tradeoffs, risks, and failure modes.</p>
+    </div>
+
+    <div class="panel" id="panel-patterns">
+      <h2>Implementation patterns</h2>
+      <p>Provide patterns and examples.</p>
+    </div>
+
+    <div class="panel" id="panel-evaluation">
+      <h2>Evaluation and measurement</h2>
+      <p>Describe metrics, test harnesses, and benchmarks.</p>
+    </div>
+
+    <div class="panel" id="panel-future">
+      <h2>Future directions</h2>
+      <p>Open questions and research ideas.</p>
+    </div>
+
+    <div class="panel" id="panel-summary">
+      <h2>Summary and takeaways</h2>
+      <p>Actionable takeaways and next steps.</p>
+    </div>
+  </div>
+
+  <style>
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 32px;
+    }
+    .content p {
+      font-size: 16px;
+    }
+    .content ul,
+    .content ol {
+      font-size: 16px;
+      padding-left: 1.5rem;
+      margin: 0.75rem 0;
+    }
+    .content ul li,
+    .content ol li {
+      font-size: 16px;
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+    }
+    .content h3 {
+      font-size: 14px;
+    }
+    .panel {
+      display: none;
+    }
+    .panel.active {
+      display: block;
+    }
+  </style>
+</BlogPost>

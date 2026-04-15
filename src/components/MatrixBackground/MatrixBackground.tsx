@@ -306,7 +306,7 @@ export default function MatrixBackground() {
       }
     };
 
-    const handleThemeEvent = (e: Event) => {
+    const handleThemeEvent = () => {
       // Read theme directly from DOM attribute - more reliable than custom event detail
       const attr = document.documentElement.getAttribute('data-theme');
       themeRef.current = attr || 'dark';

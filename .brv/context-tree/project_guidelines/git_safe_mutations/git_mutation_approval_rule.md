@@ -2,10 +2,10 @@
 title: Git Mutation Approval Rule
 tags: []
 keywords: []
-importance: 71
+importance: 77
 recency: 1
 maturity: validated
-accessCount: 7
+accessCount: 9
 createdAt: '2026-04-08T00:19:35.881Z'
 updatedAt: '2026-04-08T00:19:35.881Z'
 ---

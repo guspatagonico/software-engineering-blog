@@ -94,6 +94,19 @@
   display: block;
 }
 
+.mermaid {
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  margin-bottom: 16px;
+}
+
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 :root[data-panel-syncing='true'] .panel {
   display: none !important;
 }

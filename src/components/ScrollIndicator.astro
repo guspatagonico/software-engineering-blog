@@ -6,25 +6,12 @@ interface Props {
   bottom?: string;
 }
 
-const { 
-  targetSelector, 
-  position = 'fixed', 
-  top = '48px',
-  bottom 
-} = Astro.props;
+const { targetSelector, position = 'fixed', top = '48px', bottom } = Astro.props;
 
-const style = position === 'fixed' 
-  ? `top: ${top}` 
-  : top 
-    ? `top: ${top}` 
-    : `bottom: ${bottom ?? 0}`;
+const style = position === 'fixed' ? `top: ${top}` : top ? `top: ${top}` : `bottom: ${bottom ?? 0}`;
 ---
 
-<div 
-  class="scroll-indicator" 
-  data-target={targetSelector}
-  style={style}
->
+<div class="scroll-indicator" data-target={targetSelector} style={style}>
   <div class="scroll-line"></div>
 </div>
 
@@ -36,85 +23,90 @@ const style = position === 'fixed'
     indicator.dataset.initialized = 'true';
 
     const targetSelector = indicator.dataset.target;
-    
+
     // Helper: find the actually scrollable element
     function findScrollableElement(selector: string) {
       const el = document.querySelector(selector);
       if (!el) return null;
       const style = window.getComputedStyle(el);
-      const isScrollable = style.overflow === 'auto' || style.overflow === 'scroll' || 
-                          style.overflowY === 'auto' || style.overflowY === 'scroll';
+      const isScrollable =
+        style.overflow === 'auto' ||
+        style.overflow === 'scroll' ||
+        style.overflowY === 'auto' ||
+        style.overflowY === 'scroll';
       return isScrollable ? el : null;
     }
-    
-    // Try selectors in order, preferring actually scrollable elements
-    let target = targetSelector ? findScrollableElement(targetSelector) : null;
-    if (!target) target = findScrollableElement('.content');
-    if (!target) target = findScrollableElement('.post-layout');
-    if (!target) target = findScrollableElement('main');
-    if (!target) target = document.body;
 
-    if (!target) return;
+    let target: HTMLElement | null = null;
+    let resizeRaf = 0;
+
+    function resolveTarget(): HTMLElement | null {
+      let next = targetSelector ? findScrollableElement(targetSelector) : null;
+      if (!next) next = findScrollableElement('.content');
+      if (!next) next = findScrollableElement('.post-layout');
+      if (!next) next = findScrollableElement('main');
+      if (!next) next = document.body;
+      return next as HTMLElement | null;
+    }
 
     const line = indicator.querySelector('.scroll-line') as HTMLElement;
     if (!line) return;
 
-    let lastScrollHeight = 0;
     let lockCount = 0;
-    let lockedProgress: number | null = null;
 
     function updateProgress() {
-      const targetEl = target as HTMLElement;
+      if (!target) return;
+      const targetEl = target;
       if (lockCount > 0) return;
       const scrollTop = targetEl.scrollTop;
       const scrollHeight = targetEl.scrollHeight - targetEl.clientHeight;
 
       if (scrollHeight <= 0) {
         line.style.width = '0%';
-        lastScrollHeight = 0;
         return;
       }
 
       const progress = (scrollTop / scrollHeight) * 100;
       const next = Math.min(100, Math.max(0, progress));
       line.style.width = `${next}%`;
-      lockedProgress = next;
-      lastScrollHeight = scrollHeight;
     }
 
-    target.addEventListener('scroll', updateProgress, { passive: true });
+    function setTarget(next: HTMLElement | null) {
+      if (!next || next === target) return;
+      if (target) target.removeEventListener('scroll', updateProgress);
+      target = next;
+      target.addEventListener('scroll', updateProgress, { passive: true });
+      updateProgress();
+    }
+
+    setTarget(resolveTarget());
     window.addEventListener('section-nav-toggle', (event) => {
       const detail = (event as CustomEvent<{ isCollapsed: boolean }>).detail;
       if (!detail) return;
 
       if (!detail.isCollapsed) {
-        const targetEl = target as HTMLElement;
-        const currentHeight = targetEl.scrollHeight - targetEl.clientHeight;
-        if (currentHeight > 0) {
-          const currentProgress = (targetEl.scrollTop / currentHeight) * 100;
-          lockedProgress = Math.min(100, Math.max(0, currentProgress));
-          lastScrollHeight = currentHeight;
-        } else {
-          lockedProgress = 0;
-        }
         lockCount += 1;
       } else if (lockCount > 0) {
         lockCount -= 1;
-      }
-      if (lockCount === 0) {
-        lockedProgress = null;
       }
     });
 
     window.addEventListener('section-activated', () => {
       lockCount = 0;
-      lockedProgress = null;
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           updateProgress();
         });
       });
     });
+    function handleResize() {
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(() => {
+        setTarget(resolveTarget());
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
     updateProgress();
   }
 

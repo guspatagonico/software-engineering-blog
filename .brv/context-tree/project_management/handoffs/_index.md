@@ -1,12 +1,10 @@
 ---
-children_hash: 8262921e4b0e083a62a3f545d21a6eea9ad1e28cd00fb860868410d694318e04
-compression_ratio: 0.269041095890411
-condensation_order: 1
-covers: [context.md, current_session_handoff_rule.md, handoff_2026_04_04.md, hybrid_session_state_approach.md]
-covers_token_total: 1825
-summary_level: d1
-token_count: 491
-type: summary
+tags: []
+keywords: []
+importance: 53
+recency: 1
+maturity: draft
+accessCount: 1
 ---
 # Project Management – Handoffs (structural summary)
 

@@ -246,14 +246,39 @@ const checklistSections = [
       <div class="data-block">
         <div class="data-header">## Context Budget: [nombre-subagente]</div>
         <table>
-          <tr><td>Sistema:</td><td>~800 tokens <span class="data-note">(AGENTS.md específico del sub-agente)</span></td></tr>
-          <tr><td>Spec task:</td><td>~1500 tokens <span class="data-note">(solo la sección relevante del spec)</span></td></tr>
-          <tr><td>Archivos:</td><td>~3000 tokens <span class="data-note">(solo los archivos que necesita tocar)</span></td></tr>
-          <tr><td>Handoff:</td><td>~500 tokens <span class="data-note">(resumen del estado de la fase anterior)</span></td></tr>
-          <tr class="data-separator-row"><td colspan="2"><div class="data-separator"></div></td></tr>
-          <tr class="data-total"><td>Total:</td><td>~5800 tokens <span class="data-note">(margen amplio para el output)</span></td></tr>
+          <tr
+            ><td>Sistema:</td><td
+              >~800 tokens <span class="data-note">(AGENTS.md específico del sub-agente)</span></td
+            ></tr
+          >
+          <tr
+            ><td>Spec task:</td><td
+              >~1500 tokens <span class="data-note">(solo la sección relevante del spec)</span></td
+            ></tr
+          >
+          <tr
+            ><td>Archivos:</td><td
+              >~3000 tokens <span class="data-note">(solo los archivos que necesita tocar)</span
+              ></td
+            ></tr
+          >
+          <tr
+            ><td>Handoff:</td><td
+              >~500 tokens <span class="data-note">(resumen del estado de la fase anterior)</span
+              ></td
+            ></tr
+          >
+          <tr class="data-separator-row"><td colspan="2"><div class="data-separator"></div></td></tr
+          >
+          <tr class="data-total"
+            ><td>Total:</td><td
+              >~5800 tokens <span class="data-note">(margen amplio para el output)</span></td
+            ></tr
+          >
         </table>
-        <div class="data-footer">NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto.</div>
+        <div class="data-footer">
+          NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto.
+        </div>
       </div>
 
       <h3>Handoff comprimido (template)</h3>
@@ -262,7 +287,10 @@ const checklistSections = [
         <table>
           <tr><td>Completado:</td><td>[qué hizo, en una oración]</td></tr>
           <tr><td>Artefactos:</td><td>[lista de archivos con paths exactos]</td></tr>
-          <tr><td>Estado clave:</td><td>[una o dos líneas relevantes para el siguiente agente]</td></tr>
+          <tr
+            ><td>Estado clave:</td><td>[una o dos líneas relevantes para el siguiente agente]</td
+            ></tr
+          >
           <tr><td>Pendiente:</td><td>[qué queda fuera de scope]</td></tr>
           <tr><td>Blockers:</td><td>ninguno | [descripción si hay alguno]</td></tr>
           <tr><td>Resultado:</td><td>DONE | PARTIAL | BLOCKED</td></tr>
@@ -273,9 +301,18 @@ const checklistSections = [
       <div class="data-block">
         <div class="data-header">## Handoff: pmpro-css → pmpro-js</div>
         <table>
-          <tr><td>Completado:</td><td>Estilos del pricing table con SVG column icons y badge "Mejor Valor"</td></tr>
+          <tr
+            ><td>Completado:</td><td
+              >Estilos del pricing table con SVG column icons y badge "Mejor Valor"</td
+            ></tr
+          >
           <tr><td>Artefactos:</td><td>/wp-content/themes/pivot/css/pmpro-table.css</td></tr>
-          <tr><td>Estado clave:</td><td>La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via data-attribute, no inline styles</td></tr>
+          <tr
+            ><td>Estado clave:</td><td
+              >La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via
+              data-attribute, no inline styles</td
+            ></tr
+          >
           <tr><td>Pendiente:</td><td>Responsive breakpoints en mobile (fuera de scope)</td></tr>
           <tr><td>Blockers:</td><td>ninguno</td></tr>
           <tr><td>Resultado:</td><td><strong style="color: var(--teal)">DONE</strong></td></tr>
@@ -291,8 +328,10 @@ const checklistSections = [
       </Highlight>
       <div class="data-block">
         <div class="data-header"># Session State — pivot.lat</div>
-        <div style="color: var(--teal); font-weight: 600; margin-bottom: 12px;">Fase actual: 2 / 4</div>
-        
+        <div style="color: var(--teal); font-weight: 600; margin-bottom: 12px;">
+          Fase actual: 2 / 4
+        </div>
+
         <div class="data-section">
           <div class="data-section-title">Completado</div>
           <ul class="data-list data-list-checked">
@@ -300,15 +339,17 @@ const checklistSections = [
             <li><span class="check">✓</span> wp-db: schema custom PMPro</li>
           </ul>
         </div>
-        
+
         <div class="data-section">
           <div class="data-section-title">En progreso</div>
           <ul class="data-list">
-            <li><span class="bullet">○</span> pmpro-js: comportamiento interactivo (en ejecución)</li>
+            <li>
+              <span class="bullet">○</span> pmpro-js: comportamiento interactivo (en ejecución)
+            </li>
             <li><span class="bullet">○</span> paypal-nvp: sandbox (bloqueado: creds pendientes)</li>
           </ul>
         </div>
-        
+
         <div class="data-section">
           <div class="data-section-title">Decisiones tomadas</div>
           <ul class="data-list">
@@ -316,7 +357,7 @@ const checklistSections = [
             <li>Sandbox mode via WP_DEBUG constante</li>
           </ul>
         </div>
-        
+
         <div class="data-section">
           <div class="data-section-title">Blockers activos</div>
           <ul class="data-list">
@@ -341,53 +382,95 @@ const checklistSections = [
         <!-- Desktop: Horizontal layout -->
         <div class="fj-flow-desktop">
           <div class="fj-horizontal-flow">
-            <div class="fj-start">Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span></div>
+            <div class="fj-start">
+              Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span>
+            </div>
             <div class="fj-h-arrow">
               <span class="fj-arrow-glyph">→</span>
             </div>
-            <div class="fj-fork">Fork<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span></div>
+            <div class="fj-fork">
+              Fork<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span>
+            </div>
             <div class="fj-h-arrow">
               <span class="fj-arrow-glyph">→</span>
             </div>
             <div class="fj-parallel-box">
-              <div class="fj-agent-card"><span class="fj-label">Subagente A</span><span class="fj-type">CSS</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
-              <div class="fj-agent-card"><span class="fj-label">Subagente B</span><span class="fj-type">PHP</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
-              <div class="fj-agent-card"><span class="fj-label">Subagente C</span><span class="fj-type">DB</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+              <div class="fj-agent-card">
+                <span class="fj-label">Subagente A</span><span class="fj-type">CSS</span><span
+                  class="fj-stage-token fj-stage-token--sub"
+                  aria-hidden="true"></span>
+              </div>
+              <div class="fj-agent-card">
+                <span class="fj-label">Subagente B</span><span class="fj-type">PHP</span><span
+                  class="fj-stage-token fj-stage-token--sub"
+                  aria-hidden="true"></span>
+              </div>
+              <div class="fj-agent-card">
+                <span class="fj-label">Subagente C</span><span class="fj-type">DB</span><span
+                  class="fj-stage-token fj-stage-token--sub"
+                  aria-hidden="true"></span>
+              </div>
             </div>
             <div class="fj-h-arrow">
               <span class="fj-arrow-glyph">→</span>
             </div>
-            <div class="fj-join">Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span></div>
+            <div class="fj-join">
+              Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span>
+            </div>
             <div class="fj-h-arrow">
               <span class="fj-arrow-glyph">→</span>
             </div>
-            <div class="fj-validation">Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span></div>
+            <div class="fj-validation">
+              Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span>
+            </div>
             <div class="fj-h-arrow">
               <span class="fj-arrow-glyph">→</span>
             </div>
-            <div class="fj-end">siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span></div>
+            <div class="fj-end">
+              siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
-        
+
         <!-- Mobile: Simplified vertical -->
         <div class="fj-flow-mobile">
-          <div class="fj-node">Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span></div>
-          <div class="fj-fork-label">┌── Fork ──┐<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span></div>
+          <div class="fj-node">
+            Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span>
+          </div>
+          <div class="fj-fork-label">
+            ┌── Fork ──┐<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span>
+          </div>
           <div class="fj-parallel-stack">
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
-            <div class="fj-agent-card"><span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span></div>
+            <div class="fj-agent-card">
+              <span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span
+              ><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span>
+            </div>
+            <div class="fj-agent-card">
+              <span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span
+              ><span class="fj-stage-token fj-stage-token--sub" aria-hidden="true"></span>
+            </div>
+            <div class="fj-agent-card">
+              <span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span><span
+                class="fj-stage-token fj-stage-token--sub"
+                aria-hidden="true"></span>
+            </div>
           </div>
           <div class="fj-join-label">└── Join ──┘</div>
-          <div class="fj-node fj-join">Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span></div>
+          <div class="fj-node fj-join">
+            Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span>
+          </div>
           <div class="fj-arrow">
             <span class="fj-arrow-glyph">↓</span>
           </div>
-          <div class="fj-node fj-validation">Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span></div>
+          <div class="fj-node fj-validation">
+            Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span>
+          </div>
           <div class="fj-arrow">
             <span class="fj-arrow-glyph">↓</span>
           </div>
-          <div class="fj-next">siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span></div>
+          <div class="fj-next">
+            siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
 
@@ -521,84 +604,60 @@ const checklistSections = [
       <h2>Vocabulario del framework</h2>
       <div class="subtitle">Términos operacionales</div>
 
-      <div class="vocab-list">
-        <div class="vocab-entry">
-          <div class="vocab-term">envolvente convergente</div>
-          <p>
-            El rango de comportamiento tolerable del agente, que se estrecha progresivamente hacia
-            la solución. La metáfora central del framework.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">entropía agéntica</div>
-          <p>
-            Acumulación de drift: decisiones individualmente razonables que producen un resultado
-            incoherente. Señal de harness roto.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">convergencia</div>
-          <p>
-            El proceso llega a la solución óptima dentro de las cotas definidas. Objetivo de todo
-            proceso agéntico bien harnesseado.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">barrier function</div>
-          <p>
-            Constraint estructural (no instruccional) que hace imposible — no solo costosa — la
-            violación del scope. Ej: MCP con paths restringidos.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">context budget</div>
-          <p>
-            Presupuesto de tokens asignado a un sub-agente: qué puede ver y cuánto. Se define antes
-            de lanzar, no durante.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">tool budget</div>
-          <p>
-            Conjunto de MCPs y skills habilitados para un sub-agente específico. Define sus barrier
-            functions estructurales.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">handoff comprimido</div>
-          <p>
-            Resumen estructurado del output de un sub-agente, optimizado para entrar barato en el
-            context del siguiente. No es el output completo.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">session state</div>
-          <p>
-            Estado global comprimido del proyecto, mantenido exclusivamente por el orquestador.
-            Nunca entra en el context de los sub-agentes.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">drift</div>
-          <p>
-            Desviación acumulada del objetivo. Señal de que el agente se acerca a los límites de la
-            envolvente y requiere intervención del orquestador.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">fork-join</div>
-          <p>
-            Patrón de ejecución paralela: múltiples sub-agentes independientes seguidos de un punto
-            de validación conjunta por el orquestador.
-          </p>
-        </div>
-        <div class="vocab-entry">
-          <div class="vocab-term">contrato de sub-agente</div>
-          <p>
-            Definición explícita del input schema y output schema de un sub-agente. El orquestador
-            valida contra este contrato.
-          </p>
-        </div>
+      <h3>Fundamentos del control</h3>
+      <div class="card-stack">
+        <Card title="Envolvente convergente">
+          El rango de comportamiento tolerable del agente, que se estrecha progresivamente hacia la
+          solución. La metáfora central del framework.
+        </Card>
+        <Card title="Convergencia">
+          El proceso llega a la solución óptima dentro de las cotas definidas. Objetivo de todo
+          proceso agéntico bien harnesseado.
+        </Card>
+        <Card title="Entropía agéntica">
+          Acumulación de drift: decisiones individualmente razonables que producen un resultado
+          incoherente. Señal de harness roto.
+        </Card>
+        <Card title="Drift">
+          Desviación acumulada del objetivo. Señal de que el agente se acerca a los límites de la
+          envolvente y requiere intervención del orquestador.
+        </Card>
+      </div>
+
+      <h3>Constraints y presupuestos</h3>
+      <div class="card-stack">
+        <Card title="Barrier function">
+          Constraint estructural (no instruccional) que hace imposible — no solo costosa — la
+          violación del scope. Ej: MCP con paths restringidos.
+        </Card>
+        <Card title="Context budget">
+          Presupuesto de tokens asignado a un sub-agente: qué puede ver y cuánto. Se define antes de
+          lanzar, no durante.
+        </Card>
+        <Card title="Tool budget">
+          Conjunto de MCPs y skills habilitados para un sub-agente específico. Define sus barrier
+          functions estructurales.
+        </Card>
+      </div>
+
+      <h3>Orquestación y coordinación</h3>
+      <div class="card-stack">
+        <Card title="Contrato de sub-agente">
+          Definición explícita del input schema y output schema de un sub-agente. El orquestador
+          valida contra este contrato.
+        </Card>
+        <Card title="Handoff comprimido">
+          Resumen estructurado del output de un sub-agente, optimizado para entrar barato en el
+          context del siguiente. No es el output completo.
+        </Card>
+        <Card title="Session state">
+          Estado global comprimido del proyecto, mantenido exclusivamente por el orquestador. Nunca
+          entra en el context de los sub-agentes.
+        </Card>
+        <Card title="Fork-join">
+          Patrón de ejecución paralela: múltiples sub-agentes independientes seguidos de un punto de
+          validación conjunta por el orquestador.
+        </Card>
       </div>
     </div>
   </div>
@@ -937,55 +996,6 @@ const checklistSections = [
     color: var(--text-dim);
   }
 
-  .vocab-list {
-    margin-top: 12px;
-    display: grid;
-    gap: 0;
-  }
-
-  .vocab-entry {
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .vocab-entry:last-child {
-    border-bottom: 0;
-  }
-
-  .vocab-entry .vocab-term {
-    color: var(--amber);
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 6px;
-  }
-
-  .vocab-entry p {
-    margin: 0;
-    color: var(--text-dim);
-    font-size: 15px;
-    line-height: 1.55;
-  }
-
-  @media (min-width: 768px) {
-    .vocab-list {
-      gap: 0;
-    }
-
-    .vocab-entry {
-      display: grid;
-      grid-template-columns: minmax(180px, 220px) 1fr;
-      gap: 18px;
-      align-items: start;
-    }
-
-    .vocab-entry .vocab-term {
-      margin: 0;
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-  }
-
   :global(.funnel-container svg) {
     display: block;
     width: 100%;
@@ -1021,5 +1031,4 @@ const checklistSections = [
       font-size: 14px;
     }
   }
-
 </style>
