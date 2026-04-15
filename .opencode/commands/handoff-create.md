@@ -2,6 +2,7 @@
 description: Create a handoff file capturing current project state
 agent: general
 ---
+
 Create a handoff file in `_handoffs/` capturing only work from the current session.
 
 File naming: `handoff-{YYYY-MM-DD}-{HH-mm}.md`
@@ -20,12 +21,14 @@ Sections:
 
 - Files modified in this session
 - Exclude the handoff file itself to avoid recursion
+- Exclude any files under `.brv/`
 
 ## Pending
 
 - Pending tasks (checkboxes with [ ])
 
 ## Blockers
+
 - Any blockers
 
 Use shell output:

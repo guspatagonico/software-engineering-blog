@@ -521,70 +521,83 @@ const checklistSections = [
       <h2>Vocabulario del framework</h2>
       <div class="subtitle">Términos operacionales</div>
 
-      <div class="vocab-item">
-        <div class="vocab-term">envolvente convergente</div><div>
-          El rango de comportamiento tolerable del agente, que se estrecha progresivamente hacia la
-          solución. La metáfora central del framework.
+      <div class="vocab-list">
+        <div class="vocab-entry">
+          <div class="vocab-term">envolvente convergente</div>
+          <p>
+            El rango de comportamiento tolerable del agente, que se estrecha progresivamente hacia
+            la solución. La metáfora central del framework.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">entropía agéntica</div><div>
-          Acumulación de drift: decisiones individualmente razonables que producen un resultado
-          incoherente. Señal de harness roto.
+        <div class="vocab-entry">
+          <div class="vocab-term">entropía agéntica</div>
+          <p>
+            Acumulación de drift: decisiones individualmente razonables que producen un resultado
+            incoherente. Señal de harness roto.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">convergencia</div><div>
-          El proceso llega a la solución óptima dentro de las cotas definidas. Objetivo de todo
-          proceso agéntico bien harnesseado.
+        <div class="vocab-entry">
+          <div class="vocab-term">convergencia</div>
+          <p>
+            El proceso llega a la solución óptima dentro de las cotas definidas. Objetivo de todo
+            proceso agéntico bien harnesseado.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">barrier function</div><div>
-          Constraint estructural (no instruccional) que hace imposible — no solo costosa — la
-          violación del scope. Ej: MCP con paths restringidos.
+        <div class="vocab-entry">
+          <div class="vocab-term">barrier function</div>
+          <p>
+            Constraint estructural (no instruccional) que hace imposible — no solo costosa — la
+            violación del scope. Ej: MCP con paths restringidos.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">context budget</div><div>
-          Presupuesto de tokens asignado a un sub-agente: qué puede ver y cuánto. Se define antes de
-          lanzar, no durante.
+        <div class="vocab-entry">
+          <div class="vocab-term">context budget</div>
+          <p>
+            Presupuesto de tokens asignado a un sub-agente: qué puede ver y cuánto. Se define antes
+            de lanzar, no durante.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">tool budget</div><div>
-          Conjunto de MCPs y skills habilitados para un sub-agente específico. Define sus barrier
-          functions estructurales.
+        <div class="vocab-entry">
+          <div class="vocab-term">tool budget</div>
+          <p>
+            Conjunto de MCPs y skills habilitados para un sub-agente específico. Define sus barrier
+            functions estructurales.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">handoff comprimido</div><div>
-          Resumen estructurado del output de un sub-agente, optimizado para entrar barato en el
-          context del siguiente. No es el output completo.
+        <div class="vocab-entry">
+          <div class="vocab-term">handoff comprimido</div>
+          <p>
+            Resumen estructurado del output de un sub-agente, optimizado para entrar barato en el
+            context del siguiente. No es el output completo.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">session state</div><div>
-          Estado global comprimido del proyecto, mantenido exclusivamente por el orquestador. Nunca
-          entra en el context de los sub-agentes.
+        <div class="vocab-entry">
+          <div class="vocab-term">session state</div>
+          <p>
+            Estado global comprimido del proyecto, mantenido exclusivamente por el orquestador.
+            Nunca entra en el context de los sub-agentes.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">drift</div><div>
-          Desviación acumulada del objetivo. Señal de que el agente se acerca a los límites de la
-          envolvente y requiere intervención del orquestador.
+        <div class="vocab-entry">
+          <div class="vocab-term">drift</div>
+          <p>
+            Desviación acumulada del objetivo. Señal de que el agente se acerca a los límites de la
+            envolvente y requiere intervención del orquestador.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">fork-join</div><div>
-          Patrón de ejecución paralela: múltiples sub-agentes independientes seguidos de un punto de
-          validación conjunta por el orquestador.
+        <div class="vocab-entry">
+          <div class="vocab-term">fork-join</div>
+          <p>
+            Patrón de ejecución paralela: múltiples sub-agentes independientes seguidos de un punto
+            de validación conjunta por el orquestador.
+          </p>
         </div>
-      </div>
-      <div class="vocab-item">
-        <div class="vocab-term">contrato de sub-agente</div><div>
-          Definición explícita del input schema y output schema de un sub-agente. El orquestador
-          valida contra este contrato.
+        <div class="vocab-entry">
+          <div class="vocab-term">contrato de sub-agente</div>
+          <p>
+            Definición explícita del input schema y output schema de un sub-agente. El orquestador
+            valida contra este contrato.
+          </p>
         </div>
       </div>
     </div>
@@ -922,6 +935,55 @@ const checklistSections = [
 
   .ph-dim {
     color: var(--text-dim);
+  }
+
+  .vocab-list {
+    margin-top: 12px;
+    display: grid;
+    gap: 0;
+  }
+
+  .vocab-entry {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vocab-entry:last-child {
+    border-bottom: 0;
+  }
+
+  .vocab-entry .vocab-term {
+    color: var(--amber);
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .vocab-entry p {
+    margin: 0;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  @media (min-width: 768px) {
+    .vocab-list {
+      gap: 0;
+    }
+
+    .vocab-entry {
+      display: grid;
+      grid-template-columns: minmax(180px, 220px) 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .vocab-entry .vocab-term {
+      margin: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
   }
 
   :global(.funnel-container svg) {

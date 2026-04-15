@@ -15,6 +15,29 @@ export default function SectionNav({ sections }: SectionNavProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? '');
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  const updatePanelHeader = useCallback(
+    (id: string) => {
+      const section = sections.find((s) => s.id === id);
+      if (!section) return;
+
+      const panel = document.getElementById(`panel-${id}`);
+      if (!panel) return;
+
+      let header = panel.querySelector('.panel-mobile-header');
+      if (!header) {
+        header = document.createElement('div');
+        header.className = 'panel-mobile-header';
+        panel.prepend(header);
+      }
+
+      header.innerHTML = `
+        <span class="panel-mobile-header__icon">${section.icon}</span>
+        <span class="panel-mobile-header__label">${section.label}</span>
+      `;
+    },
+    [sections]
+  );
+
   // Activate a section by ID (update URL hash, show panel, update state)
   const activateSection = useCallback(
     (id: string, updateHash: boolean = true) => {
@@ -28,6 +51,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
       });
       const target = document.getElementById(`panel-${id}`);
       if (target) {
+        updatePanelHeader(id);
         target.classList.add('active');
         const content = document.querySelector('.content');
         const scrollContainer = document.querySelector('.post-layout');
@@ -45,8 +69,32 @@ export default function SectionNav({ sections }: SectionNavProps) {
         window.history.replaceState(null, '', `#${id}`);
       }
     },
-    [sections]
+    [sections, updatePanelHeader]
   );
+
+  useEffect(() => {
+    document.documentElement.dataset.sectionsCollapsed = isCollapsed ? 'true' : 'false';
+  }, [isCollapsed]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)');
+
+    const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      if (event.matches) {
+        setIsCollapsed(false);
+      }
+    };
+
+    handleChange(mediaQuery);
+
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
 
   // Handle initial hash and hash changes
   useEffect(() => {
@@ -69,6 +117,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
       const { sectionId } = e.detail;
       if (sectionId && sections.find((s) => s.id === sectionId)) {
         setActiveId(sectionId);
+        updatePanelHeader(sectionId);
       }
     };
 
@@ -79,10 +128,13 @@ export default function SectionNav({ sections }: SectionNavProps) {
       window.removeEventListener('hashchange', handleHashChange);
       window.removeEventListener('section-activated', handleSectionActivated as EventListener);
     };
-  }, [sections, activateSection]);
+  }, [sections, activateSection, updatePanelHeader]);
 
   const handleClick = (id: string) => {
     activateSection(id);
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      setIsCollapsed(true);
+    }
   };
 
   const toggleCollapse = () => {

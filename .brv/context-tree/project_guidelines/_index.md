@@ -1,23 +1,39 @@
 ---
-children_hash: dc656bd1293bc59c985a864365f6cf1c9a359a661f26d5bde78ac25ac7974200
-compression_ratio: 0.15016059957173447
+children_hash: 9ffc615a27297f2424d69f570471df9af7c93e2be8ec45bb9160a0c344b5a97c
+compression_ratio: 0.26880222841225626
 condensation_order: 2
 covers: [agents/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md]
-covers_token_total: 3736
+covers_token_total: 3590
 summary_level: d2
-token_count: 561
+token_count: 965
 type: summary
 ---
-### project_guidelines
-- **Purpose & Usage:** Captures repository-wide build/lint/test/run conventions plus onboarding guidance, linking agents, blog post layout, dev process, run commands, and git governance under a cohesive pnpm-driven workflow.
-- **Structure:**  
-  - `context.md`: Domain overview (purpose, scope, ownership, usage) for automation and onboarding; anchors other topics.  
-  - `agents/_index.md`: Handbook entry summarizing pnpm-only tooling, layout conventions, SectionNav/panel requirements, worktree/security rules, `_handoff` command, and dispatcher-based agent orchestration (see `context.md` for cross-links; `project_agent_handbook.md` for full AGENTS.md transcription).
-  - `blog_post_architecture/_index.md`: Layout rules mandating `BlogPost` layout, SectionNav client:load, panel IDs/classes, approved icon set, shared UI components, and homepage card registration; detailed anatomy available in `blog_post_architecture.md`.
-  - `dev_process/_index.md`: Enforces style/import/typing conventions, error handling, security (no secrets, locked Vite server config), dispatcher agent patterns, git worktree + gh PR flow, and check gates (lint/typecheck/tests before commit/push) with references to `context.md` and `development_process_and_rules.md`.
-  - `run_commands/_index.md`: pnpm command taxonomy (install, dev server, build/preview, lint/format/typecheck, Vitest/Playwright tests) with dependencies on `context.md` for pnpm-only policy; `build_and_run_commands.md` holds the full script list.
-  - `git_safe_mutations/_index.md`: Permission-enforced git workflow from `git_safe_mutations/context.md` and `git_mutation_approval_rule.md`, emphasizing explicit consent before any commit/push (linked to AGENTS.md rules and run_commands context for worktree placement).
-- **Relationships:**  
-  - `agents` topic codifies behaviors referenced by `dev_process`, `run_commands`, and `git_safe_mutations`.  
-  - `blog_post_architecture` depends on `dev_process` for broader workflow expectations and ties back to `agents` for layout enforcement policies.  
-  - `harness_engineering` (separate domain) is referenced for tooling, budget, and orchestration patterns linking to `dev_process` and `project_management/handoffs`.
+# Domain: Project Guidelines (d2 Summary)
+
+This domain establishes the foundational standards for the Software Engineering Blog, governing agent orchestration, development workflows, and architectural consistency. It integrates rigorous technical gates with a specialized framework for autonomous agent collaboration.
+
+## 1. Agent Governance & Orchestration
+The repository operates under a strict agent-driven model defined by the **AGENTS.md** manifesto and the **Harness Engineering** framework.
+*   **Operational Standards**: Mandates a **pnpm-only** workflow, **TypeScript strict mode**, and **git worktrees** for non-trivial features. Agents are prohibited from committing secrets or identifying themselves in documentation (see `agents/project_agent_handbook.md`).
+*   **Envolvente Convergente Framework**: A mathematical mental model using **Barrier Functions (CBF)** and **Lyapunov Functions** to ensure agent interventions converge toward goals while managing entropy and drift (see `harness_engineering/envolvente_convergente_framework.md`).
+*   **Sub-Agent Anatomy**: Ephemeral units with scope descriptions **≤ 2 sentences**, defined context budgets (~5800 tokens), and explicit output contracts (see `agents/sub_agent_design_and_anatomy.md`).
+*   **Orchestration Patterns**: Uses a **Fork-Join** pattern for parallel tasks. Drift signals (e.g., auto-correction loops >2) trigger interrupts. Orchestrators maintain `session-state.md` as the global source of truth (see `agents/orchestration_and_drift_management.md`).
+
+## 2. Development Process & Quality Gates
+A standardized lifecycle ensures code quality and repository safety across all environments.
+*   **Workflow Flow**: Style enforcement → `pnpm lint/typecheck/format` → Test execution (Vitest/Playwright) → Conventional commit → Push via worktree → `gh` PR creation (see `dev_process/_index.md`).
+*   **Git Mutation Gating**: Explicit user consent is required for any `git commit` or `push` operation, regardless of automated check success (see `git_safe_mutations/git_mutation_approval_rule.md`).
+*   **Command Families**: Centralized pnpm scripts for setup (`install`), development (`dev`), production (`build/preview`), and verification (`test`, `test:e2e`) (see `run_commands/build_and_run_commands.md`).
+*   **Coding Standards**: 2-space indentation, single quotes, and ordered imports (Node → Astro → `@/` aliases → relative) (see `dev_process/development_process_and_rules.md`).
+
+## 3. Blog Architecture & UI Standards
+Consistency across the Astro-based platform is maintained through enforced layout patterns and shared components.
+*   **Layout Pattern**: Every post must import the `BlogPost` layout and integrate `SectionNav` with `client:load`. New posts must be registered in `src/pages/index.astro` (see `blog_post_architecture/_index.md`).
+*   **Panel System**: Content is organized into `div` panels with IDs following the `panel-{section.id}` pattern. The initial view is controlled via the `panel active` class.
+*   **UI Components**: Reusable components include `Highlight`, `Card`, and `ConvergentEnvelope`. Media must use the `astro:assets` `<Image />` component.
+*   **Visual Language**: Navigation icons are restricted to an approved set (e.g., ◈ ▸ ▣ ◑ ⊕ ⬡) to ensure UI uniformity (see `agents/context.md`).
+
+## 4. Resource & Context Management
+To prevent context collapse and maintain performance, strict resource budgeting is applied.
+*   **Context Budgeting**: Sub-agent context is capped at **~5800 tokens**, partitioned into System (800), Spec (1500), Files (3000), and Handoff (500) (see `agents/context_window_and_handoff_strategy.md`).
+*   **Handoff Strategy**: Standardized templates facilitate responsibility transfers between specialized agents (e.g., `pmpro-css` to `pmpro-js`), documenting artifacts, key state, and result status (DONE|PARTIAL|BLOCKED).

@@ -3,13 +3,13 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1673,
+      "tokens": 913,
       "type": "summary"
     },
     {
-      "order": 1,
-      "path": "facts/personal/_index.md",
-      "tokens": 322,
+      "order": 2,
+      "path": "project_guidelines/_index.md",
+      "tokens": 965,
       "type": "summary"
     },
     {
@@ -37,19 +37,19 @@
       "type": "context"
     },
     {
-      "importance": 65,
-      "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
+      "importance": 86,
+      "path": "project_management/handoffs/current_session_handoff_rule.md",
       "tokens": 448,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-14T01:45:25.952Z",
+  "generated_at": "2026-04-15T02:25:31.484Z",
   "lane_tokens": {
     "contexts": 4000,
     "stubs": 0,
-    "summaries": 1995
+    "summaries": 1878
   },
-  "source_fingerprint": "fbf39842cef2fb8308794bdbdfe04887edfc2f18d22c66cc07382a2ecfb92d04",
-  "total_tokens": 5995,
+  "source_fingerprint": "696b14f6cd409f0f3fc6b07b059e447227ac45c06acc77ff62cf09ddca5b8ff1",
+  "total_tokens": 5878,
   "version": 1
 }

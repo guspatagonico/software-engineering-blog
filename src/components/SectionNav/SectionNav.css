@@ -55,6 +55,24 @@
   flex-shrink: 0;
 }
 
+.panel-mobile-header {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  color: var(--teal);
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 4px 0 12px;
+}
+
+.panel-mobile-header__icon {
+  font-size: 14px;
+  width: 18px;
+  text-align: center;
+}
+
 /* Toggle button for mobile */
 .section-nav-toggle {
   display: none;
@@ -91,6 +109,10 @@
 
 /* Responsive: show toggle on mobile/tablet */
 @media (max-width: 767px) {
+  :root[data-sections-collapsed='true'] .panel-mobile-header {
+    display: flex;
+  }
+
   .section-nav-toggle {
     display: flex;
   }
