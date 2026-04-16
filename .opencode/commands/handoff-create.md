@@ -1,9 +1,9 @@
 ---
-description: Create a handoff file capturing current project state
-agent: general
+description: Create a handoff file from current session only (no long-term memory)
 ---
 
 Create a handoff file in `_handoffs/` capturing only work from the current session.
+Do not use long-term memory (ByteRover or any persisted context). Only use the current session context and the shell output below.
 
 File naming: `handoff-{YYYY-MM-DD}-{HH-mm}.md`
 

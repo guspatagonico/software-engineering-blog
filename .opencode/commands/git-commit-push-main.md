@@ -11,7 +11,7 @@ Workflow:
 2. Show git status for context
 3. Show recent commits for message style reference
 4. Stage all changes: `git add -A`
-5. Create commit with conventional format (feat:, fix:, docs:, refactor:, chore:)
+5. Create commit with conventional format (feat:, fix:, docs:, refactor:, chore:) with the first line as main message plus an empty line and extra message lines with the main tasks in this session.
 6. Push to remote main: `git push`
 
 If there are no changes to commit, skip the commit and push.

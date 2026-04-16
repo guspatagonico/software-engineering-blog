@@ -1,9 +1,11 @@
 (() => {
   let mermaidRetryTimeout;
   let isMermaidInitialized = false;
+  let mermaidLoadBound = false;
 
   const MERMAID_QUERY = '.mermaid';
   const MERMAID_RENDER_QUERY = '.mermaid.mermaid--render';
+  const MAX_MERMAID_ATTEMPTS = 20;
 
   const getThemeVariables = () => {
     const styles = getComputedStyle(document.documentElement);
@@ -22,6 +24,20 @@
       clusterBkg: styles.getPropertyValue('--surface').trim(),
       clusterBorder: styles.getPropertyValue('--border').trim(),
     };
+  };
+
+  const bindMermaidLoad = () => {
+    if (mermaidLoadBound) return;
+    const script = document.querySelector('script[src*="mermaid.min.js"]');
+    if (!script) return;
+    mermaidLoadBound = true;
+    script.addEventListener(
+      'load',
+      () => {
+        scheduleMermaidRender(true);
+      },
+      { once: true }
+    );
   };
 
   const initializeMermaid = () => {
@@ -69,11 +85,12 @@
 
   const renderMermaid = async (isRerender, attempt = 0) => {
     if (typeof mermaid === 'undefined') {
-      if (attempt < 5) {
+      bindMermaidLoad();
+      if (attempt < MAX_MERMAID_ATTEMPTS) {
         clearTimeout(mermaidRetryTimeout);
         mermaidRetryTimeout = setTimeout(
           () => renderMermaid(isRerender, attempt + 1),
-          200 + attempt * 100
+          200 + attempt * 120
         );
       }
       return;
@@ -88,14 +105,17 @@
     }
 
     markMermaidTargets();
-    const hasVisibleTargets = document.querySelector(MERMAID_RENDER_QUERY);
+    const visibleTargets = document.querySelectorAll(MERMAID_RENDER_QUERY);
+    if (!visibleTargets.length) {
+      if (attempt < 2 && document.querySelector(MERMAID_QUERY)) {
+        clearTimeout(mermaidRetryTimeout);
+        mermaidRetryTimeout = setTimeout(() => renderMermaid(isRerender, attempt + 1), 120);
+      }
+      return;
+    }
 
     try {
-      if (hasVisibleTargets) {
-        await mermaid.run({ querySelector: MERMAID_RENDER_QUERY });
-      } else {
-        await mermaid.run({ querySelector: MERMAID_QUERY });
-      }
+      await mermaid.run({ querySelector: MERMAID_RENDER_QUERY });
     } catch (error) {
       if (attempt < 5) {
         clearTimeout(mermaidRetryTimeout);
@@ -123,7 +143,22 @@
     scheduleMermaidRender(false);
     setTimeout(() => scheduleMermaidRender(true), 300);
   });
-  document.addEventListener('section-activated', () => scheduleMermaidRender(true));
+  document.addEventListener('section-activated', () => {
+    setTimeout(() => scheduleMermaidRender(true), 50);
+  });
+
+  document.addEventListener('section-activated', () => {
+    const activePanel = document.querySelector('.panel.active');
+    if (!activePanel) return;
+    activePanel.querySelectorAll(MERMAID_QUERY).forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      const source = node.dataset.mermaidSource;
+      if (!source) return;
+      node.removeAttribute('data-processed');
+      node.innerHTML = '';
+      node.textContent = source;
+    });
+  });
 
   const observer = new MutationObserver((mutations) => {
     const hasThemeChange = mutations.some((mutation) => mutation.attributeName === 'data-theme');

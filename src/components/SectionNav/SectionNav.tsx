@@ -327,7 +327,6 @@ export default function SectionNav({ sections }: SectionNavProps) {
         <span className="section-nav-toggle__label">
           <span className="section-nav-toggle__label-text">Secciones</span>
           <span className="section-nav-toggle__active">
-            <span className="section-nav-toggle__list-icon">≡</span>
             {activeSection ? (
               <>
                 <span className="panel-mobile-header__icon">{activeSection.icon}</span>

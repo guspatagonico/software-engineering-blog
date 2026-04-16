@@ -84,6 +84,7 @@ const finalDescription = description ?? post?.description;
       (function () {
         const root = document.documentElement;
         const threshold = 12;
+        const hysteresis = 16;
         const mobileQuery = window.matchMedia('(max-width: 767px)');
         let lastCompact = null;
 
@@ -91,12 +92,29 @@ const finalDescription = description ?? post?.description;
           return mobileQuery.matches;
         }
 
-        function getScrollTop() {
+        function getScrollMetrics() {
           const content = document.querySelector('.content');
-          if (content && content.scrollHeight > content.clientHeight) return content.scrollTop;
+          if (content && content.scrollHeight > content.clientHeight) {
+            return {
+              scrollTop: content.scrollTop,
+              scrollHeight: content.scrollHeight,
+              clientHeight: content.clientHeight,
+            };
+          }
           const layout = document.querySelector('.post-layout');
-          if (layout && layout.scrollHeight > layout.clientHeight) return layout.scrollTop;
-          return window.scrollY || document.documentElement.scrollTop;
+          if (layout && layout.scrollHeight > layout.clientHeight) {
+            return {
+              scrollTop: layout.scrollTop,
+              scrollHeight: layout.scrollHeight,
+              clientHeight: layout.clientHeight,
+            };
+          }
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          return {
+            scrollTop,
+            scrollHeight: document.documentElement.scrollHeight,
+            clientHeight: document.documentElement.clientHeight,
+          };
         }
 
         function setHeaderHeight() {
@@ -116,8 +134,29 @@ const finalDescription = description ?? post?.description;
             return;
           }
 
-          const scrollTop = getScrollTop();
-          const shouldCompact = scrollTop > threshold;
+          const { scrollTop, scrollHeight, clientHeight } = getScrollMetrics();
+          const maxScroll = Math.max(0, scrollHeight - clientHeight);
+          const upper = threshold + hysteresis;
+          const lower = Math.max(0, threshold - hysteresis);
+          const minScrollForCompact = upper + 56;
+
+          if (maxScroll < minScrollForCompact) {
+            if (lastCompact !== false) {
+              root.dataset.headerCompact = 'false';
+              lastCompact = false;
+              requestAnimationFrame(setHeaderHeight);
+            }
+            return;
+          }
+
+          let shouldCompact = false;
+          if (lastCompact === null) {
+            shouldCompact = scrollTop > upper;
+          } else if (lastCompact) {
+            shouldCompact = scrollTop > lower;
+          } else {
+            shouldCompact = scrollTop > upper;
+          }
           if (shouldCompact !== lastCompact) {
             root.dataset.headerCompact = shouldCompact ? 'true' : 'false';
             lastCompact = shouldCompact;
