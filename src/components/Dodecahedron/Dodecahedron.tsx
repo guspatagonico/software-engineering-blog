@@ -235,6 +235,9 @@ export default function Dodecahedron({ className, autoHideOnScroll = false }: Do
     // Initial render
     renderer.render(scene, camera);
 
+    // Store ref value for cleanup
+    const containerElement = containerRef.current;
+
     // Cleanup
     return () => {
       document.removeEventListener('theme-changed', handleThemeChange as EventListener);
@@ -246,8 +249,8 @@ export default function Dodecahedron({ className, autoHideOnScroll = false }: Do
       edgeMaterial.dispose();
       innerGlowMaterial.dispose();
       wireframeGeometry.dispose();
-      if (containerRef.current && renderer.domElement) {
-        containerRef.current.removeChild(renderer.domElement);
+      if (containerElement && renderer.domElement) {
+        containerElement.removeChild(renderer.domElement);
       }
     };
   }, []);
