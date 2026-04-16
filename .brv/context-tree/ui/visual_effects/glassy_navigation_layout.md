@@ -3,10 +3,10 @@ title: Glassy Navigation Layout
 tags: []
 related: [ui/visual_effects/matrix_background.md]
 keywords: []
-importance: 59
+importance: 62
 recency: 1
 maturity: draft
-accessCount: 3
+accessCount: 4
 createdAt: '2026-04-07T02:53:40.887Z'
 updatedAt: '2026-04-07T02:53:40.887Z'
 ---

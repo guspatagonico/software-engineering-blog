@@ -4,10 +4,10 @@ summary: Harness Engineering page outlines ConvergentEnvelope behavior, context 
 tags: []
 related: [project_guidelines/dev_process/development_process_and_rules.md, project_management/handoffs/context.md]
 keywords: []
-importance: 56
+importance: 62
 recency: 1
 maturity: draft
-accessCount: 2
+accessCount: 4
 createdAt: '2026-04-14T01:44:46.897Z'
 updatedAt: '2026-04-14T01:44:46.897Z'
 ---

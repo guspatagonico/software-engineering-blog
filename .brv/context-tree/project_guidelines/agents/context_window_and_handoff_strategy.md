@@ -3,9 +3,10 @@ title: Context Window and Handoff Strategy
 summary: 'Context strategy: minimum sufficient context (~5800 tokens total) and compressed handoff templates'
 tags: []
 keywords: []
-importance: 50
+importance: 53
 recency: 1
 maturity: draft
+accessCount: 1
 createdAt: '2026-04-15T02:24:52.899Z'
 updatedAt: '2026-04-15T02:24:52.899Z'
 ---

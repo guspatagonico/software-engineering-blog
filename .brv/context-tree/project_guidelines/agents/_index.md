@@ -1,12 +1,10 @@
 ---
-children_hash: abaa629065cd25f504d01222be64925ba958a8c09b5864f9fc3e110110871f66
-compression_ratio: 0.29470316388197654
-condensation_order: 1
-covers: [context.md, context_window_and_handoff_strategy.md, orchestration_and_drift_management.md, project_agent_handbook.md, specialized_agents_and_orchestration.md, sub_agent_design_and_anatomy.md]
-covers_token_total: 2813
-summary_level: d1
-token_count: 829
-type: summary
+tags: []
+keywords: []
+importance: 53
+recency: 1
+maturity: draft
+accessCount: 1
 ---
 # Domain: Agents
 

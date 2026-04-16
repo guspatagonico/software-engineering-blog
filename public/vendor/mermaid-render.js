@@ -2,10 +2,15 @@
   let mermaidRetryTimeout;
   let isMermaidInitialized = false;
   let mermaidLoadBound = false;
+  let mermaidObserver;
+  let triggerMermaidRender = () => {};
 
   const MERMAID_QUERY = '.mermaid';
   const MERMAID_RENDER_QUERY = '.mermaid.mermaid--render';
   const MAX_MERMAID_ATTEMPTS = 20;
+  const MERMAID_INVIEW_MARGIN = '240px 0px';
+  const MERMAID_INVIEW_THRESHOLD = 0.15;
+  const observedMermaid = new WeakSet();
 
   const getThemeVariables = () => {
     const styles = getComputedStyle(document.documentElement);
@@ -50,12 +55,63 @@
     isMermaidInitialized = true;
   };
 
+  const isMermaidInViewport = (node) => {
+    const rect = node.getBoundingClientRect();
+    const viewHeight = window.innerHeight || document.documentElement.clientHeight;
+    return rect.bottom > -240 && rect.top < viewHeight + 240;
+  };
+
+  const getMermaidObserver = () => {
+    if (mermaidObserver) return mermaidObserver;
+    if (!('IntersectionObserver' in window)) return null;
+    mermaidObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const node = entry.target;
+          if (!(node instanceof HTMLElement)) return;
+          const panel = node.closest('.panel');
+          const isPanelActive = panel ? panel.classList.contains('active') : true;
+          const inView = entry.isIntersecting && isPanelActive;
+          node.dataset.mermaidInView = inView ? 'true' : 'false';
+          node.classList.toggle('mermaid--render', inView);
+          if (inView) triggerMermaidRender();
+        });
+      },
+      {
+        rootMargin: MERMAID_INVIEW_MARGIN,
+        threshold: MERMAID_INVIEW_THRESHOLD,
+      }
+    );
+    return mermaidObserver;
+  };
+
+  const observeMermaidTargets = () => {
+    const observer = getMermaidObserver();
+    document.querySelectorAll(MERMAID_QUERY).forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      if (observedMermaid.has(node)) return;
+      observedMermaid.add(node);
+      node.classList.add('mermaid--lazy');
+      if (observer) {
+        observer.observe(node);
+      } else {
+        const panel = node.closest('.panel');
+        const isPanelActive = panel ? panel.classList.contains('active') : true;
+        const inView = isPanelActive;
+        node.dataset.mermaidInView = inView ? 'true' : 'false';
+        node.classList.toggle('mermaid--render', inView);
+      }
+    });
+  };
+
   const markMermaidTargets = () => {
     document.querySelectorAll(MERMAID_QUERY).forEach((node) => {
       if (!(node instanceof HTMLElement)) return;
       const panel = node.closest('.panel');
-      const isVisible = panel ? panel.classList.contains('active') : true;
-      node.classList.toggle('mermaid--render', isVisible);
+      const isPanelActive = panel ? panel.classList.contains('active') : true;
+      const inView = isPanelActive && isMermaidInViewport(node);
+      node.dataset.mermaidInView = inView ? 'true' : 'false';
+      node.classList.toggle('mermaid--render', inView);
     });
   };
 
@@ -78,6 +134,7 @@
       const source = node.dataset.mermaidSource;
       if (!source) return;
       node.removeAttribute('data-processed');
+      delete node.dataset.mermaidRendered;
       node.innerHTML = '';
       node.textContent = source;
     });
@@ -104,6 +161,7 @@
       resetMermaidContainers();
     }
 
+    observeMermaidTargets();
     markMermaidTargets();
     const visibleTargets = document.querySelectorAll(MERMAID_RENDER_QUERY);
     if (!visibleTargets.length) {
@@ -116,6 +174,12 @@
 
     try {
       await mermaid.run({ querySelector: MERMAID_RENDER_QUERY });
+      document.querySelectorAll(MERMAID_RENDER_QUERY).forEach((node) => {
+        if (!(node instanceof HTMLElement)) return;
+        if (node.getAttribute('data-processed') === 'true') {
+          node.dataset.mermaidRendered = 'true';
+        }
+      });
     } catch (error) {
       if (attempt < 5) {
         clearTimeout(mermaidRetryTimeout);
@@ -132,6 +196,8 @@
       void renderMermaid(isRerender);
     });
   };
+
+  triggerMermaidRender = () => scheduleMermaidRender(false);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => scheduleMermaidRender(false));
@@ -155,6 +221,7 @@
       const source = node.dataset.mermaidSource;
       if (!source) return;
       node.removeAttribute('data-processed');
+      delete node.dataset.mermaidRendered;
       node.innerHTML = '';
       node.textContent = source;
     });

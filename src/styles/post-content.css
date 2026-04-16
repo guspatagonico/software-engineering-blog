@@ -104,6 +104,57 @@
   margin-bottom: 16px;
 }
 
+.mermaid.mermaid--lazy {
+  position: relative;
+  min-height: 220px;
+  overflow: hidden;
+}
+
+.mermaid.mermaid--lazy:not([data-processed]) {
+  color: transparent;
+}
+
+.mermaid.mermaid--lazy:not([data-processed])::before {
+  content: 'Diagram loading...';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.mermaid.mermaid--lazy:not([data-processed])::after {
+  content: '';
+  position: absolute;
+  inset: 36px 12px 12px;
+  border-radius: 6px;
+  background: linear-gradient(
+    110deg,
+    rgba(0, 212, 170, 0.04) 0%,
+    rgba(0, 212, 170, 0.14) 40%,
+    rgba(0, 212, 170, 0.04) 70%
+  );
+  background-size: 200% 100%;
+  animation: mermaidShimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes mermaidShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mermaid.mermaid--lazy:not([data-processed])::after {
+    animation: none;
+  }
+}
+
 .mermaid svg {
   max-width: 100%;
   height: auto;

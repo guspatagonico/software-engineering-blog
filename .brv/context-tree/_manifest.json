@@ -3,13 +3,25 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1001,
+      "tokens": 1015,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "project_guidelines/_index.md",
-      "tokens": 922,
+      "path": "facts/_index.md",
+      "tokens": 455,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "facts/personal/_index.md",
+      "tokens": 338,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
     },
     {
@@ -45,9 +57,25 @@
     {
       "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
       "abstractTokens": 47,
-      "importance": 67,
+      "importance": 73,
       "path": "project_management/handoffs/hybrid_session_state_approach.md",
       "tokens": 47,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 52,
+      "importance": 65,
+      "path": "ui/harness_engineering/harness_engineering_page.md",
+      "tokens": 52,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 59,
+      "importance": 62,
+      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
+      "tokens": 59,
       "type": "context"
     },
     {
@@ -59,37 +87,29 @@
       "type": "context"
     },
     {
-      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 52,
-      "importance": 62,
-      "path": "ui/harness_engineering/harness_engineering_page.md",
-      "tokens": 52,
+      "abstractPath": "project_guidelines/ui_design/mobile_ui_performance_patterns.abstract.md",
+      "abstractTokens": 5,
+      "importance": 53,
+      "path": "project_guidelines/ui_design/mobile_ui_performance_patterns.md",
+      "tokens": 5,
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 59,
-      "importance": 56,
-      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
-      "tokens": 59,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_guidelines/agents/specialized_agents_and_orchestration.abstract.md",
-      "abstractTokens": 6,
+      "abstractPath": "project_guidelines/run_commands/production_asset_upload.abstract.md",
+      "abstractTokens": 2,
       "importance": 50,
-      "path": "project_guidelines/agents/specialized_agents_and_orchestration.md",
-      "tokens": 6,
+      "path": "project_guidelines/run_commands/production_asset_upload.md",
+      "tokens": 2,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-16T11:44:59.322Z",
+  "generated_at": "2026-04-16T18:17:18.231Z",
   "lane_tokens": {
-    "contexts": 3999,
+    "contexts": 4000,
     "stubs": 0,
-    "summaries": 1923
+    "summaries": 1995
   },
-  "source_fingerprint": "6aaddf756cf03b5a50ad907f73dd91a33a87d5708b245e1bf9c510f00d5501b7",
-  "total_tokens": 5922,
+  "source_fingerprint": "2976027e18434ec6196d08ce9f7bff388016a28f20ba317e8a9e2846213f4b7f",
+  "total_tokens": 5995,
   "version": 1
 }

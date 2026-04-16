@@ -3,9 +3,10 @@ title: Mobile UI Performance Patterns
 summary: Patterns for avoiding layout shifts and managing complex mobile UI states in Astro/React hybrid environments.
 tags: []
 keywords: []
-importance: 50
+importance: 53
 recency: 1
 maturity: draft
+accessCount: 1
 createdAt: '2026-04-15T14:56:35.242Z'
 updatedAt: '2026-04-15T14:56:35.242Z'
 ---
