@@ -1,24 +1,49 @@
 ---
-children_hash: b5d2221021a161a0f0c913b2a1ff2074589b73a0ca25c6f2f5d32f760767c3e5
-compression_ratio: 0.5336734693877551
+children_hash: 3efa55f834ac5ef331be60d9297066ed3316e1f4bf415970b7fc6aa8538f371b
+compression_ratio: 0.5065502183406113
 condensation_order: 1
-covers: [context.md, development_process_and_rules.md]
-covers_token_total: 980
+covers: [context.md, development_process_and_rules.md, project_workflow_and_commands.md]
+covers_token_total: 1374
 summary_level: d1
-token_count: 523
+token_count: 696
 type: summary
 ---
-# dev_process
-- **Scope & Flow**: Governs repository-wide code style, naming, error handling, security, parallel task orchestration, and git/PR workflows. Core flow: enforce style → run `pnpm lint/typecheck/format` → execute needed tests → commit (conventional messages) → push via dedicated git worktree → open PR through `gh` once automated checks pass → remove worktree post-merge.
-- **Key Concepts & Rules**:
-  - Style: 2-space indentation, single quotes, trailing commas, interface-based prop typing (no `any`), co-locate tests/styles with components.
-  - Imports: Ordered as Node/external → Astro framework → `@/` aliases → relative within feature folders.
-  - Naming: Specific conventions for components, hooks, utilities, stores, CSS modules, constants, and types.
-  - Error handling: Never swallow errors; keep Vite server block (host `0.0.0.0`, `allowedHosts: ["galadriel"]`) unchanged.
-  - Security: Never commit secrets/API keys/.env files.
-  - Parallel work: Dispatcher pattern splitting work across agents like `@component-builder` and `@blog-writer`.
-  - Git/PR: Use git worktrees for larger efforts (trivial fixes may touch `main`), run lint/typecheck before every commit, push only when cleared, and create PRs via `gh`.
-- **Dependencies & Highlights**: Relies on pnpm, ESLint with `@astrojs/eslint-plugin` and `eslint-plugin-react-hooks`, TypeScript, Astro layouts, and `gh` CLI. Highlights include using `SectionNav` with `client:load`, preferring Astro components for static content and React islands for interactivity, and keeping the Vite server config intact.
-- **Fact summary (for drill-down)**: TypeScript strict mode is enforced; imports follow the prescribed order; git worktrees are standard for non-trivial work; pre-commit checks include lint/typecheck/tests and PR creation only after verification; secrets and the Vite config are protected; dark/light persistence uses `LocalStorage` with Astro/React component preferences.
+# Domain: dev_process
 
-Reference entries: `context.md` (dev_process overview) and `development_process_and_rules.md` (detailed conventions, rules, and facts).
+The development process domain centralizes repository-wide standards for code style, architectural patterns, security, and git workflows. It ensures consistency across the Astro-based blog platform through strict tooling enforcement and specialized agent orchestration.
+
+## Core Development Standards
+Detailed in **development_process_and_rules.md** and **project_workflow_and_commands.md**:
+*   **Tooling**: **pnpm** is the exclusive package manager. **TypeScript strict mode** is mandatory, utilizing interfaces for prop typing and prohibiting `any`.
+*   **Code Style**: 2-space indentation, single quotes, and ES5 trailing commas.
+*   **Import Ordering**: 
+    1. Node/external libraries
+    2. Astro framework imports
+    3. `@/` path aliases
+    4. Relative imports within the feature folder.
+*   **Naming Conventions**: Strict patterns are defined for components, hooks, utilities, stores, CSS modules, constants, and types.
+
+## Architectural Patterns
+Referenced in **context.md** and **development_process_and_rules.md**:
+*   **Component Strategy**: Astro components are used for static content, while React islands (using `client:load`) handle complex interactivity.
+*   **Persistence**: LocalStorage drives dark/light mode state.
+*   **Interactive Posts**: Interactive blog posts must utilize the `SectionNav` component.
+*   **Agent Orchestration**: Complex work is managed via a parallel task dispatcher, splitting tasks between specialized agents such as `@component-builder` and `@blog-writer`.
+
+## Workflow and Git Policy
+Outlined in **development_process_and_rules.md** and **project_workflow_and_commands.md**:
+*   **Git Worktrees**: Mandatory for new features, refactors, and exploratory work; direct commits to `main` are reserved for trivial fixes.
+*   **Pre-commit Requirements**: `pnpm lint`, `pnpm typecheck`, and relevant tests must pass before any commit.
+*   **PR Process**: PRs are created via the **gh CLI** only after automated checks pass.
+*   **Commit Policy**: No commits or pushes should occur until explicit user authorization is provided.
+
+## Security and Project Rules
+Preserved in **development_process_and_rules.md**:
+*   **Secrets**: Strict prohibition against committing API keys, `.env` files, or secrets.
+*   **Server Config**: The `vite.config.mjs` server block (host: `0.0.0.0`, allowedHosts: `["galadriel"]`) must remain unmodified.
+*   **Error Handling**: Errors must never be swallowed; explicit handling is required.
+
+## Command Reference
+Summarized in **project_workflow_and_commands.md**:
+*   **Lifecycle**: `pnpm install` → `pnpm dev` → `pnpm lint` → `pnpm typecheck` → `pnpm build`.
+*   **Testing**: Vitest and Playwright are used for testing; single file tests are run via `pnpm test -- path/to/file.test.ts`.

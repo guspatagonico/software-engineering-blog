@@ -1,40 +1,48 @@
 ---
-children_hash: a67cd9c4c4905387df4c52bfc805b7beeb58a1196a9290eefb5749ef04b2f37a
-compression_ratio: 0.19461471103327496
+children_hash: 6898ad1bca7bc9bc34ef7c4963ffbcf2d2eda1af729e087c9551276dfc32cc66
+compression_ratio: 0.1880481337956353
 condensation_order: 2
 covers: [agents/_index.md, architecture/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md, ui_design/_index.md]
-covers_token_total: 4568
+covers_token_total: 4903
 summary_level: d2
-token_count: 889
+token_count: 922
 type: summary
 ---
-# Domain: Project Guidelines (d2 Summary)
+# Domain: Project Guidelines (Level d2 Summary)
 
-This domain establishes the architectural, operational, and governance standards for the Software Engineering Blog. It integrates agent-driven development workflows with a rigorous interactive UI framework and centralized state management.
+The `project_guidelines` domain establishes the foundational standards for the Software Engineering Blog, integrating specialized agent orchestration, strict development workflows, and a cohesive architectural framework for interactive content.
 
-## 1. Agent Governance & Orchestration
-The project operates under a strict agent-driven framework defined by the **AGENTS.md** manifesto.
-*   **Operational Standards**: Mandates a **pnpm-only** workflow, **TypeScript strict mode**, and **git worktrees** for non-trivial features. Agents are prohibited from committing secrets or including their names in documentation (see `agents/project_agent_handbook.md`).
-*   **Harness Engineering**: Employs the **Envolvente Convergente Framework**, using Barrier and Lyapunov functions to ensure sub-agent interventions converge toward project goals while managing entropy and drift (see `agents/harness_engineering/_index.md`).
-*   **Context Management**: Strictly budgets sub-agent context to **~5800 tokens**. Global state is maintained in `session-state.md` and transferred via standardized handoff templates (see `agents/context_window_and_handoff_strategy.md`).
-*   **Mutation Gating**: All git commits and pushes require explicit user consent, regardless of lint or typecheck success (see `project_guidelines/git_safe_mutations/_index.md`).
+## Agent Ecosystem & Orchestration
+The project operates on a **Fork-Join dispatcher model** managed by a central `@orchestrator`. This system is designed to minimize "entropy" (uncoordinated drift) through strict constraints and budget management.
 
-## 2. Blog Architecture & UI Standards
-Every blog post follows a standardized interactive layout to ensure platform-wide consistency.
-*   **Layout Pattern**: Posts must utilize the `BlogPost` layout and `SectionNav` component (with `client:load`). Content is organized into a **Panel System** where IDs follow the `panel-{section.id}` pattern (see `blog_post_architecture/_index.md`).
-*   **Visual Language**: Navigation icons are restricted to an approved set (◈ ▸ ▣ ◑ ⊕ ⬡). Reusable components like `Highlight`, `Card`, and `ConvergentEnvelope` are mandatory for cohesive styling.
-*   **Mobile Performance**: Implements early viewport detection (mobile < 767px) in the document head to prevent hydration flickering and layout shifts. `SectionNav` automatically expands at viewports > 1024px (see `ui_design/mobile_ui_performance_patterns.md`).
+*   **Orchestration Framework**: Uses the **Envolvente Convergente** mental model, employing Barrier and Lyapunov functions to ensure task convergence. Parallel execution is permitted only for independent outputs (e.g., different files).
+*   **Drift Management**: The system monitors for signals such as scope expansion, schema mismatches, and excessive auto-correction loops (>2 iterations).
+*   **Context Budgeting**: Sub-agents are capped at **~5,800 tokens**. Global state is maintained in `session-state.md` (never passed to sub-agents), while `_handoff` commands facilitate state transfer between roles.
+*   **Specialized Roles**: Includes `@project-leader`, `@component-builder`, `@blog-writer`, `@tester`, and `@plan`.
+*   **Drill-down**: See `agents/` for orchestration patterns and `harness_engineering/` for the mathematical convergence framework.
 
-## 3. Development Process & Infrastructure
-The repository enforces a standardized lifecycle for code quality and deployment.
-*   **Workflow Gates**: Core flow requires style enforcement → `pnpm lint/typecheck/format` → Vitest/Playwright execution → Conventional Commits → PR via `gh` CLI (see `dev_process/_index.md`).
-*   **State Persistence**: Centralized management via `src/utils/storage.ts` using a single `localStorage` key (`gsalvini-se-blog`). It handles theme, background visibility, and checklist states with SSR-safe window checks (see `architecture/state_persistence_and_storage.md`).
-*   **Execution Environment**: Defines standardized commands for local development (`pnpm dev`), testing (`pnpm test`, `pnpm test:e2e`), and production asset management via the `/dist-upload` command (see `run_commands/_index.md`).
+## Development Process & Git Policy
+Consistency is enforced through a **pnpm-only** workflow and mandatory quality gates.
 
-## 4. Key Drill-down References
-*   **agents/**: Core governance, sub-agent anatomy, and orchestration rules.
-*   **architecture/**: State persistence logic and storage schemas.
-*   **blog_post_architecture/**: BlogPost layout conventions and panel systems.
-*   **dev_process/**: Coding standards, import ordering, and PR workflows.
-*   **harness_engineering/**: Mathematical models for convergence and context budgeting.
-*   **run_commands/**: Script manifest for build, test, and production deployment.
+*   **Git Mutation Gating**: Explicit user consent is required for all `git commit` or `push` operations, regardless of lint/test success.
+*   **Worktree Policy**: Mandatory for new features and refactors; direct `main` commits are restricted to trivial fixes.
+*   **Quality Gates**: `pnpm lint`, `pnpm typecheck`, and relevant tests (Vitest/Playwright) must pass before any commit.
+*   **Security**: Strict prohibition against committing secrets, API keys, or `.env` files.
+*   **Drill-down**: Refer to `dev_process/` for code standards and `git_safe_mutations/` for consent rules.
+
+## Blog Post & UI Architecture
+The blog utilizes an **Astro + React hybrid model**, prioritizing layout stability and interactive navigation.
+
+*   **Structural Requirements**: Posts must use the `BlogPost` layout and `SectionNav` component (`client:load`). Content is organized into discrete `panel` sections with strict ID naming (`panel-{id}`).
+*   **State Persistence**: Managed via a unified `localStorage` key (`gsalvini-se-blog`) in `src/utils/storage.ts`. It handles theme, background visibility, and checklist states with SSR-safe guards.
+*   **Mobile Performance**: Implements early viewport detection in the document head to prevent hydration flickering. Mobile viewports (<767px) trigger specific CSS adaptations and container constraints (`overscroll-behavior: none`).
+*   **Design Constraints**: Navigation icons are restricted to a specific set (e.g., `◈ ▸ ▣ ◑ ⊕`).
+*   **Drill-down**: See `blog_post_architecture/` for layout rules, `ui_design/` for mobile patterns, and `architecture/` for state persistence logic.
+
+## Execution & Deployment
+Standardized commands ensure environment parity from local development to production.
+
+*   **Lifecycle Scripts**: `pnpm dev` (port 4321), `pnpm build`, and `pnpm preview`.
+*   **Testing Suite**: Bifurcated into **Vitest** (unit/regression) and **Playwright** (E2E).
+*   **Production Upload**: Managed via `/dist-upload` using `gsupload -b frontend`. The system supports interactive relaying of production prompts to the user.
+*   **Drill-down**: See `run_commands/` for the full script manifest and deployment workflows.

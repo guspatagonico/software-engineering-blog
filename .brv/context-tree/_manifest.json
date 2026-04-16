@@ -3,13 +3,13 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1005,
+      "tokens": 1001,
       "type": "summary"
     },
     {
       "order": 2,
       "path": "project_guidelines/_index.md",
-      "tokens": 889,
+      "tokens": 922,
       "type": "summary"
     },
     {
@@ -32,24 +32,64 @@
     },
     {
       "importance": 100,
-      "path": "project_management/handoffs/handoff_2026_04_04.md",
-      "tokens": 675,
+      "path": "project_management/handoffs/current_session_handoff_rule.md",
+      "tokens": 449,
       "type": "context"
     },
     {
-      "importance": 95,
-      "path": "project_management/handoffs/current_session_handoff_rule.md",
+      "importance": 80,
+      "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
       "tokens": 448,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
+      "abstractTokens": 47,
+      "importance": 67,
+      "path": "project_management/handoffs/hybrid_session_state_approach.md",
+      "tokens": 47,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
+      "abstractTokens": 61,
+      "importance": 62,
+      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
+      "tokens": 61,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 52,
+      "importance": 62,
+      "path": "ui/harness_engineering/harness_engineering_page.md",
+      "tokens": 52,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 59,
+      "importance": 56,
+      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
+      "tokens": 59,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/agents/specialized_agents_and_orchestration.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "project_guidelines/agents/specialized_agents_and_orchestration.md",
+      "tokens": 6,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-15T16:35:54.814Z",
+  "generated_at": "2026-04-16T11:44:59.322Z",
   "lane_tokens": {
-    "contexts": 4000,
+    "contexts": 3999,
     "stubs": 0,
-    "summaries": 1894
+    "summaries": 1923
   },
-  "source_fingerprint": "c802a6d71ae3eb7dc95baab03de18d29fad1ddf59aa033d18b0d84fe092d8683",
-  "total_tokens": 5894,
+  "source_fingerprint": "6aaddf756cf03b5a50ad907f73dd91a33a87d5708b245e1bf9c510f00d5501b7",
+  "total_tokens": 5922,
   "version": 1
 }

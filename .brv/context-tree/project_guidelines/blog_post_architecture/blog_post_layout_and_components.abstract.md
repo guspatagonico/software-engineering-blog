@@ -1,0 +1,1 @@
+Blog posts utilize an Astro

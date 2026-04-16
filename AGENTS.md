@@ -223,6 +223,9 @@ Use `@/` path alias for cross-folder imports; relative imports only within same 
 - **Never** include agent names in commit messages, co-author trailers, PR text, or docs.
 - Do not remove/modify `server` block in `vite.config.ts` (`host: '0.0.0.0'`, `allowedHosts: ['galadriel']`) — LAN dev convenience, must be preserved.
 - **Never** commit and push until user explicitly asks.
+- **Never** manage services/processes — do not use `pkill`, `kill`, or similar commands.
+- **Never** run `pnpm dev`, `pnpm build`, or any dev server commands by yourself.
+- **Always** use the existing dev server at `http://localhost:4321/software-engineering` for all local testing.
 - Use **GitHub CLI (`gh`)** for PR creation, issue management, and repo operations.
 
 ---
