@@ -193,7 +193,6 @@ const finalDescription = description ?? post?.description;
     {
       post && post.tags.length > 0 && (
         <div class="post-tags-inline" data-post-tags hidden>
-          <span class="post-tags-inline__label">Tags</span>
           <div class="post-tags-inline__list">
             {post.tags.map((tag) => (
               <span class="post-tag">{tag}</span>

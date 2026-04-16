@@ -3,6 +3,7 @@
   let isMermaidInitialized = false;
 
   const MERMAID_QUERY = '.mermaid';
+  const MERMAID_RENDER_QUERY = '.mermaid.mermaid--render';
 
   const getThemeVariables = () => {
     const styles = getComputedStyle(document.documentElement);
@@ -31,6 +32,15 @@
       themeVariables: getThemeVariables(),
     });
     isMermaidInitialized = true;
+  };
+
+  const markMermaidTargets = () => {
+    document.querySelectorAll(MERMAID_QUERY).forEach((node) => {
+      if (!(node instanceof HTMLElement)) return;
+      const panel = node.closest('.panel');
+      const isVisible = panel ? panel.classList.contains('active') : true;
+      node.classList.toggle('mermaid--render', isVisible);
+    });
   };
 
   const ensureMermaidContainers = () => {
@@ -77,8 +87,15 @@
       resetMermaidContainers();
     }
 
+    markMermaidTargets();
+    const hasVisibleTargets = document.querySelector(MERMAID_RENDER_QUERY);
+
     try {
-      await mermaid.run({ querySelector: MERMAID_QUERY });
+      if (hasVisibleTargets) {
+        await mermaid.run({ querySelector: MERMAID_RENDER_QUERY });
+      } else {
+        await mermaid.run({ querySelector: MERMAID_QUERY });
+      }
     } catch (error) {
       if (attempt < 5) {
         clearTimeout(mermaidRetryTimeout);
@@ -102,7 +119,11 @@
     scheduleMermaidRender(false);
   }
 
-  document.addEventListener('astro:page-load', () => scheduleMermaidRender(false));
+  document.addEventListener('astro:page-load', () => {
+    scheduleMermaidRender(false);
+    setTimeout(() => scheduleMermaidRender(true), 300);
+  });
+  document.addEventListener('section-activated', () => scheduleMermaidRender(true));
 
   const observer = new MutationObserver((mutations) => {
     const hasThemeChange = mutations.some((mutation) => mutation.attributeName === 'data-theme');

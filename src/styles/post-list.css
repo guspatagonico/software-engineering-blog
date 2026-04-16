@@ -1,3 +1,5 @@
+@import './post-tags.css';
+
 /* Homepage post list styles */
 
 .tagline {
@@ -99,18 +101,6 @@ body.matrix-bg-visible .post-card:hover {
   font-size: 12px;
   color: var(--text-dim) !important;
   margin: 0;
-}
-
-.post-tag {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-dim) !important;
-  background: rgba(0, 212, 170, 0.1);
-  padding: 3px 8px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
 }
 
 .post-tags {
