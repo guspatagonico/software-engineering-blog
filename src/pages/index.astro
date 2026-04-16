@@ -34,14 +34,16 @@ function formatDate(dateStr: string): string {
       {
         posts.map((post) => (
           <a href={`${base}/blog/${post.id}`} class="post-card">
-            <div class="post-meta">
-              <span class="post-date">{formatDate(post.pubDate)}</span>
-              {post.tags.map((tag) => (
-                <span class="post-tag">{tag}</span>
-              ))}
-            </div>
             <h2 class="post-title">{post.title}</h2>
             {post.description && <p class="post-desc">{post.description}</p>}
+            <div class="post-footer">
+              <div class="post-tags">
+                {post.tags.map((tag) => (
+                  <span class="post-tag">{tag}</span>
+                ))}
+              </div>
+              <span class="post-date">{formatDate(post.pubDate)}</span>
+            </div>
           </a>
         ))
       }
