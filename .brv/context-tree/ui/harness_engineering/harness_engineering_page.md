@@ -4,10 +4,10 @@ summary: Documents harness engineering page structure, ConvergentEnvelope animat
 tags: []
 related: [project_management/handoffs/context.md, project_management/handoffs/hybrid_session_state_approach.md]
 keywords: []
-importance: 59
+importance: 62
 recency: 1
 maturity: draft
-accessCount: 3
+accessCount: 4
 createdAt: '2026-04-14T01:44:02.186Z'
 updatedAt: '2026-04-14T01:44:02.186Z'
 ---

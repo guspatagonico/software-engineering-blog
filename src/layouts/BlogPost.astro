@@ -84,7 +84,12 @@ const finalDescription = description ?? post?.description;
       (function () {
         const root = document.documentElement;
         const threshold = 12;
+        const mobileQuery = window.matchMedia('(max-width: 767px)');
         let lastCompact = null;
+
+        function isMobile() {
+          return mobileQuery.matches;
+        }
 
         function getScrollTop() {
           const content = document.querySelector('.content');
@@ -102,6 +107,15 @@ const finalDescription = description ?? post?.description;
         }
 
         function updateCompact() {
+          if (!isMobile()) {
+            if (lastCompact !== false) {
+              root.dataset.headerCompact = 'false';
+              lastCompact = false;
+              requestAnimationFrame(setHeaderHeight);
+            }
+            return;
+          }
+
           const scrollTop = getScrollTop();
           const shouldCompact = scrollTop > threshold;
           if (shouldCompact !== lastCompact) {
