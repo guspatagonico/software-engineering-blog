@@ -4,10 +4,10 @@ summary: Centralized post-content CSS defines layout helpers, tables accents/mut
 tags: []
 related: [ui/blog_post_layout/context.md]
 keywords: []
-importance: 62
+importance: 65
 recency: 1
-maturity: draft
-accessCount: 4
+maturity: validated
+accessCount: 5
 createdAt: '2026-04-14T00:17:24.192Z'
 updatedAt: '2026-04-14T00:17:24.192Z'
 ---

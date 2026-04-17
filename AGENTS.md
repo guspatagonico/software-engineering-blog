@@ -132,10 +132,17 @@ src/
   layouts/        # page layouts
   pages/          # Astro routes
   content/        # MDX blog posts (content collections)
+  assets/         # post assets (src/assets/posts/<slug>/)
   styles/         # global CSS / design tokens
   utils/          # pure helper functions
   lib/            # external integrations
 ```
+
+### Post assets
+
+- Keep post-specific images/icons in `src/assets/posts/<slug>/`.
+- Use `astro:assets` for rendering and optimization.
+- Avoid placing post assets in `public/` (reserved for global/static files like favicons).
 
 ### State Management
 

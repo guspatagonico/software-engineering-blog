@@ -34,11 +34,45 @@
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.2);
   color: inherit;
   text-decoration: none;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: postCardReveal 0.45s ease forwards;
+  animation-delay: var(--card-delay, 0ms);
   transition:
     transform 0.15s ease,
     border-color 0.15s ease,
     box-shadow 0.15s ease,
     background 0.2s ease;
+}
+
+.post-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+  min-width: 0;
+}
+
+.post-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(10, 12, 18, 0.4);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 10px 20px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.post-icon__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .post-card:hover {
@@ -47,6 +81,21 @@
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.26);
   background: linear-gradient(135deg, rgba(0, 212, 170, 0.22), rgba(10, 12, 18, 0.45));
   text-decoration: none;
+}
+
+@keyframes postCardReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .post-card::after {
@@ -121,7 +170,13 @@ body.matrix-bg-visible .post-card:hover {
   font-size: 16px;
   font-weight: 600;
   color: var(--text-bright) !important;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  line-height: 1.3;
+  min-height: calc(1.3em * 2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   word-break: break-word;
 }
 
@@ -129,7 +184,8 @@ body.matrix-bg-visible .post-card:hover {
   font-size: 14px;
   color: var(--text-dim) !important;
   line-height: 1.5;
-  margin: 0 0 10px;
+  margin: 0;
+  min-width: 0;
   word-break: break-word;
 }
 
@@ -140,5 +196,15 @@ body.matrix-bg-visible .post-card:hover {
 
   .post-card {
     padding: 14px;
+  }
+
+  .post-summary {
+    gap: 10px;
+  }
+
+  .post-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
   }
 }

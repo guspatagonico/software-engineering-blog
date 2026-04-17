@@ -30,6 +30,6 @@ export default tseslint.config(
   },
   prettier,
   {
-    ignores: ['dist/', '.astro/', 'node_modules/'],
+    ignores: ['dist/', '.astro/', 'node_modules/', 'public/vendor/'],
   },
 );
