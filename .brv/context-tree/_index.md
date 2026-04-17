@@ -1,49 +1,46 @@
 ---
-children_hash: 346e85c8d64bb125f73b175613645e76794633f4850b5fd1e0dccb824d89633c
-compression_ratio: 0.3017241379310345
+children_hash: b1ac54cc169c0c3ee300454fb570c9f604cf31738767cf6e84668a8c2456506e
+compression_ratio: 0.25415533393774553
 condensation_order: 3
 covers: [facts/_index.md, project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 3364
+covers_token_total: 3309
 summary_level: d3
-token_count: 1015
+token_count: 841
 type: summary
 ---
 # Software Engineering Blog: Structural Knowledge Summary (Level d3)
 
-This summary integrates the foundational preferences, project guidelines, management workflows, and UI architecture of the Software Engineering Blog. It synthesizes durable knowledge across four primary domains.
+This summary synthesizes the foundational domains of the Software Engineering Blog, integrating personal preferences, project governance, architectural standards, and UI frameworks.
 
-## 1. Core Identity & Personal Preferences
-The **facts** domain governs the persona and branding of the project, enforced by the ByteRover context engineer.
-*   **Communication Model**: Mandates **Caveman Full Mode** for all agent interactions—prioritizing fragments and extreme brevity while maintaining 100% technical fidelity for entity names and signatures.
+## 1. Core Identity & Communication (Facts)
+The **facts** domain governs the persona and branding of the platform. It enforces a strict interaction model designed for maximum efficiency and technical fidelity.
+*   **Linguistic Model**: Mandates **Caveman Full Mode** (terseness, fragments, no filler) while maintaining a **Zero-paraphrase policy** for technical entities and signatures.
 *   **Branding**: Strict attribution requirement for the site footer: `© Gustavo Adrián Salvini`.
-*   **Drill-down**: `facts/personal/` for linguistic constraints and branding strings.
+*   **Drill-down**: `facts/personal/` (style and attribution).
 
-## 2. Project Guidelines & Agent Orchestration
-The **project_guidelines** domain defines the "Envolvente Convergente" framework, balancing specialized agent automation with strict quality gates.
-*   **Agent Ecosystem**: Operates on a **Fork-Join dispatcher model** managed by `@orchestrator`. Sub-agents (e.g., `@blog-writer`, `@tester`) are capped at **~5,800 tokens** and use `_handoff` commands for state transfer.
-*   **Drift Control**: Monitors for scope expansion and excessive auto-correction loops (>2 iterations) to prevent uncoordinated drift.
-*   **Development Workflow**: Enforces a **pnpm-only** environment. Mandatory quality gates include `pnpm lint`, `pnpm typecheck`, and Vitest/Playwright suites.
-*   **Git Policy**: Explicit user consent is required for all mutations. Direct `main` commits are restricted to trivial fixes; all others require PRs.
-*   **Drill-down**: `project_guidelines/agents/` for orchestration and `project_guidelines/dev_process/` for workflow rules.
+## 2. Project Governance & Workflow (Project Management & Guidelines)
+The project utilizes a highly structured development lifecycle to minimize "entropy" and ensure environment isolation.
+*   **Agent Orchestration**: Operates on a **Fork-Join dispatcher model** managed by `@orchestrator`. It employs the **Envolvente Convergente** framework to ensure task convergence and manages a strict **~5,800 token budget** per sub-agent.
+*   **Git & Environment Policy**: 
+    *   **Isolation**: Mandatory use of **Git worktrees** located in `.worktrees/<branch_name>`.
+    *   **Quality Gates**: **pnpm-only** workflow requiring `lint`, `typecheck`, and Vitest/Playwright passes before any commit.
+    *   **Consent**: Explicit user approval is required for all `git commit` or `push` operations.
+*   **Session Continuity**: Uses a **Hybrid State Strategy**. Durable knowledge (patterns/decisions) is curated by ByteRover, while ephemeral state (tasks/blockers) is tracked via `_handoff` files.
+*   **Drill-down**: `project_guidelines/agents/`, `project_management/git_workflow/`, `project_management/handoffs/`.
 
-## 3. Project Management & Session Continuity
-The **project_management** domain ensures environment isolation and tracks ephemeral progress across sessions.
-*   **Environment Isolation**: Mandatory use of **Git worktrees** located in `.worktrees/<branch_name>` for all non-trivial features and refactors.
-*   **Hybrid State Strategy**: Partitioning of knowledge into **Durable** (patterns/preferences in ByteRover) and **Ephemeral** (tasks/blockers in handoff files). Agents auto-query durable knowledge but only access handoffs on request.
-*   **Handoff Standards**: Files must capture completed tasks, decisions, and pending actions for the active session only.
-*   **Drill-down**: `project_management/git_workflow/` for worktree policies and `project_management/handoffs/` for state strategies.
+## 3. Technical Architecture (Blog & UI)
+The platform is built as an **Astro + React hybrid**, optimized for technical documentation and high-performance visual effects.
+*   **Layout & Content**:
+    *   **Standardization**: Uses `BlogPost.astro` with a sticky header and `SectionNav` for hash-based navigation. Content is partitioned into `panel-{id}` sections.
+    *   **Styling**: `post-content.css` provides specialized utilities for technical callouts, data blocks, and two-column glossary grids.
+*   **State & Persistence**: Centralized `localStorage` management (`gsalvini-se-blog`) handles theme, checklist completion, and scroll positions with SSR-safe guards.
+*   **Visual Systems**:
+    *   **Immersive UI**: Features a five-layer **Matrix Background** with mouse-driven shockwaves and a **Three.js Dodecahedron Toggle** for event dispatching.
+    *   **Performance**: Implements early viewport detection to prevent hydration flickering and utilizes `RequestAnimationFrame` for DOM measurements.
+*   **Drill-down**: `ui/blog_post_layout/`, `ui/visual_effects/`, `project_guidelines/blog_post_architecture/`.
 
-## 4. UI Architecture & Visual Framework
-The **ui** domain manages the immersive, high-performance interface and interactive blog components.
-*   **Layout & Content**: Uses an **Astro + React hybrid model**. `BlogPost.astro` manages scroll behavior and mobile hydration, while `post-content.css` provides standardized scaffolding for technical grids and tables.
-*   **Interactive Navigation**: The `SectionNav` component synchronizes UI state with URL hashes and `matchMedia` responsive breakpoints.
-*   **Visual Effects**: Includes a WebGL **Matrix Background** with interactive mouse forces and a Three.js **Dodecahedron** toggle.
-*   **State Persistence**: Unified `localStorage` management (`gsalvini-se-blog`) for theme, background visibility, and checklist completion states.
-*   **Mobile Optimization**: Early viewport detection in the document head prevents hydration flickering; viewports <767px trigger specific container constraints.
-*   **Drill-down**: `ui/blog_post_layout/` for core architecture and `ui/visual_effects/` for animation logic.
-
-## Key Architectural Decisions
-*   **Dispatcher Model**: Fork-Join orchestration with Lyapunov-based convergence.
-*   **State Store**: Unified namespaced `localStorage` for all UI preferences.
-*   **Isolation**: Worktree-first development to maintain repository cleanliness.
-*   **Fidelity**: Zero-paraphrase policy for technical entities despite "Caveman" stylistic compression.
+## 4. Execution & Deployment
+Standardized lifecycle scripts ensure parity across environments.
+*   **Scripts**: `pnpm dev` (4321), `pnpm build`, and `pnpm preview`.
+*   **Deployment**: Production uploads are handled via `gsupload -b frontend` through the `/dist-upload` command.
+*   **Drill-down**: `project_guidelines/run_commands/`.

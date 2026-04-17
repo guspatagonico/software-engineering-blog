@@ -272,6 +272,19 @@ export default function SectionNav({ sections }: SectionNavProps) {
     }
   }, [activeId, sections, isCollapsed, getScrollTarget]);
 
+  // Check scroll position when collapsed state or active section changes
+  useEffect(() => {
+    if (!activeId) return;
+    // Use requestAnimationFrame + setTimeout to ensure DOM and layout are ready
+    const raf = requestAnimationFrame(() => {
+      const timer = window.setTimeout(() => {
+        checkScrollPosition();
+      }, 100);
+      return () => window.clearTimeout(timer);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [activeId, isCollapsed, checkScrollPosition]);
+
   // Handle initial hash and hash changes
   useEffect(() => {
     if (!activeId) return;
@@ -305,9 +318,6 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
     window.addEventListener('pagehide', handlePageHide);
     document.addEventListener('visibilitychange', handleVisibility);
-
-    // Initial check
-    checkScrollPosition();
 
     return () => {
       if (target === window) {
@@ -363,6 +373,10 @@ export default function SectionNav({ sections }: SectionNavProps) {
         setActiveId(sectionId);
         updatePanelHeader(sectionId);
         restoreScrollPosition(sectionId);
+        // Force a check after section activation
+        requestAnimationFrame(() => {
+          setTimeout(() => checkScrollPosition(), 150);
+        });
       }
     };
 
@@ -373,12 +387,16 @@ export default function SectionNav({ sections }: SectionNavProps) {
       window.removeEventListener('hashchange', handleHashChange);
       window.removeEventListener('section-activated', handleSectionActivated as EventListener);
     };
-  }, [sections, activateSection, updatePanelHeader, restoreScrollPosition]);
+  }, [sections, activateSection, updatePanelHeader, restoreScrollPosition, checkScrollPosition]);
 
   const handleClick = (id: string) => {
     activateSection(id);
     if (window.matchMedia('(max-width: 767px)').matches) {
       setIsCollapsed(true);
+      // Force a check after section activation
+      requestAnimationFrame(() => {
+        setTimeout(() => checkScrollPosition(), 150);
+      });
     }
   };
 

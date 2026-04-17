@@ -1,0 +1,1 @@
+The SectionNav component manages section
