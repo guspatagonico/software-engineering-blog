@@ -47,16 +47,19 @@ const links = [
 
 <nav class="mobile-nav" data-visible="false">
   <div class="mobile-nav__header">
-    <span class="mobile-nav__title">Menu</span>
+    <div class="mobile-nav__logo">
+      <span class="mobile-nav__logo-mark">{'{ }'}</span>
+      <span class="mobile-nav__logo-text">The SE Blog</span>
+    </div>
     <div class="mobile-nav__header-actions">
       <button class="mobile-nav__close" aria-label="Close navigation"> ✕ </button>
     </div>
   </div>
   <div class="mobile-nav__links">
-    <a href={`${base}/`} class="mobile-nav__link">Home</a>
-    <a href={`${base}/about`} class="mobile-nav__link">About</a>
+    <a href={`${base}/`} class="mobile-nav__link">Índice</a>
+    <a href={`${base}/about`} class="mobile-nav__link">Sobre mí</a>
     <a href={`${base}/now`} class="mobile-nav__link">Now</a>
-    <a href={`${base}/contact`} class="mobile-nav__link">Contact</a>
+    <a href={`${base}/contact`} class="mobile-nav__link">Contacto</a>
   </div>
 </nav>
 
@@ -325,12 +328,25 @@ const links = [
     gap: 8px;
   }
 
-  .mobile-nav__title {
-    font-size: 12px;
+  .mobile-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .mobile-nav__logo-mark {
+    font-family: var(--font);
+    font-size: 18px;
     font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-dim);
+    color: var(--teal);
+    letter-spacing: -0.3px;
+  }
+
+  .mobile-nav__logo-text {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-bright);
+    letter-spacing: -0.3px;
   }
 
   .mobile-nav__close {

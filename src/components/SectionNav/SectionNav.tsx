@@ -16,10 +16,12 @@ export default function SectionNav({ sections }: SectionNavProps) {
   const [activeId, setActiveId] = useState('');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [showNextHint, setShowNextHint] = useState(false);
   const hasInitialized = useRef(false);
   const scrollRaf = useRef<number | null>(null);
   const didInitialRestore = useRef(false);
   const scrollTimeout = useRef<number | null>(null);
+  const skipNextRestore = useRef(false);
 
   const updatePanelHeader = useCallback(
     (id: string) => {
@@ -101,8 +103,13 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
   // Activate a section by ID (update URL hash, show panel, update state)
   const activateSection = useCallback(
-    (id: string, updateHash: boolean = true) => {
+    (id: string, updateHash: boolean = true, restoreScroll: boolean = true) => {
       if (!sections.find((s) => s.id === id)) return;
+
+      // Mark if we should skip the next automatic restore
+      if (!restoreScroll) {
+        skipNextRestore.current = true;
+      }
 
       setActiveId(id);
 
@@ -114,7 +121,17 @@ export default function SectionNav({ sections }: SectionNavProps) {
       if (target) {
         updatePanelHeader(id);
         target.classList.add('active');
-        restoreScrollPosition(id);
+        if (restoreScroll) {
+          restoreScrollPosition(id);
+        } else {
+          // Scroll to top
+          const scrollTarget = getScrollTarget();
+          if (scrollTarget === window) {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+          } else {
+            scrollTarget.scrollTo({ top: 0, behavior: 'auto' });
+          }
+        }
       }
 
       // Update URL hash
@@ -128,7 +145,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
         })
       );
     },
-    [sections, updatePanelHeader, restoreScrollPosition]
+    [sections, updatePanelHeader, restoreScrollPosition, getScrollTarget]
   );
 
   useEffect(() => {
@@ -205,6 +222,56 @@ export default function SectionNav({ sections }: SectionNavProps) {
     }
   }, [sections]);
 
+  // Detect if user is near the end of the current panel (for "next" hint)
+  const checkScrollPosition = useCallback(() => {
+    // Only check on mobile
+    if (!window.matchMedia('(max-width: 767px)').matches) {
+      setShowNextHint(false);
+      return;
+    }
+
+    // Only if collapsed (active section is showing)
+    if (!isCollapsed) {
+      setShowNextHint(false);
+      return;
+    }
+
+    // Check if there's a next section
+    const currentIndex = sections.findIndex((s) => s.id === activeId);
+    if (currentIndex === -1 || currentIndex === sections.length - 1) {
+      setShowNextHint(false);
+      return;
+    }
+
+    const panel = document.getElementById(`panel-${activeId}`);
+    if (!panel) {
+      setShowNextHint(false);
+      return;
+    }
+
+    const target = getScrollTarget();
+    const scrollPos = target === window ? window.scrollY : (target as HTMLElement).scrollTop;
+    const scrollHeight =
+      target === window
+        ? document.documentElement.scrollHeight
+        : (target as HTMLElement).scrollHeight;
+    const clientHeight =
+      target === window ? window.innerHeight : (target as HTMLElement).clientHeight;
+
+    // Check if content is not scrollable (brief section)
+    const hasNoScroll = scrollHeight <= clientHeight;
+
+    // If no scroll, always show hint. Otherwise, check if near bottom
+    if (hasNoScroll) {
+      setShowNextHint(true);
+    } else {
+      // Hysteresis: 150px from bottom
+      const threshold = 150;
+      const isNearBottom = scrollPos + clientHeight >= scrollHeight - threshold;
+      setShowNextHint(isNearBottom);
+    }
+  }, [activeId, sections, isCollapsed, getScrollTarget]);
+
   // Handle initial hash and hash changes
   useEffect(() => {
     if (!activeId) return;
@@ -214,12 +281,14 @@ export default function SectionNav({ sections }: SectionNavProps) {
       scrollRaf.current = window.requestAnimationFrame(() => {
         scrollRaf.current = null;
         saveScrollPosition(activeId);
+        checkScrollPosition();
       });
       if (scrollTimeout.current) {
         window.clearTimeout(scrollTimeout.current);
       }
       scrollTimeout.current = window.setTimeout(() => {
         saveScrollPosition(activeId);
+        checkScrollPosition();
       }, 140);
     };
 
@@ -237,6 +306,9 @@ export default function SectionNav({ sections }: SectionNavProps) {
     window.addEventListener('pagehide', handlePageHide);
     document.addEventListener('visibilitychange', handleVisibility);
 
+    // Initial check
+    checkScrollPosition();
+
     return () => {
       if (target === window) {
         window.removeEventListener('scroll', handleScroll);
@@ -250,10 +322,18 @@ export default function SectionNav({ sections }: SectionNavProps) {
       window.removeEventListener('pagehide', handlePageHide);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
-  }, [activeId, getScrollTarget, saveScrollPosition]);
+  }, [activeId, getScrollTarget, saveScrollPosition, checkScrollPosition]);
 
   useEffect(() => {
     if (!isHydrated || !activeId || didInitialRestore.current) return;
+
+    // Skip restore if we explicitly requested not to
+    if (skipNextRestore.current) {
+      skipNextRestore.current = false;
+      didInitialRestore.current = true;
+      return;
+    }
+
     const hash = window.location.hash.slice(1);
     if (hash && hash === activeId) {
       didInitialRestore.current = true;
@@ -312,8 +392,17 @@ export default function SectionNav({ sections }: SectionNavProps) {
     );
   };
 
+  const goToNextSection = () => {
+    const currentIndex = sections.findIndex((s) => s.id === activeId);
+    if (currentIndex !== -1 && currentIndex < sections.length - 1) {
+      activateSection(sections[currentIndex + 1].id, true, false);
+      setIsCollapsed(true);
+    }
+  };
+
   const activeSection = sections.find((section) => section.id === activeId) ?? null;
   const effectiveCollapsed = isHydrated ? isCollapsed : false;
+  const hasNextSection = sections.findIndex((s) => s.id === activeId) < sections.length - 1;
 
   return (
     <div className="section-nav-shell">
@@ -331,6 +420,27 @@ export default function SectionNav({ sections }: SectionNavProps) {
               <>
                 <span className="panel-mobile-header__icon">{activeSection.icon}</span>
                 <span className="panel-mobile-header__label">{activeSection.label}</span>
+                {showNextHint && hasNextSection && (
+                  <button
+                    type="button"
+                    className="section-nav-next-hint"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      goToNextSection();
+                    }}
+                    aria-label="Go to next section"
+                  >
+                    <span className="section-nav-next-hint__arrow section-nav-next-hint__arrow--1">
+                      ▸
+                    </span>
+                    <span className="section-nav-next-hint__arrow section-nav-next-hint__arrow--2">
+                      ▸
+                    </span>
+                    <span className="section-nav-next-hint__arrow section-nav-next-hint__arrow--3">
+                      ▸
+                    </span>
+                  </button>
+                )}
               </>
             ) : (
               <span className="section-nav-toggle__placeholder" aria-hidden="true" />
