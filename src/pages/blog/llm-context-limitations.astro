@@ -5,7 +5,7 @@ import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
 import { getPost } from '../../data/posts';
 
-const post = getPost('llm-context-limitations');
+const post = await getPost('llm-context-limitations');
 
 const sections = [
   { id: 'problema', icon: '⚠', label: 'Problema' },

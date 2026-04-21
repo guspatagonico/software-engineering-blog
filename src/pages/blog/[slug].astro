@@ -1,0 +1,33 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('blog');
+  return entries
+    .map((entry) => {
+      const slug = entry.slug ?? entry.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, '');
+      return {
+        params: { slug },
+      };
+    })
+    .filter((route) => Boolean(route.params.slug));
+}
+
+const { slug } = Astro.params;
+if (!slug) {
+  throw new Error('Missing slug parameter');
+}
+
+const entries = await getCollection('blog');
+const entry = entries.find((item) => {
+  const fallbackSlug = item.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, '');
+  return item.slug === slug || fallbackSlug === slug;
+});
+if (!entry) {
+  throw new Error(`Blog entry not found: ${slug}`);
+}
+
+const { Content } = await render(entry);
+---
+
+<Content />

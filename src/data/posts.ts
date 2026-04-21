@@ -1,4 +1,6 @@
 import type { ImageMetadata } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 import { getPostIcon } from '@/data/postAssets';
 
@@ -15,7 +17,9 @@ export interface PostMeta {
   draft?: boolean;
 }
 
-export const posts: PostMeta[] = [
+export type BlogEntry = CollectionEntry<'blog'>;
+
+const legacyPosts: PostMeta[] = [
   {
     id: 'harness-agentic-control',
     title: 'Harness Engineering para agentes tipo OpenCode',
@@ -23,6 +27,17 @@ export const posts: PostMeta[] = [
     description: 'Modelo operativo para agentes con herramientas, contratos y evidencia',
     pubDate: '2026-04-15',
     tags: ['harness', 'agents', 'orchestration'],
+    icon: getPostIcon('harness-agentic-control'),
+    ogImage: getPostIcon('harness-agentic-control'),
+    iconAlt: 'Harness Engineering para agentes tipo OpenCode',
+  },
+  {
+    id: 'harness-agentic-control-astro',
+    title: 'Harness Engineering para agentes tipo OpenCode (Astro)',
+    subtitle: 'Legacy Astro · Control loop, contracts y señales de deriva',
+    description: 'Version legacy del post, previo a la migracion MDX',
+    pubDate: '2026-04-15',
+    tags: ['harness', 'agents', 'orchestration', 'legacy'],
     icon: getPostIcon('harness-agentic-control'),
     ogImage: getPostIcon('harness-agentic-control'),
     iconAlt: 'Harness Engineering para agentes tipo OpenCode',
@@ -62,12 +77,39 @@ export const posts: PostMeta[] = [
   },
 ];
 
-export function getPost(id: string): PostMeta | undefined {
-  return posts.find((p) => p.id === id);
+function mapEntry(entry: BlogEntry): PostMeta {
+  return {
+    id: entry.slug,
+    title: entry.data.title,
+    subtitle: entry.data.subtitle,
+    description: entry.data.description,
+    pubDate: entry.data.pubDate,
+    tags: entry.data.tags,
+    icon: entry.data.icon,
+    ogImage: entry.data.ogImage,
+    iconAlt: entry.data.iconAlt,
+    draft: entry.data.draft,
+  };
 }
 
-export function getPublishedPosts(): PostMeta[] {
+async function getAllPosts(): Promise<PostMeta[]> {
+  const collectionPosts = (await getCollection('blog')).map(mapEntry);
+  const merged = new Map<string, PostMeta>();
+
+  legacyPosts.forEach((post) => merged.set(post.id, post));
+  collectionPosts.forEach((post) => merged.set(post.id, post));
+
+  return Array.from(merged.values());
+}
+
+export async function getPost(id: string): Promise<PostMeta | undefined> {
+  const posts = await getAllPosts();
+  return posts.find((post) => post.id === id);
+}
+
+export async function getPublishedPosts(): Promise<PostMeta[]> {
+  const posts = await getAllPosts();
   return posts
-    .filter((p) => !p.draft)
+    .filter((post) => !post.draft)
     .sort((a, b) => new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime());
 }
