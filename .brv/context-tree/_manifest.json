@@ -3,7 +3,7 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 841,
+      "tokens": 925,
       "type": "summary"
     },
     {
@@ -13,9 +13,15 @@
       "type": "summary"
     },
     {
-      "order": 2,
-      "path": "project_management/_index.md",
-      "tokens": 643,
+      "order": 1,
+      "path": "facts/personal/_index.md",
+      "tokens": 338,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/git_workflow/_index.md",
+      "tokens": 221,
       "type": "summary"
     },
     {
@@ -49,61 +55,67 @@
       "type": "context"
     },
     {
-      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
-      "abstractTokens": 47,
-      "importance": 73,
-      "path": "project_management/handoffs/hybrid_session_state_approach.md",
-      "tokens": 47,
+      "importance": 50,
+      "path": "facts/context.md",
+      "tokens": 100,
       "type": "context"
     },
     {
-      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
-      "abstractTokens": 61,
-      "importance": 65,
-      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
-      "tokens": 61,
+      "importance": 50,
+      "path": "facts/personal/author_attribution_preference.abstract.md",
+      "tokens": 8,
       "type": "context"
     },
     {
-      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 52,
-      "importance": 65,
-      "path": "ui/harness_engineering/harness_engineering_page.md",
-      "tokens": 52,
+      "importance": 50,
+      "path": "facts/personal/caveman_style_preference.abstract.md",
+      "tokens": 35,
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 59,
-      "importance": 62,
-      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
-      "tokens": 59,
+      "importance": 50,
+      "path": "facts/personal/context.md",
+      "tokens": 48,
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/ui_design/mobile_ui_performance_patterns.abstract.md",
-      "abstractTokens": 5,
-      "importance": 53,
-      "path": "project_guidelines/ui_design/mobile_ui_performance_patterns.md",
+      "importance": 50,
+      "path": "facts/personal/site_footer_copyright_preference.abstract.md",
       "tokens": 5,
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/run_commands/production_asset_upload.abstract.md",
-      "abstractTokens": 2,
       "importance": 50,
-      "path": "project_guidelines/run_commands/production_asset_upload.md",
-      "tokens": 2,
+      "path": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/agents/orchestration_and_drift_management.abstract.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/agents/specialized_agents_and_orchestration.abstract.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/agents/sub_agent_design_and_anatomy.abstract.md",
+      "tokens": 7,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-17T22:30:03.105Z",
+  "generated_at": "2026-04-21T18:10:38.690Z",
   "lane_tokens": {
-    "contexts": 4000,
+    "contexts": 3999,
     "stubs": 0,
     "summaries": 1939
   },
-  "source_fingerprint": "91d4fbb09a287078c4e02f0f525942bc2eb490119ccddaa71ea704d1843d3df5",
-  "total_tokens": 5939,
+  "source_fingerprint": "c3b9ed5cab130199832403ac4f616eb111532412685ac7832985461d05f1c451",
+  "total_tokens": 5938,
   "version": 1
 }

@@ -1,0 +1,288 @@
+---
+title: Limitaciones de los LLM en la actualidad
+subtitle: Ventana de contexto y Smart Context
+description: Análisis de las limitaciones de contexto en LLMs, fundamentos matemáticos y estrategias
+pubDate: '2026-03-20'
+tags:
+  - llm
+  - context
+  - architecture
+icon: ../../assets/posts/llm-context-limitations/icon.png
+ogImage: ../../assets/posts/llm-context-limitations/icon.png
+iconAlt: Limitaciones de los LLM en la actualidad
+---
+
+import ContextWindowChart from '../../components/ContextWindowChart/ContextWindowChart';
+import SectionNav from '../../components/SectionNav/SectionNav';
+import '../../styles/post-content.css';
+
+export const sections = [
+  { id: 'problema', icon: '⚠', label: 'Problema' },
+  { id: 'fundamentos', icon: '∑', label: 'Fundamentos' },
+  { id: 'comparacion', icon: '⧉', label: 'Comparación' },
+  { id: 'smart-context', icon: '◑', label: 'Smart Context' },
+  { id: 'estrategias', icon: '⊕', label: 'Estrategias' },
+  { id: 'impacto', icon: '✓', label: 'Impacto' },
+];
+
+export const contextModels = [
+  { name: 'Gemini 3.1 Pro', provider: 'Google', contextK: 1000, smartContextK: 500, year: 2026 },
+  {
+    name: 'Claude Opus 4.6',
+    provider: 'Anthropic',
+    contextK: 1000,
+    smartContextK: 500,
+    year: 2026,
+  },
+  {
+    name: 'Claude Sonnet 4.6',
+    provider: 'Anthropic',
+    contextK: 1000,
+    smartContextK: 500,
+    year: 2026,
+  },
+  { name: 'GPT-5.4', provider: 'OpenAI', contextK: 1000, smartContextK: 500, year: 2026 },
+  { name: 'GPT-5.4 mini', provider: 'OpenAI', contextK: 400, smartContextK: 200, year: 2026 },
+  { name: 'Gemini 2.5 Pro', provider: 'Google', contextK: 1000, smartContextK: 500, year: 2025 },
+  { name: 'GPT-4.1', provider: 'OpenAI', contextK: 1000, smartContextK: 500, year: 2025 },
+  { name: 'Claude Opus 4', provider: 'Anthropic', contextK: 200, smartContextK: 100, year: 2025 },
+  { name: 'Gemini 1.5 Pro', provider: 'Google', contextK: 2000, smartContextK: 1000, year: 2024 },
+];
+
+<SectionNav client:load sections={sections} />
+
+<div class="content">
+  <div class="panel active" id="panel-problema">
+    <h2>El problema del contexto</h2>
+
+    <p>
+      Los Large Language Models han avanzado rápidamente en capacidad, pero una limitación
+      estructural persiste: la <strong>ventana de contexto</strong>. Cada modelo tiene un límite
+      fijo de tokens que puede procesar simultáneamente —incluyendo el system prompt, el historial
+      de conversación, las herramientas disponibles y la respuesta generada.
+    </p>
+
+    <p>
+      A medida que las sesiones se alargan, el contexto crece linealmente. Cada turno agrega
+      tokens al historial, y eventualmente se alcanza el límite. Cuando esto ocurre, el modelo
+      pierde acceso a información anterior y la calidad de las respuestas degrada.
+    </p>
+
+  </div>
+
+  <div class="panel" id="panel-fundamentos">
+    <h2>Fundamentos matemáticos del problema</h2>
+
+    <p>
+      La limitación de la ventana de contexto no es una decisión arbitraria de los proveedores —
+      es una consecuencia directa de la arquitectura Transformer. Comprender por qué requiere
+      mirar las matemáticas que hay debajo.
+    </p>
+
+    <h3>Escalado cuadrático de la atención — O(n²)</h3>
+
+    <p>
+      El mecanismo de <em>self-attention</em> (Vaswani et al., 2017) calcula una matriz de atención
+      de tamaño <strong>n × n</strong>, donde <em>n</em> es el número de tokens. Cada token debe compararse
+      con todos los demás para determinar su relevancia relativa.
+    </p>
+
+    <ul>
+      <li>
+        <strong>Complejidad temporal:</strong> O(n² · d), donde d es la dimensión del modelo
+      </li>
+      <li><strong>Memoria:</strong> O(h · n²), donde h es el número de cabezas de atención</li>
+      <li><strong>Implicación:</strong> duplicar el contexto <em>cuadruplica</em> el costo</li>
+    </ul>
+
+    <table class="complexity-table table-accent-2 table-accent-red">
+      <thead>
+        <tr><th>Tokens</th><th>Costo relativo</th><th>Latencia aprox.</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1K</td><td>1x</td><td>~200ms</td></tr>
+        <tr><td>4K</td><td>16x</td><td>~800ms</td></tr>
+        <tr><td>16K</td><td>256x</td><td>~3.2s</td></tr>
+        <tr><td>64K</td><td>4,096x</td><td>~12s</td></tr>
+        <tr><td>128K</td><td>16,384x</td><td>~30s+</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      No se trata de un bug — es la restricción arquitectónica fundamental del Transformer. Con
+      100K tokens, el modelo mantiene <strong>10 mil millones de relaciones por pares</strong>.
+    </p>
+
+    <h3>Dilución de la atención</h3>
+
+    <p>
+      La función <em>softmax</em> normaliza los pesos de atención entre todos los tokens. A medida que
+      el contexto crece, el peso de cada token individual <strong>se reduce</strong>. La señal no
+      se amplifica — el piso de ruido sube. Este es un problema arquitectónico, no de
+      entrenamiento.
+    </p>
+
+    <h3>Lost in the Middle (Stanford, 2023)</h3>
+
+    <p>
+      Liu et al. demostraron que el rendimiento sigue una <strong>curva en U</strong> a lo largo de
+      las posiciones del contexto:
+    </p>
+
+    <ul>
+      <li><strong>Alta precisión</strong> al inicio y al final del contexto</li>
+      <li>
+        <strong>Caída de más del 30%</strong> cuando la información relevante está en las posiciones
+        intermedias (5–15)
+      </li>
+      <li>Afecta a <em>todos</em> los modelos, incluyendo los diseñados para contextos largos</li>
+    </ul>
+
+    <div class="post-callout">
+      <p>
+        <strong>Context Rot</strong> (Chroma, 2025): en pruebas con 18 modelos de frontera (GPT-4.1,
+        Claude Opus 4, Gemini 2.5), todos mostraron degradación <em>continua</em>
+        con la longitud del contexto. Un modelo con ventana de 200K ya degrada a los ~50K tokens. No
+        es un precipicio — es una pendiente gradual que empieza mucho antes de llenarse.
+      </p>
+    </div>
+
+    <h3>Consecuencias prácticas</h3>
+
+    <p>
+      Estas limitaciones matemáticas explican por qué simplemente aumentar la ventana de contexto
+      no es suficiente:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Costo exponencial:</strong> pasar de 64K a 128K no duplica el costo — lo multiplica
+        por 4
+      </li>
+      <li>
+        <strong>Degradación progresiva:</strong> la calidad de la atención cae mucho antes de alcanzar
+        el límite nominal
+      </li>
+      <li>
+        <strong>Sesgo posicional:</strong> el modelo "olvida" sistemáticamente lo que está en el medio
+        del contexto
+      </li>
+      <li>
+        <strong>Ruido acumulativo:</strong> cada token adicional diluye la atención sobre los tokens
+        existentes
+      </li>
+    </ul>
+
+    <p>
+      Estos hallazgos son la base teórica del concepto de <strong>Smart Context</strong>: si la
+      calidad de atención degrada progresivamente, la estrategia óptima no es maximizar lo que
+      cabe en la ventana, sino <strong>gestionar activamente qué entra</strong>.
+    </p>
+
+  </div>
+
+  <div class="panel" id="panel-comparacion">
+    <h2>Comparación de ventanas de contexto</h2>
+
+    <ContextWindowChart client:load models={contextModels} />
+
+  </div>
+
+  <div class="panel" id="panel-smart-context">
+    <h2>Smart Context: la mitad útil</h2>
+
+    <p>
+      El concepto de <strong>Smart Context</strong> es simple pero revelador: el espacio realmente útil
+      de una ventana de contexto es aproximadamente la mitad del tamaño nominal.
+    </p>
+
+    <p>¿Por qué? Porque el contexto se distribuye entre:</p>
+
+    <ul>
+      <li><strong>System prompt</strong> — instrucciones del sistema, personalidad, reglas</li>
+      <li><strong>Herramientas y skills</strong> — definiciones de funciones, MCPs, schemas</li>
+      <li>
+        <strong>Historial de conversación</strong> — mensajes previos del usuario y asistente
+      </li>
+      <li><strong>Respuesta generada</strong> — tokens de salida del modelo</li>
+    </ul>
+
+    <p>
+      En una sesión larga con herramientas activas, el historial de conversación puede fácilmente
+      consumir el 60-70% del contexto. Si además el system prompt y las herramientas ocupan un
+      20-30%, el espacio disponible para la respuesta se reduce dramáticamente.
+    </p>
+
+    <div class="post-callout">
+      <p>
+        <strong>Regla práctica:</strong> si tu ventana de contexto es de 200K tokens, planifica trabajar
+        con ~100K tokens efectivos. La otra mitad ya está reservada por el sistema, herramientas y la
+        respuesta misma.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="panel" id="panel-estrategias">
+    <h2>Estrategias para ahorrar contexto</h2>
+
+    <p>
+      Dado que el contexto es un recurso finito, existen varias técnicas para maximizar su uso
+      efectivo en sesiones largas:
+    </p>
+
+    <h3>MCPs (Model Context Protocol)</h3>
+
+    <p>
+      Los MCPs externalizan el acceso a datos. En lugar de incluir archivos completos en el
+      contexto, el modelo consulta herramientas externas bajo demanda. Esto permite trabajar con
+      repositorios grandes sin copiar todo al contexto.
+    </p>
+
+    <h3>Skills y Tools</h3>
+
+    <p>
+      Las skills y tools bien diseñadas reducen la cantidad de instrucciones que necesitan estar
+      en el system prompt. Una skill con instrucciones claras reemplaza párrafos de explicación
+      ad-hoc, liberando contexto para el trabajo real.
+    </p>
+
+    <h3>Compresión de contexto (Compaction)</h3>
+
+    <p>
+      La compresión resume periódicamente el historial de conversación, manteniendo solo la
+      información esencial. Mensajes largos de debugging, por ejemplo, se comprimen en una línea
+      que describe el problema y la solución encontrada.
+    </p>
+
+    <h3>Handoffs</h3>
+
+    <p>
+      Los handoffs capturan el estado completo del proyecto en un archivo —tareas completadas,
+      decisiones tomadas, próximos pasos— permitiendo iniciar sesiones frescas sin perder
+      continuidad. Es la técnica más efectiva para sesiones que exceden la ventana de contexto.
+    </p>
+
+    <h3>RTK (Reduce Token Knowledge)</h3>
+
+    <p>
+      RTK se refiere a prácticas conscientes para minimizar el consumo de tokens: respuestas
+      concisas, evitar repetición de contexto ya presente, usar herramientas en lugar de incluir
+      archivos inline, y estructurar el historial para que cada token aporte información útil.
+    </p>
+
+  </div>
+
+  <div class="panel" id="panel-impacto">
+    <h2>Impacto en la práctica</h2>
+
+    <p>
+      Combinando estas estrategias, se puede multiplicar la duración efectiva de una sesión de
+      coding. Una sesión que normalmente agotaría 200K tokens en 30 turnos puede extenderse a 100+
+      turnos con handoffs, compresión y uso eficiente de herramientas.
+    </p>
+
+    <p>La clave no es tener más contexto — es usar mejor el que ya tenemos.</p>
+
+  </div>
+</div>

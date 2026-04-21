@@ -1,48 +1,47 @@
 ---
-children_hash: 6898ad1bca7bc9bc34ef7c4963ffbcf2d2eda1af729e087c9551276dfc32cc66
-compression_ratio: 0.1880481337956353
+children_hash: 44c1518d67da42cc27d53774286a9becb8e8107f9f7d7761ce496960611275b0
+compression_ratio: 0.1917368632170076
 condensation_order: 2
 covers: [agents/_index.md, architecture/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md, ui_design/_index.md]
-covers_token_total: 4903
+covers_token_total: 4986
 summary_level: d2
-token_count: 922
+token_count: 956
 type: summary
 ---
-# Domain: Project Guidelines (Level d2 Summary)
+# Project Guidelines Structural Summary (Level d2)
 
-The `project_guidelines` domain establishes the foundational standards for the Software Engineering Blog, integrating specialized agent orchestration, strict development workflows, and a cohesive architectural framework for interactive content.
+The Software Engineering Blog project is governed by a high-integrity development framework that integrates specialized agent orchestration, strict architectural patterns, and automated quality gates. The system prioritizes consistency across its Astro + React hybrid environment through standardized workflows and durable state management.
 
-## Agent Ecosystem & Orchestration
-The project operates on a **Fork-Join dispatcher model** managed by a central `@orchestrator`. This system is designed to minimize "entropy" (uncoordinated drift) through strict constraints and budget management.
+### Agent Ecosystem & Orchestration
+The project employs a **Fork-Join dispatcher model** managed by a central **@orchestrator**. This framework is designed to minimize "drift" (uncoordinated local optimizations) and maintain strict context efficiency.
+*   **Orchestration Framework**: Utilizes the **Envolvente Convergente** mental model, applying Barrier and Lyapunov functions to ensure agent actions converge toward project goals.
+*   **Drift Management**: Systems monitor for scope expansion, schema mismatches, and repeated correction loops.
+*   **Context Budgeting**: Sub-agents operate under a strict **~5,800 token budget**. Global state is maintained in `session-state.md` and transferred via compressed templates in `_handoffs/`.
+*   **Drill-down**: See `agents/` for agent specifications and `harness_engineering/` for the mathematical foundations of the convergence framework.
 
-*   **Orchestration Framework**: Uses the **Envolvente Convergente** mental model, employing Barrier and Lyapunov functions to ensure task convergence. Parallel execution is permitted only for independent outputs (e.g., different files).
-*   **Drift Management**: The system monitors for signals such as scope expansion, schema mismatches, and excessive auto-correction loops (>2 iterations).
-*   **Context Budgeting**: Sub-agents are capped at **~5,800 tokens**. Global state is maintained in `session-state.md` (never passed to sub-agents), while `_handoff` commands facilitate state transfer between roles.
-*   **Specialized Roles**: Includes `@project-leader`, `@component-builder`, `@blog-writer`, `@tester`, and `@plan`.
-*   **Drill-down**: See `agents/` for orchestration patterns and `harness_engineering/` for the mathematical convergence framework.
+### Core Architecture & State Management
+The technical stack is a **Hybrid Island Architecture** using **Astro** for static content and **React** for interactive "islands."
+*   **State Persistence**: Centralized in `src/utils/storage.ts` using a unified `localStorage` key (`gsalvini-se-blog`). It manages theme, background visibility, and checklist states with built-in SSR safety and legacy migration logic.
+*   **UI/UX Standards**: Mobile performance is prioritized through early viewport detection (inline scripts in `<head>`) to prevent hydration flickering. Layout stability is enforced via precomputed states for async labels.
+*   **Drill-down**: Refer to `architecture/` for persistence logic and `ui_design/` for mobile performance patterns.
 
-## Development Process & Git Policy
-Consistency is enforced through a **pnpm-only** workflow and mandatory quality gates.
+### Development Process & Quality Gates
+A standardized lifecycle ensures repository integrity through mandatory automation and strict git policies.
+*   **Workflow**: Strictly **pnpm-only**. The standard lifecycle follows `install` → `dev` → `lint` → `typecheck` → `build`.
+*   **Git Policy**: Complex features require **Git Worktrees** in `.worktrees/`. A "Git Mutation Gating" rule requires explicit user consent before any `commit` or `push`, regardless of lint success.
+*   **Testing**: Bifurcated into unit/regression testing (**Vitest**) and E2E testing (**Playwright**).
+*   **Drill-down**: See `dev_process/` for workflow rules, `run_commands/` for the script manifest, and `git_safe_mutations/` for mutation approval protocols.
 
-*   **Git Mutation Gating**: Explicit user consent is required for all `git commit` or `push` operations, regardless of lint/test success.
-*   **Worktree Policy**: Mandatory for new features and refactors; direct `main` commits are restricted to trivial fixes.
-*   **Quality Gates**: `pnpm lint`, `pnpm typecheck`, and relevant tests (Vitest/Playwright) must pass before any commit.
-*   **Security**: Strict prohibition against committing secrets, API keys, or `.env` files.
-*   **Drill-down**: Refer to `dev_process/` for code standards and `git_safe_mutations/` for consent rules.
+### Blog Post Structural Standards
+All blog content must adhere to specific structural requirements to maintain interactivity and visual cohesion.
+*   **Layout Requirements**: Every post must implement the `BlogPost` layout and the `SectionNav` component (loaded with `client:load`).
+*   **Panel System**: Content must be organized into discrete panels using `id="panel-{id}"` naming conventions.
+*   **Asset Management**: Local images must use the Astro `<Image />` component. Post-specific assets are localized to `src/assets/posts/<slug>/`.
+*   **Visual Consistency**: Navigation icons are restricted to a predefined set (e.g., `◈ ▸ ▣ ◑ ⊕ ⬡`).
+*   **Drill-down**: Detailed layout and component rules are located in `blog_post_architecture/`.
 
-## Blog Post & UI Architecture
-The blog utilizes an **Astro + React hybrid model**, prioritizing layout stability and interactive navigation.
-
-*   **Structural Requirements**: Posts must use the `BlogPost` layout and `SectionNav` component (`client:load`). Content is organized into discrete `panel` sections with strict ID naming (`panel-{id}`).
-*   **State Persistence**: Managed via a unified `localStorage` key (`gsalvini-se-blog`) in `src/utils/storage.ts`. It handles theme, background visibility, and checklist states with SSR-safe guards.
-*   **Mobile Performance**: Implements early viewport detection in the document head to prevent hydration flickering. Mobile viewports (<767px) trigger specific CSS adaptations and container constraints (`overscroll-behavior: none`).
-*   **Design Constraints**: Navigation icons are restricted to a specific set (e.g., `◈ ▸ ▣ ◑ ⊕`).
-*   **Drill-down**: See `blog_post_architecture/` for layout rules, `ui_design/` for mobile patterns, and `architecture/` for state persistence logic.
-
-## Execution & Deployment
-Standardized commands ensure environment parity from local development to production.
-
-*   **Lifecycle Scripts**: `pnpm dev` (port 4321), `pnpm build`, and `pnpm preview`.
-*   **Testing Suite**: Bifurcated into **Vitest** (unit/regression) and **Playwright** (E2E).
-*   **Production Upload**: Managed via `/dist-upload` using `gsupload -b frontend`. The system supports interactive relaying of production prompts to the user.
-*   **Drill-down**: See `run_commands/` for the full script manifest and deployment workflows.
+### Key Repository Rules
+*   **Rule 3**: Never use apologies.
+*   **Security**: API keys and secrets must never be committed; agent names are prohibited in metadata.
+*   **SLA**: Initial PR reviews have a maximum 4-hour SLA.
+*   **Change Freeze**: Requirement changes after Day 3 of a sprint are deferred.
