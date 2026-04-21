@@ -116,13 +116,22 @@
   };
 
   const ensureMermaidContainers = () => {
-    document.querySelectorAll('pre > code.language-mermaid').forEach((code) => {
-      const pre = code.parentElement;
+    const selectors = [
+      'pre > code.language-mermaid',
+      'pre.astro-code[data-language="mermaid"] > code',
+      'pre[data-language="mermaid"] > code',
+      'code.language-mermaid',
+    ];
+    document.querySelectorAll(selectors.join(',')).forEach((code) => {
+      if (!(code instanceof HTMLElement)) return;
+      const pre = code.closest('pre');
       if (!pre || pre.dataset.mermaidRendered === 'true') return;
+      const source = code.textContent || '';
+      if (!source.trim()) return;
       const container = document.createElement('div');
       container.className = 'mermaid';
-      container.dataset.mermaidSource = code.textContent || '';
-      container.textContent = code.textContent || '';
+      container.dataset.mermaidSource = source;
+      container.textContent = source;
       pre.dataset.mermaidRendered = 'true';
       pre.replaceWith(container);
     });

@@ -6,7 +6,7 @@ import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
 import { getPost } from '../../data/posts';
 
-const post = getPost('harness-agentic-control');
+const post = await getPost('harness-agentic-control-astro');
 
 const sections = [
   { id: 'thesis', icon: '◈', label: 'Tesis' },

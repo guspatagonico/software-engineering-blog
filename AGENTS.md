@@ -58,6 +58,7 @@ pnpm test
 - Prefer Astro components for static content; React only when necessary.
 - Use `interface` for props; avoid `any`.
 - Use worktrees for new features, complex refactors, or exploratory work; trivial fixes can go on `main`.
+- Create worktrees under `[project]/.worktrees/`.
 
 ## Verification steps
 

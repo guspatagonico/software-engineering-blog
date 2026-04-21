@@ -250,9 +250,21 @@ body {
 }
 
 .mermaid .edgeLabel {
-  background: rgba(10, 12, 18, 0.85);
-  border-radius: 6px;
-  padding: 1px 6px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.mermaid .edgeLabel rect,
+.mermaid .edgeLabel path {
+  fill: transparent;
+  stroke: transparent;
+}
+
+.mermaid .edgeLabel text,
+.mermaid .edgeLabel tspan {
+  fill: var(--text-bright);
 }
 
 .mermaid .node rect,
@@ -273,8 +285,8 @@ body {
 }
 
 :root[data-theme='light'] .mermaid .edgeLabel {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 60, 48, 0.15);
+  background: transparent;
+  border: none;
 }
 
 :root[data-theme='light'] .mermaid .edgePath path {
@@ -282,8 +294,8 @@ body {
 }
 
 :root[data-theme='dark'] .mermaid .edgeLabel {
-  background: rgba(10, 12, 18, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border: none;
 }
 
 /* Tablet */

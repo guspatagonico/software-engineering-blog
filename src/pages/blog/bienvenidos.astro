@@ -6,7 +6,7 @@ import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
 import { getPost } from '../../data/posts';
 
-const post = getPost('bienvenidos');
+const post = await getPost('bienvenidos');
 
 const sections = [
   { id: 'intro', icon: '◈', label: 'Intro' },
