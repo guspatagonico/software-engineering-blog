@@ -41,6 +41,7 @@ const legacyPosts: PostMeta[] = [
     icon: getPostIcon('harness-agentic-control'),
     ogImage: getPostIcon('harness-agentic-control'),
     iconAlt: 'Harness Engineering para agentes tipo OpenCode',
+    draft: true,
   },
   {
     id: 'llm-context-limitations',
@@ -79,7 +80,7 @@ const legacyPosts: PostMeta[] = [
 
 function mapEntry(entry: BlogEntry): PostMeta {
   return {
-    id: entry.slug,
+    id: entry.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, ''),
     title: entry.data.title,
     subtitle: entry.data.subtitle,
     description: entry.data.description,

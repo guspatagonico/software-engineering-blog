@@ -4,7 +4,7 @@ import SectionNav from '../src/components/SectionNav/SectionNav';
 import '../src/styles/post-content.css';
 import { getPost } from '../src/data/posts';
 
-const post = getPost('slug-goes-here');
+const post = await getPost('slug-goes-here');
 
 const sections = [
   { id: 'thesis', icon: '◈', label: 'Thesis' },

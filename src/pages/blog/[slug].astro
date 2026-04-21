@@ -1,11 +1,14 @@
 ---
 import { getCollection, render } from 'astro:content';
+import BlogPost from '@/layouts/BlogPost.astro';
+import { getPost } from '@/data/posts';
 
 export async function getStaticPaths() {
   const entries = await getCollection('blog');
   return entries
+    .filter((entry) => !entry.data.draft)
     .map((entry) => {
-      const slug = entry.slug ?? entry.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, '');
+      const slug = entry.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, '');
       return {
         params: { slug },
       };
@@ -20,14 +23,23 @@ if (!slug) {
 
 const entries = await getCollection('blog');
 const entry = entries.find((item) => {
+  if (item.data.draft) return false;
   const fallbackSlug = item.id.replace(/^blog\//, '').replace(/\.(md|mdx)$/, '');
-  return item.slug === slug || fallbackSlug === slug;
+  return fallbackSlug === slug;
 });
 if (!entry) {
   throw new Error(`Blog entry not found: ${slug}`);
 }
 
 const { Content } = await render(entry);
+const post = await getPost(slug);
 ---
 
-<Content />
+<BlogPost
+  title={entry.data.title}
+  subtitle={entry.data.subtitle}
+  description={entry.data.description}
+  post={post}
+>
+  <Content />
+</BlogPost>

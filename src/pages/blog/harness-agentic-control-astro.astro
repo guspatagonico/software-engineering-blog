@@ -7,6 +7,9 @@ import '../../styles/post-content.css';
 import { getPost } from '../../data/posts';
 
 const post = await getPost('harness-agentic-control-astro');
+if (post?.draft) {
+  return Astro.redirect(`${import.meta.env.BASE_URL}404`);
+}
 
 const sections = [
   { id: 'thesis', icon: '◈', label: 'Tesis' },
