@@ -36,15 +36,15 @@ The AGENTS manifesto breaks down into sections covering style, imports, componen
 Relies on pnpm, ESLint with @astrojs/eslint-plugin and eslint-plugin-react-hooks, TypeScript, Astro layouts, and gh CLI for PR management.
 
 ### Highlights
-Use SectionNav with client:load for interactive posts, keep shared components co-located with their tests and styles, never swallow errors, and keep the vite.config.mjs server block intact. The parallel task dispatcher encourages splitting complex work into subagents like @component-builder and @blog-writer. Secrets stay out of the repo, and commit/push waits until the user explicitly gives the go-ahead.
+Use SectionNav with client:load for interactive posts, keep shared components co-located with their tests and styles, never swallow errors, and keep the vite.config.mjs server block intact. Create all git worktrees under `[project]/.worktrees/` for new features, complex refactors, and explorations. The parallel task dispatcher encourages splitting complex work into subagents like @component-builder and @blog-writer. Secrets stay out of the repo, and commit/push waits until the user explicitly gives the go-ahead.
 
 ### Rules
-Rule 1: Never commit API keys, secrets, or .env files. Rule 2: Do not remove or modify the vite.config.mjs server block (host: "0.0.0.0", allowedHosts: ["galadriel"]). Rule 3: Never push or commit until the user explicitly asks. Rule 4: Use git worktrees for new features, complex refactors, and exploratory work; trivial fixes can touch main. Rule 5: Run pnpm lint and pnpm typecheck before every commit and create PRs via gh CLI.
+Rule 1: Never commit API keys, secrets, or .env files. Rule 2: Do not remove or modify the vite.config.mjs server block (host: "0.0.0.0", allowedHosts: ["galadriel"]). Rule 3: Never push or commit until the user explicitly asks. Rule 4: Use git worktrees for new features, complex refactors, and exploratory work; create them under `[project]/.worktrees/`; trivial fixes can touch main. Rule 5: Run pnpm lint and pnpm typecheck before every commit and create PRs via gh CLI.
 
 ## Facts
 - **typescript_strict_mode**: TypeScript strict mode is enabled for all code, and components use interfaces for props while avoiding any. [project]
 - **import_order**: Import order must be: Node/external libs, Astro framework imports, @/ alias paths, then relative imports within the same feature folder. [convention]
-- **git_worktree_policy**: Use git worktrees for new features, complex refactors, and explorations; trivial fixes may be done directly on main. [convention]
+- **git_worktree_policy**: Use git worktrees for new features, complex refactors, and explorations; trivial fixes may be done directly on main. Create worktrees under `[project]/.worktrees/`. [convention]
 - **pre_commit_checks**: Before committing, run pnpm lint, pnpm typecheck, and any relevant tests; use gh CLI to create PRs only after the branch passes verification. [convention]
 - **secrets_policy**: Never commit API keys, secrets, or .env files, and keep the vite.config.mjs server block (host: "0.0.0.0", allowedHosts: ["galadriel"]). [project]
 - **component_split**: LocalStorage drives persistence for dark/light mode; the team prefers Astro components for static content and React islands for interactive widgets. [environment]

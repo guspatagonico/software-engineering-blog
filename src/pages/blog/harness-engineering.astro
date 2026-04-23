@@ -801,68 +801,27 @@ const checklistSections = [
     width: 9px;
     height: 9px;
     border-radius: 999px;
-    background: var(--teal);
-    box-shadow: 0 0 16px rgba(0, 212, 170, 0.9);
-    opacity: 0;
+    background: color-mix(in srgb, var(--teal) 35%, transparent);
+    box-shadow: 0 0 3px rgba(0, 212, 170, 0.12);
+    opacity: 0.1;
     top: 50%;
     left: 100%;
     margin-left: 6px;
     transform: translateY(-50%) scale(0.7);
-    animation: fj-stage 7.2s ease-in-out infinite;
+    transition: opacity 180ms ease, transform 180ms ease;
     z-index: 2;
   }
 
-  .fj-stage-token--orq {
-    animation-delay: 0s;
-  }
-
-  .fj-stage-token--fork {
-    animation-delay: 1.2s;
-  }
-
-  .fj-stage-token--sub {
-    animation-delay: 2.4s;
-  }
-
-  .fj-stage-token--join {
-    animation-delay: 3.6s;
-  }
-
-  .fj-stage-token--val {
-    animation-delay: 4.8s;
-  }
-
-  .fj-stage-token--next {
-    animation-delay: 6s;
-  }
-
-  @keyframes fj-stage {
-    0% {
-      opacity: 0;
-      transform: translateY(-50%) scale(0.7);
-    }
-    8% {
-      opacity: 0.95;
-      transform: translateY(-50%) scale(1);
-    }
-    14% {
-      opacity: 0.85;
-      transform: translateY(-50%) scale(1);
-    }
-    18% {
-      opacity: 0;
-      transform: translateY(-50%) scale(0.8);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-50%) scale(0.7);
-    }
+  .fj-stage-token.is-on {
+    opacity: 0.95;
+    background: var(--teal);
+    box-shadow: 0 0 16px rgba(0, 212, 170, 0.9);
+    transform: translateY(-50%) scale(1);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .fj-stage-token {
-      animation: none;
-      opacity: 0.6;
+      transition: none;
     }
   }
 
@@ -929,11 +888,11 @@ const checklistSections = [
     }
 
     .fj-stage-token {
+      opacity: 0;
       left: 50%;
       margin-left: 0;
       top: -8px;
       transform: translate(-50%, -50%) scale(0.7);
-      animation-name: fj-stage-desktop;
     }
 
     .fj-agent-card .fj-stage-token {
@@ -941,30 +900,14 @@ const checklistSections = [
       top: 50%;
       right: -8px;
       transform: translateY(-50%) scale(0.7);
-      animation-name: fj-stage;
     }
 
-    @keyframes fj-stage-desktop {
-      0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.7);
-      }
-      8% {
-        opacity: 0.95;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      14% {
-        opacity: 0.85;
-        transform: translate(-50%, -50%) scale(1);
-      }
-      18% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.8);
-      }
-      100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.7);
-      }
+    .fj-stage-token.is-on {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .fj-agent-card .fj-stage-token.is-on {
+      transform: translateY(-50%) scale(1);
     }
 
     .fj-parallel-box {
@@ -1035,3 +978,45 @@ const checklistSections = [
     }
   }
 </style>
+
+<script is:inline>
+  (() => {
+    const STAGES = ['orq', 'fork', 'sub', 'join', 'val', 'next'];
+    const STEP_MS = 1200;
+
+    const setStage = (diagram, stage) => {
+      const tokens = diagram.querySelectorAll('.fj-stage-token');
+      tokens.forEach((token) => token.classList.remove('is-on'));
+
+      const active = diagram.querySelectorAll(`.fj-stage-token--${stage}`);
+      active.forEach((token) => token.classList.add('is-on'));
+    };
+
+    const initDiagram = (diagram) => {
+      if (diagram.dataset.fjInit === '1') return;
+      diagram.dataset.fjInit = '1';
+
+      setStage(diagram, 'orq');
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduceMotion) return;
+
+      let index = 0;
+      window.setInterval(() => {
+        index = (index + 1) % STAGES.length;
+        setStage(diagram, STAGES[index]);
+      }, STEP_MS);
+    };
+
+    const run = () => {
+      const diagrams = document.querySelectorAll('.fork-join-diagram');
+      diagrams.forEach((diagram) => initDiagram(diagram));
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run, { once: true });
+    } else {
+      run();
+    }
+  })();
+</script>
