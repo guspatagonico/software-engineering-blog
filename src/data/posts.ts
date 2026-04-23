@@ -65,7 +65,7 @@ const legacyPosts: PostMeta[] = [
     icon: getPostIcon('llm-context-limitations'),
     ogImage: getPostIcon('llm-context-limitations'),
     iconAlt: 'Limitaciones de los LLM en la actualidad',
-    draft: false,
+    draft: true,
   },
   {
     id: 'harness-engineering',

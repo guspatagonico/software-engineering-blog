@@ -3,25 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 925,
+      "tokens": 1055,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "facts/_index.md",
-      "tokens": 455,
+      "path": "project_management/_index.md",
+      "tokens": 643,
       "type": "summary"
     },
     {
       "order": 1,
-      "path": "facts/personal/_index.md",
-      "tokens": 338,
-      "type": "summary"
-    },
-    {
-      "order": 1,
-      "path": "project_management/git_workflow/_index.md",
-      "tokens": 221,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
     },
     {
@@ -39,7 +33,7 @@
     {
       "importance": 100,
       "path": "project_guidelines/dev_process/development_process_and_rules.md",
-      "tokens": 884,
+      "tokens": 934,
       "type": "context"
     },
     {
@@ -55,67 +49,61 @@
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "facts/context.md",
-      "tokens": 100,
+      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
+      "abstractTokens": 47,
+      "importance": 73,
+      "path": "project_management/handoffs/hybrid_session_state_approach.md",
+      "tokens": 47,
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "facts/personal/author_attribution_preference.abstract.md",
-      "tokens": 8,
+      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
+      "abstractTokens": 61,
+      "importance": 71,
+      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
+      "tokens": 61,
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "facts/personal/caveman_style_preference.abstract.md",
-      "tokens": 35,
+      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 52,
+      "importance": 65,
+      "path": "ui/harness_engineering/harness_engineering_page.md",
+      "tokens": 52,
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "facts/personal/context.md",
-      "tokens": 48,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "facts/personal/site_footer_copyright_preference.abstract.md",
-      "tokens": 5,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
-      "tokens": 8,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/agents/orchestration_and_drift_management.abstract.md",
-      "tokens": 8,
-      "type": "context"
-    },
-    {
-      "importance": 50,
-      "path": "project_guidelines/agents/specialized_agents_and_orchestration.abstract.md",
+      "abstractPath": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.abstract.md",
+      "abstractTokens": 6,
+      "importance": 55,
+      "path": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md",
       "tokens": 6,
       "type": "context"
     },
     {
+      "abstractPath": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
+      "abstractTokens": 8,
+      "importance": 53,
+      "path": "project_guidelines/agents/context_window_and_handoff_strategy.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/run_commands/production_asset_upload.abstract.md",
+      "abstractTokens": 2,
       "importance": 50,
-      "path": "project_guidelines/agents/sub_agent_design_and_anatomy.abstract.md",
-      "tokens": 7,
+      "path": "project_guidelines/run_commands/production_asset_upload.md",
+      "tokens": 2,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-21T18:10:38.690Z",
+  "generated_at": "2026-04-23T22:22:00.261Z",
   "lane_tokens": {
-    "contexts": 3999,
+    "contexts": 4000,
     "stubs": 0,
-    "summaries": 1939
+    "summaries": 1885
   },
-  "source_fingerprint": "c3b9ed5cab130199832403ac4f616eb111532412685ac7832985461d05f1c451",
-  "total_tokens": 5938,
+  "source_fingerprint": "f0bd215297043510ccf7f849f4fe005bbe7a7c8844f738832d97204af5ecc49f",
+  "total_tokens": 5885,
   "version": 1
 }

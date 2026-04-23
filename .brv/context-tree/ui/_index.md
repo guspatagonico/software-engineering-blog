@@ -1,44 +1,38 @@
 ---
-children_hash: ff82941cbd8f4c7dd148980937b25fee042c53fb106f8ca95d6e8110a3f46c33
-compression_ratio: 0.2656826568265683
+children_hash: 82764498a04a32b11834d93f20f2ea4a1f1c9fa08aa10aec04616664630ca0f0
+compression_ratio: 0.42119419042495965
 condensation_order: 2
-covers: [blog_post_layout/_index.md, context.md, design_system/_index.md, harness_engineering/_index.md, navigation/_index.md, persistence/_index.md, visual_effects/_index.md]
-covers_token_total: 3523
+covers: [blog_post_layout/_index.md, context.md, visual_effects/_index.md]
+covers_token_total: 1859
 summary_level: d2
-token_count: 936
+token_count: 783
 type: summary
 ---
-# UI Domain Structural Summary (Level D2)
+# UI and Visual Experience Architecture
 
-The **UI Domain** encompasses the architectural framework for immersive visuals, responsive navigation, and standardized content layouts. It prioritizes performance-tuned animations, persistent state management, and a unified technical styling language across the platform.
+The `ui` domain governs the immersive, interactive, and structural frontend components of the site, focusing on responsive blog layouts and high-performance visual effects.
 
-### 1. Layout & Content Architecture
-The system employs a standardized shell to ensure consistency across engineering documentation and technical posts.
-*   **Core Shell (`blog_post_layout`)**: `BlogPost.astro` integrates global navigation with a sticky header (z-index 40) and specialized scroll management (`overscroll-behavior: none` on mobile). It utilizes early-execution scripts to hydrate mobile states and synchronize hash-based navigation.
-*   **Metadata & Tagging**: A responsive fixed overlay surfaces post metadata. It transitions from a right-aligned desktop block to a full-width mobile row, utilizing uppercase teal chips for categorization.
-*   **Styling Framework (`post-content.css`)**: A utility-first CSS scaffolding provides:
-    *   **Data Visualization**: Enhanced tables with accent highlighting and structured `.data-block` key-value cards.
-    *   **Technical Callouts**: `.post-panel` for diagrams and `.vocab-item` for two-column glossary grids (175px term column).
-    *   **Semantic Utilities**: Standardized tokens for technical text (e.g., `.cm` for comments, `.kw` for keywords).
+### Blog Post Layout and Component System
+The layout architecture provides a consistent reading experience through responsive structural components and shared utility styles.
 
-### 2. Navigation & Persistence Systems
-Navigation components are designed for section-heavy layouts with robust state synchronization.
-*   **SectionNav Component (`navigation`)**: A React-based system (`SectionNav.tsx`) that manages section activation via URL hashes. It features a multi-stage execution pattern using `RequestAnimationFrame` to prevent DOM measurement race conditions during panel rendering.
-*   **Mobile Navigation Patterns**: Implements dynamic header injection into active panels and "next section" hints driven by a 150px hysteresis threshold.
-*   **State Persistence (`persistence`)**:
-    *   **Navigation**: Scroll positions and active sections are persisted via `localStorage` using keys derived from `window.location.pathname`.
-    *   **Checklists**: The `Checklist.tsx` component tracks completion status in a namespaced central store: `{ [storageKey: string]: number[] }`.
+*   **Core Layout (BlogPost.astro)**: Implements a layered structure with a sticky header (`z-index: 40`), a scrollable `.content` wrapper, and a fixed metadata footer (`z-index: 45`). It enforces strict mobile scroll behavior (`overscroll-behavior: none`) to prevent bounce effects.
+*   **Responsive Metadata Footer**: Adapts positioning based on breakpoints, shifting from a right-aligned desktop block to a full-width mobile row positioned above the global footer.
+*   **Content Utilities**: Defined in `src/styles/post-content.css`, these include:
+    *   **Table & Data Helpers**: Accent and muted column highlighting (`.table-accent-2/3`) and framed metadata cards.
+    *   **Vocabulary Grids**: A specialized two-column layout for glossaries (175px labels).
+    *   **Tag Chips**: Responsive teal chips with mobile-optimized padding.
+*   **Navigation Sync**: A hash-navigation script synchronizes the `SectionNav` component, managing `.active` class toggling and dispatching `section-activated` events for UI state consistency.
+*   **Entry Reference**: See **blog_post_layout/_index.md**, **blog_post_meta_footer_and_tags.md**, and **blogpost_layout_architecture.md**.
 
-### 3. Visual Effects & Immersive UI
-The domain manages high-performance WebGL and Canvas animations that respond to theme and user inputs.
-*   **Matrix Background (`visual_effects`)**: A five-layer canvas system featuring layered digital rain and 44 flicker-animated "gem words." It includes mouse-driven shockwave interactions (200px radius) and performance guards to avoid blocking draw frames.
-*   **Interactive Toggles**:
-    *   **Dodecahedron Toggle**: A Three.js-based 3D button that dispatches `toggle-matrix-background` events. It features theme-aware materials and auto-hides during scroll inactivity.
-    *   **Glassy Surfaces**: Standardized `backdrop-filter` surfaces (blur/saturate) used in `Navbar.astro` and `Footer.astro`, driven by shared CSS tokens.
-*   **Harness Engineering Framework**: A specialized multi-tab structure documenting convergence metaphors. It utilizes the `ConvergentEnvelope` animation framework, governed by strict orchestration rules regarding context budgets (~5800 tokens) and drift signals.
+### Visual Effects and Interactive Backgrounds
+The visual system utilizes Canvas, WebGL, and Three.js to provide theme-aware feedback and aesthetic depth.
 
-### Key References for Drill-Down
-*   **Layouts**: `blogpost_layout_architecture.md`, `blog_post_meta_footer_and_tags.md`
-*   **Components**: `sectionnav_component.md`, `checklist_state_persistence.md`
-*   **Visuals**: `matrix_background.md`, `dodecahedron_toggle.md`, `harness_engineering_page.md`
-*   **Styles**: `post_content_styles.md`, `glassy_navigation_layout.md`
+*   **Matrix Background (MatrixBackground.tsx)**: A five-layer "Kodama-style" character rain. It features responsive stream density (60 to 220 streams) and "gem word" flickering. Performance is optimized by short-circuiting the draw loop when the `matrix-bg-visible` class is absent.
+*   **Dodecahedron Toggle (Dodecahedron.tsx)**: A Three.js 3D interactive button that dispatches `toggle-matrix-background` events. It includes hover-based geometry scaling and persists state via `localStorage`.
+*   **Glassy UI Patterns**: Centralized in `tokens.css`, applying `backdrop-filter` (blur/saturate) to navigation and footer elements. Post cards receive specific saturation boosts only when the matrix background is active in dark mode.
+*   **Scroll Feedback**: A custom architecture featuring a 3px progress bar (`ScrollIndicator.astro`) and a `.page-container` flex frame that suppresses native scrollbars while maintaining viewport-edge scroll tracking.
+*   **Entry Reference**: See **visual_effects/_index.md**, **matrix_background.md**, and **scroll_feedback_system.md**.
+
+### Key Relationships
+*   **Layout & Effects**: Layout components integrate with the scroll feedback system and matrix-aware card styles for cohesive theme transitions.
+*   **State & Persistence**: Global state for visual toggles is managed in `Base.astro` and persisted across sessions, influencing component hydration and visibility.
