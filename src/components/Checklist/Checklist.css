@@ -44,10 +44,17 @@
 
 .checklist__input {
   position: absolute;
-  opacity: 0;
   width: 1px;
   height: 1px;
-  margin: 0;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 .checklist__input:focus-visible + .checklist__box {
