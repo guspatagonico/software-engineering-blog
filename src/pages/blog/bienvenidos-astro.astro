@@ -6,7 +6,7 @@ import SectionNav from '../../components/SectionNav/SectionNav';
 import '../../styles/post-content.css';
 import { getPost } from '../../data/posts';
 
-const post = await getPost('bienvenidos');
+const post = await getPost('bienvenidos-astro');
 if (post?.draft) {
   return Astro.redirect(`${import.meta.env.BASE_URL}404`);
 }

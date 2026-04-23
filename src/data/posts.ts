@@ -89,6 +89,18 @@ const legacyPosts: PostMeta[] = [
     ogImage: getPostIcon('bienvenidos'),
     iconAlt: 'Bienvenidos al blog',
   },
+  {
+    id: 'bienvenidos-astro',
+    title: 'Bienvenidos al blog (Astro)',
+    subtitle: 'Legacy Astro · Punto de partida',
+    description: 'Version legacy del post, previo a la migracion MDX',
+    pubDate: '2026-03-15',
+    tags: ['meta', 'legacy'],
+    icon: getPostIcon('bienvenidos'),
+    ogImage: getPostIcon('bienvenidos'),
+    iconAlt: 'Bienvenidos al blog',
+    draft: true,
+  },
 ];
 
 function mapEntry(entry: BlogEntry): PostMeta {
