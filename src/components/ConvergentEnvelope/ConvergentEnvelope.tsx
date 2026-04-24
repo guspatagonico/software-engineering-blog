@@ -395,9 +395,9 @@ export default function ConvergentEnvelope({
           trayectoria del agente
         </text>
         <line
-          x1={320}
+          x1={350}
           y1={legY}
-          x2={356}
+          x2={386}
           y2={legY}
           stroke="#00d4aa"
           strokeWidth={1.5}
@@ -405,7 +405,7 @@ export default function ConvergentEnvelope({
           opacity={0.65}
         />
         <text
-          x={363}
+          x={393}
           y={legY + 4}
           fontFamily="Inter, sans-serif"
           fontWeight={600}
