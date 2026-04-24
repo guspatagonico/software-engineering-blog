@@ -40,10 +40,14 @@
   font-family: var(--font);
   font-size: 15px;
   font-weight: 500;
-  color: var(--text-dim);
+  color: #d8e3f4;
   text-align: left;
   transition: all 0.15s;
   border-left: 2px solid transparent;
+}
+
+:root[data-theme='light'] .section-nav__button {
+  color: var(--text);
 }
 
 .section-nav__button--active {
@@ -108,6 +112,10 @@
   color: var(--teal);
   margin-left: 0;
   transition: transform 0.25s ease;
+}
+
+.section-nav-toggle__icon--hinting {
+  animation: hint-sync-fade 1.5s ease-in-out infinite;
 }
 
 .section-nav-toggle__active {
@@ -239,6 +247,17 @@
   50% {
     opacity: 1;
     transform: scale(1.05);
+  }
+}
+
+@keyframes hint-sync-fade {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  40%,
+  60% {
+    opacity: 1;
   }
 }
 

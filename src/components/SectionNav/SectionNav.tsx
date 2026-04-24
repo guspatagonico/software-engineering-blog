@@ -465,7 +465,11 @@ export default function SectionNav({ sections }: SectionNavProps) {
             )}
           </span>
         </span>
-        <span className="section-nav-toggle__icon">▶</span>
+        <span
+          className={`section-nav-toggle__icon ${showNextHint && hasNextSection && effectiveCollapsed ? 'section-nav-toggle__icon--hinting' : ''}`}
+        >
+          ▶
+        </span>
       </button>
       <nav className={`section-nav ${effectiveCollapsed ? 'section-nav--collapsed' : ''}`}>
         <div className="section-nav__label">Secciones</div>
