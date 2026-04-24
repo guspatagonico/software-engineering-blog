@@ -59,7 +59,6 @@ export default function ConvergentEnvelopeSwitcher() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.controls}>
-        <div className={styles.title}>Diagrama de la envolvente</div>
         <div className={styles.switchGroup}>
           <span className={mode === 'static' ? styles.activeLabel : styles.inactiveLabel}>
             Estático

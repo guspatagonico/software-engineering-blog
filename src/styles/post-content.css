@@ -305,12 +305,12 @@
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 20px;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 }
 
 .post-panel-lg {
-  padding: 24px;
-  margin-bottom: 24px;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
 /* Callout blocks inside posts */

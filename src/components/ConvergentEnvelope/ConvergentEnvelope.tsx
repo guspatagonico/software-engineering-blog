@@ -362,7 +362,7 @@ export default function ConvergentEnvelope({
 
         {/* Converge label */}
         <text
-          x={X1}
+          x={X1-20}
           y={22}
           fontFamily="Inter, sans-serif"
           fontWeight={700}

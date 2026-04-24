@@ -96,6 +96,30 @@
 
 @media (max-width: 720px) {
   .controls {
+    order: 2;
+  }
+
+  .diagramFrame {
+    order: 1;
+  }
+
+  .controls {
     align-items: flex-start;
+  }
+
+  .switch {
+    width: 44px;
+    height: 24px;
+  }
+
+  .slider::before {
+    width: 16px;
+    height: 16px;
+    left: 4px;
+    top: 3px;
+  }
+
+  .switch input:checked + .slider::before {
+    transform: translateX(20px);
   }
 }
