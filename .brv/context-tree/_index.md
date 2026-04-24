@@ -1,49 +1,47 @@
 ---
-children_hash: 416042f37ed0f090bfb2a9d0c8b59e73ed6c80285e4528dfc98075da3258b61c
-compression_ratio: 0.3987150415721844
+children_hash: 90394eed057f3e25dd4450f98de3c5b2b0c6fd8a80059ecef998832c6bb117f7
+compression_ratio: 0.3434639326254119
 condensation_order: 3
-covers: [project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 2646
+covers: [facts/_index.md, project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
+covers_token_total: 2731
 summary_level: d3
-token_count: 1055
+token_count: 938
 type: summary
 ---
-# Software Engineering Blog: Structural Knowledge Summary (Level d3)
+# Software Engineering Blog: Structural Knowledge Overview (Level d3)
 
-The Software Engineering Blog project is a high-integrity Astro + React hybrid platform governed by a mathematical orchestration framework and strict architectural standards. The system prioritizes repository integrity, mobile-first performance, and immersive visual experiences through a unified development lifecycle.
+This summary synthesizes the operational, architectural, and visual frameworks of the Software Engineering Blog, integrating agentic workflows with high-integrity development standards and immersive UI patterns.
 
-### 1. Agent Orchestration & Development Governance
-The project utilizes a specialized agent ecosystem designed for high-precision task execution and minimal context drift.
-*   **Orchestration Framework**: Managed by a central **@orchestrator** using the **Envolvente Convergente** model (Barrier/Lyapunov functions) to ensure goal convergence. Sub-agents operate under a strict **~5,800 token budget** with state transferred via `_handoffs/`.
-*   **Git & Mutation Policy**: Enforces environment isolation via **Git Worktrees** in `.worktrees/`. A "Git Mutation Gating" rule requires explicit user consent for all commits/pushes.
-*   **Session Continuity**: Employs a **Hybrid State Strategy** where durable knowledge (patterns/preferences) is separated from ephemeral session state (tasks/blockers).
-*   **Drill-down**: `project_guidelines/agents/`, `project_guidelines/harness_engineering/`, `project_management/git_workflow/`, `project_management/handoffs/`.
+## 1. Operational Framework & Agent Ecosystem
+The project utilizes a high-integrity agentic model governed by strict control theory and resource management.
 
-### 2. Core Architecture & State Management
-The technical stack leverages a **Hybrid Island Architecture** to balance static content delivery with interactive stateful components.
-*   **State Persistence**: Centralized in `src/utils/storage.ts` using a unified `localStorage` key (`gsalvini-se-blog`) to manage themes, visual toggles, and checklist states with SSR safety.
-*   **Mobile Performance**: Prioritizes layout stability through early viewport detection in `<head>` and precomputed states to prevent hydration flickering.
-*   **Workflow**: Strictly **pnpm-only** lifecycle (`install` → `dev` → `lint` → `typecheck` → `build`) with bifurcated testing via **Vitest** and **Playwright**.
-*   **Drill-down**: `project_guidelines/architecture/`, `project_guidelines/ui_design/`, `project_guidelines/dev_process/`.
+*   **Dispatcher Pattern & Orchestration**: Operations are managed by an `@orchestrator` directing specialized sub-agents (e.g., `@blog-writer`, `@tester`). Behavior is constrained by the **Envolvente Convergente Framework**, using Lyapunov and Barrier Functions to prevent scope drift and ensure objective convergence.
+*   **Entropy Management**: System interventions are triggered by "Entropía Agéntica" signals (scope expansion or correction loops). Agents operate under a **~5800-token context budget** and the **"Rule of Gold"** (scopes must be <2 sentences).
+*   **Session Continuity**: Employs a **Hybrid State Strategy**. Durable knowledge (patterns/preferences) is managed by ByteRover, while ephemeral session state (tasks/blockers) is tracked via handoff files.
+*   **Drill-down**: `project_guidelines/agents/`, `project_guidelines/harness_engineering/`, `project_management/handoffs/`.
 
-### 3. UI/UX & Blog Content Standards
-Content is structured into interactive panels to maintain visual cohesion and navigation accuracy.
-*   **Layout Architecture**: `BlogPost.astro` implements a layered z-index system (Header: 40, Footer: 45) and enforces `overscroll-behavior: none` for mobile stability.
-*   **Component Requirements**: Every post must use the `SectionNav` component (`client:load`) and organize content into discrete panels (`id="panel-{id}"`).
-*   **Styling Utilities**: `src/styles/post-content.css` provides specialized layouts for glossaries (175px labels), framed metadata cards, and responsive tag chips.
-*   **Asset Management**: Local images must use the Astro `<Image />` component, localized to `src/assets/posts/<slug>/`.
-*   **Drill-down**: `project_guidelines/blog_post_architecture/`, `ui/blog_post_layout/`.
+## 2. Core Architecture & Development Standards
+A strict **Astro + React hybrid island architecture** ensures performance, with React reserved for interactive visualizations.
 
-### 4. Visual Effects & Interactive Systems
-The visual layer provides theme-aware feedback using Canvas, WebGL, and Three.js.
-*   **Matrix Background**: A five-layer character rain system in `MatrixBackground.tsx` with responsive stream density (60-220). It short-circuits when inactive to preserve performance.
-*   **Interactive Toggles**: A Three.js **Dodecahedron** button dispatches global events to toggle background visibility, with state persisted in `localStorage`.
-*   **Glassy UI**: Centralized `backdrop-filter` patterns in `tokens.css` for navigation and footers, with saturation boosts for post cards in dark mode.
-*   **Scroll Feedback**: Integrates a 3px `ScrollIndicator.astro` with a `.page-container` frame that suppresses native scrollbars.
-*   **Drill-down**: `ui/visual_effects/`.
+*   **Blog Standards**: Posts implement the `BlogPost` layout and `SectionNav` component. Content is organized into discrete panels (`id="panel-{id}"`) with specific CSS transitions. Local images must use the Astro `<Image />` component.
+*   **Git & Mutation Policy**: **Conventional Commits** are mandatory. The **Git Mutation Gating** rule requires explicit user consent for all commits/pushes. Non-trivial work must use **Git Worktrees** located in `.worktrees/<branch_name>`.
+*   **Workflow Lifecycle**: Standardized via **pnpm**: `install` → `dev` → `lint` → `typecheck` → `build`. Production deployment uses the `/dist-upload` command via `gsupload`.
+*   **Drill-down**: `project_guidelines/blog_post_architecture/`, `project_guidelines/dev_process/`, `project_management/git_workflow/`.
 
-### 5. Key Repository Constraints
-*   **Communication**: Rule 3 explicitly prohibits apologies in agent responses.
-*   **SLA & Planning**: 4-hour SLA for PR reviews; requirement changes after Day 3 of a sprint are deferred.
-*   **Security**: Agent names are prohibited in metadata; secrets must never be committed.
-*   **Drill-down**: `project_guidelines/context.md`, `project_management/context.md`.
+## 3. UI, Visual Experience & Design System
+The frontend focuses on immersive, theme-aware interactions and responsive structural integrity.
+
+*   **Layout Architecture**: `BlogPost.astro` manages a layered structure with a sticky header (`z-index: 40`) and a fixed metadata footer. It enforces `overscroll-behavior: none` on mobile to prevent bounce effects.
+*   **Visual Effects System**:
+    *   **Matrix Background**: A five-layer character rain with responsive stream density (60-220 streams).
+    *   **Dodecahedron Toggle**: A Three.js 3D interactive button that manages background state and persists via `localStorage`.
+    *   **Glassy UI**: Centralized `backdrop-filter` tokens applied to navigation and footers.
+*   **Content Utilities**: Specialized styles for vocabulary grids (175px labels), table accent highlighting (`.table-accent-2/3`), and responsive teal tag chips.
+*   **Drill-down**: `ui/blog_post_layout/`, `ui/visual_effects/`, `ui/design_system/`.
+
+## 4. Project Conventions & Facts
+Standardized preferences and formatting rules ensure consistency across the codebase.
+
+*   **Formatting Standards**: HTML/JSX/MDX tags must keep closing angle brackets (`>`) on the same line as the tag boundary; leading brackets on new lines are prohibited.
+*   **Attribution & Ownership**: Project owned by Gustavo Adrián Salvini; managed by ByteRover context engineer.
+*   **Drill-down**: `facts/conventions/`, `facts/personal/`.

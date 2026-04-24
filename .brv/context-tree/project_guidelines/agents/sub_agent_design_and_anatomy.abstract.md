@@ -1,1 +1,1 @@
-Effective sub-agent design
+Sub-agent design requires

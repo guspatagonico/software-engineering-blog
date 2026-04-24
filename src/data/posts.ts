@@ -79,6 +79,18 @@ const legacyPosts: PostMeta[] = [
     iconAlt: 'Harness Engineering',
   },
   {
+    id: 'harness-engineering-astro',
+    title: 'Harness Engineering (Astro)',
+    subtitle: 'Legacy Astro · Guía práctica',
+    description: 'Version legacy del post, previo a la migracion MDX',
+    pubDate: '2026-04-01',
+    tags: ['guide', 'legacy'],
+    icon: getPostIcon('harness-engineering'),
+    ogImage: getPostIcon('harness-engineering'),
+    iconAlt: 'Harness Engineering',
+    draft: true,
+  },
+  {
     id: 'bienvenidos',
     title: 'Bienvenidos al blog',
     subtitle: 'Punto de partida',

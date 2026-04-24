@@ -1,0 +1,547 @@
+---
+title: Harness Engineering
+subtitle: Guía práctica
+description: Guía práctica · OpenCode + Sub-agentes
+pubDate: '2026-04-01'
+tags:
+  - guide
+icon: ../../assets/posts/harness-engineering/icon.png
+ogImage: ../../assets/posts/harness-engineering/icon.png
+iconAlt: Harness Engineering
+---
+
+import Highlight from '../../components/Highlight.astro';
+import Card from '../../components/Card.astro';
+import ConvergentEnvelopeSwitcher from '../../components/ConvergentEnvelope/ConvergentEnvelopeSwitcher';
+import SectionNav from '../../components/SectionNav/SectionNav';
+import ProjectTabs from '../../components/ProjectTabs/ProjectTabs';
+import Checklist from '../../components/Checklist/Checklist';
+import HarnessEngineeringExtras from '../../components/posts/HarnessEngineeringExtras.astro';
+import '../../styles/post-content.css';
+
+export const sections = [
+  { id: 'mental-model', icon: '◈', label: 'Modelo mental' },
+  { id: 'subagentes', icon: '⬡', label: 'Sub-agentes' },
+  { id: 'context', icon: '◑', label: 'Context window' },
+  { id: 'orq', icon: '⟳', label: 'Orquestación' },
+  { id: 'tools', icon: '⧉', label: 'Skills & MCPs' },
+  { id: 'checklist', icon: '✓', label: 'Checklist' },
+  { id: 'vocab', icon: '≡', label: 'Vocabulario' },
+];
+
+export const projectTabs = [
+  {
+    id: 'pivot',
+    label: 'pivot.lat',
+    headers: ['Sub-agente', 'Scope', 'Archivos', 'MCPs / Skills'],
+    rows: [
+      [
+        'pmpro-css',
+        'Pricing table styling, SVG icons, badge "Mejor Valor"',
+        '/themes/pivot/css/pmpro.css',
+        'filesystem(css), frontend-design',
+      ],
+      [
+        'paypal-nvp',
+        'Integración NVP API, sandbox config',
+        '/plugins/pmpro-paypal/*.php',
+        'filesystem(php), web-fetch(PayPal docs)',
+      ],
+      [
+        'pmpro-js',
+        'Comportamiento interactivo del pricing table',
+        '/themes/pivot/js/pmpro.js',
+        'filesystem(js only)',
+      ],
+      [
+        'wp-db',
+        'Queries y schema custom de PMPro',
+        '/migrations/*.sql',
+        'filesystem(sql), db-client',
+      ],
+    ],
+  },
+  {
+    id: 'sanatorio',
+    label: 'Sanatorio Felú',
+    headers: ['Sub-agente', 'Scope', 'Archivos', 'MCPs / Skills'],
+    rows: [
+      [
+        'slim-routes',
+        'Definición de endpoints y middleware',
+        '/src/Routes/*.php',
+        'filesystem(routes)',
+      ],
+      [
+        'atlas-entities',
+        'Entities, mappers y relations ORM',
+        '/src/Domain/*.php',
+        'filesystem(domain)',
+      ],
+      [
+        'ui-forms',
+        'HTML/JS de formularios clínicos',
+        '/templates/*.html, /public/js/',
+        'filesystem(frontend), frontend-design',
+      ],
+      [
+        'api-validator',
+        'Validación de requests entrantes',
+        '/src/Validators/*.php',
+        'filesystem(validators)',
+      ],
+    ],
+  },
+  {
+    id: 'kartonsec',
+    label: 'Kartonsec',
+    headers: ['Sub-agente', 'Scope', 'Archivos', 'MCPs / Skills'],
+    rows: [
+      [
+        'recommendation-logic',
+        'Lógica de scoring y recomendación de productos',
+        '/src/Recommender/*.php',
+        'filesystem(recommender)',
+      ],
+      [
+        'chat-ui',
+        'UI del asistente virtual',
+        '/public/chat/*.js, *.css',
+        'filesystem(chat), frontend-design',
+      ],
+      [
+        'product-data',
+        'Estructura y queries de catálogo',
+        '/src/Catalog/*.php, /migrations/',
+        'filesystem(catalog), db-client',
+      ],
+    ],
+  },
+];
+
+export const checklistSections = [
+  {
+    title: 'Por cada sub-agente',
+    items: [
+      { label: '¿Tiene un único tipo de artefacto de salida definido?' },
+      { label: '¿Su context budget está definido (lista exacta de archivos que puede ver)?' },
+      { label: '¿Su tool budget está definido (MCPs y skills habilitados explícitamente)?' },
+      { label: '¿Su contrato con el orquestador es explícito (input schema → output schema)?' },
+      { label: '¿Su AGENTS.md o system prompt es específico al scope (no genérico)?' },
+    ],
+  },
+  {
+    title: 'Para el orquestador',
+    items: [
+      { label: '¿Existe un session-state.md como única fuente de verdad del estado global?' },
+      { label: '¿El formato de handoff comprimido está definido para cada sub-agente?' },
+      { label: '¿Están identificadas las fases paralelizables vs. secuenciales?' },
+      { label: '¿Están definidas las señales de drift para cada sub-agente?' },
+      {
+        label:
+          '¿Hay un criterio claro de convergencia (cómo sabe el orquestador que un output es válido)?',
+      },
+    ],
+  },
+  {
+    title: 'Context window',
+    items: [
+      { label: '¿Cada sub-agente recibe solo los archivos que necesita?' },
+      { label: '¿El historial de fases anteriores se poda antes de cada sub-agente?' },
+      { label: '¿Los handoffs son resúmenes estructurados, no outputs completos?' },
+      { label: '¿La spec del proyecto se fragmenta y solo entra la sección relevante?' },
+      { label: '¿El session-state.md está actualizado antes de lanzar la siguiente fase?' },
+    ],
+  },
+];
+
+<SectionNav client:load sections={sections} />
+
+<div class="content">
+  <div class="panel active" id="panel-mental-model">
+    <h2>La envolvente convergente</h2>
+    <div class="subtitle">El modelo mental central del framework</div>
+
+    <ConvergentEnvelopeSwitcher client:load />
+
+    <Highlight>
+      El harness no define un único camino óptimo (frágil) — define una <strong class="teal">envolvente dinámica</strong> que tolera dispersión al inicio y la va cerrando conforme el proceso avanza. El orquestador es el controlador que mantiene esa envolvente activa.
+    </Highlight>
+
+    <h3>Dos conceptos formales que fundamentan la metáfora</h3>
+    <div class="card-stack">
+      <Card title="Barrier Functions (CBF)">
+        No solo definís adónde querés llegar — definís regiones prohibidas con "paredes repulsivas".
+        El agente recibe señal de que se está alejando <em>antes</em> de romper algo. En el harness:
+        los MCPs con paths restringidos son barrier functions estructurales, no instruccionales.
+      </Card>
+      <Card title="Funciones de Lyapunov">
+        Una función que decrece monótonamente a lo largo de cualquier trayectoria del sistema prueba
+        la convergencia. En harness: cada intervención del orquestador debe reducir la distancia al
+        objetivo. Si no la reduce, el feedback loop está roto.
+      </Card>
+    </div>
+
+    <h3>Entropía vs. convergencia</h3>
+    <div class="post-grid">
+      <Card title="Entropía (harness roto)" variant="danger">
+        Decisiones individualmente razonables que acumulan desviación. El context window se llena de
+        ruido, las herramientas proliferan sin estructura, los sub-agentes optimizan localmente sin
+        coherencia global.
+      </Card>
+      <Card title="Convergencia (harness bien aplicado)">
+        El espacio de acción está acotado, el feedback loop provee señal clara, las constraints son
+        justas — ni tan laxas que generen entropía, ni tan rígidas que produzcan óptimos locales.
+      </Card>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-subagentes">
+    <h2>Diseño de sub-agentes</h2>
+    <div class="subtitle">Single responsibility + bounded context</div>
+
+    <Highlight>
+      <strong>Regla de oro:</strong> si describir el scope de un sub-agente requiere más de dos
+      oraciones, está haciendo demasiado.
+    </Highlight>
+
+    <h3>Anatomía de un sub-agente bien diseñado</h3>
+    <div class="post-grid">
+      <Card title="Artefacto de salida">Un único tipo: CSS, PHP, SQL, Markdown — nunca mezclados.</Card>
+      <Card title="Context budget">Lista exacta de archivos que puede ver. Nada más.</Card>
+      <Card title="Tool budget">MCPs y skills habilitados explícitamente para su scope.</Card>
+      <Card title="Contrato explícito">Input schema → output schema definidos antes de lanzar.</Card>
+    </div>
+
+    <h3>Ejemplos por proyecto</h3>
+    <ProjectTabs client:load tabs={projectTabs} />
+
+    <h3>Anti-patrones</h3>
+    <Highlight variant="red">
+      <strong>El sub-agente full-stack:</strong> acceso a todo el proyecto → entropía garantizada por
+      expansión de scope.<br /><br />
+      <strong>El sub-agente ambiguo:</strong> output puede ser CSS o PHP "según lo que haga falta" →
+      el orquestador no puede validar el contrato.<br /><br />
+      <strong>Sin herramientas acotadas:</strong> puede leer/escribir cualquier archivo → las barrier
+      functions son instruccionales (débiles) en vez de estructurales (fuertes).
+    </Highlight>
+  </div>
+
+  <div class="panel" id="panel-context">
+    <h2>Estrategia de context window</h2>
+    <div class="subtitle">Partición · Handoff · Compresión</div>
+
+    <Highlight>
+      El context window es el recurso más escaso. Llenarlo = pérdida de coherencia = entropía. El
+      diseño correcto no es usar ventanas más grandes — es que cada sub-agente opere con el contexto
+      <strong class="teal">mínimo suficiente</strong>.
+    </Highlight>
+
+    <h3>Context Budget (template)</h3>
+    <div class="data-block">
+      <div class="data-header">## Context Budget: [nombre-subagente]</div>
+      <table>
+        <tr><td>Sistema:</td><td>~800 tokens <span class="data-note">(AGENTS.md específico del sub-agente)</span></td></tr>
+        <tr><td>Spec task:</td><td>~1500 tokens <span class="data-note">(solo la sección relevante del spec)</span></td></tr>
+        <tr><td>Archivos:</td><td>~3000 tokens <span class="data-note">(solo los archivos que necesita tocar)</span></td></tr>
+        <tr><td>Handoff:</td><td>~500 tokens <span class="data-note">(resumen del estado de la fase anterior)</span></td></tr>
+        <tr class="data-separator-row"><td colspan="2"><div class="data-separator"></div></td></tr>
+        <tr class="data-total"><td>Total:</td><td>~5800 tokens <span class="data-note">(margen amplio para el output)</span></td></tr>
+      </table>
+      <div class="data-footer">
+        NO entra: historial previo, archivos de otros módulos, la spec completa del proyecto.
+      </div>
+    </div>
+
+    <h3>Handoff comprimido (template)</h3>
+    <div class="data-block">
+      <div class="data-header">## Handoff: [nombre-subagente] → [destino]</div>
+      <table>
+        <tr><td>Completado:</td><td>[qué hizo, en una oración]</td></tr>
+        <tr><td>Artefactos:</td><td>[lista de archivos con paths exactos]</td></tr>
+        <tr><td>Estado clave:</td><td>[una o dos líneas relevantes para el siguiente agente]</td></tr>
+        <tr><td>Pendiente:</td><td>[qué queda fuera de scope]</td></tr>
+        <tr><td>Blockers:</td><td>ninguno | [descripción si hay alguno]</td></tr>
+        <tr><td>Resultado:</td><td>DONE | PARTIAL | BLOCKED</td></tr>
+      </table>
+    </div>
+
+    <h3>Ejemplo real — pivot.lat</h3>
+    <div class="data-block">
+      <div class="data-header">## Handoff: pmpro-css → pmpro-js</div>
+      <table>
+        <tr><td>Completado:</td><td>Estilos del pricing table con SVG column icons y badge "Mejor Valor"</td></tr>
+        <tr><td>Artefactos:</td><td>/wp-content/themes/pivot/css/pmpro-table.css</td></tr>
+        <tr><td>Estado clave:</td><td>La clase .pmpro-best-value marca la columna destacada; JS debe toggle-arla via data-attribute, no inline styles</td></tr>
+        <tr><td>Pendiente:</td><td>Responsive breakpoints en mobile (fuera de scope)</td></tr>
+        <tr><td>Blockers:</td><td>ninguno</td></tr>
+        <tr><td>Resultado:</td><td><strong style="color: var(--teal)">DONE</strong></td></tr>
+      </table>
+    </div>
+
+    <h3>Session-state.md — fuente de verdad global</h3>
+    <Highlight variant="amber">
+      El orquestador mantiene un archivo comprimido que es el <strong>único estado global del proyecto</strong>. Entra en el context del orquestador en cada turno, pero <strong>nunca</strong> en el de los sub-agentes.
+    </Highlight>
+    <div class="data-block">
+      <div class="data-header"># Session State — pivot.lat</div>
+      <div style="color: var(--teal); font-weight: 600; margin-bottom: 12px;">Fase actual: 2 / 4</div>
+
+      <div class="data-section">
+        <div class="data-section-title">Completado</div>
+        <ul class="data-list data-list-checked">
+          <li><span class="check">✓</span> pmpro-css: pricing table styling</li>
+          <li><span class="check">✓</span> wp-db: schema custom PMPro</li>
+        </ul>
+      </div>
+
+      <div class="data-section">
+        <div class="data-section-title">En progreso</div>
+        <ul class="data-list">
+          <li><span class="bullet">○</span> pmpro-js: comportamiento interactivo (en ejecución)</li>
+          <li><span class="bullet">○</span> paypal-nvp: sandbox (bloqueado: creds pendientes)</li>
+        </ul>
+      </div>
+
+      <div class="data-section">
+        <div class="data-section-title">Decisiones tomadas</div>
+        <ul class="data-list">
+          <li>Columna destacada via data-attribute, no inline styles</li>
+          <li>Sandbox mode via WP_DEBUG constante</li>
+        </ul>
+      </div>
+
+      <div class="data-section">
+        <div class="data-section-title">Blockers activos</div>
+        <ul class="data-list">
+          <li>paypal-nvp necesita PAYPAL_CLIENT_ID del cliente</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-orq">
+    <h2>Orquestación paralela</h2>
+    <div class="subtitle">Fork-Join · Detección de drift</div>
+
+    <Highlight>
+      El orquestador <strong>no piensa sobre el dominio</strong> — mide distancia al objetivo y redirige.
+      Su función es mantener la envolvente convergente activa.
+    </Highlight>
+
+    <h3>Patrón Fork-Join</h3>
+    <div class="fork-join-diagram post-panel">
+      <div class="fj-flow-desktop">
+        <div class="fj-horizontal-flow">
+          <div class="fj-start">
+            Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span>
+          </div>
+          <div class="fj-h-arrow"><span class="fj-arrow-glyph">→</span></div>
+          <div class="fj-fork">
+            Fork<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span>
+          </div>
+          <div class="fj-h-arrow"><span class="fj-arrow-glyph">→</span></div>
+          <div class="fj-parallel-box">
+            <div class="fj-agent-card">
+              <span class="fj-label">Subagente A</span><span class="fj-type">CSS</span><span
+                class="fj-stage-token fj-stage-token--sub"
+                aria-hidden="true"></span>
+            </div>
+            <div class="fj-agent-card">
+              <span class="fj-label">Subagente B</span><span class="fj-type">PHP</span><span
+                class="fj-stage-token fj-stage-token--sub"
+                aria-hidden="true"></span>
+            </div>
+            <div class="fj-agent-card">
+              <span class="fj-label">Subagente C</span><span class="fj-type">DB</span><span
+                class="fj-stage-token fj-stage-token--sub"
+                aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="fj-h-arrow"><span class="fj-arrow-glyph">→</span></div>
+          <div class="fj-join">
+            Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span>
+          </div>
+          <div class="fj-h-arrow"><span class="fj-arrow-glyph">→</span></div>
+          <div class="fj-validation">
+            Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span>
+          </div>
+          <div class="fj-h-arrow"><span class="fj-arrow-glyph">→</span></div>
+          <div class="fj-end">
+            siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="fj-flow-mobile">
+        <div class="fj-node">
+          Orquestador<span class="fj-stage-token fj-stage-token--orq" aria-hidden="true"></span>
+        </div>
+        <div class="fj-fork-label">
+          ┌── Fork ──┐<span class="fj-stage-token fj-stage-token--fork" aria-hidden="true"></span>
+        </div>
+        <div class="fj-parallel-stack">
+          <div class="fj-agent-card">
+            <span class="fj-label">Sub-agente A</span><span class="fj-type">CSS/frontend</span><span
+              class="fj-stage-token fj-stage-token--sub"
+              aria-hidden="true"></span>
+          </div>
+          <div class="fj-agent-card">
+            <span class="fj-label">Sub-agente B</span><span class="fj-type">PHP/backend</span><span
+              class="fj-stage-token fj-stage-token--sub"
+              aria-hidden="true"></span>
+          </div>
+          <div class="fj-agent-card">
+            <span class="fj-label">Sub-agente C</span><span class="fj-type">DB/queries</span><span
+              class="fj-stage-token fj-stage-token--sub"
+              aria-hidden="true"></span>
+          </div>
+        </div>
+        <div class="fj-join-label">└── Join ──┘</div>
+        <div class="fj-node fj-join">
+          Join<span class="fj-stage-token fj-stage-token--join" aria-hidden="true"></span>
+        </div>
+        <div class="fj-arrow"><span class="fj-arrow-glyph">↓</span></div>
+        <div class="fj-node fj-validation">
+          Validación<span class="fj-stage-token fj-stage-token--val" aria-hidden="true"></span>
+        </div>
+        <div class="fj-arrow"><span class="fj-arrow-glyph">↓</span></div>
+        <div class="fj-next">
+          siguiente<span class="fj-stage-token fj-stage-token--next" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <h3>Condiciones para paralelizar (las tres deben cumplirse)</h3>
+    <div class="card-stack">
+      <Card title="1" variant="numbered">Los sub-agentes <strong class="teal">no escriben al mismo archivo</strong></Card>
+      <Card title="2" variant="numbered">Sus outputs son <strong class="teal">independientes</strong> en esta fase (no se alimentan entre sí)</Card>
+      <Card title="3" variant="numbered">El orquestador puede <strong class="teal">validar cada output aisladamente</strong></Card>
+    </div>
+
+    <h3>Señales de drift</h3>
+    <table class="drift-table table-accent-2 table-accent-red table-muted-3">
+      <thead>
+        <tr><th>Señal</th><th>Interpretación</th><th>Acción del orquestador</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Output más extenso de lo esperado</td><td>Expansión de scope</td><td>Interrumpir, re-definir scope</td></tr>
+        <tr><td>Modificaciones a archivos fuera del scope</td><td>Violación de barrier function</td><td>Revertir, separar en nuevo sub-agente</td></tr>
+        <tr><td>Preguntas sobre dominio ajeno al task</td><td>Ambigüedad en el spec</td><td>Aclarar y proveer contexto mínimo</td></tr>
+        <tr><td>Output que no matchea el schema de handoff</td><td>Contrato roto</td><td>Re-ejecutar con spec más restrictiva</td></tr>
+        <tr><td>Loops de auto-corrección (&gt;2 iteraciones)</td><td>Convergencia prematura</td><td>Cambiar enfoque o partir el task</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="panel" id="panel-tools">
+    <h2>Skills & MCPs como constraints</h2>
+    <div class="subtitle">Barrier functions estructurales</div>
+
+    <Highlight>
+      <strong>El insight clave:</strong> skills y MCPs no son solo herramientas de capacidad — son <strong class="teal">mecanismos de constraint estructurales</strong>. Asignar a un sub-agente solo los MCPs relevantes define las paredes de su envolvente de forma física, no instruccional.
+    </Highlight>
+
+    <h3>Constraint instruccional vs. estructural</h3>
+    <div class="post-grid">
+      <Card title="Instruccional (débil)" variant="danger">
+        "No toques los archivos PHP." El agente puede ignorarla, especialmente bajo drift o cuando el
+        contexto es ambiguo.
+      </Card>
+      <Card title="Estructural (barrier function real)">
+        El MCP de filesystem solo tiene acceso a <code>/css/</code>. Físicamente no puede tocar el PHP.
+        El costo de violar el scope es infinito.
+      </Card>
+    </div>
+
+    <h3>Matriz de tool budget — pivot.lat</h3>
+    <table>
+      <thead>
+        <tr><th>Sub-agente</th><th>filesystem scope</th><th>db-client</th><th>web-fetch</th><th>Skills</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>pmpro-css</td><td>/themes/pivot/css/</td><td class="cross">✗</td><td class="cross">✗</td><td>frontend-design</td></tr>
+        <tr><td>paypal-nvp</td><td>/plugins/pmpro-paypal/</td><td class="cross">✗</td><td>PayPal docs (r)</td><td>—</td></tr>
+        <tr><td>pmpro-js</td><td>/themes/pivot/js/</td><td class="cross">✗</td><td class="cross">✗</td><td>—</td></tr>
+        <tr><td>wp-db</td><td>/migrations/</td><td class="tick">✓</td><td class="cross">✗</td><td>—</td></tr>
+        <tr><td>orquestador</td><td>proyecto completo (r)</td><td class="tick">✓</td><td class="tick">✓</td><td>todas</td></tr>
+      </tbody>
+    </table>
+
+    <Highlight variant="amber">
+      <strong>Patrón:</strong> si te encontrás explicando más de ~200 tokens de "cómo debe formatear el
+      output" en un system prompt, eso debería ser una skill. Una skill bien escrita entra barata en el
+      context window y es versionable y reutilizable entre proyectos.
+    </Highlight>
+  </div>
+
+  <div class="panel" id="panel-checklist">
+    <h2>Checklist de harness design</h2>
+    <div class="subtitle">Validar antes de lanzar cada proceso agéntico</div>
+
+    <Checklist client:load sections={checklistSections} storageKey="harness-engineering" />
+  </div>
+
+  <div class="panel" id="panel-vocab">
+    <h2>Vocabulario del framework</h2>
+    <div class="subtitle">Términos operacionales</div>
+
+    <h3>Fundamentos del control</h3>
+    <div class="card-stack">
+      <Card title="Envolvente convergente">
+        El rango de comportamiento tolerable del agente, que se estrecha progresivamente hacia la
+        solución. La metáfora central del framework.
+      </Card>
+      <Card title="Convergencia">
+        El proceso llega a la solución óptima dentro de las cotas definidas. Objetivo de todo proceso
+        agéntico bien harnesseado.
+      </Card>
+      <Card title="Entropía agéntica">
+        Acumulación de drift: decisiones individualmente razonables que producen un resultado
+        incoherente. Señal de harness roto.
+      </Card>
+      <Card title="Drift">
+        Desviación acumulada del objetivo. Señal de que el agente se acerca a los límites de la
+        envolvente y requiere intervención del orquestador.
+      </Card>
+    </div>
+
+    <h3>Constraints y presupuestos</h3>
+    <div class="card-stack">
+      <Card title="Barrier function">
+        Constraint estructural (no instruccional) que hace imposible — no solo costosa — la violación
+        del scope. Ej: MCP con paths restringidos.
+      </Card>
+      <Card title="Context budget">
+        Presupuesto de tokens asignado a un sub-agente: qué puede ver y cuánto. Se define antes de
+        lanzar, no durante.
+      </Card>
+      <Card title="Tool budget">
+        Conjunto de MCPs y skills habilitados para un sub-agente específico. Define sus barrier
+        functions estructurales.
+      </Card>
+    </div>
+
+    <h3>Orquestación y coordinación</h3>
+    <div class="card-stack">
+      <Card title="Contrato de sub-agente">
+        Definición explícita del input schema y output schema de un sub-agente. El orquestador valida
+        contra este contrato.
+      </Card>
+      <Card title="Handoff comprimido">
+        Resumen estructurado del output de un sub-agente, optimizado para entrar barato en el context
+        del siguiente. No es el output completo.
+      </Card>
+      <Card title="Session state">
+        Estado global comprimido del proyecto, mantenido exclusivamente por el orquestador. Nunca entra
+        en el context de los sub-agentes.
+      </Card>
+      <Card title="Fork-join">
+        Patrón de ejecución paralela: múltiples sub-agentes independientes seguidos de un punto de
+        validación conjunta por el orquestador.
+      </Card>
+    </div>
+  </div>
+</div>
+
+<HarnessEngineeringExtras />

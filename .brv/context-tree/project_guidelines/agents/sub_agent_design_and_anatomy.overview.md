@@ -1,28 +1,35 @@
 # Sub-agent Design and Anatomy Overview
 
-### Key Points
-*   **The Rule of Gold:** Sub-agent scope descriptions must be strictly limited to two sentences or fewer to ensure focus and prevent scope creep.
-*   **Single Output Constraint:** Every sub-agent must have a single, clearly defined output type (*Artefacto de salida*).
-*   **Constraint Hierarchy:** Structural constraints (e.g., restricted file paths or limited tool access) are "strong" barriers, whereas instructional constraints (prompt-based rules) are "weak" and prone to failure.
-*   **Explicit Budgeting:** Sub-agents operate under defined budgets for context (specific file lists) and tools (enabled MCPs).
-*   **Contract-Driven Design:** Interactions are governed by explicit contracts and schema mapping rather than ambiguous natural language instructions.
+## Key Points
+*   **The Rule of Gold**: A sub-agent is over-scoped if its purpose cannot be described in two sentences or fewer.
+*   **Anatomy of a Sub-agent**: Defined by four pillars: a single output artifact type, an exact context budget (visible files), an explicit tool budget, and a strict I/O schema contract.
+*   **Minimum Sufficient Context (MSC)**: A strategy to maximize efficiency by treating context as a scarce resource, targeting a total budget of ~5,800 tokens.
+*   **Structural vs. Instructional Constraints**: Structural constraints (e.g., restricted filesystem MCPs) are preferred over instructional prompts because they make violations "physically" impossible for the agent.
+*   **Skill Conversion Pattern**: To maintain efficiency, any formatting instructions exceeding ~200 tokens must be offloaded and converted into a dedicated "Skill."
+*   **Compressed Handoff**: State transfer between agents is managed via a specific template that includes completed tasks, artifact paths, key state, pending items, and blockers.
 
-### Structure / Sections Summary
-*   **Reason & Raw Concept:** Establishes the purpose of the document and the logical flow of sub-agent creation: *Scope $\rightarrow$ Budgets $\rightarrow$ Contract $\rightarrow$ Output*.
-*   **Narrative:** Explores the anatomy of a sub-agent and the philosophy of "barrier functions," emphasizing that technical restrictions outperform prompt-based instructions.
-*   **Rules & Facts:** Formalizes the design conventions, specifically the "Rule of Gold" and the requirement for singular output types.
+## Structure Summary
+*   **Reason & Raw Concept**: Defines the document's purpose, source files, and the high-level flow (Scope → Budgets → Contract → Output).
+*   **Narrative**: Outlines the core philosophy of sub-agent anatomy and highlights the "Rule of Gold" and MSC strategy.
+*   **Rules**: Establishes hard constraints for scoping and the threshold for converting instructions into Skills.
+*   **Facts**: Provides technical specifications, including the token budget breakdown, handoff requirements, and specific sub-agent examples.
 
-### Notable Entities, Patterns, and Decisions
+## Notable Entities, Patterns, and Decisions
 
-**Entities**
-*   **Artefacto de salida:** The singular, formal output produced by the sub-agent.
-*   **MCP (Model Context Protocol):** The framework used to define and restrict the "Tool budget" available to the agent.
-*   **Contrato explícito:** The schema mapping that defines how the sub-agent receives and sends data.
+### Entities (Example Sub-agents)
+*   `pmpro-css`: Dedicated to styling.
+*   `paypal-nvp`: Handles API integration.
+*   `slim-routes`: Manages endpoint definitions.
+*   `atlas-entities`: Manages ORM/entity definitions.
 
-**Patterns**
-*   **Structural Barrier Functions:** A design pattern where system limits (like restricted directory access) are used to enforce behavior instead of relying on the LLM's adherence to instructions.
-*   **Anti-pattern: Full-stack Access:** Granting a sub-agent broad access is identified as a source of entropy and system failure.
+### Patterns
+*   **Context Budget Template (~5,800 tokens)**:
+    *   System: 800 tokens
+    *   Spec Task: 1,500 tokens
+    *   Files: 3,000 tokens
+    *   Handoff: 500 tokens
+*   **Compressed Handoff Template**: A standardized state-transfer object containing `completed_tasks`, `artifact_paths`, `next_agent_state`, `pending_items`, `blockers`, and `result_status`.
 
-**Decisions**
-*   **Instructional vs. Structural:** The design framework explicitly favors structural constraints over instructional ones to ensure reliability.
-*   **Scope Limitation:** A hard limit of $\le$ 2 sentences for scope is mandated to force modularity.
+### Key Decisions
+*   **Constraint Hierarchy**: Prioritize Model Context Protocol (MCP) restrictions over prompt-based instructions to ensure reliability.
+*   **Token Management**: Explicitly limit formatting instructions to 200 tokens to prevent prompt bloat, forcing modularization into Skills.

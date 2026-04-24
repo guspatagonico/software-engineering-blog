@@ -1,0 +1,351 @@
+<script is:inline>
+	(() => {
+		const STAGES = ['orq', 'fork', 'sub', 'join', 'val', 'next'];
+		const STEP_MS = 1200;
+
+		const setStage = (diagram, stage) => {
+			const tokens = diagram.querySelectorAll('.fj-stage-token');
+			tokens.forEach((token) => token.classList.remove('is-on'));
+
+			const active = diagram.querySelectorAll(`.fj-stage-token--${stage}`);
+			active.forEach((token) => token.classList.add('is-on'));
+		};
+
+		const initDiagram = (diagram) => {
+			if (diagram.dataset.fjInit === '1') return;
+			diagram.dataset.fjInit = '1';
+
+			setStage(diagram, 'orq');
+
+			const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (reduceMotion) return;
+
+			let index = 0;
+			window.setInterval(() => {
+				index = (index + 1) % STAGES.length;
+				setStage(diagram, STAGES[index]);
+			}, STEP_MS);
+		};
+
+		const run = () => {
+			const diagrams = document.querySelectorAll('.fork-join-diagram');
+			diagrams.forEach((diagram) => initDiagram(diagram));
+		};
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', run, { once: true });
+		} else {
+			run();
+		}
+	})();
+</script>
+
+<style is:global>
+	.phase-diagram {
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 2.2;
+		color: var(--text-dim);
+	}
+
+	.ph-parallel {
+		color: var(--teal);
+		font-weight: 600;
+	}
+
+	.ph-seq {
+		color: var(--amber);
+		font-weight: 600;
+	}
+
+	.ph-join {
+		color: var(--text);
+		font-weight: 600;
+	}
+
+	.fork-join-diagram {
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.4;
+		color: var(--text-dim);
+	}
+
+	.fj-flow-desktop {
+		display: none;
+	}
+
+	.fj-flow-mobile {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		overflow: visible;
+	}
+
+	.fj-node {
+		font-weight: 600;
+		color: var(--text);
+		padding: 6px 12px;
+		position: relative;
+		overflow: visible;
+	}
+
+	.fj-arrow-glyph {
+		font-size: 14px;
+		color: var(--text-dim);
+	}
+
+	.fj-fork-label,
+	.fj-join-label {
+		font-family: monospace;
+		font-size: 14px;
+		color: var(--teal);
+		letter-spacing: 1px;
+		position: relative;
+	}
+
+	.fj-parallel-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		width: 100%;
+		max-width: 260px;
+		overflow: visible;
+	}
+
+	.fj-agent-card {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 8px 12px;
+		background: var(--bg);
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		gap: 12px;
+		position: relative;
+		overflow: visible;
+	}
+
+	.fj-label {
+		color: var(--teal);
+		font-weight: 600;
+	}
+
+	.fj-type {
+		color: var(--text-dim);
+		font-size: 14px;
+	}
+
+	.fj-join {
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		background: var(--bg);
+		position: relative;
+		overflow: visible;
+	}
+
+	.fj-validation {
+		color: var(--amber);
+		position: relative;
+		overflow: visible;
+	}
+
+	.fj-arrow {
+		color: var(--text-dim);
+		font-size: 14px;
+		position: relative;
+		width: 24px;
+		height: 18px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.fj-next {
+		color: var(--text-dim);
+		font-size: 14px;
+		position: relative;
+		overflow: visible;
+	}
+
+	.fj-stage-token {
+		position: absolute;
+		width: 9px;
+		height: 9px;
+		border-radius: 999px;
+		background: color-mix(in srgb, var(--teal) 35%, transparent);
+		box-shadow: 0 0 3px rgba(0, 212, 170, 0.12);
+		opacity: 0.1;
+		top: 50%;
+		left: 100%;
+		margin-left: 6px;
+		transform: translateY(-50%) scale(0.7);
+		transition: opacity 180ms ease, transform 180ms ease;
+		z-index: 2;
+	}
+
+	.fj-stage-token.is-on {
+		opacity: 0.95;
+		background: var(--teal);
+		box-shadow: 0 0 16px rgba(0, 212, 170, 0.9);
+		transform: translateY(-50%) scale(1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.fj-stage-token {
+			transition: none;
+		}
+	}
+
+	@media (min-width: 768px) {
+		.fj-flow-mobile {
+			display: none;
+		}
+
+		.fj-flow-desktop {
+			display: block;
+		}
+
+		.fj-horizontal-flow {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+
+		.fj-start,
+		.fj-fork,
+		.fj-join,
+		.fj-validation,
+		.fj-end {
+			font-weight: 600;
+			padding: 4px 8px;
+			white-space: nowrap;
+			position: relative;
+		}
+
+		.fj-start {
+			color: var(--text);
+		}
+
+		.fj-fork,
+		.fj-join {
+			color: var(--teal);
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			background: var(--bg);
+			padding: 4px 12px;
+		}
+
+		.fj-validation {
+			color: var(--amber);
+		}
+
+		.fj-end {
+			color: var(--text-dim);
+			font-size: 14px;
+		}
+
+		.fj-h-arrow {
+			color: var(--text-dim);
+			font-size: 14px;
+			position: relative;
+			width: 34px;
+			height: 18px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.fj-stage-token {
+			opacity: 0;
+			left: 50%;
+			margin-left: 0;
+			top: -8px;
+			transform: translate(-50%, -50%) scale(0.7);
+		}
+
+		.fj-agent-card .fj-stage-token {
+			left: auto;
+			top: 50%;
+			right: -8px;
+			transform: translateY(-50%) scale(0.7);
+		}
+
+		.fj-stage-token.is-on {
+			transform: translate(-50%, -50%) scale(1);
+		}
+
+		.fj-agent-card .fj-stage-token.is-on {
+			transform: translateY(-50%) scale(1);
+		}
+
+		.fj-parallel-box {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			padding: 10px;
+			background: var(--bg);
+			border: 1px solid var(--border);
+			border-radius: 4px;
+		}
+
+		.fj-parallel-box .fj-agent-card {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			padding: 8px 12px;
+			min-width: 140px;
+			gap: 12px;
+		}
+
+		.fj-parallel-box .fj-label {
+			font-size: 14px;
+		}
+
+		.fj-parallel-box .fj-type {
+			font-size: 14px;
+		}
+	}
+
+	.ph-dim {
+		color: var(--text-dim);
+	}
+
+	.funnel-container svg {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	.funnel-phase-label {
+		font-size: 14px;
+	}
+
+	.funnel-converge-label {
+		font-size: 14px;
+	}
+
+	.funnel-legend-label {
+		font-size: 14px;
+	}
+
+	@media (max-width: 640px) {
+		.funnel-container {
+			padding: 10px;
+		}
+
+		.funnel-phase-label {
+			font-size: 14px;
+		}
+
+		.funnel-converge-label {
+			font-size: 14px;
+		}
+
+		.funnel-legend-label {
+			font-size: 14px;
+		}
+	}
+</style>

@@ -3,19 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 1055,
+      "tokens": 938,
       "type": "summary"
     },
     {
       "order": 2,
-      "path": "project_management/_index.md",
-      "tokens": 643,
+      "path": "facts/_index.md",
+      "tokens": 192,
       "type": "summary"
     },
     {
-      "order": 1,
-      "path": "project_management/run_commands/_index.md",
-      "tokens": 187,
+      "order": 2,
+      "path": "project_guidelines/_index.md",
+      "tokens": 795,
       "type": "summary"
     },
     {
@@ -49,19 +49,19 @@
       "type": "context"
     },
     {
+      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
+      "abstractTokens": 61,
+      "importance": 74,
+      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
+      "tokens": 61,
+      "type": "context"
+    },
+    {
       "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
       "abstractTokens": 47,
       "importance": 73,
       "path": "project_management/handoffs/hybrid_session_state_approach.md",
       "tokens": 47,
-      "type": "context"
-    },
-    {
-      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
-      "abstractTokens": 61,
-      "importance": 71,
-      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
-      "tokens": 61,
       "type": "context"
     },
     {
@@ -73,6 +73,14 @@
       "type": "context"
     },
     {
+      "abstractPath": "project_guidelines/agents/sub_agent_design_and_anatomy.abstract.md",
+      "abstractTokens": 6,
+      "importance": 55,
+      "path": "project_guidelines/agents/sub_agent_design_and_anatomy.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
       "abstractPath": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.abstract.md",
       "abstractTokens": 6,
       "importance": 55,
@@ -81,29 +89,21 @@
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
-      "abstractTokens": 8,
-      "importance": 53,
-      "path": "project_guidelines/agents/context_window_and_handoff_strategy.md",
-      "tokens": 8,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_guidelines/run_commands/production_asset_upload.abstract.md",
-      "abstractTokens": 2,
+      "abstractPath": "facts/conventions/html_tag_formatting.abstract.md",
+      "abstractTokens": 3,
       "importance": 50,
-      "path": "project_guidelines/run_commands/production_asset_upload.md",
-      "tokens": 2,
+      "path": "facts/conventions/html_tag_formatting.md",
+      "tokens": 3,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-23T22:22:00.261Z",
+  "generated_at": "2026-04-24T16:03:13.204Z",
   "lane_tokens": {
-    "contexts": 4000,
+    "contexts": 3999,
     "stubs": 0,
-    "summaries": 1885
+    "summaries": 1925
   },
-  "source_fingerprint": "f0bd215297043510ccf7f849f4fe005bbe7a7c8844f738832d97204af5ecc49f",
-  "total_tokens": 5885,
+  "source_fingerprint": "6193b66e5323aca3e6e484c2f433eb8380349a04641be5b5e9508aa22b9967f7",
+  "total_tokens": 5924,
   "version": 1
 }

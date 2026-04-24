@@ -1,48 +1,38 @@
 ---
-tags: []
-keywords: []
-importance: 53
-recency: 1
-maturity: draft
-accessCount: 1
+children_hash: edf91b5a9580dfc2a6bfc5cf71cb8d588c3426976dc1c4f0ebdcc2501b4bd4ab
+compression_ratio: 0.2514812376563529
+condensation_order: 1
+covers: [context.md, context_window_and_handoff_strategy.md, orchestration_and_drift_management.md, project_agent_handbook.md, specialized_agents_and_orchestration.md, sub_agent_design_and_anatomy.md]
+covers_token_total: 3038
+summary_level: d1
+token_count: 764
+type: summary
 ---
 # Domain: Agents
 
-The agent ecosystem for the Software Engineering Blog project is built on a specialized dispatcher model and a strict orchestration framework designed to minimize drift and manage context efficiently.
+The `agents` domain establishes the operational framework for the Software Engineering Blog project, covering the specialized agent ecosystem, context management strategies, and strict architectural conventions defined in the `AGENTS.md` handbook.
 
-## Agent Architecture & Orchestration
-The project utilizes a **Fork-Join pattern** where a central **@orchestrator** measures progress toward objectives and dispatches tasks to specialized sub-agents without deep domain reasoning. Key orchestration components include:
+## Agent Ecosystem and Orchestration
+The project utilizes a **Dispatcher Pattern** to manage complexity by delegating tasks to specialized sub-agents via `@mention` (e.g., `@blog-writer`, `@component-builder`, `@tester`).
+- **Orchestrator Role**: The `@orchestrator` measures progress toward objectives and manages task dispatching without domain-specific reasoning. It utilizes a **Fork-Join pattern** for parallel execution of independent sub-agents.
+- **Drift Management**: Orchestration interventions are triggered by drift signals such as scope expansion (output longer than expected), barrier violations (modifications outside scope), or auto-correction loops exceeding 2 iterations.
+- **Agent Definition**: New agents are defined via markdown files with frontmatter in `.opencode/agents/`.
+- **References**: `orchestration_and_drift_management.md`, `specialized_agents_and_orchestration.md`
 
-*   **Specialized Agents**: Roles include `@project-leader`, `@orchestrator`, `@component-builder`, `@blog-writer`, `@tester`, `@explore`, and `@plan`.
-*   **Drift Management**: The orchestrator monitors for drift signals such as scope expansion, barrier violations, schema mismatches (broken contracts), and auto-correction loops exceeding two iterations.
-*   **Sub-agent Design (Rule of Gold)**: Sub-agent scope must be defined in $\le$ 2 sentences. Each sub-agent must have a single output type (*Artefacto de salida*) and operate under explicit context and tool budgets.
-*   **Constraint Philosophy**: Structural constraints (e.g., restricted MCP paths) are prioritized as strong barriers over weak instructional constraints.
+## Sub-Agent Design and Context Strategy
+Sub-agents operate under the **"Rule of Gold"**: if a scope requires >2 sentences to describe, it is over-scoped.
+- **Anatomy**: Every sub-agent has a single output artifact type, an exact context budget, an explicit tool budget, and a defined input/output contract.
+- **Context Window Budget**: Target budget is **~5800 tokens** (System: 800, Spec: 1500, Files: 3000, Handoff: 500).
+- **Minimum Sufficient Context**: A strategy to use context efficiently. If formatting instructions exceed ~200 tokens, they must be converted into a **Skill**.
+- **Handoff Procedures**: State transfer occurs via a **Compressed Handoff Template** (Summary, Artifact Paths, Key State, Pending, Blockers, Result). `session-state.md` serves as the global source of truth but never enters sub-agent context.
+- **References**: `sub_agent_design_and_anatomy.md`, `context_window_and_handoff_strategy.md`
 
-For details on orchestration patterns and drift signals, see **orchestration_and_drift_management.md**. For sub-agent specifications, refer to **sub_agent_design_and_anatomy.md**.
-
-## Context & Handoff Strategy
-To maintain performance, the system enforces a target sub-agent context budget of **~5,800 tokens** (System: 800, Spec: 1500, Files: 3000, Handoff: 500). 
-
-*   **Session State**: `session-state.md` serves as the global source of truth maintained by the orchestrator and is never passed into sub-agent context.
-*   **Handoffs**: The `_handoff` command generates compressed templates in `_handoffs/` containing completion summaries, artifact paths, key state for the next agent, and blockers.
-
-Detailed budget breakdowns and templates are located in **context_window_and_handoff_strategy.md**.
-
-## Project Standards & Rules (AGENTS.md)
-The **Project Agent Handbook** defines the technical environment and mandatory conventions for all contributors:
-
-*   **Workflow**: Strictly **pnpm-only** for all scripts (`dev`, `build`, `lint`, `typecheck`, `format`). Git worktrees are required for non-trivial features.
-*   **Blog Architecture**: Posts must use the `BlogPost` layout and `SectionNav` component (loaded with `client:load`). 
-    *   **Panels**: Must use `id="panel-{id}"`; the first panel must have the `active` class.
-    *   **Icons**: Restricted to a specific set: `◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑`.
-*   **Security & Privacy**: API keys and secrets must never be committed. Agent names are prohibited in commit messages, documentation, or co-author trailers.
-*   **Development Rules**: 
-    *   Requirement changes after Day 3 are deferred to the next sprint.
-    *   Initial PR reviews have a maximum 4-hour SLA.
-    *   **Rule 3**: Never use apologies.
-
-Comprehensive command lists, layout samples, and verbatim rules are found in **project_agent_handbook.md**.
-
-## Knowledge Map
-*   **context.md**: High-level overview and navigation of the agent domain.
-*   **specialized_agents_and_orchestration.md**: Documentation of the dispatcher pattern and agent directory (`.opencode/agents/`).
+## Development and Architectural Rules
+The `AGENTS.md` handbook prescribes strict technical and collaborative standards.
+- **Workflow**: **pnpm-only** workflow for all scripts. Git worktrees are required for non-trivial features. The `_handoff` command is used to generate session summaries in `_handoffs/`.
+- **Blog Architecture**: Posts must use the `BlogPost` layout and `SectionNav` component (loaded with `client:load`).
+    - **Panel Convention**: First panel must be `class="panel active"`; others are `class="panel"`. IDs must be prefixed with `panel-`.
+    - **Icons**: Restricted set: ◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑.
+- **Code Style**: TypeScript strict mode, 2-space indents, single quotes, and `@/` alias for imports. Use `<Image />` from `astro:assets`.
+- **Security & Privacy**: Never commit secrets or `.env` files. **Crucial Rule**: Never include agent names in commit messages, PRs, or documentation.
+- **References**: `project_agent_handbook.md`, `context.md`
