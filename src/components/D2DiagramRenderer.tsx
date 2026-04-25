@@ -142,12 +142,6 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 		setIsDragging(false);
 	};
 
-	const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-		e.preventDefault();
-		const delta = e.deltaY > 0 ? -ZOOM_STEP : ZOOM_STEP;
-		setScale((prev) => Math.max(ZOOM_MIN, Math.min(prev + delta, ZOOM_MAX)));
-	};
-
 	const transformStyle = {
 		transform: `translate(${panX}px, ${panY}px) scale(${scale})`,
 		transformOrigin: '0 0',
@@ -179,7 +173,6 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 						onMouseMove={handleMouseMove}
 						onMouseUp={handleMouseUp}
 						onMouseLeave={handleMouseUp}
-						onWheel={handleWheel}
 						style={{
 							cursor: isDragging ? 'grabbing' : 'grab',
 						}}
