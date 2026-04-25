@@ -19,73 +19,15 @@
       "type": "summary"
     },
     {
-      "importance": 100,
-      "path": "project_guidelines/agents/project_agent_handbook.md",
-      "tokens": 1355,
+      "importance": 50,
+      "path": "facts/context.md",
+      "tokens": 100,
       "type": "context"
     },
     {
-      "importance": 100,
-      "path": "project_guidelines/blog_post_architecture/blog_post_architecture.md",
-      "tokens": 638,
-      "type": "context"
-    },
-    {
-      "importance": 100,
-      "path": "project_guidelines/dev_process/development_process_and_rules.md",
-      "tokens": 934,
-      "type": "context"
-    },
-    {
-      "importance": 100,
-      "path": "project_management/handoffs/current_session_handoff_rule.md",
-      "tokens": 449,
-      "type": "context"
-    },
-    {
-      "importance": 80,
-      "path": "project_guidelines/git_safe_mutations/git_mutation_approval_rule.md",
-      "tokens": 448,
-      "type": "context"
-    },
-    {
-      "abstractPath": "ui/blog_post_layout/post_content_styles/post_content_styles.abstract.md",
-      "abstractTokens": 61,
-      "importance": 74,
-      "path": "ui/blog_post_layout/post_content_styles/post_content_styles.md",
-      "tokens": 61,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_management/handoffs/hybrid_session_state_approach.abstract.md",
-      "abstractTokens": 47,
-      "importance": 73,
-      "path": "project_management/handoffs/hybrid_session_state_approach.md",
-      "tokens": 47,
-      "type": "context"
-    },
-    {
-      "abstractPath": "ui/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 52,
-      "importance": 65,
-      "path": "ui/harness_engineering/harness_engineering_page.md",
-      "tokens": 52,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_guidelines/agents/sub_agent_design_and_anatomy.abstract.md",
-      "abstractTokens": 6,
-      "importance": 55,
-      "path": "project_guidelines/agents/sub_agent_design_and_anatomy.md",
-      "tokens": 6,
-      "type": "context"
-    },
-    {
-      "abstractPath": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.abstract.md",
-      "abstractTokens": 6,
-      "importance": 55,
-      "path": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md",
-      "tokens": 6,
+      "importance": 50,
+      "path": "facts/conventions/context.md",
+      "tokens": 39,
       "type": "context"
     },
     {
@@ -95,15 +37,229 @@
       "path": "facts/conventions/html_tag_formatting.md",
       "tokens": 3,
       "type": "context"
+    },
+    {
+      "abstractPath": "facts/personal/caveman_style_preference.abstract.md",
+      "abstractTokens": 35,
+      "importance": 50,
+      "path": "facts/personal/caveman_style_preference.md",
+      "tokens": 35,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "facts/personal/context.md",
+      "tokens": 48,
+      "type": "context"
+    },
+    {
+      "abstractPath": "facts/personal/site_footer_copyright_preference.abstract.md",
+      "abstractTokens": 5,
+      "importance": 50,
+      "path": "facts/personal/site_footer_copyright_preference.md",
+      "tokens": 5,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/agents/context.md",
+      "tokens": 155,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
+      "abstractTokens": 8,
+      "importance": 50,
+      "path": "project_guidelines/agents/context_window_and_handoff_strategy.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/agents/orchestration_and_drift_management.abstract.md",
+      "abstractTokens": 8,
+      "importance": 50,
+      "path": "project_guidelines/agents/orchestration_and_drift_management.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/agents/project_agent_handbook.md",
+      "tokens": 1355,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/agents/specialized_agents_and_orchestration.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "project_guidelines/agents/specialized_agents_and_orchestration.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/agents/sub_agent_design_and_anatomy.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "project_guidelines/agents/sub_agent_design_and_anatomy.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/architecture/state_persistence_and_storage.abstract.md",
+      "abstractTokens": 7,
+      "importance": 50,
+      "path": "project_guidelines/architecture/state_persistence_and_storage.md",
+      "tokens": 7,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/blog_post_architecture/blog_post_architecture.md",
+      "tokens": 638,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/blog_post_architecture/blog_post_layout_and_components.abstract.md",
+      "abstractTokens": 7,
+      "importance": 50,
+      "path": "project_guidelines/blog_post_architecture/blog_post_layout_and_components.md",
+      "tokens": 7,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/blog_post_architecture/context.md",
+      "tokens": 98,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/context.md",
+      "tokens": 134,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/dev_process/agent_guidelines_and_workflow.md",
+      "tokens": 1029,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/dev_process/context.md",
+      "tokens": 100,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/dev_process/project_workflow_and_commands.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "project_guidelines/dev_process/project_workflow_and_commands.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
+      "importance": 50,
+      "path": "project_guidelines/git_safe_mutations/context.md",
+      "tokens": 93,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/harness_engineering/envolvente_convergente_framework.abstract.md",
+      "abstractTokens": 4,
+      "importance": 50,
+      "path": "project_guidelines/harness_engineering/envolvente_convergente_framework.md",
+      "tokens": 4,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_framework.abstract.md",
+      "abstractTokens": 8,
+      "importance": 50,
+      "path": "project_guidelines/harness_engineering/harness_engineering_framework.md",
+      "tokens": 8,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
+      "abstractTokens": 59,
+      "importance": 50,
+      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
+      "tokens": 59,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/run_commands/production_asset_upload.abstract.md",
+      "abstractTokens": 2,
+      "importance": 50,
+      "path": "project_guidelines/run_commands/production_asset_upload.md",
+      "tokens": 2,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/ui_design/mobile_ui_performance_patterns.abstract.md",
+      "abstractTokens": 5,
+      "importance": 50,
+      "path": "project_guidelines/ui_design/mobile_ui_performance_patterns.md",
+      "tokens": 5,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_management/git_workflow/git_worktree_and_commit_policy.abstract.md",
+      "abstractTokens": 7,
+      "importance": 50,
+      "path": "project_management/git_workflow/git_worktree_and_commit_policy.md",
+      "tokens": 7,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/blog_post_layout/blogpost_layout_architecture.abstract.md",
+      "abstractTokens": 5,
+      "importance": 50,
+      "path": "ui/blog_post_layout/blogpost_layout_architecture.md",
+      "tokens": 5,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/blog_post_layout/post_list_and_card_styles.abstract.md",
+      "abstractTokens": 9,
+      "importance": 50,
+      "path": "ui/blog_post_layout/post_list_and_card_styles.md",
+      "tokens": 9,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md",
+      "tokens": 6,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/design_system/glossary_vocabulary_layout.abstract.md",
+      "abstractTokens": 9,
+      "importance": 50,
+      "path": "ui/design_system/glossary_vocabulary_layout.md",
+      "tokens": 9,
+      "type": "context"
+    },
+    {
+      "abstractPath": "ui/persistence/checklist_state_persistence.abstract.md",
+      "abstractTokens": 6,
+      "importance": 50,
+      "path": "ui/persistence/checklist_state_persistence.md",
+      "tokens": 6,
+      "type": "context"
     }
   ],
-  "generated_at": "2026-04-24T16:03:13.204Z",
+  "generated_at": "2026-04-24T22:15:53.735Z",
   "lane_tokens": {
-    "contexts": 3999,
+    "contexts": 4000,
     "stubs": 0,
     "summaries": 1925
   },
-  "source_fingerprint": "6193b66e5323aca3e6e484c2f433eb8380349a04641be5b5e9508aa22b9967f7",
-  "total_tokens": 5924,
+  "source_fingerprint": "9c3ea87f9c90ae594dd258e8b6d8ab651bffeef5be7eea12a7a0b22880ce8197",
+  "total_tokens": 5925,
   "version": 1
 }

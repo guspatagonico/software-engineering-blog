@@ -200,7 +200,7 @@ body {
 
 .mermaid {
   margin: 16px 0 18px;
-  padding: 18px 20px;
+  padding: 0;
   border-radius: 12px;
   border: 1px solid var(--border);
   background: linear-gradient(135deg, rgba(0, 212, 170, 0.08), rgba(10, 12, 18, 0));
@@ -214,6 +214,97 @@ body {
   height: auto;
   font-size: 14px;
   font-family: var(--font) !important;
+}
+
+.mermaid--interactive {
+  padding: 0;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mermaid--interactive svg,
+.mermaid--interactive svg * {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.mermaid-viewport {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  border-radius: inherit;
+  border: 0;
+  background: transparent;
+  touch-action: none;
+}
+
+.mermaid-canvas {
+  transform-origin: 0 0;
+  will-change: transform;
+  cursor: grab;
+}
+
+.mermaid-viewport.is-panning .mermaid-canvas {
+  cursor: grabbing;
+}
+
+.content .mermaid-viewport .mermaid-controls {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: calc(100% - 20px);
+  z-index: 2;
+  opacity: 0 !important;
+  transform: translateY(6px) scale(0.98);
+  pointer-events: none !important;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.content .mermaid-viewport.controls-visible .mermaid-controls {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1);
+  pointer-events: auto !important;
+  transition:
+    opacity 420ms ease,
+    transform 420ms ease;
+}
+
+.mermaid-control {
+  border: 1px solid rgba(0, 212, 170, 0.35);
+  background: rgba(14, 22, 34, 0.78);
+  color: var(--text-bright);
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  border-radius: 6px;
+  height: 28px;
+  min-width: 28px;
+  padding: 0 7px;
+  cursor: pointer;
+}
+
+.mermaid-control:hover {
+  border-color: rgba(0, 212, 170, 0.65);
+}
+
+.mermaid-control:focus-visible {
+  outline: 2px solid rgba(0, 212, 170, 0.45);
+  outline-offset: 1px;
+}
+
+.mermaid-pan-controls {
+  display: inline-flex;
+  gap: 4px;
 }
 
 .mermaid svg * {
@@ -290,12 +381,135 @@ body {
 }
 
 :root[data-theme='light'] .mermaid .edgePath path {
-  stroke: rgba(0, 60, 48, 0.6);
+  stroke: rgba(12, 47, 70, 0.85);
+}
+
+:root[data-theme='light'] .mermaid .label text,
+:root[data-theme='light'] .mermaid .nodeLabel,
+:root[data-theme='light'] .mermaid .edgeLabel text,
+:root[data-theme='light'] .mermaid .edgeLabel tspan,
+:root[data-theme='light'] .mermaid text,
+:root[data-theme='light'] .mermaid tspan {
+  fill: #10233a;
+}
+
+:root[data-theme='light'] .mermaid .node rect,
+:root[data-theme='light'] .mermaid .node circle,
+:root[data-theme='light'] .mermaid .node polygon,
+:root[data-theme='light'] .mermaid .node path,
+:root[data-theme='light'] .mermaid .cluster rect {
+	fill: rgba(255, 255, 255, 0.92);
+	stroke: #2b4563 !important;
+	stroke-width: 1px !important;
+}
+
+:root[data-theme='light'] .mermaid .label-container,
+:root[data-theme='light'] .mermaid .flowchart-label rect {
+	stroke: #2b4563 !important;
+	stroke-width: 1px !important;
+}
+
+:root[data-theme='light'] .mermaid .actor,
+:root[data-theme='light'] .mermaid .actor-bottom,
+:root[data-theme='light'] .mermaid .actor-top,
+:root[data-theme='light'] .mermaid .labelBox,
+:root[data-theme='light'] .mermaid .note {
+	fill: rgba(255, 255, 255, 0.92) !important;
+	stroke: #2b4563 !important;
+	stroke-width: 1px !important;
+}
+
+:root[data-theme='light'] .mermaid .actor-line,
+:root[data-theme='light'] .mermaid .messageLine0,
+:root[data-theme='light'] .mermaid .messageLine1,
+:root[data-theme='light'] .mermaid .loopLine,
+:root[data-theme='light'] .mermaid .note-line,
+:root[data-theme='light'] .mermaid .activation0,
+:root[data-theme='light'] .mermaid .activation1,
+:root[data-theme='light'] .mermaid .sequenceNumber,
+:root[data-theme='light'] .mermaid .loopText,
+:root[data-theme='light'] .mermaid .labelText,
+:root[data-theme='light'] .mermaid .messageText,
+:root[data-theme='light'] .mermaid .noteText,
+:root[data-theme='light'] .mermaid .actor > text,
+:root[data-theme='light'] .mermaid .actor-box,
+:root[data-theme='light'] .mermaid .actor-man,
+:root[data-theme='light'] .mermaid .signal,
+:root[data-theme='light'] .mermaid .signal-line {
+	stroke: #2b4563 !important;
+	fill: #10233a !important;
+	color: #10233a !important;
+}
+
+:root[data-theme='light'] .mermaid .messageLine0,
+:root[data-theme='light'] .mermaid .messageLine1,
+:root[data-theme='light'] .mermaid .actor-line,
+:root[data-theme='light'] .mermaid .loopLine,
+:root[data-theme='light'] .mermaid .note-line,
+:root[data-theme='light'] .mermaid .signal-line {
+	stroke-width: 1.2px !important;
+}
+
+:root[data-theme='light'] .mermaid marker path {
+  fill: rgba(12, 47, 70, 0.9);
+  stroke: rgba(12, 47, 70, 0.9);
+}
+
+:root[data-theme='light'] .mermaid-control {
+  border-color: rgba(16, 56, 86, 0.45);
+  background: rgba(250, 253, 255, 0.96);
+  color: #0f2a44;
+}
+
+:root[data-theme='light'] .mermaid-control:hover {
+  border-color: rgba(10, 121, 98, 0.72);
+  background: #ffffff;
+}
+
+:root[data-theme='light'] .mermaid-control:focus-visible {
+  outline-color: rgba(10, 121, 98, 0.55);
 }
 
 :root[data-theme='dark'] .mermaid .edgeLabel {
   background: transparent;
   border: none;
+}
+
+:root[data-theme='dark'] .mermaid .node rect,
+:root[data-theme='dark'] .mermaid .node circle,
+:root[data-theme='dark'] .mermaid .node polygon,
+:root[data-theme='dark'] .mermaid .node path,
+:root[data-theme='dark'] .mermaid .cluster rect,
+:root[data-theme='dark'] .mermaid .label-container,
+:root[data-theme='dark'] .mermaid .flowchart-label rect {
+	fill: rgba(24, 36, 58, 0.9) !important;
+	stroke: #9bb6d8 !important;
+	stroke-width: 1px !important;
+}
+
+:root[data-theme='dark'] .mermaid .actor,
+:root[data-theme='dark'] .mermaid .actor-bottom,
+:root[data-theme='dark'] .mermaid .actor-top,
+:root[data-theme='dark'] .mermaid .labelBox,
+:root[data-theme='dark'] .mermaid .note {
+	fill: rgba(24, 36, 58, 0.9) !important;
+	stroke: #9bb6d8 !important;
+	stroke-width: 1px !important;
+}
+
+:root[data-theme='dark'] .mermaid .actor-line,
+:root[data-theme='dark'] .mermaid .messageLine0,
+:root[data-theme='dark'] .mermaid .messageLine1,
+:root[data-theme='dark'] .mermaid .loopLine,
+:root[data-theme='dark'] .mermaid .note-line,
+:root[data-theme='dark'] .mermaid .signal-line {
+	stroke: #7f9bc1 !important;
+	stroke-width: 1.2px !important;
+}
+
+:root[data-theme='dark'] .mermaid marker path {
+	fill: #7f9bc1;
+	stroke: #7f9bc1;
 }
 
 /* Tablet */
@@ -314,7 +528,16 @@ body {
 }
 
 @media (max-width: 767px) {
-  .mermaid {
-    padding: 14px 12px;
+  .content .mermaid-viewport .mermaid-controls {
+    right: 8px;
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  .mermaid-control {
+    height: 26px;
+    min-width: 26px;
+    padding: 0 6px;
+    font-size: 9px;
   }
 }
