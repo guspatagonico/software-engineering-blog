@@ -1,11 +1,14 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
+import { rehypeD2 } from './src/lib/rehypeD2.mjs';
 
 export default defineConfig({
   site: 'https://dev.ecim.tech',
   base: '/software-engineering',
-  integrations: [react(), mdx()],
+  integrations: [react(), mdx({
+    rehypePlugins: [rehypeD2],
+  })],
   server: {
     host: '0.0.0.0',
     allowedHosts: ['galadriel'],
@@ -21,8 +24,8 @@ export default defineConfig({
             if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
               return 'react-vendor';
             }
-            if (id.includes('node_modules/mermaid')) {
-              return 'mermaid';
+            if (id.includes('node_modules/@terrastruct/d2')) {
+              return 'd2-wasm';
             }
           },
         },

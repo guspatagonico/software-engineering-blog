@@ -126,16 +126,22 @@ export const sections = [
     </p>
 
     <h3>Loop de control</h3>
-    ```mermaid
-    flowchart TD
-      A[Input + Contrato] --> B[Agente]
-      B --> C["Llamadas a tools"]
-      C --> D[Artefactos]
-      D --> E[Validador]
-      E --> F{"¿Convergió?"}
-      F -- "Sí" --> G[Publicar]
-      F -- "No" --> H["Delta + Nuevas restricciones"]
-      H --> B
+    ```d2
+    direction: down
+
+    Input: "Input + Contrato"
+    Agent: Agente
+    Tools: "Llamadas a tools"
+    Artifacts: Artefactos
+    Validator: Validador
+    Converged: "¿Convergió?"
+    Publish: Publicar
+    Delta: "Delta + Nuevas restricciones"
+
+    Input -> Agent -> Tools -> Artifacts -> Validator -> Converged
+    Converged -> Publish: "Sí"
+    Converged -> Delta: "No"
+    Delta -> Agent
     ```
     <p>
       Este loop es el corazón de Harness Engineering: cada vuelta termina con un veredicto.
@@ -145,16 +151,20 @@ export const sections = [
     </p>
 
     <h3>Loop de tool use (agéntico)</h3>
-    ```mermaid
-    sequenceDiagram
-      participant O as Orquestador
-      participant A as Agente
-      participant T as Herramientas
-      O->>A: Tarea + Contrato + Presupuestos
-      A->>T: tool_use (call)
-      T-->>A: tool_result
-      A->>O: Salida + Evidencia
-      O->>A: Aceptar / Revisar
+    ```d2
+    seq: {
+      shape: sequence_diagram
+
+      Orchestrator
+      Agent
+      Tools
+
+      Orchestrator -> Agent: "Tarea + Contrato + Presupuestos"
+      Agent -> Tools: "tool_use (call)"
+      Tools -> Agent: "tool_result"
+      Agent -> Orchestrator: "Salida + Evidencia"
+      Orchestrator -> Agent: "Aceptar / Revisar"
+    }
     ```
     <p>
       En cualquier stack con tool calling, el contrato debe viajar con la tarea: el agente no solo
@@ -165,19 +175,20 @@ export const sections = [
     </p>
 
     <h3>Arquitectura (contenedores)</h3>
-    ```mermaid
-    flowchart LR
-      user[Usuario]
-      orchestrator[Orquestador\nLoop de control]
-      agent[Agente\nLLM + politicas]
-      tools[Herramientas\nMCP/skills]
-      artifacts[Artefactos\nArchivos, logs, checklists]
+    ```d2
+    direction: right
 
-      user -->|Define objetivo| orchestrator
-      orchestrator -->|Tarea + Contrato| agent
-      agent -->|Uso de herramientas| tools
-      agent -->|Escribe| artifacts
-      orchestrator -->|Valida| artifacts
+    User: Usuario
+    Orchestrator: "Orquestador\nLoop de control"
+    Agent: "Agente\nLLM + politicas"
+    Tools: "Herramientas\nMCP/skills"
+    Artifacts: "Artefactos\nArchivos, logs, checklists"
+
+    User -> Orchestrator: "Define objetivo"
+    Orchestrator -> Agent: "Tarea + Contrato"
+    Agent -> Tools: "Uso de herramientas"
+    Agent -> Artifacts: "Escribe"
+    Orchestrator -> Artifacts: "Valida"
     ```
     <p>
       Esta vista resume los límites del sistema. El orquestador es el único actor que valida y

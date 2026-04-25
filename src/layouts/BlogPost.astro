@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/blog-post.css';
+import '../styles/d2-diagram.css';
 
 import { Image } from 'astro:assets';
 
@@ -9,6 +10,7 @@ import Footer from '@/components/Footer.astro';
 import Navbar from '@/components/Navbar.astro';
 import PostCompactFooter from '@/components/PostCompactFooter.astro';
 import ScrollIndicator from '@/components/ScrollIndicator.astro';
+import D2DiagramsTransformer from '@/components/D2DiagramsTransformer';
 import type { PostMeta } from '@/data/posts';
 
 interface Props {
@@ -234,6 +236,8 @@ const finalDescription = description ?? post?.description;
       <slot />
     </div>
 
+    <D2DiagramsTransformer client:load />
+
     {post && <PostCompactFooter published={post.pubDate} />}
 
     {
@@ -308,7 +312,5 @@ const finalDescription = description ?? post?.description;
         document.addEventListener('astro:page-load', initHashNavigation);
       })();
     </script>
-    <script src="/software-engineering/vendor/mermaid.min.js" defer></script>
-    <script src="/software-engineering/vendor/mermaid-render.js" defer></script>
   </body>
 </html>
