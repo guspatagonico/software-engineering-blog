@@ -17,6 +17,10 @@ const ZOOM_MIN = 0.5;
 const ZOOM_MAX = 3.0;
 const ZOOM_STEP = 0.1;
 
+// D2 theme IDs for light and dark modes
+const LIGHT_THEME = 0; // Default light theme
+const DARK_THEME = 1; // Neutral dark theme
+
 const calculateFitToViewScale = (metrics: ViewportMetrics): number => {
 	if (metrics.baseWidth <= 0 || metrics.baseHeight <= 0) {
 		return 1;
@@ -29,10 +33,21 @@ const calculateFitToViewScale = (metrics: ViewportMetrics): number => {
 	return Math.max(ZOOM_MIN, Math.min(fitScale, ZOOM_MAX));
 };
 
+const getCurrentTheme = (): 'light' | 'dark' => {
+	if (typeof document === 'undefined') return 'dark';
+	const theme = document.documentElement.getAttribute('data-theme');
+	return theme === 'light' ? 'light' : 'dark';
+};
+
+const getD2ThemeId = (theme: 'light' | 'dark'): number => {
+	return theme === 'light' ? LIGHT_THEME : DARK_THEME;
+};
+
 export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) => {
 	const [svg, setSvg] = useState<string | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 	const containerRef = useRef<HTMLDivElement>(null);
 	const canvasRef = useRef<HTMLDivElement>(null);
 	const viewportRef = useRef<HTMLDivElement>(null);
@@ -43,6 +58,26 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	const [isDragging, setIsDragging] = useState(false);
 	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 	const d2InstanceRef = useRef<InstanceType<typeof D2> | null>(null);
+
+	// Detect theme changes
+	useEffect(() => {
+		setTheme(getCurrentTheme());
+
+		const observer = new MutationObserver((mutations) => {
+			mutations.forEach((mutation) => {
+				if (mutation.attributeName === 'data-theme') {
+					setTheme(getCurrentTheme());
+				}
+			});
+		});
+
+		observer.observe(document.documentElement, {
+			attributes: true,
+			attributeFilter: ['data-theme'],
+		});
+
+		return () => observer.disconnect();
+	}, []);
 
 	// Initialize D2 and render diagram
 	useEffect(() => {
@@ -61,8 +96,14 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 				// Compile D2 code
 				const compiled = await d2.compile(code);
 
-				// Render to SVG
-				const renderedSvg = await d2.render(compiled.diagram, compiled.renderOptions);
+				// Get render options with current theme
+				const renderOptions = {
+					...compiled.renderOptions,
+					themeID: getD2ThemeId(theme),
+				};
+
+				// Render to SVG with theme
+				const renderedSvg = await d2.render(compiled.diagram, renderOptions);
 
 				setSvg(renderedSvg);
 				setLoading(false);
@@ -78,7 +119,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 		};
 
 		renderDiagram();
-	}, [code]);
+	}, [code, theme]);
 
 	const calculateAndSetInitialScale = () => {
 		if (!canvasRef.current || !viewportRef.current) return;
@@ -149,7 +190,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	};
 
 	return (
-		<div ref={containerRef} className="d2-diagram d2-diagram--interactive">
+		<div ref={containerRef} className={`d2-diagram d2-diagram--interactive d2-diagram--${theme}`}>
 			{loading && (
 				<div className="d2-diagram__loading">
 					<div className="d2-diagram__loading-spinner" />
