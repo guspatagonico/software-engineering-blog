@@ -6,32 +6,12 @@ interface D2DiagramRendererProps {
 	code: string;
 }
 
-interface ViewportMetrics {
-	baseWidth: number;
-	baseHeight: number;
-	viewportWidth: number;
-	viewportHeight: number;
-}
-
 const ZOOM_MIN = 0.5;
 const ZOOM_MAX = 3.0;
 const ZOOM_STEP = 0.1;
 
-// D2 theme IDs for light and dark modes
-const LIGHT_THEME = 0; // Default light theme
-const DARK_THEME = 1; // Neutral dark theme
-
-const calculateFitToViewScale = (metrics: ViewportMetrics): number => {
-	if (metrics.baseWidth <= 0 || metrics.baseHeight <= 0) {
-		return 1;
-	}
-
-	const scaleX = metrics.viewportWidth / metrics.baseWidth;
-	const scaleY = metrics.viewportHeight / metrics.baseHeight;
-	const fitScale = Math.min(scaleX, scaleY);
-
-	return Math.max(ZOOM_MIN, Math.min(fitScale, ZOOM_MAX));
-};
+const LIGHT_THEME = 0;
+const DARK_THEME = 1;
 
 const getCurrentTheme = (): 'light' | 'dark' => {
 	if (typeof document === 'undefined') return 'dark';
@@ -163,18 +143,10 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 
 				setSvg(svgString);
 				setLoading(false);
-				// Reset pan and zoom to defaults
 				setPanX(0);
 				setPanY(0);
 				setScale(1);
-
-				// Calculate fit-to-view scale after SVG is rendered and DOM is updated
-				// Use nested requestAnimationFrame to wait for React render + browser paint
-				requestAnimationFrame(() => {
-					requestAnimationFrame(() => {
-						calculateAndSetInitialScale();
-					});
-				});
+				setInitialScale(1);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to render D2 diagram');
 				setLoading(false);
@@ -184,38 +156,6 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 		renderDiagram();
 	}, [code, theme]);
 
-
-	const calculateAndSetInitialScale = () => {
-		if (!canvasRef.current || !viewportRef.current) return;
-
-		// Get SVG dimensions
-		const svg = canvasRef.current.querySelector('svg');
-		if (!svg) return;
-
-		const viewBox = svg.getAttribute('viewBox');
-		if (!viewBox) return;
-
-		const [, , baseWidth, baseHeight] = viewBox.split(' ').map(Number);
-		if (baseWidth <= 0 || baseHeight <= 0) return;
-
-		// Get viewport dimensions
-		const viewportRect = viewportRef.current.getBoundingClientRect();
-		const viewportWidth = viewportRect.width - 16; // Subtract padding
-		const viewportHeight = viewportRect.height - 16;
-
-		const metrics: ViewportMetrics = {
-			baseWidth,
-			baseHeight,
-			viewportWidth,
-			viewportHeight,
-		};
-
-		const fitScale = calculateFitToViewScale(metrics);
-		setInitialScale(fitScale);
-		setScale(fitScale);
-		setPanX(0);
-		setPanY(0);
-	};
 
 	const handleZoomIn = () => {
 		setScale((prev) => Math.min(prev + ZOOM_STEP, ZOOM_MAX));
