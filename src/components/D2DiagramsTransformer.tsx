@@ -25,10 +25,8 @@ export const D2DiagramsTransformer: React.FC = () => {
 			const code = htmlContainer.dataset.d2Code;
 			if (!code || !code.trim()) return;
 
-			// Mark the first diagram
-			if (index === 0) {
-				htmlContainer.setAttribute('data-first', 'true');
-			}
+			// Mark diagram position for per-diagram CSS
+			htmlContainer.setAttribute('data-diagram-index', String(index));
 
 			// Create a wrapper for the React component
 			const wrapper = document.createElement('div');

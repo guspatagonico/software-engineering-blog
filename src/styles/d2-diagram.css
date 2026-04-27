@@ -10,9 +10,23 @@
 	transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* First diagram on the page: 50% smaller */
-[data-first="true"] .d2-diagram .d2-viewport {
-	min-height: 140px;
+/* Desktop: per-diagram widths */
+@media (min-width: 769px) {
+	[data-diagram-index="0"] .d2-diagram {
+		width: 50%;
+	}
+
+	[data-diagram-index="0"] .d2-diagram .d2-viewport {
+		min-height: 140px;
+	}
+
+	[data-diagram-index="1"] .d2-diagram {
+		width: 70%;
+	}
+
+	[data-diagram-index="2"] .d2-diagram {
+		width: 100%;
+	}
 }
 
 .d2-diagram--interactive {
