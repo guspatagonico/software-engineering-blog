@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { D2 } from '@terrastruct/d2';
+import type { D2 as D2Type } from '@terrastruct/d2';
 import '../styles/d2-diagram.css';
 
 interface D2DiagramRendererProps {
@@ -12,6 +12,16 @@ const ZOOM_STEP = 0.1;
 
 const LIGHT_THEME = 0;
 const DARK_THEME = 1;
+
+let d2ModulePromise: Promise<typeof import('@terrastruct/d2')> | null = null;
+
+const loadD2Module = (): Promise<typeof import('@terrastruct/d2')> => {
+	if (!d2ModulePromise) {
+		d2ModulePromise = import('@terrastruct/d2');
+	}
+
+	return d2ModulePromise;
+};
 
 const getCurrentTheme = (): 'light' | 'dark' => {
 	if (typeof document === 'undefined') return 'dark';
@@ -38,7 +48,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	const [isDragging, setIsDragging] = useState(false);
 	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
 	const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
-	const d2InstanceRef = useRef<InstanceType<typeof D2> | null>(null);
+	const d2InstanceRef = useRef<D2Type | null>(null);
 
 	// Detect theme changes
 	useEffect(() => {
@@ -69,6 +79,8 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 			try {
 				setLoading(true);
 				setError(null);
+
+				const { D2 } = await loadD2Module();
 
 				// Initialize D2 if not already done
 				if (!d2InstanceRef.current) {

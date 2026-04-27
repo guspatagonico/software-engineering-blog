@@ -3,7 +3,7 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 938,
+      "tokens": 974,
       "type": "summary"
     },
     {
@@ -14,8 +14,14 @@
     },
     {
       "order": 2,
-      "path": "project_guidelines/_index.md",
-      "tokens": 795,
+      "path": "project_management/_index.md",
+      "tokens": 643,
+      "type": "summary"
+    },
+    {
+      "order": 1,
+      "path": "project_management/run_commands/_index.md",
+      "tokens": 187,
       "type": "summary"
     },
     {
@@ -102,6 +108,14 @@
       "importance": 50,
       "path": "project_guidelines/agents/sub_agent_design_and_anatomy.md",
       "tokens": 6,
+      "type": "context"
+    },
+    {
+      "abstractPath": "project_guidelines/architecture/d2_diagram_optimization.abstract.md",
+      "abstractTokens": 12,
+      "importance": 50,
+      "path": "project_guidelines/architecture/d2_diagram_optimization.md",
+      "tokens": 12,
       "type": "context"
     },
     {
@@ -235,31 +249,15 @@
       "path": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md",
       "tokens": 6,
       "type": "context"
-    },
-    {
-      "abstractPath": "ui/design_system/glossary_vocabulary_layout.abstract.md",
-      "abstractTokens": 9,
-      "importance": 50,
-      "path": "ui/design_system/glossary_vocabulary_layout.md",
-      "tokens": 9,
-      "type": "context"
-    },
-    {
-      "abstractPath": "ui/persistence/checklist_state_persistence.abstract.md",
-      "abstractTokens": 6,
-      "importance": 50,
-      "path": "ui/persistence/checklist_state_persistence.md",
-      "tokens": 6,
-      "type": "context"
     }
   ],
-  "generated_at": "2026-04-24T22:15:53.735Z",
+  "generated_at": "2026-04-27T16:34:05.570Z",
   "lane_tokens": {
-    "contexts": 4000,
+    "contexts": 3997,
     "stubs": 0,
-    "summaries": 1925
+    "summaries": 1996
   },
-  "source_fingerprint": "9c3ea87f9c90ae594dd258e8b6d8ab651bffeef5be7eea12a7a0b22880ce8197",
-  "total_tokens": 5925,
+  "source_fingerprint": "ee10ab88ef1336f38380f6c316ddf72d2ebdf0b6a1f49ac6d6f16b8b7b314a73",
+  "total_tokens": 5993,
   "version": 1
 }

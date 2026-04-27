@@ -13,23 +13,24 @@ export default defineConfig({
     host: '0.0.0.0',
     allowedHosts: ['galadriel', 'metaponto'],
   },
-  vite: {
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules/three')) {
-              return 'three';
-            }
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('node_modules/@terrastruct/d2')) {
-              return 'd2-wasm';
-            }
-          },
-        },
-      },
-    },
-  },
+	vite: {
+		build: {
+			chunkSizeWarningLimit: 8500,
+			rollupOptions: {
+				output: {
+					manualChunks(id) {
+						if (id.includes('node_modules/three')) {
+							return 'three';
+						}
+						if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+							return 'react-vendor';
+						}
+						if (id.includes('node_modules/@terrastruct/d2')) {
+							return 'd2-wasm';
+						}
+					},
+				},
+			},
+		},
+	},
 });

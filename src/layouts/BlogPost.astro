@@ -10,7 +10,6 @@ import Footer from '@/components/Footer.astro';
 import Navbar from '@/components/Navbar.astro';
 import PostCompactFooter from '@/components/PostCompactFooter.astro';
 import ScrollIndicator from '@/components/ScrollIndicator.astro';
-import D2DiagramsTransformer from '@/components/D2DiagramsTransformer';
 import type { PostMeta } from '@/data/posts';
 
 interface Props {
@@ -59,6 +58,23 @@ const finalDescription = description ?? post?.description;
         }
 
         document.addEventListener('astro:page-load', moveTagsInline);
+      })();
+    </script>
+    <script>
+      (function () {
+        async function loadD2TransformerIfNeeded() {
+          if (!document.querySelector('[data-d2-diagram="true"]')) return;
+          const module = await import('@/components/D2DiagramsTransformer');
+          module.transformD2Diagrams();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', loadD2TransformerIfNeeded, { once: true });
+        } else {
+          loadD2TransformerIfNeeded();
+        }
+
+        document.addEventListener('astro:page-load', loadD2TransformerIfNeeded);
       })();
     </script>
     <script is:inline>
@@ -235,9 +251,6 @@ const finalDescription = description ?? post?.description;
     <div class="post-layout">
       <slot />
     </div>
-
-    <D2DiagramsTransformer client:load />
-
     {post && <PostCompactFooter published={post.pubDate} />}
 
     {

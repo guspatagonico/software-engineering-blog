@@ -1,39 +1,49 @@
 ---
-children_hash: 5ffc45d19eb5ab38f895ae773eae523e00b0f7c08fc763c8705952607041d9b3
-compression_ratio: 0.1839426191577973
+children_hash: 7c7a1f65c917b2a6f89cd2a5333eb19686857482e65f96d3b44e9c46990d2414
+compression_ratio: 0.19314580031695722
 condensation_order: 2
-covers: [agents/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md]
-covers_token_total: 4322
+covers: [agents/_index.md, architecture/_index.md, blog_post_architecture/_index.md, context.md, dev_process/_index.md, git_safe_mutations/_index.md, harness_engineering/_index.md, run_commands/_index.md]
+covers_token_total: 5048
 summary_level: d2
-token_count: 795
+token_count: 975
 type: summary
 ---
-# Domain: project_guidelines (Level d2 Summary)
+# Project Guidelines: Structural Overview (d2)
 
-The `project_guidelines` domain establishes the high-integrity operational framework for the Software Engineering Blog. It integrates agentic orchestration, strict architectural standards, and automated development workflows to ensure consistency across the Astro + React hybrid environment.
+The `project_guidelines` domain establishes the operational, architectural, and procedural standards for the Software Engineering Blog. It integrates specialized agent orchestration, a hybrid Astro/React architecture, and strict quality-gated development workflows.
 
 ## 1. Agent Ecosystem and Orchestration
-The project operates via a **Dispatcher Pattern**, utilizing specialized sub-agents (e.g., `@blog-writer`, `@tester`) managed by an `@orchestrator`.
-*   **Control Theory Framework**: The **Envolvente Convergente Framework** uses Lyapunov functions and Barrier Functions (CBF) to ensure agent behavior monotonically approaches objectives while preventing scope drift.
-*   **Drift & Entropy Management**: Orchestration interventions are triggered by "Entropía Agéntica" signals, including scope expansion, barrier violations, or excessive correction loops.
-*   **Operational Budgets**: Sub-agents adhere to the **"Rule of Gold"** (scopes must be describable in <2 sentences) and a strict **~5800-token context budget**.
-*   **Drill-down**: `agents/_index.md`, `harness_engineering/_index.md`.
+The project operates via a **Dispatcher Pattern** where an `@orchestrator` manages specialized sub-agents (e.g., `@blog-writer`, `@tester`) defined in `.opencode/agents/`.
 
-## 2. Core Architecture and Blog Standards
-The repository utilizes an **Astro + React hybrid island architecture**, where React is reserved for interactive visualizations and mathematical notations.
-*   **Blog Post Structure**: All posts must implement the `BlogPost` layout and `SectionNav` component (using `client:load`). Content is organized into discrete panels (`id="panel-{id}"`) with specific CSS class transitions (`panel active`).
-*   **Asset Management**: Local images must use the Astro `<Image />` component. Post-specific assets are localized in `src/assets/posts/<slug>/`.
-*   **Design System**: Visual consistency is enforced through a restricted icon set (e.g., ◈, ▣, ⬡) and shared UI components like `ConvergentEnvelope`.
-*   **Drill-down**: `blog_post_architecture/_index.md`, `dev_process/_index.md`.
+*   **Orchestration Patterns**: Utilizes a **Fork-Join pattern** for parallel task execution. Interventions are triggered by "drift signals" such as scope expansion, barrier violations, or excessive auto-correction loops.
+*   **Harness Engineering Framework**: Guided by the **Envolvente Convergente** model, which uses control theory (Lyapunov functions, Barrier functions) to ensure agent actions monotonically decrease the distance to project objectives.
+*   **Context & Budgets**: Enforces a strict **~5800 token budget** per sub-agent. The **"Rule of Gold"** mandates that any task requiring >2 sentences to describe must be sub-scoped.
+*   **Handoffs**: State transfer occurs via **Compressed Handoff Templates** in `_handoffs/`. `session-state.md` remains the global source of truth but is never injected directly into sub-agent context.
+*   **Drill-down**: `agents/_index.md`, `harness_engineering/_index.md`
+
+## 2. Core Architecture and State Management
+The blog utilizes an **Astro + React hybrid "Island" architecture**, prioritizing static performance while enabling complex interactivity.
+
+*   **Blog Post Structure**: Mandatory use of `BlogPost` layout and `SectionNav` component (`client:load`). Content must be organized into `panels` with strict ID naming (`panel-{id}`) and specific CSS class transitions (`panel active`).
+*   **D2 Diagram Pipeline**: A three-tier rendering system handles heavy D2/WASM assets (~8MB). It uses dynamic imports (`D2DiagramsTransformer.tsx`), React hydration (`D2DiagramRenderer.tsx`), and a `MutationObserver` for real-time theme synchronization.
+*   **Persistence Layer**: Centralized in `src/utils/storage.ts` using a single localStorage key (`gsalvini-se-blog`). It tracks themes, visual toggles, and checklist states with SSR-safe checks.
+*   **Asset Management**: Local images must use the Astro `<Image />` component; post-specific assets are localized to `src/assets/posts/<slug>/`.
+*   **Drill-down**: `architecture/_index.md`, `blog_post_architecture/_index.md`
 
 ## 3. Development Process and Quality Gates
-A standardized, **pnpm-exclusive** workflow governs all lifecycle phases from local development to production.
-*   **Command Lifecycle**: The standard progression is `pnpm install` → `pnpm dev` → `pnpm lint` → `pnpm typecheck` → `pnpm build`.
-*   **Git & Mutation Policy**: **Conventional Commits** are mandatory. The **Git Mutation Gating** rule requires explicit user consent before any `commit` or `push`, regardless of lint/typecheck success. Complex features must use **Git Worktrees** in `.worktrees/`.
-*   **Testing Suite**: Bifurcated into unit/regression testing via **Vitest** and E2E testing via **Playwright**.
-*   **Drill-down**: `dev_process/_index.md`, `run_commands/_index.md`, `git_safe_mutations/_index.md`.
+A standardized high-integrity workflow enforced through automated scripts and strict Git policies.
 
-## 4. Environment and Security
-*   **Secrets & Safety**: Committing credentials or `.env` files is strictly prohibited. Destructive Git commands (force push/hard reset) are banned unless explicitly authorized.
-*   **Deployment**: Production assets are managed via the `/dist-upload` command, which utilizes `gsupload` with interactive response piping.
-*   **Drill-down**: `run_commands/_index.md`, `context.md`.
+*   **Toolchain**: **pnpm** is the exclusive package manager. The lifecycle follows: `install` → `dev` → `lint` → `typecheck` → `build`.
+*   **Git Policy**: 
+    *   **Worktrees**: Required for non-trivial features via the `.worktrees/` directory.
+    *   **Mutation Gating**: Explicit user consent is required for any `git commit` or `push`, regardless of lint/typecheck success.
+    *   **Safety**: Force pushes and hard resets are prohibited.
+*   **Testing**: Bifurcated into unit/regression testing (**Vitest**) and E2E testing (**Playwright**).
+*   **Standards**: Strict TypeScript (no `any`), Conventional Commits, and `@/` path aliasing.
+*   **Drill-down**: `dev_process/_index.md`, `git_safe_mutations/_index.md`, `run_commands/_index.md`
+
+## 4. Operational Environment
+*   **Production**: Deployment involves specialized interactive commands (e.g., `/dist-upload`) using `gsupload`.
+*   **Visual Constraints**: Restricted icon set (◈ ▸ ▣ ◑ ⊕ ⬡ → ⟳ ✓ ≡ ∑) and mandatory dark/light mode support.
+*   **Security**: Strict prohibition against committing secrets, `.env` files, or including agent names in public-facing documentation/commits.
+*   **Drill-down**: `run_commands/_index.md`, `context.md`

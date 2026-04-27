@@ -19,6 +19,10 @@ body {
   overflow: hidden;
 }
 
+:root:not([data-theme='light']) body.post-page {
+  background: #050910;
+}
+
 .post-page .footer {
   display: none;
 }

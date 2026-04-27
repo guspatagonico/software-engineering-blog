@@ -1,47 +1,47 @@
 ---
-children_hash: 90394eed057f3e25dd4450f98de3c5b2b0c6fd8a80059ecef998832c6bb117f7
-compression_ratio: 0.3434639326254119
+children_hash: c126fba9c20b2e9fc76c0bb95c7c0bef0a752c4d441c8b2111360647a92ecc16
+compression_ratio: 0.33379026730637423
 condensation_order: 3
 covers: [facts/_index.md, project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 2731
+covers_token_total: 2918
 summary_level: d3
-token_count: 938
+token_count: 974
 type: summary
 ---
-# Software Engineering Blog: Structural Knowledge Overview (Level d3)
+# Structural Summary: Software Engineering Blog Knowledge Base (Level d3)
 
-This summary synthesizes the operational, architectural, and visual frameworks of the Software Engineering Blog, integrating agentic workflows with high-integrity development standards and immersive UI patterns.
+This summary synthesizes the operational, architectural, and visual standards of the Software Engineering Blog, integrating agent-driven development with a high-performance Astro/React frontend.
 
-## 1. Operational Framework & Agent Ecosystem
-The project utilizes a high-integrity agentic model governed by strict control theory and resource management.
+## 1. Agent Ecosystem & Operational Framework
+The project utilizes a **Dispatcher Pattern** where an `@orchestrator` manages specialized sub-agents (e.g., `@blog-writer`, `@tester`) within a strict **~5800 token budget**.
 
-*   **Dispatcher Pattern & Orchestration**: Operations are managed by an `@orchestrator` directing specialized sub-agents (e.g., `@blog-writer`, `@tester`). Behavior is constrained by the **Envolvente Convergente Framework**, using Lyapunov and Barrier Functions to prevent scope drift and ensure objective convergence.
-*   **Entropy Management**: System interventions are triggered by "Entropía Agéntica" signals (scope expansion or correction loops). Agents operate under a **~5800-token context budget** and the **"Rule of Gold"** (scopes must be <2 sentences).
-*   **Session Continuity**: Employs a **Hybrid State Strategy**. Durable knowledge (patterns/preferences) is managed by ByteRover, while ephemeral session state (tasks/blockers) is tracked via handoff files.
-*   **Drill-down**: `project_guidelines/agents/`, `project_guidelines/harness_engineering/`, `project_management/handoffs/`.
+*   **Harness Engineering**: Guided by the **Envolvente Convergente** model, ensuring agent actions monotonically approach project objectives through control theory principles.
+*   **Drift & Orchestration**: Employs a **Fork-Join pattern** for parallel execution, triggered by "drift signals" like scope expansion or auto-correction loops.
+*   **Handoff Strategy**: Uses a **Hybrid State Strategy** where durable knowledge (patterns/preferences) is managed by ByteRover, while ephemeral session state (tasks/blockers) is tracked via **Compressed Handoff Templates** in `_handoffs/`.
+*   **Drill-down**: `project_guidelines/agents/_index.md`, `project_guidelines/harness_engineering/_index.md`, `project_management/handoffs/_index.md`.
 
-## 2. Core Architecture & Development Standards
-A strict **Astro + React hybrid island architecture** ensures performance, with React reserved for interactive visualizations.
+## 2. Core Architecture & Technical Standards
+The site follows an **Astro + React "Island" architecture**, prioritizing static performance with targeted interactivity.
 
-*   **Blog Standards**: Posts implement the `BlogPost` layout and `SectionNav` component. Content is organized into discrete panels (`id="panel-{id}"`) with specific CSS transitions. Local images must use the Astro `<Image />` component.
-*   **Git & Mutation Policy**: **Conventional Commits** are mandatory. The **Git Mutation Gating** rule requires explicit user consent for all commits/pushes. Non-trivial work must use **Git Worktrees** located in `.worktrees/<branch_name>`.
-*   **Workflow Lifecycle**: Standardized via **pnpm**: `install` → `dev` → `lint` → `typecheck` → `build`. Production deployment uses the `/dist-upload` command via `gsupload`.
-*   **Drill-down**: `project_guidelines/blog_post_architecture/`, `project_guidelines/dev_process/`, `project_management/git_workflow/`.
+*   **Blog Post Structure**: Mandatory `BlogPost` layout and `SectionNav` component (`client:load`). Content is organized into `panels` with strict `panel-{id}` naming and specific CSS transitions.
+*   **Diagram Pipeline**: A three-tier system for D2/WASM assets using dynamic imports (`D2DiagramsTransformer.tsx`) and a `MutationObserver` for theme synchronization.
+*   **Persistence Layer**: Centralized in `src/utils/storage.ts` using a single `gsalvini-se-blog` localStorage key for themes, toggles, and checklist states.
+*   **Development Workflow**: Exclusive use of **pnpm**. Strict Git policies require **Worktrees** for non-trivial features (located in `.worktrees/`) and explicit user consent for all mutations.
+*   **Drill-down**: `project_guidelines/architecture/_index.md`, `project_guidelines/dev_process/_index.md`, `project_management/git_workflow/_index.md`.
 
-## 3. UI, Visual Experience & Design System
-The frontend focuses on immersive, theme-aware interactions and responsive structural integrity.
+## 3. UI, Visual Experience & Design Systems
+The `ui` domain governs immersive components and responsive layouts through theme-aware feedback systems.
 
-*   **Layout Architecture**: `BlogPost.astro` manages a layered structure with a sticky header (`z-index: 40`) and a fixed metadata footer. It enforces `overscroll-behavior: none` on mobile to prevent bounce effects.
-*   **Visual Effects System**:
-    *   **Matrix Background**: A five-layer character rain with responsive stream density (60-220 streams).
-    *   **Dodecahedron Toggle**: A Three.js 3D interactive button that manages background state and persists via `localStorage`.
-    *   **Glassy UI**: Centralized `backdrop-filter` tokens applied to navigation and footers.
-*   **Content Utilities**: Specialized styles for vocabulary grids (175px labels), table accent highlighting (`.table-accent-2/3`), and responsive teal tag chips.
-*   **Drill-down**: `ui/blog_post_layout/`, `ui/visual_effects/`, `ui/design_system/`.
+*   **Layout & Navigation**: `BlogPost.astro` enforces a layered structure (sticky header `z-index: 40`, fixed footer `z-index: 45`) and `overscroll-behavior: none` for mobile. `SectionNav` synchronizes via a hash-navigation script and `section-activated` events.
+*   **Visual Effects**: 
+    *   **Matrix Background**: A five-layer character rain (`MatrixBackground.tsx`) with responsive stream density (60-220 streams).
+    *   **Dodecahedron Toggle**: A Three.js 3D interactive button for background state management.
+    *   **Glassy UI**: Centralized `backdrop-filter` tokens in `tokens.css` for navigation and footers.
+*   **Content Utilities**: Specialized styles in `src/styles/post-content.css` for vocabulary grids (175px labels), table accent highlighting (`.table-accent-2/3`), and responsive tag chips.
+*   **Drill-down**: `ui/blog_post_layout/_index.md`, `ui/visual_effects/_index.md`, `ui/design_system/glossary_vocabulary_layout.md`.
 
-## 4. Project Conventions & Facts
-Standardized preferences and formatting rules ensure consistency across the codebase.
-
-*   **Formatting Standards**: HTML/JSX/MDX tags must keep closing angle brackets (`>`) on the same line as the tag boundary; leading brackets on new lines are prohibited.
-*   **Attribution & Ownership**: Project owned by Gustavo Adrián Salvini; managed by ByteRover context engineer.
-*   **Drill-down**: `facts/conventions/`, `facts/personal/`.
+## 4. Project Conventions & Governance
+*   **Formatting**: Strict HTML/JSX/MDX standards; closing angle brackets (`>`) must remain on the same line as the tag boundary.
+*   **Git Policy**: Conventional Commits are mandatory. The `main` branch is reserved for trivial fixes; all other changes require PRs via GitHub CLI.
+*   **Security**: Strict prohibition against committing secrets or including agent names in public documentation.
+*   **Drill-down**: `facts/conventions/_index.md`, `project_management/context.md`.

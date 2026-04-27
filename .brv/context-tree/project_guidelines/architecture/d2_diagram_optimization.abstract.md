@@ -1,0 +1,1 @@
+This document details an optimization strategy
