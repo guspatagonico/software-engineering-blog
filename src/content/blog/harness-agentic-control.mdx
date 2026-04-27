@@ -152,17 +152,19 @@ export const sections = [
 
     <h3>Loop de tool use (agéntico)</h3>
     ```d2
-    direction: right
+    seq: {
+      shape: sequence_diagram
 
-    Orchestrator: Orchestrator
-    Agent: Agente
-    Tools: Tools
+      Orchestrator
+      Agent
+      Tools
 
-    Orchestrator -> Agent: "Tarea + Contrato + Presupuestos"
-    Agent -> Tools: "tool_use (call)"
-    Tools -> Agent: "tool_result"
-    Agent -> Orchestrator: "Salida + Evidencia"
-    Orchestrator -> Agent: "Aceptar / Revisar"
+      Orchestrator -> Agent: "Tarea + Contrato + Presupuestos"
+      Agent -> Tools: "tool_use (call)"
+      Tools -> Agent: "tool_result"
+      Agent -> Orchestrator: "Salida + Evidencia"
+      Orchestrator -> Agent: "Aceptar / Revisar"
+    }
     ```
     <p>
       En cualquier stack con tool calling, el contrato debe viajar con la tarea: el agente no solo

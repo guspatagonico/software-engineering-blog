@@ -119,12 +119,6 @@
 	height: auto;
 }
 
-.d2-canvas svg > rect,
-.d2-canvas svg > svg > rect,
-.d2-canvas svg > g[clip-path] > rect:first-child {
-	fill: transparent !important;
-}
-
 .d2-controls {
 	display: flex;
 	gap: 8px;
