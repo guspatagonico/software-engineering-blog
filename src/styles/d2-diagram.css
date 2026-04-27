@@ -37,7 +37,7 @@
 
 /* Light mode specific */
 .d2-diagram--light .d2-viewport {
-	background: var(--surface);
+	background: transparent;
 }
 
 .d2-diagram--light .d2-control-btn {
@@ -66,7 +66,7 @@
 
 /* Dark mode specific */
 .d2-diagram--dark .d2-viewport {
-	background: var(--bg);
+	background: transparent;
 }
 
 .d2-diagram--dark .d2-canvas {
