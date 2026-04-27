@@ -7,6 +7,7 @@
 	background: var(--surface);
 	overflow: hidden;
 	border: 1px solid var(--border);
+	transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .d2-diagram--interactive {
@@ -17,7 +18,7 @@
 
 /* Light mode specific */
 .d2-diagram--light .d2-viewport {
-	background: #ffffff;
+	background: var(--surface);
 }
 
 .d2-diagram--light .d2-control-btn {
@@ -29,13 +30,14 @@
 .d2-diagram--light .d2-control-btn:hover {
 	background: var(--surface2);
 	border-color: var(--teal);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .d2-diagram--light .d2-control-btn:active {
 	background: var(--teal);
 	color: #ffffff;
 	border-color: var(--teal);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
 }
 
 .d2-diagram--light .d2-controls {
@@ -45,7 +47,7 @@
 
 /* Dark mode specific */
 .d2-diagram--dark .d2-viewport {
-	background: #0a0e14;
+	background: var(--bg);
 }
 
 .d2-diagram--dark .d2-control-btn {
@@ -57,13 +59,14 @@
 .d2-diagram--dark .d2-control-btn:hover {
 	background: var(--surface);
 	border-color: var(--teal);
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 1px 3px rgba(0, 212, 170, 0.15);
 }
 
 .d2-diagram--dark .d2-control-btn:active {
 	background: var(--teal);
-	color: #ffffff;
+	color: #000000;
 	border-color: var(--teal);
+	box-shadow: 0 2px 6px rgba(0, 212, 170, 0.2);
 }
 
 .d2-diagram--dark .d2-controls {
@@ -124,11 +127,20 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: var(--surface);
+	color: var(--text);
 }
 
 .d2-control-btn:disabled {
 	opacity: 0.5;
 	cursor: not-allowed;
+}
+
+/* Theme transition effect */
+.d2-diagram--transitioning .d2-viewport,
+.d2-diagram--transitioning .d2-controls {
+	opacity: 0.95;
+	transition: opacity 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
 }
 
 /* Loading state */

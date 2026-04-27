@@ -57,6 +57,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	const [initialScale, setInitialScale] = useState(1);
 	const [isDragging, setIsDragging] = useState(false);
 	const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+	const [isThemeTransitioning, setIsThemeTransitioning] = useState(false);
 	const d2InstanceRef = useRef<InstanceType<typeof D2> | null>(null);
 
 	// Detect theme changes
@@ -66,7 +67,10 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 		const observer = new MutationObserver((mutations) => {
 			mutations.forEach((mutation) => {
 				if (mutation.attributeName === 'data-theme') {
+					setIsThemeTransitioning(true);
 					setTheme(getCurrentTheme());
+					// Clear transition flag after animation completes
+					setTimeout(() => setIsThemeTransitioning(false), 200);
 				}
 			});
 		});
@@ -190,7 +194,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	};
 
 	return (
-		<div ref={containerRef} className={`d2-diagram d2-diagram--interactive d2-diagram--${theme}`}>
+		<div ref={containerRef} className={`d2-diagram d2-diagram--interactive d2-diagram--${theme} ${isThemeTransitioning ? 'd2-diagram--transitioning' : ''}`}>
 			{loading && (
 				<div className="d2-diagram__loading">
 					<div className="d2-diagram__loading-spinner" />
