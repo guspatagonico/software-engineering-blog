@@ -16,7 +16,7 @@ export const D2DiagramsTransformer: React.FC = () => {
 		// Find all D2 diagram containers created by the rehype plugin
 		const d2Containers = document.querySelectorAll('[data-d2-diagram="true"]');
 
-		d2Containers.forEach((container) => {
+		d2Containers.forEach((container, index) => {
 			const htmlContainer = container as HTMLElement;
 
 			// Skip if already processed
@@ -24,6 +24,11 @@ export const D2DiagramsTransformer: React.FC = () => {
 
 			const code = htmlContainer.dataset.d2Code;
 			if (!code || !code.trim()) return;
+
+			// Mark the first diagram
+			if (index === 0) {
+				htmlContainer.setAttribute('data-first', 'true');
+			}
 
 			// Create a wrapper for the React component
 			const wrapper = document.createElement('div');
