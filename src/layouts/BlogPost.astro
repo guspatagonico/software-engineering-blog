@@ -21,6 +21,18 @@ interface Props {
 
 const { title, subtitle, description, post } = Astro.props;
 const finalDescription = description ?? post?.description;
+
+function formatPublishedDate(pubDate?: string): string {
+  if (!pubDate) return 'N/A';
+  if (/^\d{4}-\d{2}-\d{2}$/.test(pubDate)) return pubDate;
+
+  const parsedDate = new Date(pubDate);
+  if (Number.isNaN(parsedDate.getTime())) return pubDate;
+
+  return parsedDate.toISOString().slice(0, 10);
+}
+
+const publishedDate = formatPublishedDate(post?.pubDate);
 ---
 
 <html lang="en">
@@ -250,6 +262,32 @@ const finalDescription = description ?? post?.description;
     </header>
     <div class="post-layout">
       <slot />
+      {
+        post && (
+          <aside class="post-meta-rail" aria-label="Post metadata">
+            <div class="post-meta-rail__card">
+              <span class="post-meta-rail__label">Published</span>
+              <p class="post-meta-rail__value">{publishedDate}</p>
+            </div>
+            <div class="post-meta-rail__card">
+              <span class="post-meta-rail__label">Post ID</span>
+              <p class="post-meta-rail__value post-meta-rail__value--mono">{post.id}</p>
+            </div>
+            {
+              post.tags.length > 0 && (
+                <div class="post-meta-rail__card">
+                  <span class="post-meta-rail__label">Tags</span>
+                  <div class="post-meta-rail__tags" role="list">
+                    {post.tags.map((tag) => (
+                      <span class="post-tag" role="listitem">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              )
+            }
+          </aside>
+        )
+      }
     </div>
     {post && <PostCompactFooter published={post.pubDate} />}
 

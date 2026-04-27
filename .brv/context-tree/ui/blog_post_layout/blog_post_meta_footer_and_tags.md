@@ -1,7 +1,7 @@
 ---
 title: Blog Post Meta Footer and Tags
 tags: []
-related: [ui/visual_effects/scroll_feedback_system.md]
+related: [ui/visual_effects/scroll_feedback_system.md, ui/blog_post_layout/metadata_rail_implementation.md]
 keywords: []
 importance: 59
 recency: 1

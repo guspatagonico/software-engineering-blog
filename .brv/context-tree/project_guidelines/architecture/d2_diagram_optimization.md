@@ -2,7 +2,7 @@
 title: D2 Diagram Optimization
 summary: D2 diagram lazy loading, Vite chunk optimization, and React renderer architecture with theme synchronization.
 tags: []
-related: []
+related: [project_guidelines/agents/project_agent_handbook.md, project_guidelines/harness_engineering/harness_engineering_page.md]
 keywords: []
 createdAt: '2026-04-27T16:33:41.525Z'
 updatedAt: '2026-04-27T16:33:41.525Z'

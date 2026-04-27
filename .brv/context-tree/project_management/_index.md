@@ -1,37 +1,32 @@
 ---
-children_hash: bf29c9b558805f7624ff4dbe85e17d94a271f1386b5f0b273dcacc37ea7b0fb4
-compression_ratio: 0.5547886108714409
+children_hash: a78e5c1ce788628270abdd0c623a8301785efbed8d6fe6f8452316980ef8a9b7
+compression_ratio: 0.5576208178438662
 condensation_order: 2
-covers: [context.md, git_workflow/_index.md, handoffs/_index.md, run_commands/_index.md]
-covers_token_total: 1159
+covers: [context.md, handoffs/_index.md, hybrid-state-durable-knowledge-partitioning.md, run_commands/_index.md]
+covers_token_total: 1076
 summary_level: d2
-token_count: 643
+token_count: 600
 type: summary
 ---
 # Domain: project_management
 
-The project management domain centralizes session continuity, version control standards, and environment isolation strategies to ensure consistent development across contributors.
+The project management domain centralizes session-based state, architectural decision-making, and specialized workflow commands. It operates on a dual-store model that distinguishes between long-term durable knowledge and short-term ephemeral tasks.
 
-## Git Workflow and Environment Isolation
-The project enforces a strict isolation policy using Git worktrees and standardized commit practices to maintain repository integrity.
+## Handoffs and Session State
+The handoff system captures the state of work to ensure continuity across sessions while managing agent context window efficiency.
 
-*   **Worktree Management**: Mandatory for all non-trivial work (features, refactors, exploration). Worktrees must be located within `<project_folder>/.worktrees/<branch_name>` to prevent filesystem clutter and streamline cleanup.
-    *   **Workflow**: `git worktree add` → Development → `push` → `gh pr create` → Merge → `git worktree remove`.
-    *   **Reference**: `git_workflow/_index.md`, `run_commands/git_worktree_location.md`
-*   **Branching and Commits**: Branch names must use `feat/`, `fix/`, or `refactor/` prefixes. Commits must follow **Conventional Commits** (e.g., `feat:`, `fix:`) and pass mandatory `lint` and `typecheck` hooks.
-    *   **Reference**: `git_workflow/git_worktree_and_commit_policy.md`
+*   **Handoff Context (`context.md` / `handoffs/_index.md`):** Serves as the domain anchor, documenting the state of SEO/metadata rollouts, shared styling (`post-content.css`), and homepage conventions. It links to broader process guidance in `project_guidelines/dev_process`.
+*   **Current Session Rule (`current_session_handoff_rule.md`):** Mandates that handoffs only include work completed in the active session. It enforces non-duplication and brevity to ensure focus on new outstanding work.
+*   **Hybrid State Strategy (`hybrid_session_state_approach.md` / `hybrid-state-durable-knowledge-partitioning.md`):** Defines a strict partitioning of knowledge:
+    *   **Durable Knowledge:** Architectural patterns, decisions, and preferences curated by ByteRover; auto-queried at session start.
+    *   **Ephemeral State:** Tasks, blockers, and next steps tracked in `_handoffs/`; accessed only upon explicit request.
+    *   **Constraints:** Enforces a ~5800 token budget per sub-agent and utilizes Compressed Handoff Templates to maintain the "Rule of Gold."
+*   **Historical State (`handoff_2026_04_04.md`):** Records the implementation of Open Graph/Twitter metadata, typography updates, and the migration of styles to `src/styles/post-content.css`. Identifies the site URL as `https://dev.ecim.tech`.
 
-## Session Continuity and Handoffs
-Knowledge is partitioned between durable architectural decisions and ephemeral session state to optimize agent performance and context window usage.
+## Run Commands and Infrastructure
+Standardized commands and filesystem conventions ensure environment consistency across different worktrees.
 
-*   **Hybrid State Strategy**: Employs a dual-store pattern where ByteRover manages durable knowledge (patterns, preferences) and handoff files track ephemeral session state (tasks, blockers). Agents are instructed to auto-query durable knowledge at startup but only access handoffs upon explicit request.
-    *   **Reference**: `handoffs/hybrid_session_state_approach.md`
-*   **Handoff Standards**: Handoffs must only document work completed in the active session, avoiding duplication of previous notes. They capture completed tasks, decisions, touched files, and pending actions.
-    *   **Reference**: `handoffs/current_session_handoff_rule.md`, `handoffs/context.md`
-*   **Historical Context (April 4, 2026)**: Records the rollout of SEO/metadata (Open Graph/Twitter), shared styling migration to `src/styles/post-content.css`, and typography updates. Identifies the site URL as `https://dev.ecim.tech`.
-    *   **Reference**: `handoffs/handoff_2026_04_04.md`
-
-## Quality and Governance
-*   **Ownership**: Gustavo Adrián Salvini.
-*   **Quality Gate**: No code is pushed without explicit user request and successful execution of pre-commit quality checks.
-*   **Main Branch**: Reserved strictly for trivial fixes; all other changes require PR-based merging via GitHub CLI.
+*   **Git Worktree Location (`git_worktree_location.md` / `run_commands/_index.md`):** Enforces a centralized repository structure where all feature branches must reside within `<project_folder>/.worktrees/<branch_name>`.
+    *   **Workflow:** `git worktree add .worktrees/<branch_name> -b <branch_name>`.
+    *   **Requirement:** The `.worktrees` directory must exist at the project root.
+    *   **Decision:** Prohibits worktrees outside the designated path to streamline cleanup and tooling integration.

@@ -1,47 +1,54 @@
 ---
-children_hash: c126fba9c20b2e9fc76c0bb95c7c0bef0a752c4d441c8b2111360647a92ecc16
-compression_ratio: 0.33379026730637423
+children_hash: fb07b393d9593a5dacd77a7e4adcd12612580fb0f609b73eec7258d53fd608aa
+compression_ratio: 0.2961841308298001
 condensation_order: 3
 covers: [facts/_index.md, project_guidelines/_index.md, project_management/_index.md, ui/_index.md]
-covers_token_total: 2918
+covers_token_total: 3302
 summary_level: d3
-token_count: 974
+token_count: 978
 type: summary
 ---
-# Structural Summary: Software Engineering Blog Knowledge Base (Level d3)
+# Software Engineering Blog: Structural Knowledge Summary (Level d3)
 
-This summary synthesizes the operational, architectural, and visual standards of the Software Engineering Blog, integrating agent-driven development with a high-performance Astro/React frontend.
+This summary synthesizes the architectural, operational, and technical standards of the Software Engineering Blog project, integrating agentic control theory with high-fidelity UI systems.
 
-## 1. Agent Ecosystem & Operational Framework
-The project utilizes a **Dispatcher Pattern** where an `@orchestrator` manages specialized sub-agents (e.g., `@blog-writer`, `@tester`) within a strict **~5800 token budget**.
+## 1. Agentic Orchestration and Control Theory
+The project implements a high-integrity development lifecycle governed by the **Harness Engineering** framework to mitigate "Agentic Entropy."
 
-*   **Harness Engineering**: Guided by the **Envolvente Convergente** model, ensuring agent actions monotonically approach project objectives through control theory principles.
-*   **Drift & Orchestration**: Employs a **Fork-Join pattern** for parallel execution, triggered by "drift signals" like scope expansion or auto-correction loops.
-*   **Handoff Strategy**: Uses a **Hybrid State Strategy** where durable knowledge (patterns/preferences) is managed by ByteRover, while ephemeral session state (tasks/blockers) is tracked via **Compressed Handoff Templates** in `_handoffs/`.
-*   **Drill-down**: `project_guidelines/agents/_index.md`, `project_guidelines/harness_engineering/_index.md`, `project_management/handoffs/_index.md`.
+*   **Envolvente Convergente Framework**: Utilizes Lyapunov and Barrier functions to ensure agent actions remain objective-oriented. This is surfaced via the **Harness Agentic Control UI**, featuring a 'Drift Map' and Evidence Cards.
+*   **Dispatcher Pattern**: Manages complex tasks through a **Fork-Join pattern** for parallel sub-agent execution. Sub-agents operate under a strict **5,800 token budget** ("Rule of Gold").
+*   **Drift Management**: Orchestrators monitor for scope expansion and barrier violations, triggering redirection or auto-correction loops.
+*   **Drill-down**: `project_guidelines/harness_engineering/`, `project_guidelines/agents/`, `project_guidelines/agentic-control-loop-harness-engineering-integration.md`.
 
-## 2. Core Architecture & Technical Standards
-The site follows an **Astro + React "Island" architecture**, prioritizing static performance with targeted interactivity.
+## 2. Technical Architecture and UI Systems
+The system employs an **Astro + React hybrid "Island" architecture** with a centralized persistence layer.
 
-*   **Blog Post Structure**: Mandatory `BlogPost` layout and `SectionNav` component (`client:load`). Content is organized into `panels` with strict `panel-{id}` naming and specific CSS transitions.
-*   **Diagram Pipeline**: A three-tier system for D2/WASM assets using dynamic imports (`D2DiagramsTransformer.tsx`) and a `MutationObserver` for theme synchronization.
-*   **Persistence Layer**: Centralized in `src/utils/storage.ts` using a single `gsalvini-se-blog` localStorage key for themes, toggles, and checklist states.
-*   **Development Workflow**: Exclusive use of **pnpm**. Strict Git policies require **Worktrees** for non-trivial features (located in `.worktrees/`) and explicit user consent for all mutations.
-*   **Drill-down**: `project_guidelines/architecture/_index.md`, `project_guidelines/dev_process/_index.md`, `project_management/git_workflow/_index.md`.
+*   **Persistence Layer**: All user preferences and interactive states are stored under a single `localStorage` key: `gsalvini-se-blog`. The `updateStorage` helper ensures SSR safety.
+*   **Interactive Synchronization**: Uses the **Panel-Section Synchronization Pattern** with strict `panel-{id}` naming and `section-activated` CustomEvents to manage state in static Astro layouts.
+*   **Visual Systems**:
+    *   **Matrix Background**: A five-layer canvas system with visibility gating to eliminate overhead when hidden.
+    *   **Dodecahedron Toggle**: A Three.js-based controller for global visual effects.
+    *   **D2 Diagramming**: A three-tier rendering pipeline that lazy-loads the ~8MB D2 WASM module only when markers are detected.
+*   **Drill-down**: `ui/persistence-driven-visual-consistency.md`, `ui/interactive-panel-section-synchronization-pattern.md`, `project_guidelines/architecture/`.
 
-## 3. UI, Visual Experience & Design Systems
-The `ui` domain governs immersive components and responsive layouts through theme-aware feedback systems.
+## 3. Development Process and Quality Gates
+A standardized, high-integrity workflow centered on **pnpm** and strict TypeScript enforcement.
 
-*   **Layout & Navigation**: `BlogPost.astro` enforces a layered structure (sticky header `z-index: 40`, fixed footer `z-index: 45`) and `overscroll-behavior: none` for mobile. `SectionNav` synchronizes via a hash-navigation script and `section-activated` events.
-*   **Visual Effects**: 
-    *   **Matrix Background**: A five-layer character rain (`MatrixBackground.tsx`) with responsive stream density (60-220 streams).
-    *   **Dodecahedron Toggle**: A Three.js 3D interactive button for background state management.
-    *   **Glassy UI**: Centralized `backdrop-filter` tokens in `tokens.css` for navigation and footers.
-*   **Content Utilities**: Specialized styles in `src/styles/post-content.css` for vocabulary grids (175px labels), table accent highlighting (`.table-accent-2/3`), and responsive tag chips.
-*   **Drill-down**: `ui/blog_post_layout/_index.md`, `ui/visual_effects/_index.md`, `ui/design_system/glossary_vocabulary_layout.md`.
+*   **Git Mutation Gating**: Explicit user consent is mandatory for all git mutations (commit, push), regardless of lint/typecheck success.
+*   **Worktree Management**: Feature branches must reside within `<project_folder>/.worktrees/<branch_name>`.
+*   **Content Standards**: Transitioning from `.astro` to `.mdx`. Posts must implement the `BlogPost` layout and `SectionNav` component.
+*   **Markup Formatting**: Strict "No Dangling Brackets" policy; the closing angle bracket `>` must remain on the same line as the tag boundary.
+*   **Drill-down**: `project_guidelines/dev_process/`, `project_management/run_commands/`, `facts/conventions/html_tag_formatting.md`.
 
-## 4. Project Conventions & Governance
-*   **Formatting**: Strict HTML/JSX/MDX standards; closing angle brackets (`>`) must remain on the same line as the tag boundary.
-*   **Git Policy**: Conventional Commits are mandatory. The `main` branch is reserved for trivial fixes; all other changes require PRs via GitHub CLI.
-*   **Security**: Strict prohibition against committing secrets or including agent names in public documentation.
-*   **Drill-down**: `facts/conventions/_index.md`, `project_management/context.md`.
+## 4. Knowledge Management and Handoffs
+The project utilizes a dual-store model to manage agent context window efficiency.
+
+*   **Durable Knowledge**: Architectural patterns and decisions curated by ByteRover; auto-queried at session start.
+*   **Ephemeral State**: Tasks and blockers tracked in `_handoffs/`; accessed only upon explicit request.
+*   **Handoff Rules**: Handoffs must only include work completed in the active session to prevent context saturation.
+*   **Drill-down**: `project_management/handoffs/`, `project_management/hybrid-state-durable-knowledge-partitioning.md`.
+
+## 5. Domain Governance
+*   **Ownership**: Gustavo Adrián Salvini.
+*   **Primary URL**: `https://dev.ecim.tech`.
+*   **Core Domains**: `facts` (conventions), `project_guidelines` (architecture/process), `project_management` (state/handoffs), and `ui` (visuals/layout).

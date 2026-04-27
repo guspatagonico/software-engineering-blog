@@ -3,19 +3,19 @@
     {
       "order": 3,
       "path": "_index.md",
-      "tokens": 974,
+      "tokens": 978,
       "type": "summary"
     },
     {
       "order": 2,
       "path": "facts/_index.md",
-      "tokens": 192,
+      "tokens": 463,
       "type": "summary"
     },
     {
-      "order": 2,
-      "path": "project_management/_index.md",
-      "tokens": 643,
+      "order": 1,
+      "path": "facts/conventions/_index.md",
+      "tokens": 336,
       "type": "summary"
     },
     {
@@ -33,15 +33,13 @@
     {
       "importance": 50,
       "path": "facts/conventions/context.md",
-      "tokens": 39,
+      "tokens": 54,
       "type": "context"
     },
     {
-      "abstractPath": "facts/conventions/html_tag_formatting.abstract.md",
-      "abstractTokens": 3,
       "importance": 50,
       "path": "facts/conventions/html_tag_formatting.md",
-      "tokens": 3,
+      "tokens": 533,
       "type": "context"
     },
     {
@@ -68,16 +66,14 @@
     },
     {
       "importance": 50,
-      "path": "project_guidelines/agents/context.md",
-      "tokens": 155,
+      "path": "project_guidelines/agentic-control-loop-harness-engineering-integration.md",
+      "tokens": 200,
       "type": "context"
     },
     {
-      "abstractPath": "project_guidelines/agents/context_window_and_handoff_strategy.abstract.md",
-      "abstractTokens": 8,
       "importance": 50,
-      "path": "project_guidelines/agents/context_window_and_handoff_strategy.md",
-      "tokens": 8,
+      "path": "project_guidelines/agents/context.md",
+      "tokens": 155,
       "type": "context"
     },
     {
@@ -91,7 +87,7 @@
     {
       "importance": 50,
       "path": "project_guidelines/agents/project_agent_handbook.md",
-      "tokens": 1355,
+      "tokens": 1387,
       "type": "context"
     },
     {
@@ -154,8 +150,8 @@
     },
     {
       "importance": 50,
-      "path": "project_guidelines/dev_process/agent_guidelines_and_workflow.md",
-      "tokens": 1029,
+      "path": "project_guidelines/dev_process/astro_to_mdx_conversion_pattern.md",
+      "tokens": 409,
       "type": "context"
     },
     {
@@ -173,33 +169,11 @@
       "type": "context"
     },
     {
-      "importance": 50,
-      "path": "project_guidelines/git_safe_mutations/context.md",
-      "tokens": 93,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_guidelines/harness_engineering/envolvente_convergente_framework.abstract.md",
-      "abstractTokens": 4,
-      "importance": 50,
-      "path": "project_guidelines/harness_engineering/envolvente_convergente_framework.md",
-      "tokens": 4,
-      "type": "context"
-    },
-    {
       "abstractPath": "project_guidelines/harness_engineering/harness_engineering_framework.abstract.md",
       "abstractTokens": 8,
       "importance": 50,
       "path": "project_guidelines/harness_engineering/harness_engineering_framework.md",
       "tokens": 8,
-      "type": "context"
-    },
-    {
-      "abstractPath": "project_guidelines/harness_engineering/harness_engineering_page.abstract.md",
-      "abstractTokens": 59,
-      "importance": 50,
-      "path": "project_guidelines/harness_engineering/harness_engineering_page.md",
-      "tokens": 59,
       "type": "context"
     },
     {
@@ -235,29 +209,29 @@
       "type": "context"
     },
     {
-      "abstractPath": "ui/blog_post_layout/post_list_and_card_styles.abstract.md",
-      "abstractTokens": 9,
+      "abstractPath": "ui/blog_post_layout/harness_agentic_control/harness_agentic_control_components.abstract.md",
+      "abstractTokens": 11,
       "importance": 50,
-      "path": "ui/blog_post_layout/post_list_and_card_styles.md",
-      "tokens": 9,
+      "path": "ui/blog_post_layout/harness_agentic_control/harness_agentic_control_components.md",
+      "tokens": 11,
       "type": "context"
     },
     {
-      "abstractPath": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.abstract.md",
-      "abstractTokens": 6,
+      "abstractPath": "ui/blog_post_layout/metadata_rail_implementation.abstract.md",
+      "abstractTokens": 10,
       "importance": 50,
-      "path": "ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md",
-      "tokens": 6,
+      "path": "ui/blog_post_layout/metadata_rail_implementation.md",
+      "tokens": 10,
       "type": "context"
     }
   ],
-  "generated_at": "2026-04-27T16:34:05.570Z",
+  "generated_at": "2026-04-27T21:51:55.261Z",
   "lane_tokens": {
-    "contexts": 3997,
+    "contexts": 3996,
     "stubs": 0,
-    "summaries": 1996
+    "summaries": 1964
   },
-  "source_fingerprint": "ee10ab88ef1336f38380f6c316ddf72d2ebdf0b6a1f49ac6d6f16b8b7b314a73",
-  "total_tokens": 5993,
+  "source_fingerprint": "a266d04a54407d0b197bfec3037ebfde644f8973f42d672a632b828de00d4a4c",
+  "total_tokens": 5960,
   "version": 1
 }

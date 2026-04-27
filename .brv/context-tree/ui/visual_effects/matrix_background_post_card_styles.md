@@ -8,6 +8,7 @@ recency: 1
 maturity: draft
 createdAt: '2026-04-23T22:05:54.762Z'
 updatedAt: '2026-04-23T22:05:54.762Z'
+related: [ui/blog_post_layout/post_list_styles/post_list_and_card_component_styles.md]
 ---
 ## Reason
 Document matrix background styles for post cards and light mode fix

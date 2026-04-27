@@ -1,7 +1,7 @@
 ---
 title: Project Agent Handbook
 tags: []
-related: [project_guidelines/run_commands/build_and_run_commands.md, project_guidelines/blog_post_architecture/blog_post_architecture.md, project_guidelines/dev_process/development_process_and_rules.md]
+related: [project_guidelines/run_commands/build_and_run_commands.md, project_guidelines/blog_post_architecture/blog_post_architecture.md, project_guidelines/dev_process/development_process_and_rules.md, project_guidelines/architecture/d2_diagram_optimization.md, project_guidelines/harness_engineering/harness_engineering_page.md]
 keywords: []
 importance: 100
 recency: 1

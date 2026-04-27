@@ -2,7 +2,7 @@
 title: Harness Engineering Page
 summary: Harness Engineering page outlines ConvergentEnvelope behavior, context budgets, parallel orchestration conditions, drift handling, tool budgets, and glossary/checklist guidance.
 tags: []
-related: [project_guidelines/dev_process/development_process_and_rules.md, project_management/handoffs/context.md]
+related: [project_guidelines/dev_process/development_process_and_rules.md, project_management/handoffs/context.md, project_guidelines/architecture/d2_diagram_optimization.md, project_guidelines/agents/project_agent_handbook.md]
 keywords: []
 importance: 62
 recency: 1

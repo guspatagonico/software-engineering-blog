@@ -8,6 +8,7 @@ recency: 1
 maturity: draft
 createdAt: '2026-04-15T14:56:35.238Z'
 updatedAt: '2026-04-15T14:56:35.238Z'
+related: [ui/blog_post_layout/metadata_rail_implementation.md]
 ---
 ## Reason
 Document BlogPost layout structure, styling, and hash navigation sync

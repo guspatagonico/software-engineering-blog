@@ -27,6 +27,7 @@
 @media (min-width: 1024px) {
   .content {
     max-width: 1024px;
+    min-width: 0;
     overflow-y: auto;
     height: calc(100vh - 48px - var(--post-header-height, 60px));
     background: var(--bg);

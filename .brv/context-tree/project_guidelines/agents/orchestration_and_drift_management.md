@@ -8,6 +8,7 @@ recency: 1
 maturity: draft
 createdAt: '2026-04-15T02:24:52.900Z'
 updatedAt: '2026-04-15T02:24:52.900Z'
+related: [project_guidelines/harness_engineering/harness_engineering_framework.md]
 ---
 ## Reason
 Document orchestration patterns and drift signals

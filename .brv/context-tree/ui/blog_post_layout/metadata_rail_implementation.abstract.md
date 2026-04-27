@@ -1,0 +1,1 @@
+The BlogPost layout implements a sticky

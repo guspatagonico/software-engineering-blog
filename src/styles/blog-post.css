@@ -84,6 +84,10 @@ body {
   -ms-overflow-style: none;
 }
 
+.post-meta-rail {
+  display: none;
+}
+
 .post-layout::-webkit-scrollbar {
   display: none;
 }
@@ -106,6 +110,66 @@ body {
 
   .post-layout > nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .post-layout > .post-meta-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 272px;
+    min-width: 272px;
+    padding: 20px;
+    border-left: 1px solid rgba(120, 140, 165, 0.22);
+    background: var(--surface);
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 48px - var(--post-header-height, 60px));
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .post-layout > .post-meta-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .post-meta-rail__card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+  }
+
+  .post-meta-rail__label {
+    font-size: 11px;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  .post-meta-rail__value {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-bright);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .post-meta-rail__value--mono {
+    font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+    font-size: 12px;
+    color: var(--teal);
+    word-break: break-word;
+  }
+
+  .post-meta-rail__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 }
 
