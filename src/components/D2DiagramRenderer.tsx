@@ -141,10 +141,14 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 					throw new Error('Unexpected render output: ' + typeof rendered);
 				}
 
-				// Make the background rect transparent by replacing the first rect's fill
+				// Make the background rect transparent: remove fill-N7 class
+				// (which would re-apply a fill via SVG internal stylesheet) and set fill
 				svgString = svgString.replace(
 					/<rect([^>]*?)fill="[^"]*"([^>]*?)>/,
-					'<rect$1fill="transparent"$2>'
+					(_match, before, after) => {
+						const clean = before.replace(/\s*class\s*=\s*"[^"]*"\s*/g, ' ');
+						return `<rect${clean}fill="transparent"${after}>`;
+					}
 				);
 
 				setSvg(svgString);
