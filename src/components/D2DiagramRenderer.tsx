@@ -163,11 +163,6 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 
 				setSvg(svgString);
 				setLoading(false);
-
-				// Calculate fit-to-view scale after SVG is rendered
-				setTimeout(() => {
-					calculateAndSetInitialScale();
-				}, 0);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to render D2 diagram');
 				setLoading(false);
@@ -176,6 +171,13 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 
 		renderDiagram();
 	}, [code, theme]);
+
+	// Recalculate scale when SVG changes (after render)
+	useEffect(() => {
+		if (svg) {
+			calculateAndSetInitialScale();
+		}
+	}, [svg]);
 
 	const calculateAndSetInitialScale = () => {
 		if (!canvasRef.current || !viewportRef.current) return;
