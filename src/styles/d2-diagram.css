@@ -119,6 +119,10 @@
 	height: auto;
 }
 
+.d2-canvas svg text {
+	font-family: 'Inter', system-ui, sans-serif !important;
+}
+
 .d2-controls {
 	display: flex;
 	gap: 8px;
