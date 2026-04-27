@@ -119,6 +119,10 @@
 	height: auto;
 }
 
+.d2-canvas svg > rect {
+	fill: transparent !important;
+}
+
 .d2-controls {
 	display: flex;
 	gap: 8px;
