@@ -30,12 +30,39 @@
 
 ## Agent Browser
 
-**Important**: When using agent-browser for visual debugging:
-- If `pnpm dev` is already running on port 4321, **always use `AGENT_BROWSER_AUTO_CONNECT=true`** to reuse the existing server
-- Never let agent-browser spawn a new webserver (causes port conflicts and duplicate processes)
-- Usage: `AGENT_BROWSER_AUTO_CONNECT=true agent-browser open "http://localhost:4321/software-engineering/blog/<post>#<section>"`
-- Set `export AGENT_BROWSER_AUTO_CONNECT=true` in shell profile for persistence
-- For screenshots and visual testing of light/dark theme switching, use: `agent-browser click @e5 && sleep 2 && agent-browser screenshot`
+**For visual debugging with isolated Chrome process:**
+- Use `--profile <path>` to create a separate Chrome profile (doesn't affect your personal Chrome)
+- Use `--args "--remote-debugging-port=PORT"` to enable remote debugging on a custom port
+- This allows agent-browser to launch its own Chrome instance without interfering with your browsing
+
+**Quick usage:**
+```bash
+# Using the helper script (from project root)
+.opencode/scripts/debug-browser.sh harness-agentic-control model
+```
+
+**Manual usage for isolated debugging:**
+```bash
+agent-browser \
+  --profile ~/.agent-browser/profiles/debugging \
+  --args "--remote-debugging-port=9333" \
+  open "http://localhost:4321/software-engineering/blog/<post>#<section>"
+```
+
+**Optional shell alias (add to ~/.zshrc or ~/.bash_profile):**
+```bash
+alias debug-blog=".opencode/scripts/debug-browser.sh"
+# Then use: debug-blog harness-agentic-control model
+```
+
+**Alternative (if pnpm dev is running on 4321):**
+- If server is already running, use: `AGENT_BROWSER_AUTO_CONNECT=true agent-browser open "http://localhost:4321/..."`
+- This reuses the existing webserver instead of spawning a new one
+
+**Debugging connection:**
+- Visit `chrome://inspect` in your personal Chrome to connect to the agent-browser instance
+- Or use VS Code DevTools → chrome://inspect → port 9333
+- Remote debugging allows you to inspect DOM, debug JavaScript, and profile performance
 
 ## Quick commands
 
