@@ -107,22 +107,70 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 				};
 
 				// Render to SVG with theme
-				const rendered = await d2.render(compiled.diagram, renderOptions);
+				const rendered: unknown = await d2.render(compiled.diagram, renderOptions);
+
+				// Debug logging
+				console.log('=== D2 RENDER DEBUG (theme: ' + theme + ') ===');
+				console.log('Rendered type:', typeof rendered);
+				console.log('Rendered constructor name:', (rendered as any)?.constructor?.name);
+				console.log('Rendered value:', rendered);
+				console.log('String(rendered):', String(rendered).substring(0, 150));
 
 				// Ensure we have a string SVG (handle both string and Uint8Array responses)
 				let svgString: string;
+				
 				if (typeof rendered === 'string') {
+					// Direct string response
 					svgString = rendered;
-				} else if (ArrayBuffer.isView(rendered)) {
-					// Handle Uint8Array and other typed arrays
-					svgString = new TextDecoder().decode(rendered as BufferSource);
+					console.log('✓ Got string directly, length:', svgString.length);
 				} else if (rendered && typeof rendered === 'object') {
-					// Fallback for other object types with toString
-					svgString = String(rendered);
+					// Object response - could be Blob, or have text/svg properties
+					const obj = rendered as Record<string, any>;
+					
+					if (obj instanceof Blob) {
+						// Blob type
+						console.log('✓ Got Blob, reading as text');
+						svgString = await obj.text();
+					} else if (typeof obj.text === 'function') {
+						// Has text() method like Response or similar
+						console.log('✓ Got object with text() method');
+						svgString = await obj.text();
+					} else if (obj.svg && typeof obj.svg === 'string') {
+						// Has svg property
+						console.log('✓ Got object with svg property');
+						svgString = obj.svg;
+					} else if (ArrayBuffer.isView(obj)) {
+						// Typed array
+						console.log('✓ Got typed array');
+						svgString = new TextDecoder().decode(obj as BufferSource);
+					} else if (obj.toString && typeof obj.toString === 'function') {
+						// Has toString method
+						console.log('✓ Converting object with toString()');
+						const str = obj.toString();
+						if (str.startsWith('<?xml') || str.startsWith('<svg')) {
+							svgString = str;
+						} else {
+							throw new Error('toString() did not return SVG');
+						}
+					} else {
+						// Last resort - stringify
+						console.log('✓ Converting to string as last resort');
+						const str = String(rendered);
+						if (str === '[object Object]') {
+							console.error('Object stringification resulted in [object Object]!', obj);
+							throw new Error('Cannot convert object to SVG string');
+						}
+						svgString = str;
+					}
+				} else if (ArrayBuffer.isView(rendered)) {
+					// Typed array at top level
+					console.log('✓ Got typed array at top level');
+					svgString = new TextDecoder().decode(rendered as BufferSource);
 				} else {
-					throw new Error('Unexpected render output format');
+					throw new Error('Unexpected render output: ' + typeof rendered);
 				}
 
+				console.log('✓ Final SVG string length:', svgString.length);
 				setSvg(svgString);
 				setLoading(false);
 
