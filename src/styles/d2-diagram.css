@@ -50,6 +50,11 @@
 	background: var(--bg);
 }
 
+.d2-diagram--dark .d2-canvas {
+	/* Transform light SVG for dark mode display */
+	filter: invert(1) hue-rotate(180deg);
+}
+
 .d2-diagram--dark .d2-control-btn {
 	background: var(--surface2);
 	color: var(--text);
