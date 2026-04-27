@@ -120,7 +120,7 @@
 }
 
 .d2-canvas svg > rect,
-.d2-canvas svg rect:first-of-type {
+.d2-canvas svg > g[clip-path] > rect:first-child {
 	fill: transparent !important;
 }
 
