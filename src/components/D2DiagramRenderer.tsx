@@ -163,6 +163,18 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 
 				setSvg(svgString);
 				setLoading(false);
+				// Reset pan and zoom to defaults
+				setPanX(0);
+				setPanY(0);
+				setScale(1);
+
+				// Calculate fit-to-view scale after SVG is rendered and DOM is updated
+				// Use nested requestAnimationFrame to wait for React render + browser paint
+				requestAnimationFrame(() => {
+					requestAnimationFrame(() => {
+						calculateAndSetInitialScale();
+					});
+				});
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Failed to render D2 diagram');
 				setLoading(false);
@@ -172,12 +184,6 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 		renderDiagram();
 	}, [code, theme]);
 
-	// Recalculate scale when SVG changes (after render)
-	useEffect(() => {
-		if (svg) {
-			calculateAndSetInitialScale();
-		}
-	}, [svg]);
 
 	const calculateAndSetInitialScale = () => {
 		if (!canvasRef.current || !viewportRef.current) return;
