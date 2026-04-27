@@ -107,14 +107,34 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 				};
 
 				// Render to SVG with theme
-				const rendered: unknown = await d2.render(compiled.diagram, renderOptions);
+				let rendered: unknown = await d2.render(compiled.diagram, renderOptions);
 
 				// Debug logging
 				console.log('=== D2 RENDER DEBUG (theme: ' + theme + ') ===');
 				console.log('Rendered type:', typeof rendered);
 				console.log('Rendered constructor name:', (rendered as any)?.constructor?.name);
-				console.log('Rendered value:', rendered);
-				console.log('String(rendered):', String(rendered).substring(0, 150));
+				
+				// Check if render failed and returned compiled object instead of SVG
+				if (rendered && typeof rendered === 'object') {
+					const obj = rendered as Record<string, any>;
+					if ('diagram' in obj && 'graph' in obj && 'fs' in obj) {
+						console.warn('⚠ render() returned compiled object instead of SVG in ' + theme + ' mode!');
+						console.warn('  Attempting recovery: reinitializing D2 instance...');
+						
+						// Reset D2 instance and retry
+						d2InstanceRef.current = null;
+						const newD2 = new D2();
+						d2InstanceRef.current = newD2;
+						
+						const recompiled = await newD2.compile(code);
+						const newRenderOptions = {
+							...recompiled.renderOptions,
+							themeID: getD2ThemeId(theme),
+						};
+						rendered = await newD2.render(recompiled.diagram, newRenderOptions);
+						console.log('✓ Retry with new D2 instance, result type:', typeof rendered);
+					}
+				}
 
 				// Ensure we have a string SVG (handle both string and Uint8Array responses)
 				let svgString: string;
@@ -143,24 +163,12 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 						// Typed array
 						console.log('✓ Got typed array');
 						svgString = new TextDecoder().decode(obj as BufferSource);
-					} else if (obj.toString && typeof obj.toString === 'function') {
-						// Has toString method
-						console.log('✓ Converting object with toString()');
-						const str = obj.toString();
-						if (str.startsWith('<?xml') || str.startsWith('<svg')) {
-							svgString = str;
-						} else {
-							throw new Error('toString() did not return SVG');
-						}
 					} else {
-						// Last resort - stringify
-						console.log('✓ Converting to string as last resort');
-						const str = String(rendered);
-						if (str === '[object Object]') {
-							console.error('Object stringification resulted in [object Object]!', obj);
-							throw new Error('Cannot convert object to SVG string');
-						}
-						svgString = str;
+						// Last resort - log error with more context
+						console.error('✗ Unknown object type, cannot extract SVG');
+						console.error('  Constructor:', obj.constructor.name);
+						console.error('  Keys:', Object.keys(obj).slice(0, 10));
+						throw new Error('d2.render() returned unexpected object type in ' + theme + ' mode: ' + obj.constructor.name);
 					}
 				} else if (ArrayBuffer.isView(rendered)) {
 					// Typed array at top level
