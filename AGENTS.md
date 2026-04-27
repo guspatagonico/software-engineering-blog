@@ -28,6 +28,15 @@
 - Do not commit secrets, `.env`, or credentials.
 - Do not use destructive git commands (force push, hard reset) unless explicitly asked.
 
+## Agent Browser
+
+**Important**: When using agent-browser for visual debugging:
+- If `pnpm dev` is already running on port 4321, **always use `AGENT_BROWSER_AUTO_CONNECT=true`** to reuse the existing server
+- Never let agent-browser spawn a new webserver (causes port conflicts and duplicate processes)
+- Usage: `AGENT_BROWSER_AUTO_CONNECT=true agent-browser open "http://localhost:4321/software-engineering/blog/<post>#<section>"`
+- Set `export AGENT_BROWSER_AUTO_CONNECT=true` in shell profile for persistence
+- For screenshots and visual testing of light/dark theme switching, use: `agent-browser click @e5 && sleep 2 && agent-browser screenshot`
+
 ## Quick commands
 
 ```bash
