@@ -109,76 +109,58 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 				// Render to SVG with theme
 				let rendered: unknown = await d2.render(compiled.diagram, renderOptions);
 
-				// Debug logging
-				console.log('=== D2 RENDER DEBUG (theme: ' + theme + ') ===');
-				console.log('Rendered type:', typeof rendered);
-				console.log('Rendered constructor name:', (rendered as any)?.constructor?.name);
-				
 				// Check if render failed and returned compiled object instead of SVG
+				// This can happen in certain edge cases with WASM initialization
 				if (rendered && typeof rendered === 'object') {
 					const obj = rendered as Record<string, any>;
 					if ('diagram' in obj && 'graph' in obj && 'fs' in obj) {
-						console.warn('⚠ render() returned compiled object instead of SVG in ' + theme + ' mode!');
-						console.warn('  Attempting recovery: reinitializing D2 instance...');
-						
+						// Render returned the compiled object instead of SVG
 						// Reset D2 instance and retry
 						d2InstanceRef.current = null;
 						const newD2 = new D2();
 						d2InstanceRef.current = newD2;
-						
+
 						const recompiled = await newD2.compile(code);
 						const newRenderOptions = {
 							...recompiled.renderOptions,
 							themeID: getD2ThemeId(theme),
 						};
 						rendered = await newD2.render(recompiled.diagram, newRenderOptions);
-						console.log('✓ Retry with new D2 instance, result type:', typeof rendered);
 					}
 				}
 
 				// Ensure we have a string SVG (handle both string and Uint8Array responses)
 				let svgString: string;
-				
+
 				if (typeof rendered === 'string') {
 					// Direct string response
 					svgString = rendered;
-					console.log('✓ Got string directly, length:', svgString.length);
 				} else if (rendered && typeof rendered === 'object') {
 					// Object response - could be Blob, or have text/svg properties
 					const obj = rendered as Record<string, any>;
-					
+
 					if (obj instanceof Blob) {
 						// Blob type
-						console.log('✓ Got Blob, reading as text');
 						svgString = await obj.text();
 					} else if (typeof obj.text === 'function') {
 						// Has text() method like Response or similar
-						console.log('✓ Got object with text() method');
 						svgString = await obj.text();
 					} else if (obj.svg && typeof obj.svg === 'string') {
 						// Has svg property
-						console.log('✓ Got object with svg property');
 						svgString = obj.svg;
 					} else if (ArrayBuffer.isView(obj)) {
 						// Typed array
-						console.log('✓ Got typed array');
 						svgString = new TextDecoder().decode(obj as BufferSource);
 					} else {
-						// Last resort - log error with more context
-						console.error('✗ Unknown object type, cannot extract SVG');
-						console.error('  Constructor:', obj.constructor.name);
-						console.error('  Keys:', Object.keys(obj).slice(0, 10));
-						throw new Error('d2.render() returned unexpected object type in ' + theme + ' mode: ' + obj.constructor.name);
+						throw new Error('d2.render() returned unexpected object type: ' + obj.constructor.name);
 					}
 				} else if (ArrayBuffer.isView(rendered)) {
 					// Typed array at top level
-					console.log('✓ Got typed array at top level');
 					svgString = new TextDecoder().decode(rendered as BufferSource);
 				} else {
 					throw new Error('Unexpected render output: ' + typeof rendered);
 				}
 
-				console.log('✓ Final SVG string length:', svgString.length);
 				setSvg(svgString);
 				setLoading(false);
 
