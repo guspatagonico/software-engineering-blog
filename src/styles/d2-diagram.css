@@ -119,7 +119,8 @@
 	height: auto;
 }
 
-.d2-canvas svg > rect {
+.d2-canvas svg > rect,
+.d2-canvas svg rect:first-of-type {
 	fill: transparent !important;
 }
 
