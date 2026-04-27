@@ -11,7 +11,7 @@ export default defineConfig({
   })],
   server: {
     host: '0.0.0.0',
-    allowedHosts: ['galadriel'],
+    allowedHosts: ['galadriel', 'metaponto'],
   },
   vite: {
     build: {

@@ -182,7 +182,7 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 	};
 
 	const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-		if (e.button !== 0) return; // Only left mouse button
+		if (e.button !== 0) return;
 		setIsDragging(true);
 		setDragStart({ x: e.clientX - panX, y: e.clientY - panY });
 	};

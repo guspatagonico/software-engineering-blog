@@ -103,7 +103,7 @@
 	position: relative;
 	min-height: 280px;
 	overflow: auto;
-	touch-action: none;
+	touch-action: auto;
 	transition: background-color 0.2s ease;
 }
 
@@ -119,9 +119,7 @@
 	height: auto;
 }
 
-.d2-canvas svg text {
-	font-family: 'Inter', system-ui, sans-serif !important;
-}
+
 
 .d2-controls {
 	display: flex;
@@ -225,6 +223,32 @@
 	word-break: break-word;
 }
 
+/* Hide controls on touchscreen devices (phones and tablets).
+   pointer: coarse = finger input; hover: none = no hover capability. */
+@media (hover: none) and (pointer: coarse) {
+	.d2-controls {
+		display: none;
+	}
+
+	.d2-diagram {
+		min-height: 0;
+	}
+
+	.d2-viewport {
+		min-height: 0;
+		overflow: visible;
+	}
+
+	.d2-canvas {
+		transform: none !important;
+	}
+
+	.d2-canvas svg {
+		width: 100%;
+		height: auto;
+	}
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
 	.d2-diagram {
@@ -281,3 +305,14 @@
 	}
 }
 
+/* Keep touch-device diagrams at content height (override mobile min-heights above). */
+@media (hover: none) and (pointer: coarse) {
+	.d2-diagram {
+		min-height: 0 !important;
+	}
+
+	.d2-viewport {
+		min-height: 0 !important;
+		height: auto;
+	}
+}
