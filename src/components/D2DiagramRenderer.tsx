@@ -107,9 +107,23 @@ export const D2DiagramRenderer: React.FC<D2DiagramRendererProps> = ({ code }) =>
 				};
 
 				// Render to SVG with theme
-				const renderedSvg = await d2.render(compiled.diagram, renderOptions);
+				const rendered = await d2.render(compiled.diagram, renderOptions);
 
-				setSvg(renderedSvg);
+				// Ensure we have a string SVG (handle both string and Uint8Array responses)
+				let svgString: string;
+				if (typeof rendered === 'string') {
+					svgString = rendered;
+				} else if (ArrayBuffer.isView(rendered)) {
+					// Handle Uint8Array and other typed arrays
+					svgString = new TextDecoder().decode(rendered as BufferSource);
+				} else if (rendered && typeof rendered === 'object') {
+					// Fallback for other object types with toString
+					svgString = String(rendered);
+				} else {
+					throw new Error('Unexpected render output format');
+				}
+
+				setSvg(svgString);
 				setLoading(false);
 
 				// Calculate fit-to-view scale after SVG is rendered
