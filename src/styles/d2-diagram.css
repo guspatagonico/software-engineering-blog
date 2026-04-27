@@ -51,8 +51,8 @@
 }
 
 .d2-diagram--dark .d2-canvas {
-	/* Transform light SVG for dark mode display */
-	filter: invert(1) hue-rotate(180deg);
+	/* Transform light SVG for dark mode: invert colors and adjust for better dark theme appearance */
+	filter: invert(1) hue-rotate(180deg) saturate(0.9) brightness(1.1);
 }
 
 .d2-diagram--dark .d2-control-btn {
