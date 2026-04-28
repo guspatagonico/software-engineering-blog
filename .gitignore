@@ -51,6 +51,7 @@ _tmp/
 opencode.json
 opencode.jsonc
 .agents/
+.opencode/opencode-tree/
 
 # ByteRover
 # .brv/context-tree/ is committed (shared knowledge base)

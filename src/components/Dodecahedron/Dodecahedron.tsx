@@ -280,9 +280,10 @@ export default function Dodecahedron({ className, autoHideOnScroll = false }: Do
 
     show();
 
-    const content = document.querySelector('.content') as HTMLElement | null;
-    const pageContainer = document.querySelector('.page-container') as HTMLElement | null;
-    const scrollTarget = content || pageContainer;
+		const contentViewport = document.querySelector('.content-viewport') as HTMLElement | null;
+		const content = document.querySelector('.content') as HTMLElement | null;
+		const pageContainer = document.querySelector('.page-container') as HTMLElement | null;
+		const scrollTarget = contentViewport || content || pageContainer;
 
     if (scrollTarget) {
       scrollTarget.addEventListener('scroll', show, { passive: true });
