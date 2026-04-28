@@ -12,8 +12,7 @@ iconAlt: Bienvenidos al blog
 
 import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
-import SectionNav from '../../components/SectionNav/SectionNav';
-import '../../styles/post-content.css';
+import PostShell from '../../components/posts/PostShell.astro';
 
 export const sections = [
   { id: 'intro', icon: '◈', label: 'Intro' },
@@ -25,10 +24,7 @@ export const sections = [
   { id: 'proximos', icon: '→', label: 'Próximos pasos' },
 ];
 
-<SectionNav client:load sections={sections} />
-
-<div class="content-viewport">
-<div class="content">
+<PostShell sections={sections}>
   <div class="panel active" id="panel-intro">
     <h2>Punto de partida</h2>
 
@@ -188,5 +184,4 @@ export const sections = [
 
     <p class="closing">— Gus</p>
   </div>
-</div>
-</div>
+</PostShell>

@@ -13,8 +13,7 @@ iconAlt: Limitaciones de los LLM en la actualidad
 ---
 
 import ContextWindowChart from '../../components/ContextWindowChart/ContextWindowChart';
-import SectionNav from '../../components/SectionNav/SectionNav';
-import '../../styles/post-content.css';
+import PostShell from '../../components/posts/PostShell.astro';
 
 export const sections = [
   { id: 'problema', icon: '⚠', label: 'Problema' },
@@ -49,10 +48,7 @@ export const contextModels = [
   { name: 'Gemini 1.5 Pro', provider: 'Google', contextK: 2000, smartContextK: 1000, year: 2024 },
 ];
 
-<SectionNav client:load sections={sections} />
-
-<div class="content-viewport">
-<div class="content">
+<PostShell sections={sections}>
   <div class="panel active" id="panel-problema">
     <h2>El problema del contexto</h2>
 
@@ -286,5 +282,4 @@ export const contextModels = [
     <p>La clave no es tener más contexto — es usar mejor el que ya tenemos.</p>
 
   </div>
-</div>
-</div>
+</PostShell>

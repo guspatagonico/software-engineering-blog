@@ -13,11 +13,10 @@ iconAlt: Harness Engineering
 import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
 import ConvergentEnvelopeSwitcher from '../../components/ConvergentEnvelope/ConvergentEnvelopeSwitcher';
-import SectionNav from '../../components/SectionNav/SectionNav';
 import ProjectTabs from '../../components/ProjectTabs/ProjectTabs';
 import Checklist from '../../components/Checklist/Checklist';
 import HarnessEngineeringExtras from '../../components/posts/HarnessEngineeringExtras.astro';
-import '../../styles/post-content.css';
+import PostShell from '../../components/posts/PostShell.astro';
 
 export const sections = [
   { id: 'mental-model', icon: '◈', label: 'Modelo mental' },
@@ -155,10 +154,7 @@ export const checklistSections = [
   },
 ];
 
-<SectionNav client:load sections={sections} />
-
-<div class="content-viewport">
-<div class="content">
+<PostShell sections={sections}>
   <div class="panel active" id="panel-mental-model">
     <h2>La envolvente convergente</h2>
     <div class="subtitle">El modelo mental central del framework</div>
@@ -543,7 +539,6 @@ export const checklistSections = [
       </Card>
     </div>
   </div>
-</div>
-</div>
+</PostShell>
 
-<HarnessEngineeringExtras />
+<HarnessEngineeringExtras slot="extras" />

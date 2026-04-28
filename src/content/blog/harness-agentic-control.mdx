@@ -14,9 +14,8 @@ iconAlt: Harness Engineering para agentes tipo OpenCode
 
 import Highlight from '../../components/Highlight.astro';
 import Card from '../../components/Card.astro';
-import SectionNav from '../../components/SectionNav/SectionNav';
 import HarnessAgenticControlExtras from '../../components/posts/HarnessAgenticControlExtras.astro';
-import '../../styles/post-content.css';
+import PostShell from '../../components/posts/PostShell.astro';
 
 export const sections = [
   { id: 'thesis', icon: '◈', label: 'Tesis' },
@@ -31,10 +30,7 @@ export const sections = [
   { id: 'summary', icon: '⊕', label: 'Resumen' },
 ];
 
-<SectionNav client:load sections={sections} />
-
-<div class="content-viewport">
-<div class="content">
+<PostShell sections={sections}>
   <div class="panel active" id="panel-thesis">
     <h2>Tesis y alcance</h2>
     <p>
@@ -679,7 +675,6 @@ export const sections = [
       <li>Medir convergencia y drift es la diferencia entre demo y sistema robusto.</li>
     </ul>
   </div>
-</div>
-</div>
+</PostShell>
 
-<HarnessAgenticControlExtras />
+<HarnessAgenticControlExtras slot="extras" />

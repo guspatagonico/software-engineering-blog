@@ -1,0 +1,26 @@
+---
+import SectionNav from '../SectionNav/SectionNav';
+import '../../styles/post-content.css';
+
+interface Section {
+  id: string;
+  icon: string;
+  label: string;
+}
+
+interface Props {
+  sections: Section[];
+}
+
+const { sections } = Astro.props;
+---
+
+<SectionNav client:load sections={sections} />
+
+<div class="content-viewport">
+  <div class="content">
+    <slot />
+  </div>
+</div>
+
+<slot name="extras" />
