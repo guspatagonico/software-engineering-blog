@@ -49,6 +49,9 @@ export default function SectionNav({ sections }: SectionNavProps) {
   const getPostKey = useCallback(() => window.location.pathname, []);
 
   const getScrollTarget = useCallback(() => {
+    const contentViewport = document.querySelector<HTMLElement>('.content-viewport');
+    if (contentViewport && contentViewport.scrollHeight > contentViewport.clientHeight)
+      return contentViewport;
     const content = document.querySelector<HTMLElement>('.content');
     if (content && content.scrollHeight > content.clientHeight) return content;
     const layout = document.querySelector<HTMLElement>('.post-layout');
@@ -161,7 +164,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
       setIsCollapsed(collapsedAttr === 'true');
     }
 
-    const mobileQuery = window.matchMedia('(max-width: 767px)');
+    const mobileQuery = window.matchMedia('(max-width: 1023px)');
     const handleMobileChange = (event: MediaQueryListEvent | MediaQueryList) => {
       if (!hasInitialized.current) {
         const collapsedAttr = document.documentElement.dataset.sectionsCollapsed;
@@ -225,7 +228,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
   // Detect if user is near the end of the current panel (for "next" hint)
   const checkScrollPosition = useCallback(() => {
     // Only check on mobile
-    if (!window.matchMedia('(max-width: 767px)').matches) {
+    if (!window.matchMedia('(max-width: 1023px)').matches) {
       setShowNextHint(false);
       return;
     }
@@ -391,7 +394,7 @@ export default function SectionNav({ sections }: SectionNavProps) {
 
   const handleClick = (id: string) => {
     activateSection(id);
-    if (window.matchMedia('(max-width: 767px)').matches) {
+    if (window.matchMedia('(max-width: 1023px)').matches) {
       setIsCollapsed(true);
       // Force a check after section activation
       requestAnimationFrame(() => {

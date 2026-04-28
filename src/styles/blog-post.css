@@ -98,6 +98,11 @@ body {
     overflow: hidden;
   }
 
+  .post-layout > .content-viewport {
+    flex: 1;
+    min-width: 0;
+  }
+
   .post-layout > nav {
     position: sticky;
     top: calc(48px + var(--post-header-height, 60px));
@@ -127,6 +132,7 @@ body {
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    margin-left: auto;
   }
 
   .post-layout > .post-meta-rail::-webkit-scrollbar {
